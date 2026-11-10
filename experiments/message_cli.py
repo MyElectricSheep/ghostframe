@@ -82,6 +82,8 @@ def neural_encode_file(image, message, password, output, model, *, ecc=False):
         raise ValueError("The neural message carrier requires PNG output")
     if output.exists():
         raise FileExistsError(f"Output already exists: {output}")
+    if not output.parent.is_dir():
+        raise ValueError(f"Output directory does not exist: {output.parent}")
     if ecc:
         frame = RSCodec(tiled_ecc.PARITY_BYTES).encode(tiled_ecc.seal(message, password))
     else:
@@ -96,12 +98,17 @@ def encode_file(image, message, password, output):
         raise ValueError("Output must end in .png, .jpg or .jpeg")
     if output.exists():
         raise FileExistsError(f"Output already exists: {output}")
+    if not output.parent.is_dir():
+        raise ValueError(f"Output directory does not exist: {output.parent}")
     marked = embed(image, seal(message, password), SPACING, COPIES)
     publish_encoded(marked, output, lambda reopened: recover_message(reopened, password) == message)
 
 
 def publish_encoded(marked, output, verify):
     suffix = output.suffix.lower()
+    # Serialize pixels only. The marked image inherits the cover's info dict, and
+    # Pillow would otherwise copy its ICC profile into the output file.
+    marked = Image.fromarray(np.asarray(marked.convert("RGB")))
     with io.BytesIO() as buffer:
         if suffix == ".png":
             marked.save(buffer, format="PNG")

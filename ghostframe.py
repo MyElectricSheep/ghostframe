@@ -45,6 +45,14 @@ def read_image(path):
     with Image.open(path, formats=["PNG", "JPEG"]) as image:
         if image.width * image.height > MAX_PIXELS or min(image.size) < 16:
             raise ValueError("Use a PNG or JPEG of at least 16 pixels per side and at most 4 MP")
+        if image.mode in ("I", "F") or image.mode.startswith("I;16"):
+            # convert("RGB") would silently clip 16-bit samples to 255.
+            raise ValueError(f"Unsupported {image.mode} image: use 8-bit RGB")
+        if image.mode == "P" and "transparency" in image.info:
+            image = image.convert("RGBA")
+        if "A" in image.getbands() and image.getchannel("A").getextrema()[0] < 255:
+            # convert("RGB") would expose the hidden colour of transparent pixels.
+            raise ValueError("Image has transparent pixels: flatten it onto a background first")
         return ImageOps.exif_transpose(image).convert("RGB")
 
 

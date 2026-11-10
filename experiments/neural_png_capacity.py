@@ -86,25 +86,8 @@ def roundtrip(model, cover, profile, epsilon, steps, fixture=None):
     else:
         frame = seal(payload, frame_bytes - parity, profile)
     codeword = bytes(RSCodec(parity).encode(frame)) if parity else frame
-    tile_boxes = boxes(cover.size, cols, rows)
     start = perf_counter()
-    if profile == "baseline":
-        marked = tiled.embed_tiles(cover, tiled.bit_string(codeword), model, epsilon)
-    else:
-        marked = cover.copy()
-        groups = {}
-        for index, (left, top, right, bottom) in enumerate(tile_boxes):
-            groups.setdefault((right-left, bottom-top), []).append(index)
-        targets = torch.from_numpy(np.unpackbits(np.frombuffer(codeword, dtype=np.uint8))
-                                  .reshape(-1, bits)).float() * 2 - 1
-        for group in groups.values():
-            for offset in range(0, len(group), 8):
-                batch = group[offset:offset+8]
-                images = torch.cat([tensor(cover.crop(tile_boxes[i]), "cpu") for i in batch])
-                carriers = torch.stack([directions(i, bits, orthogonal) for i in batch])
-                tiles = mark_batch(model, images, carriers, targets[batch], epsilon, steps)
-                for index, tile in zip(batch, tiles, strict=True):
-                    marked.paste(tile, tile_boxes[index][:2])
+    marked = mark_codeword(model, cover, profile, codeword, epsilon, steps)
     seconds = perf_counter() - start
     stream = io.BytesIO()
     marked.save(stream, "PNG")
@@ -128,6 +111,29 @@ def roundtrip(model, cover, profile, epsilon, steps, fixture=None):
                 byte_errors=sum(a != b for a,b in zip(received, codeword, strict=True)),
                 max_delta=int(abs(delta).max()), mse=float(np.mean(delta.astype(float)**2)),
                 encode_seconds=seconds)
+
+
+def mark_codeword(model, cover, profile, codeword, epsilon, steps):
+    """Embed a complete codeword with the screen's optimizer (exact signs, no margin)."""
+    cols, rows, bits, _, orthogonal = PROFILES[profile]
+    tile_boxes = boxes(cover.size, cols, rows)
+    if profile == "baseline":
+        return tiled.embed_tiles(cover, tiled.bit_string(codeword), model, epsilon)
+    marked = cover.copy()
+    groups = {}
+    for index, (left, top, right, bottom) in enumerate(tile_boxes):
+        groups.setdefault((right-left, bottom-top), []).append(index)
+    targets = torch.from_numpy(np.unpackbits(np.frombuffer(codeword, dtype=np.uint8))
+                              .reshape(-1, bits)).float() * 2 - 1
+    for group in groups.values():
+        for offset in range(0, len(group), 8):
+            batch = group[offset:offset+8]
+            images = torch.cat([tensor(cover.crop(tile_boxes[i]), "cpu") for i in batch])
+            carriers = torch.stack([directions(i, bits, orthogonal) for i in batch])
+            tiles = mark_batch(model, images, carriers, targets[batch], epsilon, steps)
+            for index, tile in zip(batch, tiles, strict=True):
+                marked.paste(tile, tile_boxes[index][:2])
+    return marked
 
 
 def read_codeword(model, reopened, profile):

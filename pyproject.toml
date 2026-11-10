@@ -15,6 +15,11 @@ perceptual = ["lpips==0.1.4"]
 
 [project.scripts]
 ghostframe = "ghostframe:main"
+ghostframe-png = "ghostframe_png.cli:main"
 
 [tool.setuptools]
 py-modules = ["ghostframe"]
+packages = ["ghostframe_png"]
+
+[tool.setuptools.package-data]
+ghostframe_png = ["data/*.npy"]

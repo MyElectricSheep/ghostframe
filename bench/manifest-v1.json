@@ -1,0 +1,992 @@
+{
+ "version": 1,
+ "covers_dir": "data/covers",
+ "covers": [
+  {
+   "id": "astronaut",
+   "split": "screen",
+   "file": "astronaut.png",
+   "source": "data/astronaut.png",
+   "content": "portrait",
+   "attribution": "NASA, public domain (scikit-image)",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5",
+   "size": [
+    512,
+    512
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "chelsea",
+   "split": "screen",
+   "file": "chelsea.png",
+   "source": "data/chelsea.png",
+   "content": "animal/texture",
+   "attribution": "Stefan van der Walt, CC0 (scikit-image)",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb",
+   "size": [
+    451,
+    300
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "coffee",
+   "split": "screen",
+   "file": "coffee.png",
+   "source": "data/coffee.png",
+   "content": "object",
+   "attribution": "Rachel Michetti, CC0 (scikit-image)",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "cc02f8ca188b167c775a7101b5d767d1e71792cf762c33d6fa15a4599b5a8de7",
+   "size": [
+    600,
+    400
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "rocket",
+   "split": "screen",
+   "file": "rocket.jpg",
+   "source": "data/rocket.jpg",
+   "content": "outdoor, JPEG-origin",
+   "attribution": "SpaceX, CC0 (scikit-image)",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "c2dd0de7c538df8d111e479619b129464d0269d0ae5fd18ca91d33a7fdfea95c",
+   "size": [
+    640,
+    427
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "motorcycle_right",
+   "split": "screen",
+   "file": "motorcycle_right.png",
+   "source": "data/motorcycle_right.png",
+   "content": "object, legacy capacity screen",
+   "attribution": "Middlebury stereo (scikit-image)",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "5fc913ae870e42a4b662314bc904d1786bcad8e2f0b9b67dba5a229406357797",
+   "size": [
+    741,
+    500
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "ihc",
+   "split": "screen",
+   "file": "ihc.png",
+   "source": "data/ihc.png",
+   "content": "microscopy, legacy capacity screen",
+   "attribution": "scikit-image",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "f8dd1aa387ddd1f49d8ad13b50921b237df8e9b262606d258770687b0ef93cef",
+   "size": [
+    512,
+    512
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "hubble",
+   "split": "tune",
+   "file": "hubble.jpg",
+   "source": "data/hubble_deep_field.jpg",
+   "content": "astronomy, low light",
+   "attribution": "NASA, public domain (scikit-image)",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "3a19c5dd8a927a9334bb1229a6d63711b1c0c767fb27e2286e7c84a3e2c2f5f4",
+   "size": [
+    1000,
+    872
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "retina",
+   "split": "tune",
+   "file": "retina.jpg",
+   "source": "data/retina.jpg",
+   "content": "medical, dark surround",
+   "attribution": "scikit-image",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "38a07f36f27f095e818aea7b96d34202c05176d30253c66733f2e00379e9e0e6",
+   "size": [
+    1411,
+    1411
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "cell",
+   "split": "tune",
+   "file": "cell.png",
+   "source": "data/cell.png",
+   "content": "grayscale microscopy, legacy capacity screen",
+   "attribution": "scikit-image",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "8d23a7fb81f7cc877cd09f330357fc7f595651306e84e17252f6e0a1b3f61515",
+   "size": [
+    550,
+    660
+   ],
+   "mode": "L"
+  },
+  {
+   "id": "grace_hopper",
+   "split": "tune",
+   "file": "grace_hopper.jpg",
+   "source": "examples/grace_hopper.jpg",
+   "content": "portrait, showcase cover",
+   "attribution": "examples/ATTRIBUTION.md",
+   "license": "examples/ATTRIBUTION.md",
+   "sha256": "a8ca6d734765703b09728ab47fe59f473d93ae3967fc24c7c0288c3c7adb7130",
+   "size": [
+    512,
+    600
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "china",
+   "split": "tune",
+   "file": "china.jpg",
+   "source": "examples/china.jpg",
+   "content": "outdoor",
+   "attribution": "examples/ATTRIBUTION.md",
+   "license": "examples/ATTRIBUTION.md",
+   "sha256": "8378025ad2519d649d02e32bd98990db4ab572357d9f09841c2fbfbb4fefad29",
+   "size": [
+    640,
+    427
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "china_sky",
+   "split": "tune",
+   "file": "china_sky.png",
+   "source": "examples/china-sky.png",
+   "content": "flat sky, crop of china (same split)",
+   "attribution": "examples/ATTRIBUTION.md",
+   "license": "examples/ATTRIBUTION.md",
+   "sha256": "6c441c8f1812d6931b0b2f09178b320990b837b8ded9539795a52eda25ffc939",
+   "size": [
+    245,
+    125
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "flower",
+   "split": "tune",
+   "file": "flower.jpg",
+   "source": "examples/flower.jpg",
+   "content": "close-up, ECC showcase cover",
+   "attribution": "examples/ATTRIBUTION.md",
+   "license": "examples/ATTRIBUTION.md",
+   "sha256": "a77f6ec41e353afdf8bdff2ea981b2955535d8d83294f8cfa49cf4e423dd5638",
+   "size": [
+    640,
+    427
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "text",
+   "split": "stress",
+   "file": "text.png",
+   "source": "data/text.png",
+   "content": "line art / text, grayscale",
+   "attribution": "scikit-image",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "bd84aa3a6e3c9887850d45d606c96b2e59433fbef50338570b63c319e668e6d1",
+   "size": [
+    448,
+    172
+   ],
+   "mode": "L"
+  },
+  {
+   "id": "page",
+   "split": "stress",
+   "file": "page.png",
+   "source": "data/page.png",
+   "content": "scanned page, grayscale",
+   "attribution": "scikit-image",
+   "license": "scikit-image bundled sample data; see https://scikit-image.org/docs/stable/api/skimage.data.html",
+   "sha256": "341a6f0a61557662b02734a9b6e56ec33a915b2c41886b97509dedf2a43b47a3",
+   "size": [
+    384,
+    191
+   ],
+   "mode": "L"
+  },
+  {
+   "id": "apple_cake",
+   "split": "holdout",
+   "file": "apple_cake.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Apple_cake_with_vanilla_ice_cream_2.jpg/1280px-Apple_cake_with_vanilla_ice_cream_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Apple_cake_with_vanilla_ice_cream_2.jpg",
+   "content": "food, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:W.carter\" title=\"User:W.carter\">W.carter </a>",
+   "license": "CC0",
+   "sha256": "71ccb42704568d60e0cfbf79542a674b61c37184d634fbc4a00e0e2603bb5939",
+   "size": [
+    1280,
+    853
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "big_mac",
+   "split": "holdout",
+   "file": "big_mac.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Big_Mac_hamburger.jpg/1280px-Big_Mac_hamburger.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Big_Mac_hamburger.jpg",
+   "content": "food, saturated, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Evan-Amos\" title=\"User:Evan-Amos\">Evan-Amos </a>",
+   "license": "CC0",
+   "sha256": "35175b1d8de791ac2c3da84bae25ccf65f473e63fe85af974d11d9f1834f76f2",
+   "size": [
+    1280,
+    1105
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "cardamom_buns",
+   "split": "holdout",
+   "file": "cardamom_buns.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Cardamom_buns.jpg/1280px-Cardamom_buns.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Cardamom_buns.jpg",
+   "content": "food, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:W.carter\" title=\"User:W.carter\">W.carter </a>",
+   "license": "CC0",
+   "sha256": "8adc6f8170e99e7d51e5491956bfa8a5674e49780e6691eca1f4d447582f44e9",
+   "size": [
+    1280,
+    881
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "fungi_basket",
+   "split": "holdout",
+   "file": "fungi_basket.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Edible_fungi_in_basket_2012_G1.jpg/1280px-Edible_fungi_in_basket_2012_G1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Edible_fungi_in_basket_2012_G1.jpg",
+   "content": "food, texture, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:George_Chernilevsky\" title=\"User:George Chernilevsky\">George Chernilevsky </a>",
+   "license": "Public domain",
+   "sha256": "e5e5d0d74b9b925c3b4dde87151f483ef0bc261c3b075012a978b6740b6eff31",
+   "size": [
+    1280,
+    959
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "lark_buns",
+   "split": "holdout",
+   "file": "lark_buns.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Lob_%D0%96%D0%B0%D0%B2%D0%BE%D1%80%D0%BE%D0%BD%D0%BA%D0%B8_95.jpg/1280px-Lob_%D0%96%D0%B0%D0%B2%D0%BE%D1%80%D0%BE%D0%BD%D0%BA%D0%B8_95.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Lob_%D0%96%D0%B0%D0%B2%D0%BE%D1%80%D0%BE%D0%BD%D0%BA%D0%B8_95.jpg",
+   "content": "food, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:%D0%9B%D0%BE%D0%B1%D0%B0%D1%87%D0%B5%D0%B2_%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80\" title=\"User:Лобачев Владимир\">Лобачев Владимир </a>",
+   "license": "CC0",
+   "sha256": "51dbfc69bec61f42bfb9148086fe3898f0cb2d1c697ad57e193c6f09afcc76ee",
+   "size": [
+    1280,
+    853
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "chocolate_cake",
+   "split": "holdout",
+   "file": "chocolate_cake.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Piece_of_chocolate_cake_on_a_white_plate_decorated_with_chocolate_sauce.jpg/1280px-Piece_of_chocolate_cake_on_a_white_plate_decorated_with_chocolate_sauce.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Piece_of_chocolate_cake_on_a_white_plate_decorated_with_chocolate_sauce.jpg",
+   "content": "food, bright, JPEG-origin",
+   "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://pixabay.com/fr/users/daria-yakovleva-3938704/\">Daria Yakovleva </a> <br> <small>Minor edits made by <a href=\"//commons.wikimedia.org/wiki/User:Sub",
+   "license": "CC0",
+   "sha256": "a1982fdbd47e23d1ce2bbc6cff2c3fe26767fd24e79d624811223d2dfe4f6a8e",
+   "size": [
+    1280,
+    871
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "carrots",
+   "split": "holdout",
+   "file": "carrots.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Preparing_and_slicing_carrots.jpg/1280px-Preparing_and_slicing_carrots.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Preparing_and_slicing_carrots.jpg",
+   "content": "food, saturated, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:W.carter\" title=\"User:W.carter\">W.carter </a>",
+   "license": "CC0",
+   "sha256": "a65367a761651ab3fcf4889b99106c0eaf274e1adfd45411edcac44756aac87d",
+   "size": [
+    1280,
+    936
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "coffee_beans",
+   "split": "holdout",
+   "file": "coffee_beans.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1280px-Roasted_coffee_beans.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Roasted_coffee_beans.jpg",
+   "content": "texture, dark, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:MarkSweep\" title=\"User:MarkSweep\">MarkSweep </a>",
+   "license": "Public domain",
+   "sha256": "b2405f9f12fddf06869bfcb36575b12e1303a0eb75f30eac37d80d86c4c308ca",
+   "size": [
+    1280,
+    960
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "city_night",
+   "split": "holdout",
+   "file": "city_night.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/City_Night_Lights_%28Unsplash%29.jpg/1280px-City_Night_Lights_%28Unsplash%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:City_Night_Lights_(Unsplash).jpg",
+   "content": "low light, JPEG-origin",
+   "attribution": "Chris Leipelt <a rel=\"nofollow\" class=\"external text\" href=\"https://unsplash.com/@cleipelt\">cleipelt </a>",
+   "license": "CC0",
+   "sha256": "4273c1ba269b7339ffe2e203d185c35a4d5352b1c93159d1cc67322afca312e7",
+   "size": [
+    1280,
+    853
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "milky_way",
+   "split": "holdout",
+   "file": "milky_way.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Milky_Way_Night_Sky_%28Unsplash%29.jpg/1280px-Milky_Way_Night_Sky_%28Unsplash%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Milky_Way_Night_Sky_(Unsplash).jpg",
+   "content": "low light, noise, JPEG-origin",
+   "attribution": "Guillaume <a rel=\"nofollow\" class=\"external text\" href=\"http://unsplash.com/@guillaume\">guillaume </a>",
+   "license": "CC0",
+   "sha256": "e6682a5df3370f7740687b8a6bdd50e42d04f334c8ebd2857189cada85433a68",
+   "size": [
+    1280,
+    848
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "iss_border_night",
+   "split": "holdout",
+   "file": "iss_border_night.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/City_Lights_at_Night_along_the_France-Italy_Border.JPG/1280px-City_Lights_at_Night_along_the_France-Italy_Border.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:City_Lights_at_Night_along_the_France-Italy_Border.JPG",
+   "content": "low light, orbital, JPEG-origin",
+   "attribution": "NASA Expedition 23 crew",
+   "license": "Public domain",
+   "sha256": "3f9b115fe763275746f4dd12d0f9b9e8beb0982bf9eeea67668697cd25689c79",
+   "size": [
+    1280,
+    847
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "met_portrait",
+   "split": "holdout",
+   "file": "met_portrait.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/-Vignetted_portrait%2C_woman_holding_a_baby-_MET_DP113912.jpg/1280px--Vignetted_portrait%2C_woman_holding_a_baby-_MET_DP113912.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:-Vignetted_portrait,_woman_holding_a_baby-_MET_DP113912.jpg",
+   "content": "historic portrait, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:Alfred_Capel-Cure\" class=\"extiw\" title=\"w:en:Alfred Capel-Cure\"> <span title=\"British photographer and army officer (1826-1896)\">Alfred Capel-Cure </spa",
+   "license": "CC0",
+   "sha256": "32d516f551ab4613f2290300cb976b2a1d021f65abb62aaceb36a3a11db0f0f2",
+   "size": [
+    1280,
+    1401
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "liljefors_fox",
+   "split": "holdout",
+   "file": "liljefors_fox.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Bruno_Liljefors_-_Fox_in_forest_landscape_1926.jpg/1280px-Bruno_Liljefors_-_Fox_in_forest_landscape_1926.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Bruno_Liljefors_-_Fox_in_forest_landscape_1926.jpg",
+   "content": "painting, texture, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:Bruno_Liljefors\" class=\"extiw\" title=\"w:en:Bruno Liljefors\"> <span title=\"Swedish artist (1860–1939)\">Bruno Liljefors </span> </a> </bdi>",
+   "license": "Public domain",
+   "sha256": "ffac5c1cbf0f05f0c234d2cfd9e9927e1837426d779847044f162632708a9c91",
+   "size": [
+    1280,
+    889
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "honthorst",
+   "split": "holdout",
+   "file": "honthorst.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Der_Zahnbrecher_von_Gerard_Honthorst_%28BM_1852%2C1009.436%29.jpg/1280px-Der_Zahnbrecher_von_Gerard_Honthorst_%28BM_1852%2C1009.436%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Der_Zahnbrecher_von_Gerard_Honthorst_(BM_1852,1009.436).jpg",
+   "content": "dark painting, JPEG-origin",
+   "attribution": "<div class=\"fn value\"> <p>After: Gerard van Honthorst </p> <dl> <dd>Print made by: Franz Hanfstängl </dd> <dd>Published by: Franz Hanfstängl </dd> <dd>Printed by: Franz Hanfstängl </dd> </dl> </div>",
+   "license": "Public domain",
+   "sha256": "afcf28ef0433be5ca36689d32848b3a30b044b0d761c55fdcebbccf28d2d888d",
+   "size": [
+    1280,
+    1023
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "portrait_of_a_man_said_to_be",
+   "split": "holdout",
+   "file": "portrait_of_a_man_said_to_be.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Portrait_of_a_Man%2C_Said_to_be_Christopher_Columbus.jpg/1280px-Portrait_of_a_Man%2C_Said_to_be_Christopher_Columbus.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Portrait_of_a_Man,_Said_to_be_Christopher_Columbus.jpg",
+   "content": "portrait photograph man, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:Sebastiano_del_Piombo\" class=\"extiw\" title=\"w:en:Sebastiano del Piombo\"> <span title=\"Italian painter (c.1485-1547)\">Sebastiano del Piombo </span> </a> ",
+   "license": "Public domain",
+   "sha256": "6a5c935d6dd5ead5dc8b4ebe6c08c0c3dd7434c3199d274d370989a7818458bf",
+   "size": [
+    1280,
+    1549
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "antonello_da_messina_portrai",
+   "split": "holdout",
+   "file": "antonello_da_messina_portrai.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg/1280px-Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg",
+   "content": "portrait photograph man, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:Antonello_da_Messina\" class=\"extiw\" title=\"w:en:Antonello da Messina\"> <span title=\"Italian Renaissance painter (1430–1479)\">Antonello da Messina </span",
+   "license": "Public domain",
+   "sha256": "587a890ba5e83eed3a99bf0dd17ea8a9bd73bd1f608e75448349000e5f840ea4",
+   "size": [
+    1280,
+    1782
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "2009_photo_of_summer_in_the",
+   "split": "holdout",
+   "file": "2009_photo_of_summer_in_the.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/2009_-_photo_of_Summer_in_the_city_with_hollyhock_flowers_in_the_street_-_free_download_image_of_Amsterdam_city_-_street_photography_by_Fons_Heijnsbroek.jpg/1280px-2009_-_photo_of_Summer_in_the_city_with_hollyhock_flowers_in_the_street_-_free_download_image_of_Amsterdam_city_-_street_photography_by_Fons_Heijnsbroek.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:2009_-_photo_of_Summer_in_the_city_with_hollyhock_flowers_in_the_street_-_free_download_image_of_Amsterdam_city_-_street_photography_by_Fons_Heijnsbroek.jpg",
+   "content": "street photography, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:FotoDutch\" title=\"User:FotoDutch\">Fons Heijnsbroek </a>",
+   "license": "CC0",
+   "sha256": "94c15aaccef2d139f7cb9e0fb2444bcedf887e26b368baf9e931af0eb3ff31be",
+   "size": [
+    1280,
+    1707
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "photo_of_two_young_women_pas",
+   "split": "holdout",
+   "file": "photo_of_two_young_women_pas.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Photo_of_two_young_women_passing_a_construction_fence_with_a_writing_of_Amsterdam_street_artist_Laser_3.14_-_free_image_of_street_photography_Amsterdam_by_Fons_Heijnsbroek.jpg/1280px-thumbnail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Photo_of_two_young_women_passing_a_construction_fence_with_a_writing_of_Amsterdam_street_artist_Laser_3.14_-_free_image_of_street_photography_Amsterdam_by_Fons_Heijnsbroek.jpg",
+   "content": "street photography, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:FotoDutch\" title=\"User:FotoDutch\">Fons Heijnsbroek </a>",
+   "license": "CC0",
+   "sha256": "0022292cce3066eb07f2b037fc6e478eb3fb0d14c7d3520d81fb31dcbf65b1e0",
+   "size": [
+    1280,
+    960
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "utah_dunes_landscape_west_de",
+   "split": "holdout",
+   "file": "utah_dunes_landscape_west_de.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Utah_Dunes_Landscape_-_West_Desert_District.jpg/1280px-Utah_Dunes_Landscape_-_West_Desert_District.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Utah_Dunes_Landscape_-_West_Desert_District.jpg",
+   "content": "mountain landscape snow, JPEG-origin",
+   "attribution": "Bureau of Land Management - Utah/Bob Wick",
+   "license": "Public domain",
+   "sha256": "ef2691701c9349a982e9b6ac6daacad4bc48016745c2d415c2b9bb7e0fc43bec",
+   "size": [
+    1280,
+    841
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "ky_to_kan_school_mountain_la",
+   "split": "holdout",
+   "file": "ky_to_kan_school_mountain_la.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Ky%C5%8Dto_Kan%C5%8D_School_-_Mountain_Landscape.jpg/1280px-Ky%C5%8Dto_Kan%C5%8D_School_-_Mountain_Landscape.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Ky%C5%8Dto_Kan%C5%8D_School_-_Mountain_Landscape.jpg",
+   "content": "mountain landscape snow, JPEG-origin",
+   "attribution": "<div class=\"fn value\"> Kyōto Kanō School </div>",
+   "license": "Public domain",
+   "sha256": "f3d9c68909e88e0b7de193e22a61322a6f42cfd16781ca7ca9374c471affb3aa",
+   "size": [
+    1280,
+    2932
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "william_adolphe_bouguereau_1",
+   "split": "holdout",
+   "file": "william_adolphe_bouguereau_1.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/William-Adolphe_Bouguereau_%281825-1905%29_-_The_Wave_%281896%29.jpg/1280px-William-Adolphe_Bouguereau_%281825-1905%29_-_The_Wave_%281896%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:William-Adolphe_Bouguereau_(1825-1905)_-_The_Wave_(1896).jpg",
+   "content": "beach sea waves, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:William-Adolphe_Bouguereau\" class=\"extiw\" title=\"w:en:William-Adolphe Bouguereau\"> <span title=\"French academic painter (1825–1905)\">William-Adolphe Bou",
+   "license": "Public domain",
+   "sha256": "ea4d356ef59b5876cafbfbbf58d3490cb0633e1f87e9d8f545704408776ebf13",
+   "size": [
+    1280,
+    966
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "waves_in_sea_jpg",
+   "split": "holdout",
+   "file": "waves_in_sea_jpg.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Waves_in_sea.jpg/1280px-Waves_in_sea.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Waves_in_sea.jpg",
+   "content": "beach sea waves, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Saral_Shots\" title=\"User:Saral Shots\">Saral Shots </a>",
+   "license": "CC0",
+   "sha256": "babfb19458bf5a6a39b4260fdd76a3a49e2be98e9bb9e094f6d2faf28d02f17c",
+   "size": [
+    1280,
+    960
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "restaurant_amigos_de_acapulc",
+   "split": "holdout",
+   "file": "restaurant_amigos_de_acapulc.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Restaurant_Amigos_de_Acapulco_%28window%29%2C_Chico.jpg/1280px-Restaurant_Amigos_de_Acapulco_%28window%29%2C_Chico.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Restaurant_Amigos_de_Acapulco_(window),_Chico.jpg",
+   "content": "architecture building facade, JPEG-origin",
+   "attribution": "<b>Photograph: </b> Radomianin",
+   "license": "Public domain",
+   "sha256": "f32f2de624c0527d9447a9bfc6d7f8b56a83d2b0303c6d044c3a6a1a2ce6b059",
+   "size": [
+    1280,
+    826
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "boulevard_hotel_neon_sign_mi",
+   "split": "holdout",
+   "file": "boulevard_hotel_neon_sign_mi.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Boulevard_Hotel_%28Neon_sign%29%2C_Miami_Beach.jpg/1280px-Boulevard_Hotel_%28Neon_sign%29%2C_Miami_Beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Boulevard_Hotel_(Neon_sign),_Miami_Beach.jpg",
+   "content": "architecture building facade, JPEG-origin",
+   "attribution": "<b>Photograph: </b> Radomianin",
+   "license": "Public domain",
+   "sha256": "ce9a0f3eb410d2bd76a3086a80750d32649d216ca80638d36ac722129b03c2dc",
+   "size": [
+    1280,
+    854
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "the_blue_bird_press_photogra",
+   "split": "holdout",
+   "file": "the_blue_bird_press_photogra.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/The_Blue_Bird_press_photograph%2C_front.jpg/1280px-The_Blue_Bird_press_photograph%2C_front.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:The_Blue_Bird_press_photograph,_front.jpg",
+   "content": "bird photograph, JPEG-origin",
+   "attribution": "20th Century Fox press photograph",
+   "license": "Public domain",
+   "sha256": "2e3c35418437997a7b9a46e622c4055d0627f4100699f2e62ab1de1a4ca52bca",
+   "size": [
+    1280,
+    1040
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "dog_met_dp233970_jpg",
+   "split": "holdout",
+   "file": "dog_met_dp233970_jpg.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/-Dog-_MET_DP233970.jpg/1280px--Dog-_MET_DP233970.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:-Dog-_MET_DP233970.jpg",
+   "content": "dog photograph, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:Louis-Auguste_Bisson\" class=\"extiw\" title=\"w:en:Louis-Auguste Bisson\"> <span title=\"French photographer (1814–1876)\">Louis-Auguste Bisson </span> </a> <",
+   "license": "CC0",
+   "sha256": "a089884e86aaba06103cd040efa1c15aff42955d2a19493c4b3cdd49cbfb76db",
+   "size": [
+    1280,
+    1042
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "photograph_of_buddy_the_dog",
+   "split": "holdout",
+   "file": "photograph_of_buddy_the_dog.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Photograph_of_Buddy_the_Dog_-_DPLA_-_590d53609e2fd756d354216a77abb1eb.jpg/1280px-Photograph_of_Buddy_the_Dog_-_DPLA_-_590d53609e2fd756d354216a77abb1eb.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Photograph_of_Buddy_the_Dog_-_DPLA_-_590d53609e2fd756d354216a77abb1eb.jpg",
+   "content": "dog photograph, JPEG-origin",
+   "attribution": "President (1993-2001 : Clinton). White House Photograph Office. 1/20/1993-1/20/2001",
+   "license": "Public domain",
+   "sha256": "dfbbadb9bc70145cec02da3bb1cae3a1f39fb9326bec5defa40bddd4dc61b493",
+   "size": [
+    1280,
+    1911
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "fly_insect_macro_jpg",
+   "split": "holdout",
+   "file": "fly_insect_macro_jpg.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Fly_insect_macro.jpg/1280px-Fly_insect_macro.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Fly_insect_macro.jpg",
+   "content": "insect macro, JPEG-origin",
+   "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/watts_photos/\">Watts </a> <span class=\"mw-valign-text-top noprint\" typeof=\"mw:File/Frameless\"> <a href=\"//commons.wikimedia.",
+   "license": "CC0",
+   "sha256": "effb3eb4be9d0db61469df547dd4c4ecd92b318e724a63415e10c4fda23db68e",
+   "size": [
+    1280,
+    936
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "insect_macro_36301512526_jpg",
+   "split": "holdout",
+   "file": "insect_macro_36301512526_jpg.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Insect_macro_%2836301512526%29.jpg/1280px-Insect_macro_%2836301512526%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Insect_macro_(36301512526).jpg",
+   "content": "insect macro, JPEG-origin",
+   "attribution": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/51195133@N03\">Frayle </a> from Salamanca, España",
+   "license": "CC0",
+   "sha256": "cf98903e7d89a2082ccc169899c54805e46d751f1f357b5d56fc2c3000d514bd",
+   "size": [
+    1280,
+    850
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "chromis_reef_fish_and_stagho",
+   "split": "holdout",
+   "file": "chromis_reef_fish_and_stagho.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Chromis_reef_fish_and_staghorn_coral_underwater_scenic.jpg/1280px-Chromis_reef_fish_and_staghorn_coral_underwater_scenic.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Chromis_reef_fish_and_staghorn_coral_underwater_scenic.jpg",
+   "content": "underwater fish reef, JPEG-origin",
+   "attribution": "Amanda Meyer, U.S. Fish and Wildlife Service",
+   "license": "Public domain",
+   "sha256": "cb77af50fffa0a3d84e44c18f7ada2e8ca1cd255538f103f203d1dab8b075cda",
+   "size": [
+    1280,
+    960
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "underwater_photo_of_coral_re",
+   "split": "holdout",
+   "file": "underwater_photo_of_coral_re.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Underwater_photo_of_coral_reef.jpg/1280px-Underwater_photo_of_coral_reef.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Underwater_photo_of_coral_reef.jpg",
+   "content": "underwater fish reef, JPEG-origin",
+   "attribution": "Jerry Reid, U.S. Fish and Wildlife Service",
+   "license": "Public domain",
+   "sha256": "0648d8e36d8f4ac1ced4ffff4a5e42430eb04b4b5c58f39b51f93d74b1af38ad",
+   "size": [
+    1280,
+    855
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "aerial_view_of_farmland_cont",
+   "split": "holdout",
+   "file": "aerial_view_of_farmland_cont.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/AERIAL_VIEW_OF_FARMLAND_CONTOURS_-_NARA_-_547349.jpg/1280px-AERIAL_VIEW_OF_FARMLAND_CONTOURS_-_NARA_-_547349.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:AERIAL_VIEW_OF_FARMLAND_CONTOURS_-_NARA_-_547349.jpg",
+   "content": "aerial photograph farmland, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:Charles_O%27Rear\" class=\"extiw\" title=\"w:en:Charles O'Rear\"> <span title=\"American photographer and author (born 1941)\">Charles O'Rear </span> </a> </bd",
+   "license": "Public domain",
+   "sha256": "9396ee6bb34b3547dc76d1efb504ce30c2a9fe0e12ab829560c11ac8896e9647",
+   "size": [
+    1280,
+    861
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "aerial_photograph_of_farmlan",
+   "split": "holdout",
+   "file": "aerial_photograph_of_farmlan.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/AERIAL_PHOTOGRAPH_OF_FARMLAND_WITHIN_A_15-MILE_RADIUS_OF_NEW_ULM%2C_MINNESOTA%2C_A_COUNTY_SEAT_TRADING_CENTER_OF_13%2C000..._-_NARA_-_558414.jpg/1280px-AERIAL_PHOTOGRAPH_OF_FARMLAND_WITHIN_A_15-MILE_RADIUS_OF_NEW_ULM%2C_MINNESOTA%2C_A_COUNTY_SEAT_TRADING_CENTER_OF_13%2C000..._-_NARA_-_558414.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:AERIAL_PHOTOGRAPH_OF_FARMLAND_WITHIN_A_15-MILE_RADIUS_OF_NEW_ULM,_MINNESOTA,_A_COUNTY_SEAT_TRADING_CENTER_OF_13,000..._-_NARA_-_558414.jpg",
+   "content": "aerial photograph farmland, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:Flip_Schulke\" class=\"extiw\" title=\"w:en:Flip Schulke\"> <span title=\"US-american photographer and photojournalist (1930-2008)\">Flip Schulke </span> </a> ",
+   "license": "Public domain",
+   "sha256": "c02766a998c9e30d0edf0b4900bcf2cdc39bb2bbf07f3b38143e3c104acfd5c4",
+   "size": [
+    1280,
+    865
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "french_marigold_garden_2009",
+   "split": "holdout",
+   "file": "french_marigold_garden_2009.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/French_marigold_garden_2009_G1.jpg/1280px-French_marigold_garden_2009_G1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:French_marigold_garden_2009_G1.jpg",
+   "content": "flowers garden photograph, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:George_Chernilevsky\" title=\"User:George Chernilevsky\">George Chernilevsky </a>",
+   "license": "Public domain",
+   "sha256": "495669d2b07c69a4841ac2bbff794b8e5a58ed3ead2c5b6b8113c30347db520f",
+   "size": [
+    1280,
+    1097
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "pasillo_de_la_biblioteca_vas",
+   "split": "holdout",
+   "file": "pasillo_de_la_biblioteca_vas.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Pasillo_de_la_Biblioteca_Vasconcelos.jpg/1280px-Pasillo_de_la_Biblioteca_Vasconcelos.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Pasillo_de_la_Biblioteca_Vasconcelos.jpg",
+   "content": "library interior, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Bibliothecamex\" title=\"User:Bibliothecamex\">Jorge Mendoza </a>",
+   "license": "CC0",
+   "sha256": "0c7b7981d46b87ed7751cdf2a84b51967b4ad63af671f328d509d623ec87bf91",
+   "size": [
+    1280,
+    960
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "holsteiner_ufer_in_berlin_on",
+   "split": "holdout",
+   "file": "holsteiner_ufer_in_berlin_on.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Holsteiner_Ufer_in_Berlin_on_2026-05-13.jpg/1280px-Holsteiner_Ufer_in_Berlin_on_2026-05-13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Holsteiner_Ufer_in_Berlin_on_2026-05-13.jpg",
+   "content": "bicycle street, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/wiki/User:Shisma\" title=\"User:Shisma\">Shisma </a>",
+   "license": "CC0",
+   "sha256": "876a95d362d0d8017e0cdae7dbb2d60b9bde9a915027ca29b91e5fae9b14ca50",
+   "size": [
+    1280,
+    960
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "orange_fabric_textile_cloth",
+   "split": "holdout",
+   "file": "orange_fabric_textile_cloth.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/Orange_fabric_textile_cloth_texture.jpg/1280px-Orange_fabric_textile_cloth_texture.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Orange_fabric_textile_cloth_texture.jpg",
+   "content": "fabric texture, JPEG-origin",
+   "attribution": "Titus Tscharntke",
+   "license": "Public domain",
+   "sha256": "7b1c7f9b68e710c1689985e5cdbd2df72c9021367d062af02a8d9350056fad8a",
+   "size": [
+    1280,
+    960
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "ravi_shankar_charcoal_pencil",
+   "split": "holdout",
+   "file": "ravi_shankar_charcoal_pencil.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Ravi_Shankar_-_charcoal_pencil_sketch.jpg/1280px-Ravi_Shankar_-_charcoal_pencil_sketch.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Ravi_Shankar_-_charcoal_pencil_sketch.jpg",
+   "content": "pencil drawing sketch, JPEG-origin",
+   "attribution": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:PVRMurty1944&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:PVRMurty1944 (page does not exist)\">PVRMurty1944 </a>",
+   "license": "CC0",
+   "sha256": "3daf0b7c219da9b696930ede9ca00f5ac2ce2f0678f8e61fa1ec88a3ed6cc696",
+   "size": [
+    1280,
+    1607
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "carl_gustav_carus_morning_fo",
+   "split": "holdout",
+   "file": "carl_gustav_carus_morning_fo.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Carl_Gustav_Carus_-_Morning_Fog_-_WGA04520.jpg/1280px-Carl_Gustav_Carus_-_Morning_Fog_-_WGA04520.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Carl_Gustav_Carus_-_Morning_Fog_-_WGA04520.jpg",
+   "content": "fog morning, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:Carl_Gustav_Carus\" class=\"extiw\" title=\"w:en:Carl Gustav Carus\"> <span title=\"German philosopher, physician, painter (1789–1869)\">Carl Gustav Carus </sp",
+   "license": "Public domain",
+   "sha256": "ef11124903be9d643b2743258610cc80c7c7885b5bd77ccdd57a2762023083f2",
+   "size": [
+    1280,
+    952
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "train_station_with_train_and",
+   "split": "holdout",
+   "file": "train_station_with_train_and.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Train_station_with_train_and_coal_depot_by_Gustave_Le_Gray1.jpg/1280px-Train_station_with_train_and_coal_depot_by_Gustave_Le_Gray1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:Train_station_with_train_and_coal_depot_by_Gustave_Le_Gray1.jpg",
+   "content": "train station, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:Gustave_Le_Gray\" class=\"extiw\" title=\"w:en:Gustave Le Gray\"> <span title=\"French photographer (1820–1884)\">Gustave Le Gray </span> </a> </bdi>",
+   "license": "Public domain",
+   "sha256": "080446c610a1656ab126550d2e2dcba91003c4b40d9f1e5dcc6b944392d0bf9a",
+   "size": [
+    1280,
+    955
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "john_frederick_tayler_a_frui",
+   "split": "holdout",
+   "file": "john_frederick_tayler_a_frui.jpg",
+   "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/John_Frederick_Tayler_-_A_Fruit_Stall_in_a_Market_-_B1975.4.952_-_Yale_Center_for_British_Art.jpg/1280px-John_Frederick_Tayler_-_A_Fruit_Stall_in_a_Market_-_B1975.4.952_-_Yale_Center_for_British_Art.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "page": "https://commons.wikimedia.org/wiki/File:John_Frederick_Tayler_-_A_Fruit_Stall_in_a_Market_-_B1975.4.952_-_Yale_Center_for_British_Art.jpg",
+   "content": "market fruit stall, JPEG-origin",
+   "attribution": "<bdi> <a href=\"https://en.wikipedia.org/wiki/en:John_Frederick_Tayler\" class=\"extiw\" title=\"w:en:John Frederick Tayler\"> <span title=\"English landscape watercolour painter (1802-1889)\">John Frederick ",
+   "license": "CC0",
+   "sha256": "91348a0926e75d082f6298d13db9fb82b2a6d6934ecbd5d52b2cb16854db119a",
+   "size": [
+    1280,
+    897
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "flat_gray",
+   "split": "stress",
+   "file": "flat_gray.png",
+   "source": "bench/build_manifest.py synthetic()",
+   "content": "flat mid-gray",
+   "attribution": "generated",
+   "license": "CC0",
+   "sha256": "86b5db0fd4fe58f75db445e11e7d27d600d110a3319c099d3c5d0795ae3365a4",
+   "size": [
+    512,
+    384
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "flat_white",
+   "split": "stress",
+   "file": "flat_white.png",
+   "source": "bench/build_manifest.py synthetic()",
+   "content": "saturated white",
+   "attribution": "generated",
+   "license": "CC0",
+   "sha256": "ed130096ae5b772da30d8407edef383cf2000cc6d38f9a2751d1cbd3cac7b564",
+   "size": [
+    512,
+    384
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "flat_black",
+   "split": "stress",
+   "file": "flat_black.png",
+   "source": "bench/build_manifest.py synthetic()",
+   "content": "saturated black",
+   "attribution": "generated",
+   "license": "CC0",
+   "sha256": "598837f882359804db88260afd23fab2aa5b9674de07cedc9fde344e6dc6fc8b",
+   "size": [
+    512,
+    384
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "colour_bars",
+   "split": "stress",
+   "file": "colour_bars.png",
+   "source": "bench/build_manifest.py synthetic()",
+   "content": "saturated primaries",
+   "attribution": "generated",
+   "license": "CC0",
+   "sha256": "bc1ee649bfcefae5e46df967565d5231d2fce84de1122bfac7ae5d8bd566e547",
+   "size": [
+    512,
+    384
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "noise_odd",
+   "split": "stress",
+   "file": "noise_odd.png",
+   "source": "bench/build_manifest.py synthetic()",
+   "content": "uniform noise, odd dimensions",
+   "attribution": "generated",
+   "license": "CC0",
+   "sha256": "e0d0cb4a9c8e24bb97001b1deaa4abaa582fb591b149cc4fae51819d30bf831d",
+   "size": [
+    517,
+    333
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "wide_gradient",
+   "split": "stress",
+   "file": "wide_gradient.png",
+   "source": "bench/build_manifest.py synthetic()",
+   "content": "4:1 aspect gradient",
+   "attribution": "generated",
+   "license": "CC0",
+   "sha256": "62ee34a39ed53023caa336dd8f86a51087d55ed7cfb6c5fcd37f333889de22b6",
+   "size": [
+    640,
+    160
+   ],
+   "mode": "RGB"
+  },
+  {
+   "id": "minimum_160x128",
+   "split": "stress",
+   "file": "minimum_160x128.png",
+   "source": "bench/build_manifest.py synthetic()",
+   "content": "smallest size for a 10x8 grid of 16-px tiles",
+   "attribution": "generated",
+   "license": "CC0",
+   "sha256": "46da18db97274556dd1794123f3afcdc8cd64b91daa58999c7fc50839c945173",
+   "size": [
+    160,
+    128
+   ],
+   "mode": "RGB"
+  }
+ ]
+}
