@@ -60,4 +60,8 @@ def suites():
         variant(L8, "sw-l8-c12x10b40p96", cols=12, rows=10, bits=40, parity=96),
         variant(L8, "sw-l8-c14x12b32p96", cols=14, rows=12, bits=32, parity=96),
     ]
+    by_name = {p.name: p for suite in s.values() for p in suite}
+    s["finalists-tune"] = [by_name[n] for n in (
+        "sw-l2-c10x8b20p48", "sw-l2-c12x10b12p36", "sw-l2-c10x8b16p32",
+        "sw-l8-c12x10b32p72", "sw-l8-c10x8b40p64")]
     return s

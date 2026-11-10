@@ -50,3 +50,11 @@ experimental profile" when, on holdout,
 No profile becomes the CLI default on this evidence: the default remains the verified
 `legacy-v1` showcase frame. If any holdout failure is inspected to change a profile, the
 changed profile cannot be re-scored on this holdout set.
+
+## Amendment 1 (2026-11-10, after screening, before any tuning-split encode)
+
+`china_sky` (245×125, tuning split) is below the documented minimum size (16-pixel tiles) of
+every 10×8 or larger grid, including the legacy 49- and 161-byte profiles. A clean size
+rejection is part of the input contract, not a channel failure, so finalist selection uses the
+12 in-contract screen+tune covers and reports the rejection separately. Holdout covers are all
+at least 1280×826, so this changes nothing there.
