@@ -39,8 +39,8 @@ def payload(kind, length, key):
     raise ValueError(kind)
 
 
-def covers(split, only=None):
-    manifest = json.loads((ROOT / "bench" / "manifest-v1.json").read_text())
+def covers(split, only=None, manifest_path=ROOT / "bench" / "manifest-v1.json"):
+    manifest = json.loads(Path(manifest_path).read_text())
     for entry in manifest["covers"]:
         if entry["split"] == split and (not only or entry["id"] in only):
             path = ROOT / manifest["covers_dir"] / entry["file"]
@@ -88,6 +88,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--suite", required=True, help="suite name from bench.configs, or comma-separated legacy names")
     parser.add_argument("--split", required=True)
+    parser.add_argument("--manifest", type=Path, default=ROOT / "bench" / "manifest-v1.json")
     parser.add_argument("--covers", nargs="*")
     parser.add_argument("--frames", type=int, default=1)
     parser.add_argument("--kind", default="random", choices=("random", "ascii", "utf8"))
@@ -108,7 +109,7 @@ def main():
     passphrase_file = args.out / "passphrase.txt"
     passphrase_file.write_bytes(PASSPHRASE)
     jobs = []
-    for entry, path in covers(args.split, args.covers):
+    for entry, path in covers(args.split, args.covers, args.manifest):
         for profile in profiles:
             name = profile if isinstance(profile, str) else profile.name
             capacity = LEGACY[name]["capacity"] if isinstance(profile, str) else profile.capacity

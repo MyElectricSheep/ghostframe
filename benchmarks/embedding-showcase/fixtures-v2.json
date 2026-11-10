@@ -1,0 +1,58 @@
+[
+  {
+    "carrier": "ghostframe-png",
+    "profile": "sw-l2-c10x8b16p48",
+    "status": "recommended experimental",
+    "original": "grace-hopper-original.png",
+    "encoded": "png-l2-sentence.png",
+    "difference": "png-l2-sentence-difference.png",
+    "amplification": 96,
+    "cap": 2,
+    "max_rgb_delta": 2,
+    "changed_channel_fraction": 0.9387,
+    "recovered_message": "Meet at dawn. The north gate stays open until six. Bring the blue notebook.",
+    "payload_bytes": 75,
+    "profile_capacity": 79,
+    "source": "../../examples/grace_hopper.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "grace-hopper-original.png": "30f483f9f43ca912313d6009f437d611e09df822301f05bcd2ae27bf4d17b342",
+      "png-l2-sentence.png": "15b48021f16751061d0088cd9218667b57b495f6f14644496de2503fc9601646",
+      "png-l2-sentence-difference.png": "54649e7b007d22ec00683535aa1fb77244d8fd26aa53f4d7afe8c366b82192d5"
+    }
+  },
+  {
+    "carrier": "ghostframe-png",
+    "profile": "sw-l8-c10x8b40p64",
+    "status": "recommended experimental",
+    "original": "grace-hopper-original.png",
+    "encoded": "png-l8-paragraph.png",
+    "difference": "png-l8-paragraph-difference.png",
+    "amplification": 24,
+    "cap": 8,
+    "max_rgb_delta": 8,
+    "changed_channel_fraction": 0.9391,
+    "recovered_message": "Meet at dawn by the north gate. This longer note was written into the photo by changing each colour channel by at most eight levels, then read back by a frozen SqueezeNet model from the saved PNG alone. Error correction repaired weak bits and the passphrase check confirmed that nothing was altered.",
+    "payload_bytes": 299,
+    "profile_capacity": 302,
+    "source": "../../examples/grace_hopper.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "grace-hopper-original.png": "30f483f9f43ca912313d6009f437d611e09df822301f05bcd2ae27bf4d17b342",
+      "png-l8-paragraph.png": "f7993934c999cccf95addfad7062bd39bbefef0589df4820c0d82df3a3eacd08",
+      "png-l8-paragraph-difference.png": "049a40238e89746f5603d8e0805974c8288277b96d21346f72994649a808ed0b"
+    }
+  }
+]

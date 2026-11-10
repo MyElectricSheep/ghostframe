@@ -110,6 +110,10 @@ def _p(name, cols, rows, bits, parity, epsilon, **kw):
 PROFILES = {p.name: p for p in (
     _p("png-l2-c10x8b12", 10, 8, 12, 24, 2, notes="Low-distortion candidate on the 49-byte legacy layout"),
     _p("png-l8-c10x8b24", 10, 8, 24, 32, 8, notes="High-capacity candidate on the 161-byte legacy layout"),
+    # Preregistered finalists, kept under the names they were scored with (the name is part of
+    # the identity, so renaming would change the carriers). Evidence: docs/BENCHMARK.md.
+    _p("sw-l2-c10x8b16p48", 10, 8, 16, 48, 2, notes="Recommended experimental 2-level profile (79 B)"),
+    _p("sw-l8-c10x8b40p64", 10, 8, 40, 64, 8, notes="Recommended experimental 8-level profile (302 B)"),
 )}
 
 

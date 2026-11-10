@@ -6,14 +6,30 @@ framing, interleaved Reed–Solomon, a margin-verified encoder and a safe I/O co
 legacy `message_cli --carrier neural|neural-ecc` formats are unchanged and are available in
 the new CLI as `legacy-v1` and `legacy-v2`. Measured results: [BENCHMARK.md](BENCHMARK.md).
 
+## Profiles
+
+| Profile | Cap | Payload | Grid × bits | Parity | Status |
+|---|---:|---:|---|---:|---|
+| `sw-l2-c10x8b16p48` | 2 | 79 B | 10×8 × 16 | 48 | recommended experimental: held-out 123/123 |
+| `sw-l8-c10x8b40p64` | 8 | 302 B | 10×8 × 40 | 64 (2 blocks) | recommended experimental: held-out 123/123 |
+| `png-l2-c10x8b12` | 2 | 63 B | 10×8 × 12 | 24 | experimental: screen and tune 12/12, not held out |
+| `png-l8-c10x8b24` | 8 | 175 B | 10×8 × 24 | 32 | experimental: screen 6/6, not held out |
+| `legacy-v1` | 8 | 13 B | 6×5 | — | legacy CLI frame; default showcase |
+| `legacy-v2` | 2 | 1 B | 6×5 | 14 | legacy CLI frame |
+
+"Recommended experimental" means the profile met the preregistered promotion rule
+([BENCHMARK.md](BENCHMARK.md)) on 1280-px photographs. It is not a default, and no stability
+promise attaches to it. The profile name is part of the identity, which seeds the carriers and
+is the AAD, so a frame decodes only under its exact name.
+
 ## Command line
 
 ```sh
 python -m pip install -e '.[tiled]'
 ghostframe-png profiles
 printf '%s' 'Meet at dawn.' > message.txt
-ghostframe-png encode examples/grace_hopper.jpg marked.png --profile png-l2-c10x8b12 --message-file message.txt
-ghostframe-png decode marked.png --profile png-l2-c10x8b12 > recovered.txt
+ghostframe-png encode examples/grace_hopper.jpg marked.png --profile sw-l2-c10x8b16p48 --message-file message.txt
+ghostframe-png decode marked.png --profile sw-l2-c10x8b16p48 > recovered.txt
 ```
 
 The commands prompt for a passphrase, or read it from `--passphrase-file` (one trailing

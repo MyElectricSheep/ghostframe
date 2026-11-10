@@ -1,5 +1,19 @@
 # Embedding-only PNG capacity experiment
 
+> **Audit note (2026-11-10).** This is the archived three-cover screen. Rerun on more covers
+> ([BENCHMARK.md](BENCHMARK.md)) with an independent decoder process:
+>
+> - The 161-byte profile (cap 8) held up: 6/6 on the screening covers and 41/41 on held-out covers.
+> - The 49-byte profile (cap 2) authenticated on only 2 of 6 screening covers. It failed
+>   `astronaut`, `chelsea`, `coffee` and `rocket` (300–640 px wide) with 16–24 wrong bytes
+>   against a 12-byte budget. It passed all 41 held-out covers, which are 1280 px wide.
+>   Treat 49 bytes at cap 2 as size-dependent, not as a general result.
+> - This script assumes a single Reed–Solomon block. A frame longer than 255 − parity bytes
+>   silently becomes a longer, mismatched codeword.
+>
+> The successor profiles in `ghostframe_png` (79 bytes at cap 2, 302 bytes at cap 8) fix that
+> and were selected and evaluated under a preregistered rule.
+
 The experiment asks how much authenticated payload can survive a saved and reopened PNG with a frozen SqueezeNet 1.1 reader. Each tile yields an embedding. Projection signs supply the bits. The encoder optimizes 8-bit RGB pixels while holding the model weights fixed. The extractor needs the PNG, matching profile and checkpoint. It reads no cover image and no image metadata.
 
 The baseline is the existing 6×5 layout with 16 bits per tile and a 13-byte authenticated payload. The new profiles vary the number of tiles, the bits per tile, projection orthogonalization, and the number of Reed–Solomon parity bytes. They process same-size tiles in batches and stop updating each tile once all its bits match. This differs from the baseline optimizer, which uses up to 100 updates per tile and aims for a positive margin even after signs match. The new profiles used up to 35 updates. The screen compares complete profiles. It cannot isolate the effect of a single variable from these runs.

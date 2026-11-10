@@ -39,6 +39,16 @@ class FrameTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             profile(bits=11, cols=1, rows=1).validate()
 
+    def test_benchmarked_profiles_are_pinned(self):
+        # The identity seeds the carriers and is the AAD: changing it invalidates the evidence.
+        pinned = {
+            "sw-l2-c10x8b16p48": (79, "ghostframe-png/v1/sw-l2-c10x8b16p48/10/8/16/48/1/b8a52dc049b60e4b/e3bc8df735be7085"),
+            "sw-l8-c10x8b40p64": (302, "ghostframe-png/v1/sw-l8-c10x8b40p64/10/8/40/64/1/b8a52dc049b60e4b/e3bc8df735be7085"),
+        }
+        for name, (capacity, identity) in pinned.items():
+            self.assertEqual((PROFILES[name].capacity, PROFILES[name].identity), (capacity, identity))
+            self.assertEqual(PROFILES[name].epsilon, 2 if "-l2-" in name else 8)
+
     def test_exact_boundaries_binary_and_empty(self):
         p = profile()
         for message in (b"", bytes([0]), bytes(range(p.capacity)), "é✓".encode()[:p.capacity]):

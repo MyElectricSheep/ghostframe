@@ -1,0 +1,499 @@
+{
+ "version": 1,
+ "covers_dir": "data/covers",
+ "exploratory": true,
+ "covers": [
+  {
+   "id": "apple_cake",
+   "split": "holdout640",
+   "file": "holdout640/apple_cake.png",
+   "derived_from": "71ccb42704568d60e0cfbf79542a674b61c37184d634fbc4a00e0e2603bb5939",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "e6ae940f4beb10b1c2edfc8bb49fc6829632454a887400d60f3d94ebb3cfa538",
+   "size": [
+    640,
+    426
+   ]
+  },
+  {
+   "id": "big_mac",
+   "split": "holdout640",
+   "file": "holdout640/big_mac.png",
+   "derived_from": "35175b1d8de791ac2c3da84bae25ccf65f473e63fe85af974d11d9f1834f76f2",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "3dcacf0fb8288ce55994a3fd9a2a2443b75bd3cef5b5c867e19947b9ffc727a0",
+   "size": [
+    640,
+    552
+   ]
+  },
+  {
+   "id": "cardamom_buns",
+   "split": "holdout640",
+   "file": "holdout640/cardamom_buns.png",
+   "derived_from": "8adc6f8170e99e7d51e5491956bfa8a5674e49780e6691eca1f4d447582f44e9",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "1dc09e422275ebf11d602a3fec16ad101623c33113326cd20f6006d793a4bf51",
+   "size": [
+    640,
+    440
+   ]
+  },
+  {
+   "id": "fungi_basket",
+   "split": "holdout640",
+   "file": "holdout640/fungi_basket.png",
+   "derived_from": "e5e5d0d74b9b925c3b4dde87151f483ef0bc261c3b075012a978b6740b6eff31",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "c30c9695b9f81175a67f32d2d8c65bd010aa6fa8e3da8fe9efd0bfad902f2038",
+   "size": [
+    640,
+    480
+   ]
+  },
+  {
+   "id": "lark_buns",
+   "split": "holdout640",
+   "file": "holdout640/lark_buns.png",
+   "derived_from": "51dbfc69bec61f42bfb9148086fe3898f0cb2d1c697ad57e193c6f09afcc76ee",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "13238f1ee11077be62a4595b95f184d8b720ffd4c18a37079329419f9fb491d6",
+   "size": [
+    640,
+    426
+   ]
+  },
+  {
+   "id": "chocolate_cake",
+   "split": "holdout640",
+   "file": "holdout640/chocolate_cake.png",
+   "derived_from": "a1982fdbd47e23d1ce2bbc6cff2c3fe26767fd24e79d624811223d2dfe4f6a8e",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "f5100b84a8120931f4fb80d3958b6f31cb063ae07112ef0e397afdb18cf21987",
+   "size": [
+    640,
+    436
+   ]
+  },
+  {
+   "id": "carrots",
+   "split": "holdout640",
+   "file": "holdout640/carrots.png",
+   "derived_from": "a65367a761651ab3fcf4889b99106c0eaf274e1adfd45411edcac44756aac87d",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "ea55b83a1f7238921a064249abd63b2507fa172887423d1261ee1a0f6e2bb11b",
+   "size": [
+    640,
+    468
+   ]
+  },
+  {
+   "id": "coffee_beans",
+   "split": "holdout640",
+   "file": "holdout640/coffee_beans.png",
+   "derived_from": "b2405f9f12fddf06869bfcb36575b12e1303a0eb75f30eac37d80d86c4c308ca",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "7f2ae4c166d6fa2b2493c0a66d27a1ea609240d6e46fc9e0c8bd440a86ea88b2",
+   "size": [
+    640,
+    480
+   ]
+  },
+  {
+   "id": "city_night",
+   "split": "holdout640",
+   "file": "holdout640/city_night.png",
+   "derived_from": "4273c1ba269b7339ffe2e203d185c35a4d5352b1c93159d1cc67322afca312e7",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "3095805a379edef1aff8685b25b222c5f0753b5a8fda2ff03315aeecfad6bc25",
+   "size": [
+    640,
+    426
+   ]
+  },
+  {
+   "id": "milky_way",
+   "split": "holdout640",
+   "file": "holdout640/milky_way.png",
+   "derived_from": "e6682a5df3370f7740687b8a6bdd50e42d04f334c8ebd2857189cada85433a68",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "740da2e42bab7469d5bd59c9b9ca1d9a3b7f6b62f51d364260effc0ef6779a29",
+   "size": [
+    640,
+    424
+   ]
+  },
+  {
+   "id": "iss_border_night",
+   "split": "holdout640",
+   "file": "holdout640/iss_border_night.png",
+   "derived_from": "3f9b115fe763275746f4dd12d0f9b9e8beb0982bf9eeea67668697cd25689c79",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "3c887d1bd23ceeac3ae28e3d26e8a382f4ec99522d02d9c0cff9fd1406bfe5dc",
+   "size": [
+    640,
+    424
+   ]
+  },
+  {
+   "id": "met_portrait",
+   "split": "holdout640",
+   "file": "holdout640/met_portrait.png",
+   "derived_from": "32d516f551ab4613f2290300cb976b2a1d021f65abb62aaceb36a3a11db0f0f2",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "c2640a980e7765222671da519ec9a2942537401fdff27314a02cfad0b6c7e2b9",
+   "size": [
+    640,
+    700
+   ]
+  },
+  {
+   "id": "liljefors_fox",
+   "split": "holdout640",
+   "file": "holdout640/liljefors_fox.png",
+   "derived_from": "ffac5c1cbf0f05f0c234d2cfd9e9927e1837426d779847044f162632708a9c91",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "44d986eb5d6384950395780c9ba0c60cb52d1306a01ec107657d1f7304de93be",
+   "size": [
+    640,
+    444
+   ]
+  },
+  {
+   "id": "honthorst",
+   "split": "holdout640",
+   "file": "holdout640/honthorst.png",
+   "derived_from": "afcf28ef0433be5ca36689d32848b3a30b044b0d761c55fdcebbccf28d2d888d",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "8dfc24dad96b2caf454ce3f57d89db35bce159ed4932fd00b327033a1b3be43b",
+   "size": [
+    640,
+    512
+   ]
+  },
+  {
+   "id": "portrait_of_a_man_said_to_be",
+   "split": "holdout640",
+   "file": "holdout640/portrait_of_a_man_said_to_be.png",
+   "derived_from": "6a5c935d6dd5ead5dc8b4ebe6c08c0c3dd7434c3199d274d370989a7818458bf",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "1412785d4c0cd17bff34fb84920bfba3730dba21f7fbba605abed5be451c1dc2",
+   "size": [
+    640,
+    774
+   ]
+  },
+  {
+   "id": "antonello_da_messina_portrai",
+   "split": "holdout640",
+   "file": "holdout640/antonello_da_messina_portrai.png",
+   "derived_from": "587a890ba5e83eed3a99bf0dd17ea8a9bd73bd1f608e75448349000e5f840ea4",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "fcc325a38742745f58cd6c28d60ba0f4229ec9e94b2ce677121460d9cee58a79",
+   "size": [
+    640,
+    891
+   ]
+  },
+  {
+   "id": "2009_photo_of_summer_in_the",
+   "split": "holdout640",
+   "file": "holdout640/2009_photo_of_summer_in_the.png",
+   "derived_from": "94c15aaccef2d139f7cb9e0fb2444bcedf887e26b368baf9e931af0eb3ff31be",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "85aae33e75f3f0d74e26b35d8ad7580a3daad81291219d782ffc43ef66543b9d",
+   "size": [
+    640,
+    854
+   ]
+  },
+  {
+   "id": "photo_of_two_young_women_pas",
+   "split": "holdout640",
+   "file": "holdout640/photo_of_two_young_women_pas.png",
+   "derived_from": "0022292cce3066eb07f2b037fc6e478eb3fb0d14c7d3520d81fb31dcbf65b1e0",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "40a78ba4275204a3aa3617c2aa6073387f603149d012b79f104cf9fee6972d05",
+   "size": [
+    640,
+    480
+   ]
+  },
+  {
+   "id": "utah_dunes_landscape_west_de",
+   "split": "holdout640",
+   "file": "holdout640/utah_dunes_landscape_west_de.png",
+   "derived_from": "ef2691701c9349a982e9b6ac6daacad4bc48016745c2d415c2b9bb7e0fc43bec",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "89bb24d517f6cafeeee1dc09390b7366edf9c44fa43882a057e866ff91512b41",
+   "size": [
+    640,
+    420
+   ]
+  },
+  {
+   "id": "ky_to_kan_school_mountain_la",
+   "split": "holdout640",
+   "file": "holdout640/ky_to_kan_school_mountain_la.png",
+   "derived_from": "f3d9c68909e88e0b7de193e22a61322a6f42cfd16781ca7ca9374c471affb3aa",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "b97f01d63be7f0611f422c683fdc51c4f6e0bd7bb6ca9a2822ce330555e6e385",
+   "size": [
+    640,
+    1466
+   ]
+  },
+  {
+   "id": "william_adolphe_bouguereau_1",
+   "split": "holdout640",
+   "file": "holdout640/william_adolphe_bouguereau_1.png",
+   "derived_from": "ea4d356ef59b5876cafbfbbf58d3490cb0633e1f87e9d8f545704408776ebf13",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "a377168a55bb8396b7c0641d342b7bc1d722a324abe9ba6b9e7d73576ae10889",
+   "size": [
+    640,
+    483
+   ]
+  },
+  {
+   "id": "waves_in_sea_jpg",
+   "split": "holdout640",
+   "file": "holdout640/waves_in_sea_jpg.png",
+   "derived_from": "babfb19458bf5a6a39b4260fdd76a3a49e2be98e9bb9e094f6d2faf28d02f17c",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "7888cad1d9fb2bd05e2cdb3ded43d8d73da7957367e97e8055effe7592caef1f",
+   "size": [
+    640,
+    480
+   ]
+  },
+  {
+   "id": "restaurant_amigos_de_acapulc",
+   "split": "holdout640",
+   "file": "holdout640/restaurant_amigos_de_acapulc.png",
+   "derived_from": "f32f2de624c0527d9447a9bfc6d7f8b56a83d2b0303c6d044c3a6a1a2ce6b059",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "c79e587c2cf642bdea3e69cb0def055f2b4a8b9143ae60e1991acacdd6d71315",
+   "size": [
+    640,
+    413
+   ]
+  },
+  {
+   "id": "boulevard_hotel_neon_sign_mi",
+   "split": "holdout640",
+   "file": "holdout640/boulevard_hotel_neon_sign_mi.png",
+   "derived_from": "ce9a0f3eb410d2bd76a3086a80750d32649d216ca80638d36ac722129b03c2dc",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "a08a0fa876d97791b7c000f317746c38438a9f5190e5dbbec3c6bcd2797a7bef",
+   "size": [
+    640,
+    427
+   ]
+  },
+  {
+   "id": "the_blue_bird_press_photogra",
+   "split": "holdout640",
+   "file": "holdout640/the_blue_bird_press_photogra.png",
+   "derived_from": "2e3c35418437997a7b9a46e622c4055d0627f4100699f2e62ab1de1a4ca52bca",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "c614743f76007ea67768837793417aa112722688e9b991adc21c3e4526d59bd1",
+   "size": [
+    640,
+    520
+   ]
+  },
+  {
+   "id": "dog_met_dp233970_jpg",
+   "split": "holdout640",
+   "file": "holdout640/dog_met_dp233970_jpg.png",
+   "derived_from": "a089884e86aaba06103cd040efa1c15aff42955d2a19493c4b3cdd49cbfb76db",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "edb2f63963c7b239211804068db298cbb3527c5af6b66b54a7dd9bcebf5b425b",
+   "size": [
+    640,
+    521
+   ]
+  },
+  {
+   "id": "photograph_of_buddy_the_dog",
+   "split": "holdout640",
+   "file": "holdout640/photograph_of_buddy_the_dog.png",
+   "derived_from": "dfbbadb9bc70145cec02da3bb1cae3a1f39fb9326bec5defa40bddd4dc61b493",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "ed480e5c17374df2858101792a65b9cda1bab2c1416934d873a8c1848093e278",
+   "size": [
+    640,
+    956
+   ]
+  },
+  {
+   "id": "fly_insect_macro_jpg",
+   "split": "holdout640",
+   "file": "holdout640/fly_insect_macro_jpg.png",
+   "derived_from": "effb3eb4be9d0db61469df547dd4c4ecd92b318e724a63415e10c4fda23db68e",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "b0f4df49f1435d2ba918dc228659926271bb4c39c4080481ed3de08467845734",
+   "size": [
+    640,
+    468
+   ]
+  },
+  {
+   "id": "insect_macro_36301512526_jpg",
+   "split": "holdout640",
+   "file": "holdout640/insect_macro_36301512526_jpg.png",
+   "derived_from": "cf98903e7d89a2082ccc169899c54805e46d751f1f357b5d56fc2c3000d514bd",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "b918a9f3b40782217f193b9c02dce81f4576bfc0039a254e84afe69966a27bd2",
+   "size": [
+    640,
+    425
+   ]
+  },
+  {
+   "id": "chromis_reef_fish_and_stagho",
+   "split": "holdout640",
+   "file": "holdout640/chromis_reef_fish_and_stagho.png",
+   "derived_from": "cb77af50fffa0a3d84e44c18f7ada2e8ca1cd255538f103f203d1dab8b075cda",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "a64b6fda66f8bca7fa71c2fa3d6ea5d70c533f7ef87f11518066bfdf166e6508",
+   "size": [
+    640,
+    480
+   ]
+  },
+  {
+   "id": "underwater_photo_of_coral_re",
+   "split": "holdout640",
+   "file": "holdout640/underwater_photo_of_coral_re.png",
+   "derived_from": "0648d8e36d8f4ac1ced4ffff4a5e42430eb04b4b5c58f39b51f93d74b1af38ad",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "cff0715b3d2063542a1d8dab94de0eb3058bd194b4b8792a74b2b55974c86285",
+   "size": [
+    640,
+    428
+   ]
+  },
+  {
+   "id": "aerial_view_of_farmland_cont",
+   "split": "holdout640",
+   "file": "holdout640/aerial_view_of_farmland_cont.png",
+   "derived_from": "9396ee6bb34b3547dc76d1efb504ce30c2a9fe0e12ab829560c11ac8896e9647",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "c7854c5a0298a5e4ba31fc0da9afcc43403ff8b478c3c01647b63e4cba6cb3f0",
+   "size": [
+    640,
+    430
+   ]
+  },
+  {
+   "id": "aerial_photograph_of_farmlan",
+   "split": "holdout640",
+   "file": "holdout640/aerial_photograph_of_farmlan.png",
+   "derived_from": "c02766a998c9e30d0edf0b4900bcf2cdc39bb2bbf07f3b38143e3c104acfd5c4",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "36b737836a42dc82d9193ab36d27a1deb0dee9607dccd8d308db04769703bb28",
+   "size": [
+    640,
+    432
+   ]
+  },
+  {
+   "id": "french_marigold_garden_2009",
+   "split": "holdout640",
+   "file": "holdout640/french_marigold_garden_2009.png",
+   "derived_from": "495669d2b07c69a4841ac2bbff794b8e5a58ed3ead2c5b6b8113c30347db520f",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "177911055974f415e0c1520c12557e587de6464265dfee69ce2a801ad60740a1",
+   "size": [
+    640,
+    548
+   ]
+  },
+  {
+   "id": "pasillo_de_la_biblioteca_vas",
+   "split": "holdout640",
+   "file": "holdout640/pasillo_de_la_biblioteca_vas.png",
+   "derived_from": "0c7b7981d46b87ed7751cdf2a84b51967b4ad63af671f328d509d623ec87bf91",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "9d9125c3e4e71577055cd79aa4a74a7aae47e35f073a2220531e3535a1b81e30",
+   "size": [
+    640,
+    480
+   ]
+  },
+  {
+   "id": "holsteiner_ufer_in_berlin_on",
+   "split": "holdout640",
+   "file": "holdout640/holsteiner_ufer_in_berlin_on.png",
+   "derived_from": "876a95d362d0d8017e0cdae7dbb2d60b9bde9a915027ca29b91e5fae9b14ca50",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "56fe871f020dc7ffa85362f7ffddbc3747775be65b1d602d95d5dca758ac95d2",
+   "size": [
+    640,
+    480
+   ]
+  },
+  {
+   "id": "orange_fabric_textile_cloth",
+   "split": "holdout640",
+   "file": "holdout640/orange_fabric_textile_cloth.png",
+   "derived_from": "7b1c7f9b68e710c1689985e5cdbd2df72c9021367d062af02a8d9350056fad8a",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "471c591e58bc01e733e4bb364ff18eba3479d95b512dc789e45a9ec572a62f7b",
+   "size": [
+    640,
+    480
+   ]
+  },
+  {
+   "id": "ravi_shankar_charcoal_pencil",
+   "split": "holdout640",
+   "file": "holdout640/ravi_shankar_charcoal_pencil.png",
+   "derived_from": "3daf0b7c219da9b696930ede9ca00f5ac2ce2f0678f8e61fa1ec88a3ed6cc696",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "1d271efb32d0e0b434dde1da3a2f2b07f5ea709e51ee954897a859ab3fc5f6cc",
+   "size": [
+    640,
+    804
+   ]
+  },
+  {
+   "id": "carl_gustav_carus_morning_fo",
+   "split": "holdout640",
+   "file": "holdout640/carl_gustav_carus_morning_fo.png",
+   "derived_from": "ef11124903be9d643b2743258610cc80c7c7885b5bd77ccdd57a2762023083f2",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "3efc20fa517b897bfb49dbc53ac88979ef0954954e972d8805434640c80b14c8",
+   "size": [
+    640,
+    476
+   ]
+  },
+  {
+   "id": "train_station_with_train_and",
+   "split": "holdout640",
+   "file": "holdout640/train_station_with_train_and.png",
+   "derived_from": "080446c610a1656ab126550d2e2dcba91003c4b40d9f1e5dcc6b944392d0bf9a",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "cdf5fbebfa97b28ce2f8cd94badba0391070abe02d906edab4c8dec1f47bea01",
+   "size": [
+    640,
+    478
+   ]
+  },
+  {
+   "id": "john_frederick_tayler_a_frui",
+   "split": "holdout640",
+   "file": "holdout640/john_frederick_tayler_a_frui.png",
+   "derived_from": "91348a0926e75d082f6298d13db9fb82b2a6d6934ecbd5d52b2cb16854db119a",
+   "transform": "load_cover, LANCZOS to 640 px wide",
+   "sha256": "442c9c140e267dd5f4cb9b55ce0636ff84bcbb77cb50a2ac0dfc37046783f7b9",
+   "size": [
+    640,
+    448
+   ]
+  }
+ ]
+}

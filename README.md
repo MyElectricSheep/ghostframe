@@ -4,6 +4,19 @@ Ghostframe is a proof of concept intended for open-source release for hiding a s
 
 See [measured results](docs/EXPERIMENTS.md), [research](docs/RESEARCH.md), and [progress](docs/PROGRESS.md).
 
+## Experimental PNG profiles
+
+`ghostframe-png` is a separate CLI with versioned, experimental profiles. On 41 held-out photographs, three independently sealed frames each, an independent decoder process recovered the exact message in every trial: 79 bytes under a 2-level per-channel cap and 302 bytes under an 8-level cap (123/123 each, Wilson 95 % lower bound 97 %). The covers are 1280 px wide. Small, flat or synthetic images can refuse to encode; the encoder then writes nothing. Encoding takes about 30–40 s on a 4-vCPU CPU. The marked images are detectable by anyone running the public reader. The frame is authenticated and encrypted, but its existence is not hidden. The legacy CLI and its formats are unchanged and remain the default showcase.
+
+```sh
+python -m pip install -e '.[tiled]'
+printf '%s' 'Meet at dawn. The north gate stays open until six.' > message.txt
+ghostframe-png encode examples/grace_hopper.jpg marked.png --profile sw-l2-c10x8b16p48 --message-file message.txt
+ghostframe-png decode marked.png --profile sw-l2-c10x8b16p48
+```
+
+Profiles, frame format and input contract: [docs/PNG_PROFILES.md](docs/PNG_PROFILES.md). Evidence and reproduction: [docs/BENCHMARK.md](docs/BENCHMARK.md).
+
 ## Reproduce on Linux x86-64 CPU
 
 Use Python 3.12. Run these commands from this directory.
