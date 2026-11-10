@@ -1,0 +1,32 @@
+test_integral_matches_reference_scores (test_alignment_search.AlignmentSearchTests.test_integral_matches_reference_scores) ... ok
+test_off_center_crop_recovers_authenticated_frame (test_alignment_search.AlignmentSearchTests.test_off_center_crop_recovers_authenticated_frame) ... ok
+test_unknown_original_size_recovers_listed_resize (test_alignment_search.AlignmentSearchTests.test_unknown_original_size_recovers_listed_resize) ... ok
+test_crop_optimizer_respects_rgb_budget (test_channel.ChannelTests.test_crop_optimizer_respects_rgb_budget) ... 2.6%5.3%7.9%10.6%13.2%15.9%18.5%21.1%23.8%26.4%29.1%31.7%34.4%37.0%39.6%42.3%44.9%47.6%50.2%52.9%55.5%58.2%60.8%63.4%66.1%68.7%71.4%74.0%76.7%79.3%81.9%84.6%87.2%89.9%92.5%95.2%97.8%100.0%
+ok
+test_crop_split_has_no_overlapping_boxes (test_channel.ChannelTests.test_crop_split_has_no_overlapping_boxes) ... ok
+test_pretrained_png_roundtrip (test_channel.ChannelTests.test_pretrained_png_roundtrip) ... ok
+test_projection_protocol (test_channel.ChannelTests.test_projection_protocol) ... ok
+test_embedding_preprocessing_matches_protocol (test_channel.InputContractTests.test_embedding_preprocessing_matches_protocol) ... ok
+test_image_format_and_dimension_limits (test_channel.InputContractTests.test_image_format_and_dimension_limits) ... ok
+test_dithered_lattice_roundtrip_at_same_pixel_bound (test_jpeg_carrier.JPEGCarrierTests.test_dithered_lattice_roundtrip_at_same_pixel_bound) ... ok
+test_odd_sized_image_preserves_grid_and_rgb_bound (test_jpeg_carrier.JPEGCarrierTests.test_odd_sized_image_preserves_grid_and_rgb_bound) ... ok
+test_small_image_fails_cleanly (test_jpeg_carrier.JPEGCarrierTests.test_small_image_fails_cleanly) ... ok
+test_crop_dimensions_require_valid_original_dimensions (test_message_cli.MessageCLITests.test_crop_dimensions_require_valid_original_dimensions) ... ok
+test_crop_then_resize_recovers_without_crop_offset (test_message_cli.MessageCLITests.test_crop_then_resize_recovers_without_crop_offset) ... ok
+test_exposure_search_authenticates_scaled_brightness (test_message_cli.MessageCLITests.test_exposure_search_authenticates_scaled_brightness) ... ok
+test_failed_encode_leaves_no_output (test_message_cli.MessageCLITests.test_failed_encode_leaves_no_output) ... ok
+test_jpeg_file_preserves_binary_message_and_refuses_overwrite (test_message_cli.MessageCLITests.test_jpeg_file_preserves_binary_message_and_refuses_overwrite) ... ok
+test_larger_frame_and_wrong_password (test_robustness.RobustnessTests.test_larger_frame_and_wrong_password) ... ok
+test_original_grid_recovers_asymmetric_crop (test_robustness.RobustnessTests.test_original_grid_recovers_asymmetric_crop) ... ok
+test_confidence_retries_authenticate_thirteen_damaged_bytes (test_soft_search.SoftSearchTests.test_confidence_retries_authenticate_thirteen_damaged_bytes) ... ok
+test_frame_authentication (test_tiled.TiledTests.test_frame_authentication) ... ok
+test_tile_coverage_at_odd_dimensions (test_tiled.TiledTests.test_tile_coverage_at_odd_dimensions) ... ok
+test_corrects_seven_symbols_before_authentication (test_tiled_ecc.TiledECCTests.test_corrects_seven_symbols_before_authentication) ... ok
+test_payload_size (test_tiled_ecc.TiledECCTests.test_payload_size) ... ok
+test_dimension_candidates_cover_floor_and_nearest (test_wide_resize.WideResizeTests.test_dimension_candidates_cover_floor_and_nearest) ... ok
+test_wide_mode_recovers_unlisted_scale (test_wide_resize.WideResizeTests.test_wide_mode_recovers_unlisted_scale) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 35.616s
+
+OK

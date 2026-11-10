@@ -1,0 +1,217 @@
+{
+ "profile": "sw-l8-c10x8b40p64",
+ "threshold": 0.002,
+ "pairs": 41,
+ "auc": 1.0,
+ "clean_median": 0.04,
+ "marked_median": 0.0,
+ "clean_min": 0.0315625,
+ "marked_max": 0.0034375,
+ "per_cover": [
+  {
+   "cover": "apple_cake",
+   "clean": 0.0396875,
+   "marked": 0.0
+  },
+  {
+   "cover": "big_mac",
+   "clean": 0.0375,
+   "marked": 0.0003125
+  },
+  {
+   "cover": "cardamom_buns",
+   "clean": 0.0409375,
+   "marked": 0.0
+  },
+  {
+   "cover": "fungi_basket",
+   "clean": 0.036875,
+   "marked": 0.0
+  },
+  {
+   "cover": "lark_buns",
+   "clean": 0.0421875,
+   "marked": 0.0
+  },
+  {
+   "cover": "chocolate_cake",
+   "clean": 0.034375,
+   "marked": 0.0
+  },
+  {
+   "cover": "carrots",
+   "clean": 0.0409375,
+   "marked": 0.0
+  },
+  {
+   "cover": "coffee_beans",
+   "clean": 0.039375,
+   "marked": 0.0
+  },
+  {
+   "cover": "city_night",
+   "clean": 0.0415625,
+   "marked": 0.0
+  },
+  {
+   "cover": "milky_way",
+   "clean": 0.035625,
+   "marked": 0.0
+  },
+  {
+   "cover": "iss_border_night",
+   "clean": 0.045,
+   "marked": 0.0
+  },
+  {
+   "cover": "met_portrait",
+   "clean": 0.045625,
+   "marked": 0.0
+  },
+  {
+   "cover": "liljefors_fox",
+   "clean": 0.036875,
+   "marked": 0.0
+  },
+  {
+   "cover": "honthorst",
+   "clean": 0.0425,
+   "marked": 0.0
+  },
+  {
+   "cover": "portrait_of_a_man_said_to_be",
+   "clean": 0.0384375,
+   "marked": 0.0
+  },
+  {
+   "cover": "antonello_da_messina_portrai",
+   "clean": 0.0396875,
+   "marked": 0.0
+  },
+  {
+   "cover": "2009_photo_of_summer_in_the",
+   "clean": 0.0421875,
+   "marked": 0.0
+  },
+  {
+   "cover": "photo_of_two_young_women_pas",
+   "clean": 0.0359375,
+   "marked": 0.0
+  },
+  {
+   "cover": "utah_dunes_landscape_west_de",
+   "clean": 0.0403125,
+   "marked": 0.0
+  },
+  {
+   "cover": "ky_to_kan_school_mountain_la",
+   "clean": 0.03625,
+   "marked": 0.0
+  },
+  {
+   "cover": "william_adolphe_bouguereau_1",
+   "clean": 0.040625,
+   "marked": 0.0
+  },
+  {
+   "cover": "waves_in_sea_jpg",
+   "clean": 0.0465625,
+   "marked": 0.0
+  },
+  {
+   "cover": "restaurant_amigos_de_acapulc",
+   "clean": 0.04,
+   "marked": 0.0034375
+  },
+  {
+   "cover": "boulevard_hotel_neon_sign_mi",
+   "clean": 0.040625,
+   "marked": 0.0
+  },
+  {
+   "cover": "the_blue_bird_press_photogra",
+   "clean": 0.0378125,
+   "marked": 0.0
+  },
+  {
+   "cover": "dog_met_dp233970_jpg",
+   "clean": 0.038125,
+   "marked": 0.0
+  },
+  {
+   "cover": "photograph_of_buddy_the_dog",
+   "clean": 0.0428125,
+   "marked": 0.0
+  },
+  {
+   "cover": "fly_insect_macro_jpg",
+   "clean": 0.0415625,
+   "marked": 0.0
+  },
+  {
+   "cover": "insect_macro_36301512526_jpg",
+   "clean": 0.041875,
+   "marked": 0.0
+  },
+  {
+   "cover": "chromis_reef_fish_and_stagho",
+   "clean": 0.036875,
+   "marked": 0.0
+  },
+  {
+   "cover": "underwater_photo_of_coral_re",
+   "clean": 0.040625,
+   "marked": 0.0009375
+  },
+  {
+   "cover": "aerial_view_of_farmland_cont",
+   "clean": 0.0396875,
+   "marked": 0.0
+  },
+  {
+   "cover": "aerial_photograph_of_farmlan",
+   "clean": 0.0315625,
+   "marked": 0.0
+  },
+  {
+   "cover": "french_marigold_garden_2009",
+   "clean": 0.0375,
+   "marked": 0.0
+  },
+  {
+   "cover": "pasillo_de_la_biblioteca_vas",
+   "clean": 0.038125,
+   "marked": 0.0
+  },
+  {
+   "cover": "holsteiner_ufer_in_berlin_on",
+   "clean": 0.0396875,
+   "marked": 0.000625
+  },
+  {
+   "cover": "orange_fabric_textile_cloth",
+   "clean": 0.04375,
+   "marked": 0.0
+  },
+  {
+   "cover": "ravi_shankar_charcoal_pencil",
+   "clean": 0.0446875,
+   "marked": 0.0
+  },
+  {
+   "cover": "carl_gustav_carus_morning_fo",
+   "clean": 0.0390625,
+   "marked": 0.0
+  },
+  {
+   "cover": "train_station_with_train_and",
+   "clean": 0.0415625,
+   "marked": 0.0
+  },
+  {
+   "cover": "john_frederick_tayler_a_frui",
+   "clean": 0.043125,
+   "marked": 0.0
+  }
+ ]
+}

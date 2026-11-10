@@ -1,0 +1,36 @@
+sw-l2-c10x8b20p48|hubble|random119|f0 encoded 60s
+sw-l2-c12x10b12p36|hubble|random111|f0 encoded 209s
+sw-l2-c10x8b16p32|hubble|random95|f0 encoded 156s
+sw-l8-c12x10b32p72|hubble|random374|f0 encoded 205s
+sw-l8-c10x8b40p64|hubble|random302|f0 encoded 45s
+sw-l2-c10x8b20p48|retina|random119|f0 encoded 240s
+sw-l2-c12x10b12p36|retina|random111|f0 encoded 227s
+sw-l2-c10x8b16p32|retina|random95|f0 encoded 85s
+sw-l8-c12x10b32p72|retina|random374|f0 encoded 98s
+sw-l8-c10x8b40p64|retina|random302|f0 encoded 125s
+sw-l2-c10x8b20p48|cell|random119|f0 encoded 75s
+sw-l2-c12x10b12p36|cell|random111|f0 encoded 94s
+sw-l2-c10x8b16p32|cell|random95|f0 encoded 56s
+sw-l8-c12x10b32p72|cell|random374|f0 encoded 100s
+sw-l8-c10x8b40p64|cell|random302|f0 encoded 140s
+sw-l2-c10x8b20p48|grace_hopper|random119|f0 encoded 76s
+sw-l2-c12x10b12p36|grace_hopper|random111|f0 encoded 57s
+sw-l2-c10x8b16p32|grace_hopper|random95|f0 encoded 37s
+sw-l8-c12x10b32p72|grace_hopper|random374|f0 encoded 59s
+sw-l8-c10x8b40p64|grace_hopper|random302|f0 encoded 42s
+sw-l2-c10x8b20p48|china|random119|f0 encode_failed: CapacityError: Encoding budget exhausted befo 271s
+sw-l2-c12x10b12p36|china|random111|f0 encode_failed: CapacityError: Encoding budget exhausted befo 240s
+sw-l2-c10x8b16p32|china|random95|f0 encode_failed: CapacityError: Encoding budget exhausted befo 181s
+sw-l8-c12x10b32p72|china|random374|f0 encoded 83s
+sw-l8-c10x8b40p64|china|random302|f0 encoded 61s
+sw-l2-c10x8b20p48|china_sky|random119|f0 encode_failed: InputError: Image is too small for sw-l2-c10x 0s
+sw-l2-c12x10b12p36|china_sky|random111|f0 encode_failed: InputError: Image is too small for sw-l2-c12x 0s
+sw-l2-c10x8b16p32|china_sky|random95|f0 encode_failed: InputError: Image is too small for sw-l2-c10x 0s
+sw-l8-c12x10b32p72|china_sky|random374|f0 encode_failed: InputError: Image is too small for sw-l8-c12x 0s
+sw-l8-c10x8b40p64|china_sky|random302|f0 encode_failed: InputError: Image is too small for sw-l8-c10x 0s
+sw-l2-c10x8b20p48|flower|random119|f0 encoded 86s
+sw-l2-c12x10b12p36|flower|random111|f0 encoded 106s
+sw-l2-c10x8b16p32|flower|random95|f0 encoded 57s
+sw-l8-c12x10b32p72|flower|random374|f0 encoded 91s
+sw-l8-c10x8b40p64|flower|random302|f0 encoded 103s
+decoded 27 files

@@ -1,0 +1,22 @@
+sw-l2-c10x8b16p48|hubble|random79|f0 encoded 28s
+png-l2-c10x8b12|hubble|random63|f0 encoded 20s
+sw-l2-c8x6b20p32|hubble|random55|f0 encoded 21s
+sw-l2-c10x8b16p48|retina|random79|f0 encoded 31s
+png-l2-c10x8b12|retina|random63|f0 encoded 25s
+sw-l2-c8x6b20p32|retina|random55|f0 encoded 23s
+sw-l2-c10x8b16p48|cell|random79|f0 encoded 34s
+png-l2-c10x8b12|cell|random63|f0 encoded 28s
+sw-l2-c8x6b20p32|cell|random55|f0 encoded 20s
+sw-l2-c10x8b16p48|grace_hopper|random79|f0 encoded 32s
+png-l2-c10x8b12|grace_hopper|random63|f0 encoded 24s
+sw-l2-c8x6b20p32|grace_hopper|random55|f0 encoded 21s
+sw-l2-c10x8b16p48|china|random79|f0 encoded 71s
+png-l2-c10x8b12|china|random63|f0 encoded 54s
+sw-l2-c8x6b20p32|china|random55|f0 encoded 35s
+sw-l2-c10x8b16p48|china_sky|random79|f0 encode_failed: InputError: Image is too small for sw-l2-c10x 0s
+png-l2-c10x8b12|china_sky|random63|f0 encode_failed: InputError: Image is too small for png-l2-c10 0s
+sw-l2-c8x6b20p32|china_sky|random55|f0 encode_failed: CapacityError: Encoding budget exhausted befo 303s
+sw-l2-c10x8b16p48|flower|random79|f0 encoded 51s
+png-l2-c10x8b12|flower|random63|f0 encoded 40s
+sw-l2-c8x6b20p32|flower|random55|f0 encoded 35s
+decoded 18 files

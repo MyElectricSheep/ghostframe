@@ -1,0 +1,29 @@
+[
+ {
+  "profile": "sw-l8-c10x8b40p64",
+  "epsilon": 8,
+  "payload": 13,
+  "coded": 400,
+  "success": 41,
+  "trials": 41,
+  "covers": 41,
+  "wilson95": [
+   0.9143295511310926,
+   1.0
+  ],
+  "cluster95": [
+   1.0,
+   1.0
+  ],
+  "encode_failed": 0,
+  "median_encode_s": 39.98649655096233,
+  "median_decode_s": 2.221991006983444,
+  "median_byte_errors": 0.0,
+  "max_byte_errors": 8,
+  "max_rgb_delta": 8,
+  "median_mean_abs": 3.9126363292378916,
+  "median_psnr": 35.00270512491067,
+  "median_ssim": 0.8865584901465886,
+  "failures": []
+ }
+]

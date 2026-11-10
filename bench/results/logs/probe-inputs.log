@@ -1,0 +1,17 @@
+RGBA fully transparent -> RGB: (200, 10, 10)
+16-bit gray PNG mode/pixel: ('I;16', (255, 255, 255))
+P mode: RGB
+CMYK JPEG: (0, 0, 0)
+truncated PNG: OSError: image file is truncated
+flower.jpg ICC carried into PNG: True
+EXIF carried into PNG: False
+max |batch-single| embedding: 8.940696716308594e-08
+max |4thr-1thr| embedding: 1.4901161193847656e-07
+Traceback (most recent call last):
+  File "audit/probe_inputs.py", line 56, in <module>
+    from experiments.neural_png_capacity import roundtrip
+ModuleNotFoundError: No module named 'experiments'
+max |4thr-1thr| embedding: 1.4901161193847656e-07
+161-byte roundtrip (35 steps): {'authenticated': True, 'bit_errors': 0}
+weights unchanged after encode: True
+RS(32) codeword length for 300-byte frame: 364

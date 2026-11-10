@@ -1,0 +1,2 @@
+png-l2-sentence verified {'decode_threads_1': 'exit 0, exact message', 'decode_threads_4': 'exit 0, exact message', 'unmarked_cover': 'exit 1, no output', 'wrong_passphrase': 'exit 1, no output'}
+png-l8-paragraph verified {'decode_threads_1': 'exit 0, exact message', 'decode_threads_4': 'exit 0, exact message', 'unmarked_cover': 'exit 1, no output', 'wrong_passphrase': 'exit 1, no output'}

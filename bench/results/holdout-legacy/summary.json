@@ -1,0 +1,83 @@
+[
+ {
+  "profile": "legacy-49B",
+  "epsilon": 2,
+  "payload": 49,
+  "coded": 120,
+  "success": 41,
+  "trials": 41,
+  "covers": 41,
+  "wilson95": [
+   0.9143295511310926,
+   1.0
+  ],
+  "cluster95": [
+   1.0,
+   1.0
+  ],
+  "encode_failed": 0,
+  "median_encode_s": 20.733230173122138,
+  "median_decode_s": 2.460399585077539,
+  "median_byte_errors": 0.0,
+  "max_byte_errors": 12,
+  "max_rgb_delta": 2,
+  "median_mean_abs": 1.5477873774509805,
+  "median_psnr": 43.61523038625121,
+  "median_ssim": 0.9813728600655947,
+  "failures": []
+ },
+ {
+  "profile": "legacy-161B",
+  "epsilon": 8,
+  "payload": 161,
+  "coded": 240,
+  "success": 41,
+  "trials": 41,
+  "covers": 41,
+  "wilson95": [
+   0.9143295511310926,
+   1.0
+  ],
+  "cluster95": [
+   1.0,
+   1.0
+  ],
+  "encode_failed": 0,
+  "median_encode_s": 23.039829754969105,
+  "median_decode_s": 2.448135789949447,
+  "median_byte_errors": 0.0,
+  "max_byte_errors": 1,
+  "max_rgb_delta": 8,
+  "median_mean_abs": 2.5392860243055555,
+  "median_psnr": 38.58507390600194,
+  "median_ssim": 0.9494109588747621,
+  "failures": []
+ },
+ {
+  "profile": "legacy-v1-13B",
+  "epsilon": 8,
+  "payload": 13,
+  "coded": 60,
+  "success": 41,
+  "trials": 41,
+  "covers": 41,
+  "wilson95": [
+   0.9143295511310926,
+   1.0
+  ],
+  "cluster95": [
+   1.0,
+   1.0
+  ],
+  "encode_failed": 0,
+  "median_encode_s": 23.819842061027884,
+  "median_decode_s": 2.0052694210316986,
+  "median_byte_errors": 0.0,
+  "max_byte_errors": 0,
+  "max_rgb_delta": 8,
+  "median_mean_abs": 3.273517906428063,
+  "median_psnr": 36.476620764975614,
+  "median_ssim": 0.9243396757920532,
+  "failures": []
+ }
+]

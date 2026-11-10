@@ -131,7 +131,30 @@ slow (6–10 minutes of repair rounds before giving up). Flat and saturated imag
 a 2-level cap without clipping; the 160×128 minimum gives 16×16 tiles, too few pixels for 16 or
 40 bits each.
 
-DETECTOR_AND_THREADS
+## Detectability
+
+A declared protocol-aware detector (`bench/detect.py`) knows the public profile but not the
+passphrase. It computes the fraction of carrier scores with |score| < 0.002 on each held-out
+cover, clean and marked (frame 0, 41 pairs per profile).
+
+| Profile | AUC | Clean median / min | Marked median / max |
+|---|---:|---|---|
+| `sw-l2-c10x8b16p48` | 1.00 | 4.1 % / 2.3 % | 0.0 % / 1.8 % |
+| `sw-l8-c10x8b40p64` | 1.00 | 4.0 % / 3.2 % | 0.0 % / 0.3 % |
+
+The detector separates every clean cover from every marked one. This follows from the design:
+the encoder pushes every score past a margin. Anyone who has the public reader can tell that an
+image carries a frame for these profiles. Without the passphrase they cannot read it or forge it.
+No steganographic claim is made.
+
+## Determinism across thread counts
+
+Every held-out finalist PNG (246) was decoded again in a fresh worker process with one CPU
+thread instead of four. All 246 authenticated, and the raw received codeword bytes matched the
+four-thread decode exactly, before error correction (`decode-threads1*.jsonl`). The showcase
+fixtures were also decoded at both thread counts through the CLI. These checks cover one CPU
+and one torch build. Other hardware, BLAS builds or GPUs are untested. The 2·10⁻³ safety
+margin is meant to absorb those differences, but that has not been demonstrated.
 
 ## Reproduce
 
@@ -146,5 +169,5 @@ python -m bench.detect runs/holdout-finalists --profile sw-l2-c10x8b16p48 --out 
 ```
 
 Raw per-trial records (encode and independent decode, including failures and refusals) are in
-`bench/results/`, one directory per run, with the summaries in `bench/results/summary.json`.
+`bench/results/`, one directory per run, with a `summary.json` per run directory.
 Marked PNGs are not committed (1.2 GB); rerunning regenerates them with fresh salts.

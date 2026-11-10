@@ -1,0 +1,13 @@
+sw-l2-c10x8b16p48|apple_cake|random79|f0 encoded 276s
+legacy-49B|apple_cake|random49|f0 encoded 286s
+sw-l8-c10x8b40p64|apple_cake|random302|f0 encoded 297s
+legacy-161B|apple_cake|random161|f0 encoded 178s
+sw-l2-c10x8b16p48|big_mac|random79|f0 encoded 292s
+legacy-49B|big_mac|random49|f0 encoded 305s
+sw-l8-c10x8b40p64|big_mac|random302|f0 encoded 278s
+legacy-161B|big_mac|random161|f0 encoded 327s
+sw-l2-c10x8b16p48|cardamom_buns|random79|f0 encoded 939s
+legacy-49B|cardamom_buns|random49|f0 encoded 450s
+sw-l8-c10x8b40p64|cardamom_buns|random302|f0 encoded 259s
+legacy-161B|cardamom_buns|random161|f0 encoded 137s
+sw-l2-c10x8b16p48|fungi_basket|random79|f0 encoded 272s

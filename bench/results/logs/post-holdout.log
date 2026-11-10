@@ -1,0 +1,4 @@
+{'profile': 'sw-l2-c10x8b16p48', 'threshold': 0.002, 'pairs': 41, 'auc': 1.0, 'clean_median': 0.040625, 'marked_median': 0.0, 'clean_min': 0.0234375, 'marked_max': 0.01796875}
+{'profile': 'sw-l8-c10x8b40p64', 'threshold': 0.002, 'pairs': 41, 'auc': 1.0, 'clean_median': 0.04, 'marked_median': 0.0, 'clean_min': 0.0315625, 'marked_max': 0.0034375}
+decoded 164 files
+DONE
