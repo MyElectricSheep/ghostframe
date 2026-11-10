@@ -58,3 +58,10 @@ every 10×8 or larger grid, including the legacy 49- and 161-byte profiles. A cl
 rejection is part of the input contract, not a channel failure, so finalist selection uses the
 12 in-contract screen+tune covers and reports the rejection separately. Holdout covers are all
 at least 1280×826, so this changes nothing there.
+
+## Finalists (recorded before the holdout run)
+
+| Cap | Finalist | Payload | Screen+tune (in-contract) | Median encode | Rejected larger candidates |
+|---|---|---:|---:|---:|---|
+| 2 | `sw-l2-c10x8b16p48` | 79 B | 12/12 | 42 s | 119 B, 111 B, 95 B failed `china`; 151 B 94 s on screen |
+| 8 | `sw-l8-c10x8b40p64` | 302 B | 12/12 | 62 s | 374 B 12/12 but 93 s; 470 B, 542 B > 90 s on screen |
