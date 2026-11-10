@@ -1,0 +1,21 @@
+# Research
+
+Fernandez et al. are the closest direct precedent. Their ICASSP 2022 system modifies the pixels of an existing photograph through a fixed DINO-trained feature extractor and reads a multibit message from latent-space directions. Their implementation uses learned whitening statistics and includes image transformations during optimization. Ghostframe v1 uses a stock supervised ImageNet encoder, unwhitened features and keyed sign projections as a minimal comparison. This establishes precedent for the method, independent of Ghostframe's results. [Paper and examples](https://pierrefdz.github.io/publications/sslwatermarking/) · [Official implementation](https://github.com/facebookresearch/ssl_watermarking)
+
+| Candidate | Capacity and robustness | Cost and dependencies | Security and maturity |
+|---|---|---|---|
+| A. Frozen encoder and pixel optimization | Benchmarked separately in EXPERIMENTS.md. Feature anisotropy, correlated projections and transform drift may constrain scaling. | Gradient steps per image, a single model forward pass for decoding. No additional model training. SqueezeNet has a 4.729 MB checkpoint. | Raw keyed projections offer no authentication. Implemented and measured locally. |
+| B. Learned watermarking | StegaStamp reports recovery after physical recapture. HiDDeN studies noise, crop and JPEG approximations. Stable Signature addresses generated images, so its results cannot be transferred directly to arbitrary photos. | Typically needs specialized trained components. Amortized encoding can avoid per-image gradient descent. | Evaluate on identical covers and distortion budgets before comparing capacity or latency. Direct comparator results are in GOAL_STATUS.md. |
+| C. Coverless selection | Under independent uniform bits, a fixed target of length b needs 2^b independent candidates on average. Real feature biases can make specific targets rarer or unattainable. | Retrieval can amortize feature extraction but requires a large collection. Generation adds computation. | Pixel modifications are absent, but repeated covers or biased selection may disclose patterns. Empirical codebook results are in FULL_REPORT.md. |
+
+Sources for B. [StegaStamp paper](https://openaccess.thecvf.com/content_CVPR_2020/html/Tancik_StegaStamp_Invisible_Hyperlinks_in_Physical_Photographs_CVPR_2020_paper.html) · [HiDDeN paper](https://openaccess.thecvf.com/content_ECCV_2018/html/Jiren_Zhu_HiDDeN_Hiding_Data_ECCV_2018_paper.html) · [Stable Signature](https://ai.meta.com/research/publications/the-stable-signature-rooting-watermarks-in-latent-diffusion-models/)
+
+Sources for C. [Coverless Image Steganography survey](https://doi.org/10.1109/ACCESS.2019.2955452)
+
+The baseline uses [Torchvision SqueezeNet 1.1](https://docs.pytorch.org/vision/stable/models/squeezenet.html) for its compact checkpoint and differentiable feature trunk. The upstream architecture repository is BSD-2-Clause. The Torchvision ImageNet checkpoint is fetched separately and has no separate checkpoint license asserted here. A later comparison can use [DINOv2](https://github.com/facebookresearch/dinov2), whose model card lists Apache 2.0, and a selected [OpenCLIP](https://github.com/mlfoundations/open_clip) checkpoint after verifying its terms.
+
+Measure complete-payload recovery at a fixed distortion budget first. Check whether augmentation during optimization improves held-out JPEG and resizing outcomes before introducing ECC. Evaluate detectability independently using clean/marked pairs and a held-out steganalysis baseline.
+
+## Empirical follow-up
+
+The final evaluation directly ran the trained TrustMark C watermark model as an optional comparator. On matched 16- and 32-bit target prefixes, it recovered 8/8 JPEG 70 images and 24/24 crops at an eight-level RGB cap. At two levels it recovered 4/8 PNGs, while the frozen SqueezeNet projection baseline recovered 7/8. Coverless selection was also measured empirically. The 14-cover pool covered a median 4.30% of 8-bit targets after JPEG 70 across eight projection keys. See [objective verification](GOAL_STATUS.md) and [the full report](FULL_REPORT.md). [TrustMark source and model terms](https://github.com/adobe/trustmark)

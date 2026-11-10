@@ -1,0 +1,25 @@
+[
+  {
+    "carrier": "neural",
+    "original": "neural-original.png",
+    "encoded": "../goal-validation/neural-demo.png",
+    "difference": "neural-difference.png",
+    "amplification": 24,
+    "max_rgb_delta": 8,
+    "recovered_message": "Meet at dawn.",
+    "payload_bytes": 13,
+    "source": "../../examples/grace_hopper.jpg",
+    "original_authenticates": false
+  },
+  {
+    "carrier": "neural-ecc",
+    "original": "neural-ecc-original.png",
+    "encoded": "../goal-validation/neural-ecc-demo.png",
+    "difference": "neural-ecc-difference.png",
+    "amplification": 96,
+    "max_rgb_delta": 2,
+    "recovered_message": "!",
+    "payload_bytes": 1,
+    "source": "../../examples/flower.jpg"
+  }
+]
