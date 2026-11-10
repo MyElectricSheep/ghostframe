@@ -100,7 +100,8 @@ def main():
     from ghostframe import load_model
 
     model = load_model("cpu")
-    profiles = suites().get(args.suite) or args.suite.split(",")
+    known = {p.name: p for suite in suites().values() for p in suite} | dict(core.PROFILES)
+    profiles = suites().get(args.suite) or [n if n in LEGACY else known[n] for n in args.suite.split(",")]
     (args.out / "png").mkdir(parents=True, exist_ok=True)
     log = args.out / "encode.jsonl"
     done = {json.loads(line)["trial"] for line in log.open()} if log.exists() else set()

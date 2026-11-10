@@ -64,4 +64,6 @@ def suites():
     s["finalists-tune"] = [by_name[n] for n in (
         "sw-l2-c10x8b20p48", "sw-l2-c12x10b12p36", "sw-l2-c10x8b16p32",
         "sw-l8-c12x10b32p72", "sw-l8-c10x8b40p64")]
+    # All three 2-level candidates above failed china; next in capacity order (screen 6/6 each).
+    s["finalists-tune-l2b"] = [by_name["sw-l2-c10x8b16p48"], L2, by_name["sw-l2-c8x6b20p32"]]
     return s
