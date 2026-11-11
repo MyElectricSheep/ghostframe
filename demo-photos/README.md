@@ -10,7 +10,7 @@ hashes match the manifest), and they are free to use. The portrait is a painting
 | `milky-way.jpg` (1280×848) | Milky Way over a wooden fence | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Milky_Way_Night_Sky_(Unsplash).jpg), CC0 | "Milky Way Night Sky" by Guillaume (Unsplash), CC0, via Wikimedia Commons |
 | `antonello-portrait-of-a-man.jpg` (1280×1782) | Portrait of a man in a red cap, painted about 1475 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg), public domain (the National Gallery, London) | Antonello da Messina, *Portrait of a Man* (about 1475), The National Gallery, London, public domain, via Wikimedia Commons |
 
-Neither licence requires attribution, but crediting the source is good practice.
+None of these licences requires attribution, but crediting the source is good practice.
 
 ## Measured results on these exact files
 
