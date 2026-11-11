@@ -1,0 +1,86 @@
+[
+  {
+    "carrier": "ghostframe-png",
+    "profile": "legacy-v1",
+    "status": "legacy default",
+    "original": "original.png",
+    "encoded": "classic.png",
+    "difference": "classic-difference.png",
+    "amplification": 24,
+    "cap": 8,
+    "max_rgb_delta": 8,
+    "changed_channel_fraction": 0.9111,
+    "recovered_message": "Eyes on Orion",
+    "payload_bytes": 13,
+    "profile_capacity": 13,
+    "source": "../../milky-way.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "original.png": "2c806c48fa650246466e0eddc32290fc673e0f8bc0e65e4e809e72886d4a4500",
+      "classic.png": "f4a9300a795caca58e651ce6146e0a45b206205b68e30c5548f522a375f87431",
+      "classic-difference.png": "7eb7886a4f7d759b126d8bbccb0e7c232b0e3899e614be073e5927537f367233"
+    }
+  },
+  {
+    "carrier": "ghostframe-png",
+    "profile": "sw-l2-c10x8b16p48",
+    "status": "recommended experimental",
+    "original": "original.png",
+    "encoded": "subtle.png",
+    "difference": "subtle-difference.png",
+    "amplification": 96,
+    "cap": 2,
+    "max_rgb_delta": 2,
+    "changed_channel_fraction": 0.914,
+    "recovered_message": "Signal from the fence line at 02:00. Two flashes mean the road is clear.",
+    "payload_bytes": 72,
+    "profile_capacity": 79,
+    "source": "../../milky-way.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "original.png": "2c806c48fa650246466e0eddc32290fc673e0f8bc0e65e4e809e72886d4a4500",
+      "subtle.png": "3b49f4a0901f62b756c9ea011bc82a5de61866b79f26e0a11a6abcc0ef2d5428",
+      "subtle-difference.png": "9655462f3d12176f82904615d886de9c028fb856d9d8a5d0025ce7618ea962c0"
+    }
+  },
+  {
+    "carrier": "ghostframe-png",
+    "profile": "sw-l8-c10x8b40p64",
+    "status": "recommended experimental",
+    "original": "original.png",
+    "encoded": "long.png",
+    "difference": "long-difference.png",
+    "amplification": 24,
+    "cap": 8,
+    "max_rgb_delta": 8,
+    "changed_channel_fraction": 0.9194,
+    "recovered_message": "Night team: the drop is at the last fence post on the ridge, under the flat stone. Arrive after moonset and use no torches. If the sky is clear, wait for the satellite to pass overhead, then move. If you see headlights on the road, abort and return at the same hour tomorrow. Burn this after reading.",
+    "payload_bytes": 300,
+    "profile_capacity": 302,
+    "source": "../../milky-way.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "original.png": "2c806c48fa650246466e0eddc32290fc673e0f8bc0e65e4e809e72886d4a4500",
+      "long.png": "67ecd1d27f08e0d33f1928ff65e175b8ab49d0e136312ac58317ef68e579233f",
+      "long-difference.png": "4d2a99fd1e1151f4ba9b94d36023fb98310d90ba404a530f4974c7f5c9e7c584"
+    }
+  }
+]

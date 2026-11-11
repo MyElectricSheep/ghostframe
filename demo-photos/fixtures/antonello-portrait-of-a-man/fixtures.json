@@ -1,0 +1,86 @@
+[
+  {
+    "carrier": "ghostframe-png",
+    "profile": "legacy-v1",
+    "status": "legacy default",
+    "original": "original.png",
+    "encoded": "classic.png",
+    "difference": "classic-difference.png",
+    "amplification": 24,
+    "cap": 8,
+    "max_rgb_delta": 8,
+    "changed_channel_fraction": 0.9258,
+    "recovered_message": "Trust no one.",
+    "payload_bytes": 13,
+    "profile_capacity": 13,
+    "source": "../../antonello-portrait-of-a-man.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "original.png": "0081fb36025346057796c5d935627cfd4519528a2d27553ebad6f88c2df950be",
+      "classic.png": "8429500d5f6f4366d3a5bba411ffd189ffd4c319d36acc853063ac91bab30d16",
+      "classic-difference.png": "e029bbadae7c058e80507e97698acd3664914b8e9bdc4194f4416b474f7e16b8"
+    }
+  },
+  {
+    "carrier": "ghostframe-png",
+    "profile": "sw-l2-c10x8b16p48",
+    "status": "recommended experimental",
+    "original": "original.png",
+    "encoded": "subtle.png",
+    "difference": "subtle-difference.png",
+    "amplification": 96,
+    "cap": 2,
+    "max_rgb_delta": 2,
+    "changed_channel_fraction": 0.9298,
+    "recovered_message": "The man in the red cap knows the code. Meet him in Room 4 at closing time.",
+    "payload_bytes": 74,
+    "profile_capacity": 79,
+    "source": "../../antonello-portrait-of-a-man.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "original.png": "0081fb36025346057796c5d935627cfd4519528a2d27553ebad6f88c2df950be",
+      "subtle.png": "bb573e423a451de59becef2e1d89e67b0c5f31e97a6c3e9be576eba4d6d63c32",
+      "subtle-difference.png": "9ff500e7a8e752f325354bfd092a460290dd25080ee65a8fbe838f11ac4b7ce0"
+    }
+  },
+  {
+    "carrier": "ghostframe-png",
+    "profile": "sw-l8-c10x8b40p64",
+    "status": "recommended experimental",
+    "original": "original.png",
+    "encoded": "long.png",
+    "difference": "long-difference.png",
+    "amplification": 24,
+    "cap": 8,
+    "max_rgb_delta": 8,
+    "changed_channel_fraction": 0.937,
+    "recovered_message": "Agent, the portrait is the key. The gallery guard on the night shift is one of ours; tell him you admire the red cap and he will let you stay past closing. Behind the frame you will find a list of names. Photograph it, put everything back exactly as it was, and leave by the river door before midnight.",
+    "payload_bytes": 302,
+    "profile_capacity": 302,
+    "source": "../../antonello-portrait-of-a-man.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "original.png": "0081fb36025346057796c5d935627cfd4519528a2d27553ebad6f88c2df950be",
+      "long.png": "ac52cc5e11cbc6502f642458d049785b200a5265fce3e39bd9b7a3ffa1cddbb5",
+      "long-difference.png": "a5d0228d47801ed89bbc8da352624f3164f5180f347793ace01d80d95006ec65"
+    }
+  }
+]

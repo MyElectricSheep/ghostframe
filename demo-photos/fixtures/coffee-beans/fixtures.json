@@ -1,0 +1,86 @@
+[
+  {
+    "carrier": "ghostframe-png",
+    "profile": "legacy-v1",
+    "status": "legacy default",
+    "original": "original.png",
+    "encoded": "classic.png",
+    "difference": "classic-difference.png",
+    "amplification": 24,
+    "cap": 8,
+    "max_rgb_delta": 8,
+    "changed_channel_fraction": 0.9314,
+    "recovered_message": "Beans at six.",
+    "payload_bytes": 13,
+    "profile_capacity": 13,
+    "source": "../../coffee-beans.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "original.png": "d2c97e81f024b7577055fbb23f107d903192034a0b436a6952f09c9ed95eb80a",
+      "classic.png": "185a1f17be84fc27616fa5ca2b070db5e75ce021575ab1bb5a9b64b478bb8884",
+      "classic-difference.png": "7d2f5af195c325e5f3489e9922a5d8d35b15fe5f70c3ac07e0c701a6b4a45b97"
+    }
+  },
+  {
+    "carrier": "ghostframe-png",
+    "profile": "sw-l2-c10x8b16p48",
+    "status": "recommended experimental",
+    "original": "original.png",
+    "encoded": "subtle.png",
+    "difference": "subtle-difference.png",
+    "amplification": 96,
+    "cap": 2,
+    "max_rgb_delta": 2,
+    "changed_channel_fraction": 0.9325,
+    "recovered_message": "The roaster on Via Lucca is ours. Order the dark blend and pay in cash.",
+    "payload_bytes": 71,
+    "profile_capacity": 79,
+    "source": "../../coffee-beans.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "original.png": "d2c97e81f024b7577055fbb23f107d903192034a0b436a6952f09c9ed95eb80a",
+      "subtle.png": "390b48c5ac93b9a5df4d473f964410fb56bebe1beb6fcd7b9e091a47c7afe9de",
+      "subtle-difference.png": "caf6f4cb23b1d9942c9f3e6d01226a00ec7d109a9059ddc466bd0da6900e48b9"
+    }
+  },
+  {
+    "carrier": "ghostframe-png",
+    "profile": "sw-l8-c10x8b40p64",
+    "status": "recommended experimental",
+    "original": "original.png",
+    "encoded": "long.png",
+    "difference": "long-difference.png",
+    "amplification": 24,
+    "cap": 8,
+    "max_rgb_delta": 8,
+    "changed_channel_fraction": 0.9379,
+    "recovered_message": "Courier, your contact runs the coffee stall by the east gate of the market. Order a double roast, no sugar, and leave a folded newspaper on the counter. If she asks about the rain in Vienna, say it stopped on Tuesday. She will pass you a paper bag. Do not open it until you are across the river.",
+    "payload_bytes": 295,
+    "profile_capacity": 302,
+    "source": "../../coffee-beans.jpg",
+    "original_authenticates": false,
+    "checks": {
+      "decode_threads_1": "exit 0, exact message",
+      "decode_threads_4": "exit 0, exact message",
+      "unmarked_cover": "exit 1, no output",
+      "wrong_passphrase": "exit 1, no output"
+    },
+    "sha256": {
+      "original.png": "d2c97e81f024b7577055fbb23f107d903192034a0b436a6952f09c9ed95eb80a",
+      "long.png": "287da6bd2b20d9ad0ea8f08a77846add2da2d2eec30f4eb273852ccfbcf4e114",
+      "long-difference.png": "28b2920e7473ad32fbdc30e62aa19d44784d1d26d2f758fef084c2b168ab31ce"
+    }
+  }
+]

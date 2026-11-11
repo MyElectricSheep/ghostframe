@@ -30,3 +30,38 @@ read back incorrectly before error correction. The raw records are in
 These are the original covers, not marked images. To make verified marked fixtures (a readable
 message, a difference image and the negative control) for the site, run the same process as
 `tools/make_showcase.py` with these covers.
+
+## Verified demo fixtures
+
+`fixtures/<photo>/` holds, for each photo:
+
+- `original.png`: the cover as the engine sees it (sRGB, pixels only). This is the negative control: it carries no message.
+- `classic.png`, `subtle.png`, `long.png`: the same photo with a hidden message, one file per mode.
+- `*-difference.png`: |marked − original| per channel, amplified so the cap maps to 192/255. That is ×24 for Classic and Long (cap 8) and ×96 for Subtle (cap 2). Label it with the multiplier.
+- `fixtures.json`: the exact messages, byte counts, measured maximum change, the checks run and SHA-256 hashes.
+
+Passphrase for all of them: `ghostframe public benchmark fixture`.
+
+| Photo | Classic (13 B, cap 8) | Subtle (≤ 79 B, cap 2) | Long (≤ 302 B, cap 8) |
+|---|---|---|---|
+| Coffee beans | "Beans at six." | "The roaster on Via Lucca is ours. Order the dark blend and pay in cash." | Courier briefing, 295 B |
+| Milky Way | "Eyes on Orion" | "Signal from the fence line at 02:00. Two flashes mean the road is clear." | Night-team orders, 300 B |
+| Antonello portrait | "Trust no one." | "The man in the red cap knows the code. Meet him in Room 4 at closing time." | Gallery orders, 302 B |
+
+The full Long texts are in each `fixtures.json`. Every fixture passed four checks with the public CLI, each in a fresh process:
+
+- It decodes to the exact message with 1 and with 4 CPU threads.
+- `original.png` exits 1 with no output.
+- A wrong passphrase exits 1 with no output.
+
+The saved pixels stay within the cap: the maximum measured change equals the cap in every file.
+
+To check a fixture:
+
+```sh
+printf '%s' 'ghostframe public benchmark fixture' > pass.txt
+ghostframe-png decode demo-photos/fixtures/milky-way/subtle.png --profile sw-l2-c10x8b16p48 --passphrase-file pass.txt
+ghostframe-png decode demo-photos/fixtures/milky-way/classic.png --profile legacy-v1 --passphrase-file pass.txt
+```
+
+The Long profile is `sw-l8-c10x8b40p64`. To regenerate the fixtures, delete the PNGs and run `python -m tools.make_showcase --demo`. A fresh salt makes the new files differ byte for byte from these.
