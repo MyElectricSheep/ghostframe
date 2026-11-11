@@ -107,3 +107,13 @@ Rungs are run in ascending order, separately for each cap:
 - **Thread determinism:** the screen outputs are decoded again with 1 thread, and the received
   bytes must match.
 - **Distortion and memory:** PSNR, SSIM and peak memory.
+
+## Amendment 1 (2026-11-11 16:10 UTC, during the screen, before any EfficientNet-B0 or ConvNeXt-Tiny result)
+
+The shared `claude.slice` memory limit (6 GB across every session on the box) OOM-killed the
+run twice. Both times it was during the first EfficientNet-B0 rung, at about 2.1 GB with batch 16.
+EfficientNet-B0 and ConvNeXt-Tiny therefore run with **batch 8**. Batching only groups tiles
+that are optimized independently, so it changes memory and speed, not the result. Smaller
+batches are, if anything, slower, which works against these two backbones under the 90 s
+budget. The first 5 EfficientNet-B0 screen encodes finished at batch 16 and are kept. A trial
+that was killed mid-encode left no record and is rerun from the start.

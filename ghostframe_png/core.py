@@ -486,7 +486,11 @@ def safety_report(signed_bits, profile):
     return blocks
 
 
-def embed(cover, codeword, profile, model, *, batch=16):
+BATCH = 16  # tiles per optimizer pass; memory and speed only, each tile is optimized independently
+
+
+def embed(cover, codeword, profile, model, *, batch=None):
+    batch = batch or BATCH
     """Return marked RGB pixels and per-round diagnostics. Cover is HxWx3 uint8."""
     boxes = tile_boxes(cover.shape, profile)
     bits = np.unpackbits(np.frombuffer(codeword, np.uint8)).reshape(len(boxes), profile.bits)

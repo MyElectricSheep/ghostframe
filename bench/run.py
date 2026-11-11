@@ -124,8 +124,11 @@ def main():
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--no-decode", action="store_true")
     parser.add_argument("--timeout", type=float, help="hard per-encode limit in seconds; counts as a failure")
+    parser.add_argument("--batch", type=int, help="tiles per optimizer pass (memory only)")
     args = parser.parse_args()
     torch.set_num_threads(args.threads)
+    if args.batch:
+        core.BATCH = args.batch
     from ghostframe import load_model
 
     model = load_model("cpu")

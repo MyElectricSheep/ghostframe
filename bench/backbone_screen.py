@@ -16,12 +16,15 @@ ROOT = Path(__file__).resolve().parents[1]
 RUNS = ROOT / "runs" / "backbones"
 BUDGET_S, TIMEOUT_S = 90, 300
 CONTROL_RUNGS = 2  # SqueezeNet same-day load control
+SMALL_BATCH = {"efficientnet_b0", "convnext_tiny"}  # Amendment 1: memory
 
 
 def run(profile, split, covers=None):
     out = RUNS / split / profile.name
     cmd = [sys.executable, "-m", "bench.run", "--suite", profile.name, "--split", split, "--frames", "1",
            "--timeout", str(TIMEOUT_S), "--out", str(out)]
+    if profile.backbone in SMALL_BATCH:
+        cmd += ["--batch", "8"]
     if covers:
         cmd += ["--covers", *covers]
     subprocess.run(cmd, check=True, cwd=ROOT)
