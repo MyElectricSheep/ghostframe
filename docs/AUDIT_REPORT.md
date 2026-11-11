@@ -90,7 +90,13 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
 - **Stress covers** (synthetic, flat and minimum size): 3/9 at a 2-level cap and 6/9 at an
   8-level cap. Every failure was a clean refusal with no output written, but refusals take 6–10
   minutes.
-- **Small covers** (640 px, exploratory, after the fact): HOLDOUT640_PLACEHOLDER
+- **Small covers** (640 px, exploratory, after the fact): the 41 held-out covers resized to 640 px, one frame per arm.
+  - 2-level cap: the 79 B finalist passed 40/41, and its one failure was a clean refusal. Legacy
+    49 B passed only 28/41, and all 13 of its failures **wrote a PNG that does not decode**. On
+    the same covers the finalist won 12 and lost 0.
+  - 8-level cap: both 302 B and legacy 161 B passed 41/41.
+  - Median encodes were slower than at 1280 px: 44 s and 52 s, with a long tail up to 16 min.
+  - Details are in [BENCHMARK.md](BENCHMARK.md#exploratory-held-out-covers-at-640-px).
 
 ## 4. Showcase handoff
 

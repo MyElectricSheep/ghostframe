@@ -67,9 +67,12 @@ take a minute, with real progress states, not a spinner on a button.**
   - When the encoder refuses, it produces **no file**. It never returns an image that fails to decode.
   - Message to show: "This picture doesn't have enough texture to carry the message. Try a busier
     photo, a shorter message, or the Long mode."
-- **Small photos are harder.** A follow-up test on photos 640 px wide is still running. Early signs
-  are slower encodes and more retries. Until it finishes, recommend photos at least about 1000 px
-  wide, and never promise success.
+- **Small photos are slower, and Subtle is a little less reliable on them.** The same 41 test
+  photos were tried at 640 px wide:
+  - Long passed 41/41. Subtle passed 40/41, and its one failure was a clean refusal.
+  - Typical encodes took about 45–50 s, but the slowest took up to 16 minutes before succeeding
+    or refusing.
+  - Recommend photos at least about 1000 px wide, and never promise success.
 - **Decoding fails cleanly.** A wrong passphrase, the wrong mode, an untouched photo, or a damaged
   or re-saved file all give the same result: "No message found." Nothing partial is ever shown. The
   system cannot tell the user which of these causes applies, and should not guess.

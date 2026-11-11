@@ -131,6 +131,39 @@ slow (6–10 minutes of repair rounds before giving up). Flat and saturated imag
 a 2-level cap without clipping; the 160×128 minimum gives 16×16 tiles, too few pixels for 16 or
 40 bits each.
 
+## Exploratory: held-out covers at 640 px
+
+This was added after the holdout and was not preregistered. The screen had shown that the legacy
+49 B claim fails on small covers. To test that on unseen photos, the 41 held-out covers were
+resized to 640 px wide (LANCZOS, `bench/derive_small.py`, manifest
+`bench/manifest-holdout640-v1.json`). Each arm got one frame per cover (frame 0), decoded by
+the same independent worker. Raw records are in `bench/results/holdout640/`.
+
+| Cap | Arm | Success | Wilson 95 % | Raw wrong bytes median / max | Median PSNR | Failures |
+|---:|---|---:|---|---|---:|---|
+| 2 | `sw-l2-c10x8b16p48` (79 B) | 40/41 | 87–100 % | 2 / 22 | 42.9 dB | `boulevard_hotel_neon_sign`: clean refusal, no file written |
+| 2 | legacy 49 B | 28/41 | 53–80 % | 3 / 65 | 43.4 dB | 13 covers. **Each wrote a PNG that then failed to decode** |
+| 8 | `sw-l8-c10x8b40p64` (302 B) | 41/41 | 91–100 % | 0 / 16 | 34.2 dB | none |
+| 8 | legacy 161 B | 41/41 | 91–100 % | 0 / 11 | 36.9 dB | none |
+
+The paired frame-0 comparison on the same covers:
+- At a 2-level cap, the finalist won 12 and lost 0. Both failed `boulevard_hotel_neon_sign`.
+- At an 8-level cap there were no wins and no losses.
+
+The legacy encoder has no verify-before-write step, so at 640 px it quietly returns a
+third of its outputs unreadable. The new encoder either writes a file that authenticates or
+writes nothing.
+
+Encodes were slower than at 1280 px, with repair rounds and fresh-salt retries:
+
+| Arm | Median | p90 | Max |
+|---|---:|---:|---:|
+| L2 | 44 s | 276 s | 970 s |
+| L8 | 52 s | 207 s | 582 s |
+
+These times are inflated: the run shared the box with other jobs and was paused once with
+SIGSTOP while fixtures were built. Peak memory was about 1.2 GB per encode.
+
 ## Detectability
 
 A declared protocol-aware detector (`bench/detect.py`) knows the public profile but not the
