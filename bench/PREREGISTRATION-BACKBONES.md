@@ -117,3 +117,43 @@ that are optimized independently, so it changes memory and speed, not the result
 batches are, if anything, slower, which works against these two backbones under the 90 s
 budget. The first 5 EfficientNet-B0 screen encodes finished at batch 16 and are kept. A trial
 that was killed mid-encode left no record and is rerun from the start.
+
+## Screen and tune outcome (recorded before any holdout encode)
+
+| Backbone | Cap 2 candidate | Cap 8 candidate |
+|---|---|---|
+| MobileNetV3-Small | 79 B (ties; 119 B failed `china`) | **494 B** (12/12, median 43 s; top of the ladder) |
+| ResNet-18 | **143 B** (12/12, median 80 s) | none (302 B median 97 s) |
+| EfficientNet-B0 | 79 B (ties, median 81 s) | none (302 B median 109 s) |
+| ConvNeXt-Tiny | none (79 B median 120 s) | none (302 B median 185 s) |
+
+By the rule above, ResNet-18 143 B (cap 2) and MobileNetV3-Small 494 B (cap 8) both qualify for
+holdout.
+
+## Amendment 2 (2026-11-11 18:35 UTC, before any holdout encode): holdout scope
+
+The owner chose to run the holdout for **MobileNetV3-Small only**. ResNet-18 at 143 B qualified,
+but it is not run: its 80 s median is too slow for the intended 1–2 vCPU demo host. It stays
+recorded as a qualified, untested candidate.
+
+The MobileNetV3-Small holdout has three arms, each run on 41 holdout covers × 3 frames:
+
+| Arm | Status | Compared against (existing holdout, same covers) |
+|---|---|---|
+| `bb-mobilenet_v3_small-l8-b64p112` (494 B, cap 8) | preregistered candidate. The promotion rule applies | `sw-l8-c10x8b40p64` (302 B) |
+| `bb-mobilenet_v3_small-l8-b40p64` (302 B, cap 8) | added, matched-capacity speed comparison | `sw-l8-c10x8b40p64` (302 B) |
+| `bb-mobilenet_v3_small-l2-b16p48` (79 B, cap 2) | added, matched-capacity speed comparison | `sw-l2-c10x8b16p48` (79 B) |
+
+- The added arms use the same promotion bar: ≥ 95 % observed success, a cluster-bootstrap lower
+  bound ≥ 85 %, and paired frame-0 losses ≤ wins.
+- Being equally reliable and faster would make an arm a recommended alternative at the same
+  size. It would not replace the SqueezeNet profiles.
+- Encode-time and distortion medians are reported against the SqueezeNet holdout. Those were
+  measured on a different day under different box load, so the SqueezeNet controls from this
+  screen are reported as the same-day reference.
+- As in the original holdout, no per-encode timeout is applied: a slow encode still counts if it
+  succeeds, and a refusal counts as a failure. Batch 16.
+- Order:
+  1. frame 0 for all three arms, so a partial run still gives a paired comparison;
+  2. frames 1–2;
+  3. the stress split, one frame per arm, reported separately.
