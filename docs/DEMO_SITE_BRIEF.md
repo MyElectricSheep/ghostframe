@@ -297,3 +297,5 @@ experiment: no accounts, pricing or sign-up.
   - decode found and not found
   - the schematic
   - the limits and evidence section
+
+> See also [DEMO_SITE_BRIEF_ADDENDUM.md](DEMO_SITE_BRIEF_ADDENDUM.md): small-photo results, waiting states, daily limits and hosting.
