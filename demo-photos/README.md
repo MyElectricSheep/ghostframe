@@ -15,17 +15,19 @@ None of these licences requires attribution, but crediting the source is good pr
 ## Measured results on these exact files
 
 Three independently sealed messages per profile, each read back by a separate decoder process
-given only the saved PNG and the passphrase.
+given only the saved PNG and the passphrase. Subtle and Long use the MobileNetV3-Small profiles.
 
-| Photo | Subtle: 79 B, ±2 levels | Long: 302 B, ±8 levels | Classic: 13 B, ±8 levels |
+| Photo | Subtle: 79 B, ±2 levels | Long: 494 B, ±8 levels | Classic: 13 B, ±8 levels |
 |---|---|---|---|
-| Coffee beans | 3/3; 0 wrong bytes to correct; SSIM ≥ 0.982; encode ≤ 22 s | 3/3; 0 wrong bytes; SSIM ≥ 0.923 | 1/1 |
-| Milky Way | 3/3; ≤ 4 wrong bytes (budget 24); SSIM ≥ 0.989 | 3/3; 0 wrong bytes; SSIM ≥ 0.930 | 1/1 |
-| Antonello portrait | 3/3; 0 wrong bytes; SSIM ≥ 0.975; encode ≤ 24 s | 3/3; 0 wrong bytes; SSIM ≥ 0.878 | 1/1 |
+| Coffee beans | 3/3; 0 wrong bytes to correct; SSIM ≥ 0.983; encode ≤ 18 s | 3/3; 0 wrong bytes; SSIM ≥ 0.899; encode ≤ 27 s | 1/1 |
+| Milky Way | 3/3; 0 wrong bytes; SSIM ≥ 0.989; encode ≤ 20 s | 3/3; 0 wrong bytes; SSIM ≥ 0.924; encode ≤ 32 s | 1/1 |
+| Antonello portrait | 3/3; 0 wrong bytes; SSIM ≥ 0.976; encode ≤ 20 s | 3/3; 0 wrong bytes; SSIM ≥ 0.863; encode ≤ 31 s | 1/1 |
 
 SSIM is structural similarity to the original; 1.0 means identical. "Wrong bytes" are the bytes
 read back incorrectly before error correction. The raw records are in
-`bench/results/holdout-finalists/` and `bench/results/holdout-legacy/`.
+`bench/results/holdout-mobilenet/` and `bench/results/holdout-legacy/`. The earlier SqueezeNet
+results for Subtle (`sw-l2-c10x8b16p48`) and Long (`sw-l8-c10x8b40p64`, 302 B) are in
+`bench/results/holdout-finalists/`.
 
 These are the original covers, not marked images. To make verified marked fixtures (a readable
 message, a difference image and the negative control) for the site, run the same process as
@@ -42,11 +44,11 @@ message, a difference image and the negative control) for the site, run the same
 
 Passphrase for all of them: `ghostframe public benchmark fixture`.
 
-| Photo | Classic (13 B, cap 8) | Subtle (≤ 79 B, cap 2) | Long (≤ 302 B, cap 8) |
+| Photo | Classic (13 B, cap 8) | Subtle (≤ 79 B, cap 2) | Long (≤ 494 B, cap 8) |
 |---|---|---|---|
-| Coffee beans | "Beans at six." | "The roaster on Via Lucca is ours. Order the dark blend and pay in cash." | Courier briefing, 295 B |
-| Milky Way | "Eyes on Orion" | "Signal from the fence line at 02:00. Two flashes mean the road is clear." | Night-team orders, 300 B |
-| Antonello portrait | "Trust no one." | "The man in the red cap knows the code. Meet him in Room 4 at closing time." | Gallery orders, 302 B |
+| Coffee beans | "Beans at six." | "The roaster on Via Lucca is ours. Order the dark blend and pay in cash." | Courier briefing, 488 B |
+| Milky Way | "Eyes on Orion" | "Signal from the fence line at 02:00. Two flashes mean the road is clear." | Night-team orders, 480 B |
+| Antonello portrait | "Trust no one." | "The man in the red cap knows the code. Meet him in Room 4 at closing time." | Gallery orders, 493 B |
 
 The full Long texts are in each `fixtures.json`. Every fixture passed four checks with the public CLI, each in a fresh process:
 
@@ -60,8 +62,8 @@ To check a fixture:
 
 ```sh
 printf '%s' 'ghostframe public benchmark fixture' > pass.txt
-ghostframe-png decode demo-photos/fixtures/milky-way/subtle.png --profile sw-l2-c10x8b16p48 --passphrase-file pass.txt
+ghostframe-png decode demo-photos/fixtures/milky-way/subtle.png --profile bb-mobilenet_v3_small-l2-b16p48 --passphrase-file pass.txt
 ghostframe-png decode demo-photos/fixtures/milky-way/classic.png --profile legacy-v1 --passphrase-file pass.txt
 ```
 
-The Long profile is `sw-l8-c10x8b40p64`. To regenerate the fixtures, delete the PNGs and run `python -m tools.make_showcase --demo`. A fresh salt makes the new files differ byte for byte from these.
+The Long profile is `bb-mobilenet_v3_small-l8-b64p112`. Subtle and Long are read by MobileNetV3-Small, Classic by SqueezeNet 1.1. To regenerate the fixtures, delete the PNGs and run `python -m tools.make_showcase --demo`. A fresh salt makes the new files differ byte for byte from these.

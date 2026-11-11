@@ -2,6 +2,7 @@
   {
     "carrier": "ghostframe-png",
     "profile": "legacy-v1",
+    "backbone": "squeezenet1_1",
     "status": "legacy default",
     "original": "original.png",
     "encoded": "classic.png",
@@ -29,7 +30,8 @@
   },
   {
     "carrier": "ghostframe-png",
-    "profile": "sw-l2-c10x8b16p48",
+    "profile": "bb-mobilenet_v3_small-l2-b16p48",
+    "backbone": "mobilenet_v3_small",
     "status": "recommended experimental",
     "original": "original.png",
     "encoded": "subtle.png",
@@ -37,7 +39,7 @@
     "amplification": 96,
     "cap": 2,
     "max_rgb_delta": 2,
-    "changed_channel_fraction": 0.9298,
+    "changed_channel_fraction": 0.9254,
     "recovered_message": "The man in the red cap knows the code. Meet him in Room 4 at closing time.",
     "payload_bytes": 74,
     "profile_capacity": 79,
@@ -51,13 +53,15 @@
     },
     "sha256": {
       "original.png": "0081fb36025346057796c5d935627cfd4519528a2d27553ebad6f88c2df950be",
-      "subtle.png": "bb573e423a451de59becef2e1d89e67b0c5f31e97a6c3e9be576eba4d6d63c32",
-      "subtle-difference.png": "9ff500e7a8e752f325354bfd092a460290dd25080ee65a8fbe838f11ac4b7ce0"
-    }
+      "subtle.png": "c0fe0d34bf965769fc6215f8d04530c43f0ddfd8ed825023dcd7ef44c024a019",
+      "subtle-difference.png": "c4e89101bdc2fda428b58bf762d65919f4273a8d306b1820fb951e9665edaa5c"
+    },
+    "encode_s_cli": 25.9
   },
   {
     "carrier": "ghostframe-png",
-    "profile": "sw-l8-c10x8b40p64",
+    "profile": "bb-mobilenet_v3_small-l8-b64p112",
+    "backbone": "mobilenet_v3_small",
     "status": "recommended experimental",
     "original": "original.png",
     "encoded": "long.png",
@@ -65,10 +69,10 @@
     "amplification": 24,
     "cap": 8,
     "max_rgb_delta": 8,
-    "changed_channel_fraction": 0.937,
-    "recovered_message": "Agent, the portrait is the key. The gallery guard on the night shift is one of ours; tell him you admire the red cap and he will let you stay past closing. Behind the frame you will find a list of names. Photograph it, put everything back exactly as it was, and leave by the river door before midnight.",
-    "payload_bytes": 302,
-    "profile_capacity": 302,
+    "changed_channel_fraction": 0.9367,
+    "recovered_message": "Agent, the portrait is the key. The gallery guard on the night shift is one of ours; tell him you admire the red cap and he will let you stay past closing. Behind the frame you will find a list of names. Photograph it, put everything back exactly as it was, and leave by the river door before midnight. Avoid the lift; the cameras on the back stairs are off from eleven to twelve. If stopped, say you are from the restoration team. Bring the list to the bookshop on Charing Cross Road at nine.",
+    "payload_bytes": 493,
+    "profile_capacity": 494,
     "source": "../../antonello-portrait-of-a-man.jpg",
     "original_authenticates": false,
     "checks": {
@@ -79,8 +83,9 @@
     },
     "sha256": {
       "original.png": "0081fb36025346057796c5d935627cfd4519528a2d27553ebad6f88c2df950be",
-      "long.png": "ac52cc5e11cbc6502f642458d049785b200a5265fce3e39bd9b7a3ffa1cddbb5",
-      "long-difference.png": "a5d0228d47801ed89bbc8da352624f3164f5180f347793ace01d80d95006ec65"
-    }
+      "long.png": "1a4e9d08688bc96f0c70cb69ddd9162a6264acd90d701484c550f5dc3de24637",
+      "long-difference.png": "58751f9f3ea1edd8114904a729b0c460993ba9c4f5dad25b24ca1f8141014ab3"
+    },
+    "encode_s_cli": 41.7
   }
 ]

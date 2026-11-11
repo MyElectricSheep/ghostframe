@@ -17,7 +17,7 @@ import torch
 from bench.configs import from_spec
 from bench.run import ROOT
 from ghostframe import load_model
-from ghostframe_png import core
+from ghostframe_png import backbones, core
 
 
 def auc(negatives, positives):
@@ -30,11 +30,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("run", type=Path)
     parser.add_argument("--profile", required=True, help="profile name in the run's encode log")
-    parser.add_argument("--threshold", type=float, default=0.002)
+    parser.add_argument("--threshold", type=float, help="default: the profile's safety threshold (0.002 for SqueezeNet)")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     torch.set_num_threads(4)
-    model = load_model("cpu")
     manifest = json.loads((ROOT / "bench" / "manifest-v1.json").read_text())
     files = {e["id"]: ROOT / manifest["covers_dir"] / e["file"] for e in manifest["covers"]}
     rows = [json.loads(line) for line in (args.run / "encode.jsonl").open()]
@@ -44,6 +43,9 @@ def main():
         if job["profile"] == args.profile:
             spec = job["spec"]
     profile = from_spec(spec)
+    model = load_model("cpu") if profile.backbone == "squeezenet1_1" else backbones.load(profile.backbone)
+    if args.threshold is None:
+        args.threshold = profile.safety
     clean, marked, per_cover = [], [], []
     for r in rows:
         png = args.run / "png" / (hashlib.sha256(r["trial"].encode()).hexdigest()[:16] + ".png")

@@ -2,6 +2,7 @@
   {
     "carrier": "ghostframe-png",
     "profile": "legacy-v1",
+    "backbone": "squeezenet1_1",
     "status": "legacy default",
     "original": "original.png",
     "encoded": "classic.png",
@@ -29,7 +30,8 @@
   },
   {
     "carrier": "ghostframe-png",
-    "profile": "sw-l2-c10x8b16p48",
+    "profile": "bb-mobilenet_v3_small-l2-b16p48",
+    "backbone": "mobilenet_v3_small",
     "status": "recommended experimental",
     "original": "original.png",
     "encoded": "subtle.png",
@@ -37,7 +39,7 @@
     "amplification": 96,
     "cap": 2,
     "max_rgb_delta": 2,
-    "changed_channel_fraction": 0.9325,
+    "changed_channel_fraction": 0.9349,
     "recovered_message": "The roaster on Via Lucca is ours. Order the dark blend and pay in cash.",
     "payload_bytes": 71,
     "profile_capacity": 79,
@@ -51,13 +53,15 @@
     },
     "sha256": {
       "original.png": "d2c97e81f024b7577055fbb23f107d903192034a0b436a6952f09c9ed95eb80a",
-      "subtle.png": "390b48c5ac93b9a5df4d473f964410fb56bebe1beb6fcd7b9e091a47c7afe9de",
-      "subtle-difference.png": "caf6f4cb23b1d9942c9f3e6d01226a00ec7d109a9059ddc466bd0da6900e48b9"
-    }
+      "subtle.png": "95270a5b1b22cc4ab5fa73b7cd6d12c800e508fe8dd1a5354cb2e0caa1c9d36c",
+      "subtle-difference.png": "136075ef385b3542fe1b9ed9498fc8bd5be748c895c0fc5b6d27b6021484e1c6"
+    },
+    "encode_s_cli": 23.4
   },
   {
     "carrier": "ghostframe-png",
-    "profile": "sw-l8-c10x8b40p64",
+    "profile": "bb-mobilenet_v3_small-l8-b64p112",
+    "backbone": "mobilenet_v3_small",
     "status": "recommended experimental",
     "original": "original.png",
     "encoded": "long.png",
@@ -65,10 +69,10 @@
     "amplification": 24,
     "cap": 8,
     "max_rgb_delta": 8,
-    "changed_channel_fraction": 0.9379,
-    "recovered_message": "Courier, your contact runs the coffee stall by the east gate of the market. Order a double roast, no sugar, and leave a folded newspaper on the counter. If she asks about the rain in Vienna, say it stopped on Tuesday. She will pass you a paper bag. Do not open it until you are across the river.",
-    "payload_bytes": 295,
-    "profile_capacity": 302,
+    "changed_channel_fraction": 0.9375,
+    "recovered_message": "Courier, your contact runs the coffee stall by the east gate of the market. Order a double roast, no sugar, and leave a folded newspaper on the counter. If she asks about the rain in Vienna, say it stopped on Tuesday. She will pass you a paper bag. Do not open it until you are across the river. Inside is a brass key and a ticket for the night train to Trieste. Board the third carriage, take the window seat and wait for a man reading yesterday's paper. Give him the key; keep the stub.",
+    "payload_bytes": 488,
+    "profile_capacity": 494,
     "source": "../../coffee-beans.jpg",
     "original_authenticates": false,
     "checks": {
@@ -79,8 +83,9 @@
     },
     "sha256": {
       "original.png": "d2c97e81f024b7577055fbb23f107d903192034a0b436a6952f09c9ed95eb80a",
-      "long.png": "287da6bd2b20d9ad0ea8f08a77846add2da2d2eec30f4eb273852ccfbcf4e114",
-      "long-difference.png": "28b2920e7473ad32fbdc30e62aa19d44784d1d26d2f758fef084c2b168ab31ce"
-    }
+      "long.png": "dc217f7aa3a8ccc3535fafdccfbdc11a16baa5a4ce2e877ed5284ed97c13a3a2",
+      "long-difference.png": "a35b5712ff68e6cebd4441b06e2c715227add761a44bbae0182c3ac916877710"
+    },
+    "encode_s_cli": 43.9
   }
 ]

@@ -1,5 +1,8 @@
 """Export tile embeddings and carrier scores for the demo fixtures (original vs marked).
 
+Classic is read by SqueezeNet 1.1 (512 numbers per tile); Subtle and Long by the profile's own
+backbone (MobileNetV3-Small, 576 numbers per tile).
+
     python -m tools.dump_embeddings   # writes demo-photos/fixtures/embeddings/
 """
 import json
@@ -10,15 +13,15 @@ import torch
 
 from experiments import tiled
 from ghostframe import embedding, load_model, projections
-from ghostframe_png import core
+from ghostframe_png import backbones, core
 
 ROOT = Path("demo-photos/fixtures")
 OUT = ROOT / "embeddings"
 PHOTOS = ["coffee-beans", "milky-way", "antonello-portrait-of-a-man"]
 MODES = {
     "classic": ("legacy-v1", tiled.COLS, tiled.ROWS, tiled.TILE_BITS, 8),
-    "subtle": ("sw-l2-c10x8b16p48",) + (None,) * 4,
-    "long": ("sw-l8-c10x8b40p64",) + (None,) * 4,
+    "subtle": ("bb-mobilenet_v3_small-l2-b16p48",) + (None,) * 4,
+    "long": ("bb-mobilenet_v3_small-l8-b64p112",) + (None,) * 4,
 }
 
 
@@ -42,11 +45,19 @@ def directions(profile, index, bits):
     return core.carriers(profile, index)
 
 
-def read(model, rgb, cols, rows, bits, profile):
+def model_for(profile, cache={}):
+    name = "squeezenet1_1" if profile is None else profile.backbone
+    if name not in cache:
+        cache[name] = load_model("cpu") if name == "squeezenet1_1" else backbones.load(name)
+    return cache[name]
+
+
+def read(rgb, cols, rows, bits, profile):
+    model = model_for(profile)
     vectors, scores = [], []
     with torch.inference_mode():
         for index, tile in enumerate(tiles(rgb, cols, rows)):
-            e = embedding(model, core._tensor(tile))[0]
+            e = (embedding(model, core._tensor(tile)) if profile is None else core._embed(model, core._tensor(tile)))[0]
             vectors.append(e.numpy())
             scores.append((e @ directions(profile, index, bits).T).numpy())
     return np.stack(vectors), np.stack(scores)
@@ -58,21 +69,21 @@ def r(x, digits=5):
 
 def main():
     torch.set_num_threads(4)
-    model = load_model("cpu")
     OUT.mkdir(exist_ok=True)
     summary = {}
     for photo in PHOTOS:
         original = core.load_png(ROOT / photo / "original.png")
-        record = {"photo": photo, "embedding_dim": 512, "modes": {}}
+        record = {"photo": photo, "modes": {}}
         for mode in MODES:
             name, cols, rows, bits, cap, profile = grid(mode)
             marked = core.load_png(ROOT / photo / f"{mode}.png")
-            ev0, s0 = read(model, original, cols, rows, bits, profile)
-            ev1, s1 = read(model, marked, cols, rows, bits, profile)
+            ev0, s0 = read(original, cols, rows, bits, profile)
+            ev1, s1 = read(marked, cols, rows, bits, profile)
             cos = (ev0 * ev1).sum(1)
             flipped = (np.sign(s0) != np.sign(s1))
             record["modes"][mode] = {
-                "profile": name, "cols": cols, "rows": rows, "bits_per_tile": bits, "cap": cap,
+                "profile": name, "backbone": "squeezenet1_1" if profile is None else profile.backbone,
+                "embedding_dim": int(ev0.shape[1]), "cols": cols, "rows": rows, "bits_per_tile": bits, "cap": cap,
                 "tile_cosine": r(cos, 6),
                 "tile_shift": r(np.linalg.norm(ev1 - ev0, axis=1), 6),
                 "scores_original": r(s0), "scores_marked": r(s1),
@@ -80,6 +91,7 @@ def main():
                 "embeddings_original": r(ev0), "embeddings_marked": r(ev1),
             }
             summary.setdefault(photo, {})[mode] = {
+                "profile": name, "embedding_dim": int(ev0.shape[1]),
                 "tiles": cols * rows, "bits": cols * rows * bits,
                 "cos_min": float(cos.min()), "cos_median": float(np.median(cos)),
                 "shift_median": float(np.median(np.linalg.norm(ev1 - ev0, axis=1))),

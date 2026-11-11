@@ -1,5 +1,13 @@
 # Ghostframe demo site: brief for Claude Design
 
+> **Engine update, 2026-11-11.** Subtle and Long now use the MobileNetV3-Small profiles
+> (`bb-mobilenet_v3_small-l2-b16p48`, 79 B, and `bb-mobilenet_v3_small-l8-b64p112`, **494 B**).
+> Encodes are about 1.6× faster, and Classic is unchanged. Where this brief gives SqueezeNet
+> profile names, the 302 B limit or encode times, the current figures are in
+> [design-handoff/mobilenet-v3/](../design-handoff/mobilenet-v3/README.md). The product rules,
+> states and copy here still apply.
+
+
 A small public website where anyone can hide a short message in their own photo and read one back.
 This brief records what Ghostframe does, what it was measured to do, what a design may promise, and
 what the site has to handle. Every number here comes from the 2026-11-10 audit. The evidence is in
