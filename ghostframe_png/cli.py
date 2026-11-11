@@ -37,12 +37,12 @@ def read_message(path, limit):
 def list_profiles():
     from ghostframe_png.core import PROFILES
 
-    print(f"{'profile':22s} {'bytes':>5s} {'cap':>4s}  status        notes")
+    print(f"{'profile':32s} {'bytes':>5s} {'cap':>4s}  status        notes")
     for name, profile in PROFILES.items():
         status = "experimental" if profile.experimental else "default"
-        print(f"{name:22s} {profile.capacity:5d} {profile.epsilon:4d}  {status:12s}  {profile.notes}")
+        print(f"{name:32s} {profile.capacity:5d} {profile.epsilon:4d}  {status:12s}  {profile.notes}")
     for name, info in LEGACY.items():
-        print(f"{name:22s} {info['capacity']:5d} {info['epsilon']:4d}  {'legacy':12s}  {info['notes']}")
+        print(f"{name:32s} {info['capacity']:5d} {info['epsilon']:4d}  {'legacy':12s}  {info['notes']}")
 
 
 def main(argv=None):
@@ -83,7 +83,13 @@ def main(argv=None):
         from ghostframe import load_model
 
         torch.set_num_threads(args.threads)
-        model = load_model("cpu")
+        backbone = "squeezenet1_1" if args.profile in LEGACY else core.PROFILES[args.profile].backbone
+        if backbone == "squeezenet1_1":
+            model = load_model("cpu")
+        else:
+            from ghostframe_png import backbones
+
+            model = backbones.load(backbone)
         if args.profile in LEGACY:
             from experiments.message_cli import neural_encode_file, neural_recover
             from ghostframe import read_image

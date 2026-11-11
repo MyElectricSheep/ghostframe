@@ -44,6 +44,9 @@ class FrameTests(unittest.TestCase):
         pinned = {
             "sw-l2-c10x8b16p48": (79, "ghostframe-png/v1/sw-l2-c10x8b16p48/10/8/16/48/1/b8a52dc049b60e4b/e3bc8df735be7085"),
             "sw-l8-c10x8b40p64": (302, "ghostframe-png/v1/sw-l8-c10x8b40p64/10/8/40/64/1/b8a52dc049b60e4b/e3bc8df735be7085"),
+            "bb-mobilenet_v3_small-l2-b16p48": (79, "ghostframe-png/v1/bb-mobilenet_v3_small-l2-b16p48/10/8/16/48/1/mobilenet_v3_small/047dcff4addef86e/455b044c303ccabb"),
+            "bb-mobilenet_v3_small-l8-b40p64": (302, "ghostframe-png/v1/bb-mobilenet_v3_small-l8-b40p64/10/8/40/64/1/mobilenet_v3_small/047dcff4addef86e/455b044c303ccabb"),
+            "bb-mobilenet_v3_small-l8-b64p112": (494, "ghostframe-png/v1/bb-mobilenet_v3_small-l8-b64p112/10/8/64/112/1/mobilenet_v3_small/047dcff4addef86e/455b044c303ccabb"),
         }
         for name, (capacity, identity) in pinned.items():
             self.assertEqual((PROFILES[name].capacity, PROFILES[name].identity), (capacity, identity))

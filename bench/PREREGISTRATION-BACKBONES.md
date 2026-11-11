@@ -157,3 +157,19 @@ The MobileNetV3-Small holdout has three arms, each run on 41 holdout covers × 3
   1. frame 0 for all three arms, so a partial run still gives a paired comparison;
   2. frames 1–2;
   3. the stress split, one frame per arm, reported separately.
+
+## Holdout outcome (2026-11-11, recorded after the run, no rule changes)
+
+| Arm | Holdout | Cluster 95 % lower bound | Paired frame-0 vs SqueezeNet | Median encode | Decision |
+|---|---:|---:|---|---:|---|
+| `bb-mobilenet_v3_small-l8-b64p112` (494 B) | 123/123 | 100 % | 0 wins, 0 losses | 33 s | **promoted**: recommended experimental |
+| `bb-mobilenet_v3_small-l8-b40p64` (302 B) | 123/123 | 100 % | 0 wins, 0 losses | 25 s | meets the bar: recommended alternative to `sw-l8` |
+| `bb-mobilenet_v3_small-l2-b16p48` (79 B) | 123/123 | 100 % | 0 wins, 0 losses | 19 s | meets the bar: recommended alternative to `sw-l2` |
+
+The stress split gave 6/9, 7/9 and 4/9, against 6/9 and 3/9 for SqueezeNet. The three
+profiles are registered in `ghostframe_png/core.py` under the names they were scored with, and
+their identities are pinned by `tests/test_png_profiles.py`. The SqueezeNet profiles and the
+legacy entry point are unchanged. Raw records:
+- `bench/results/holdout-mobilenet/`
+- `bench/results/stress-mobilenet/`
+- `bench/results/backbones/`

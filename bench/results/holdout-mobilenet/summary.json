@@ -1,0 +1,83 @@
+[
+ {
+  "profile": "bb-mobilenet_v3_small-l8-b64p112",
+  "epsilon": 8,
+  "payload": 494,
+  "coded": 640,
+  "success": 123,
+  "trials": 123,
+  "covers": 41,
+  "wilson95": [
+   0.9697134063272616,
+   0.9999999999999999
+  ],
+  "cluster95": [
+   1.0,
+   1.0
+  ],
+  "encode_failed": 0,
+  "median_encode_s": 32.9815678820014,
+  "median_decode_s": 1.9969623070210218,
+  "median_byte_errors": 0.0,
+  "max_byte_errors": 15,
+  "max_rgb_delta": 8,
+  "median_mean_abs": 4.293341299019608,
+  "median_psnr": 34.10586619316311,
+  "median_ssim": 0.8723575296848551,
+  "failures": []
+ },
+ {
+  "profile": "bb-mobilenet_v3_small-l8-b40p64",
+  "epsilon": 8,
+  "payload": 302,
+  "coded": 400,
+  "success": 123,
+  "trials": 123,
+  "covers": 41,
+  "wilson95": [
+   0.9697134063272616,
+   0.9999999999999999
+  ],
+  "cluster95": [
+   1.0,
+   1.0
+  ],
+  "encode_failed": 0,
+  "median_encode_s": 24.52715478488244,
+  "median_decode_s": 1.994607939152047,
+  "median_byte_errors": 0.0,
+  "max_byte_errors": 0,
+  "max_rgb_delta": 8,
+  "median_mean_abs": 3.88388171541174,
+  "median_psnr": 34.972805428979605,
+  "median_ssim": 0.8926321515011685,
+  "failures": []
+ },
+ {
+  "profile": "bb-mobilenet_v3_small-l2-b16p48",
+  "epsilon": 2,
+  "payload": 79,
+  "coded": 160,
+  "success": 123,
+  "trials": 123,
+  "covers": 41,
+  "wilson95": [
+   0.9697134063272616,
+   0.9999999999999999
+  ],
+  "cluster95": [
+   1.0,
+   1.0
+  ],
+  "encode_failed": 0,
+  "median_encode_s": 18.8036665560212,
+  "median_decode_s": 1.993045954965055,
+  "median_byte_errors": 0.0,
+  "max_byte_errors": 19,
+  "max_rgb_delta": 2,
+  "median_mean_abs": 1.7135854512870643,
+  "median_psnr": 42.969577237908155,
+  "median_ssim": 0.9787319856342419,
+  "failures": []
+ }
+]

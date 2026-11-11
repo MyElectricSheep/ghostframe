@@ -12,6 +12,9 @@ the new CLI as `legacy-v1` and `legacy-v2`. Measured results: [BENCHMARK.md](BEN
 |---|---:|---:|---|---:|---|
 | `sw-l2-c10x8b16p48` | 2 | 79 B | 10×8 × 16 | 48 | recommended experimental: held-out 123/123 |
 | `sw-l8-c10x8b40p64` | 8 | 302 B | 10×8 × 40 | 64 (2 blocks) | recommended experimental: held-out 123/123 |
+| `bb-mobilenet_v3_small-l8-b64p112` | 8 | 494 B | 10×8 × 64 | 112 (3 blocks) | recommended experimental, MobileNetV3-Small reader: held-out 123/123 |
+| `bb-mobilenet_v3_small-l8-b40p64` | 8 | 302 B | 10×8 × 40 | 64 (2 blocks) | recommended experimental, MobileNetV3-Small reader: held-out 123/123, ~1.6× faster than `sw-l8` |
+| `bb-mobilenet_v3_small-l2-b16p48` | 2 | 79 B | 10×8 × 16 | 48 | recommended experimental, MobileNetV3-Small reader: held-out 123/123, ~1.6× faster than `sw-l2` |
 | `png-l2-c10x8b12` | 2 | 63 B | 10×8 × 12 | 24 | experimental: screen and tune 12/12, not held out |
 | `png-l8-c10x8b24` | 8 | 175 B | 10×8 × 24 | 32 | experimental: screen 6/6, not held out |
 | `legacy-v1` | 8 | 13 B | 6×5 | — | legacy CLI frame; default showcase |
@@ -21,6 +24,9 @@ the new CLI as `legacy-v1` and `legacy-v2`. Measured results: [BENCHMARK.md](BEN
 ([BENCHMARK.md](BENCHMARK.md)) on 1280-px photographs. It is not a default, and no stability
 promise attaches to it. The profile name is part of the identity, which seeds the carriers and
 is the AAD, so a frame decodes only under its exact name.
+The `bb-mobilenet_v3_small-*` profiles read tiles with torchvision's MobileNetV3-Small
+(checkpoint `047dcff4…`, SHA-256 pinned in `ghostframe_png/backbones.py`) instead of
+SqueezeNet. The backbone, its checkpoint and its calibration mean are also part of the identity.
 
 ## Command line
 

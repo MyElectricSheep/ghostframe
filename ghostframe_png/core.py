@@ -126,6 +126,13 @@ PROFILES = {p.name: p for p in (
     # the identity, so renaming would change the carriers). Evidence: docs/BENCHMARK.md.
     _p("sw-l2-c10x8b16p48", 10, 8, 16, 48, 2, notes="Recommended experimental 2-level profile (79 B)"),
     _p("sw-l8-c10x8b40p64", 10, 8, 40, 64, 8, notes="Recommended experimental 8-level profile (302 B)"),
+    # MobileNetV3-Small backbone, held out under bench/PREREGISTRATION-BACKBONES.md. Margins are
+    # SqueezeNet's scaled by the backbone's median clean |score| (1.0805).
+    *(_p(f"bb-mobilenet_v3_small-l{cap}-b{bits}p{parity}", 10, 8, bits, parity, cap, backbone="mobilenet_v3_small",
+         margin=0.010805, safety=0.002161, notes=notes) for cap, bits, parity, notes in (
+        (2, 16, 48, "Recommended experimental MobileNetV3 2-level profile (79 B)"),
+        (8, 40, 64, "Recommended experimental MobileNetV3 8-level profile (302 B)"),
+        (8, 64, 112, "Recommended experimental MobileNetV3 8-level profile (494 B)"))),
 )}
 
 

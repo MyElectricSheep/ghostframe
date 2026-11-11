@@ -10,6 +10,9 @@ Profiles and the frame format: [PNG_PROFILES.md](PNG_PROFILES.md).
 |---:|---|---:|---:|---|---|
 | 2 | `sw-l2-c10x8b16p48` | 79 B | 123/123 | 97.0–100 % | recommended experimental |
 | 8 | `sw-l8-c10x8b40p64` | 302 B | 123/123 | 97.0–100 % | recommended experimental |
+| 8 | `bb-mobilenet_v3_small-l8-b64p112` | 494 B | 123/123 | 97.0–100 % | recommended experimental (MobileNetV3 backbone) |
+| 8 | `bb-mobilenet_v3_small-l8-b40p64` | 302 B | 123/123 | 97.0–100 % | recommended experimental (MobileNetV3, faster) |
+| 2 | `bb-mobilenet_v3_small-l2-b16p48` | 79 B | 123/123 | 97.0–100 % | recommended experimental (MobileNetV3, faster) |
 | 2 | legacy 49-byte capacity profile | 49 B | 41/41 (frame 0) | 91.4–100 % | legacy research profile |
 | 8 | legacy 161-byte capacity profile | 161 B | 41/41 (frame 0) | 91.4–100 % | legacy research profile |
 | 8 | legacy v1 CLI frame (`Meet at dawn.`) | 13 B | 41/41 (frame 0) | 91.4–100 % | default showcase frame |
@@ -23,6 +26,11 @@ failure rate up to about 7 % (rule of three); they do not show the rate is zero.
 **At equal held-out reliability, the finalists carry 1.6× (cap 2) and 1.9× (cap 8) the payload
 of the legacy capacity profiles.** The cost is distortion within the same cap, chiefly at cap 8
 (median PSNR 35.0 vs 38.6 dB), and roughly 1.4–1.8× the median encode time.
+
+**A newer frozen backbone, MobileNetV3-Small (2019), carries 494 B at the 8-level cap**, 1.6×
+the SqueezeNet finalist, with the same held-out reliability, similar distortion (median PSNR
+34.1 vs 35.0 dB), and still a faster median encode (33 s vs 41 s). At matched sizes it is
+about 1.6× faster. See [the backbone comparison](#backbone-comparison-mobilenetv3-small).
 
 The legacy 49-byte claim does not generalize to small covers: it authenticated on 2 of the 6
 screening covers (it failed `astronaut`, `chelsea`, `coffee` and `rocket`, 300–640 px; raw
@@ -163,6 +171,70 @@ Encodes were slower than at 1280 px, with repair rounds and fresh-salt retries:
 
 These times are inflated: the run shared the box with other jobs and was paused once with
 SIGSTOP while fixtures were built. Peak memory was about 1.2 GB per encode.
+
+## Backbone comparison: MobileNetV3-Small
+
+Preregistered in [bench/PREREGISTRATION-BACKBONES.md](../bench/PREREGISTRATION-BACKBONES.md)
+before any alternative-backbone encode. Four torchvision ImageNet backbones were screened on
+the same 10 × 8 grid and ladder, with the same reliability bar and a 90 s median encode
+budget: MobileNetV3-Small, EfficientNet-B0, ResNet-18 and ConvNeXt-Tiny. Each was read through
+the same tile path, and each margin was scaled by its median clean |score|.
+
+**Screen and tune.** Only two candidates beat SqueezeNet's capacity:
+- MobileNetV3-Small at 494 B (cap 8), the top of the ladder: 12/12, median 43 s.
+- ResNet-18 at 143 B (cap 2): 12/12, median 80 s.
+
+EfficientNet-B0 tied at 79 B. ConvNeXt-Tiny, EfficientNet-B0 at cap 8 and ResNet-18 at cap 8
+were all over the time budget. On the owner's call (Amendment 2), only MobileNetV3-Small was
+held out. ResNet-18 at 143 B stays a qualified, untested candidate: at 80 s it is too slow for
+a small demo host. Raw screen records are in `bench/results/backbones/`.
+
+**Holdout.** 41 covers × 3 frames, decoded by the independent worker. The SqueezeNet
+references are the existing holdout on the same 41 covers.
+
+| Cap | Arm | Payload | Success | Cluster 95 % | Raw wrong bytes max | PSNR / SSIM | Encode median / p90 / max |
+|---:|---|---:|---:|---|---:|---|---|
+| 8 | `bb-mobilenet_v3_small-l8-b64p112` | 494 B | 123/123 | 100–100 % | 15 | 34.1 dB / 0.872 | 33 / 39 / 43 s |
+| 8 | `bb-mobilenet_v3_small-l8-b40p64` | 302 B | 123/123 | 100–100 % | 0 | 35.0 dB / 0.893 | 25 / 29 / 30 s |
+| 8 | `sw-l8-c10x8b40p64` (SqueezeNet) | 302 B | 123/123 | 100–100 % | 9 | 35.0 dB / 0.885 | 41 / 52 / 68 s |
+| 2 | `bb-mobilenet_v3_small-l2-b16p48` | 79 B | 123/123 | 100–100 % | 19 | 43.0 dB / 0.979 | 19 / 25 / 34 s |
+| 2 | `sw-l2-c10x8b16p48` (SqueezeNet) | 79 B | 123/123 | 100–100 % | 17 | 42.9 dB / 0.978 | 30 / 47 / 264 s |
+
+Every arm meets the promotion rule. Observed success is 100 %, and the cluster-bootstrap lower
+bound is 100 %. Paired frame-0 against the SqueezeNet finalist at the same cap: 0 wins and 0
+losses, because both sides succeeded on every cover. As before, zero failures in 41 covers is
+consistent with a per-cover failure rate up to about 7 %.
+
+The SqueezeNet holdout ran on a different day, under different box load. The same-day screen
+controls give the same picture:
+- 79 B: SqueezeNet median 49 s, MobileNetV3 28 s.
+- 302 B: SqueezeNet 62 s, MobileNetV3 31 s.
+
+MobileNetV3 also takes less memory: about 0.7 GB against 0.8 GB per encode, measured at
+library level. A full CLI encode at 494 B peaks at 0.93 GB RSS and takes 47 s.
+
+**Stress split** (9 synthetic covers, one frame per arm, reported separately):
+
+| Arm | Success | Failures |
+|---|---:|---|
+| MobileNetV3 494 B | 6/9 | `colour_bars`, `minimum_160x128`, `noise_odd` |
+| MobileNetV3 302 B | 7/9 | `minimum_160x128`, `noise_odd` |
+| SqueezeNet 302 B | 6/9 | `colour_bars`, `minimum_160x128`, `noise_odd` |
+| MobileNetV3 79 B | 4/9 | `colour_bars`, `flat_black`, `flat_white`, `minimum_160x128`, `noise_odd` |
+| SqueezeNet 79 B | 3/9 | the same five, plus `page` |
+
+Every stress failure was a refusal: the encoder wrote no file. MobileNetV3 refuses in about
+3½–5 minutes, where SqueezeNet took 6–10.
+
+**Secondary measures** (screen PNGs, not used to decide):
+- Decoding with 1 thread and with 4 gave identical received bytes on 152 of 152 PNGs.
+- After a JPEG re-save, decoding still worked on 2 of 152 at quality 95, and on none at 90. No
+  backbone gives JPEG robustness.
+
+**Not covered for MobileNetV3:** the 640-px small-cover check, the detectability analysis below
+and the thread-count determinism run on the holdout PNGs. The profiles are new, experimental,
+and named after the arms that were scored. The name is part of the identity, so a PNG decodes
+only under its exact profile name.
 
 ## Detectability
 

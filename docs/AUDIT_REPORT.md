@@ -97,6 +97,15 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
   - 8-level cap: both 302 B and legacy 161 B passed 41/41.
   - Median encodes were slower than at 1280 px: 44 s and 52 s, with a long tail up to 16 min.
   - Details are in [BENCHMARK.md](BENCHMARK.md#exploratory-held-out-covers-at-640-px).
+- **Newer backbone** (second preregistration, after the above): four torchvision backbones were
+  screened against SqueezeNet on the same grid, ladder and 90 s budget. MobileNetV3-Small was
+  held out (41 × 3) at three sizes, and all three passed 123/123:
+  - **494 B at an 8-level cap**: 1.6× the SqueezeNet finalist, PSNR 34.1 dB / SSIM 0.872,
+    median encode 33 s.
+  - 302 B and 79 B: the same sizes as the finalists, with matching distortion and about 1.6×
+    faster encodes (25 s and 19 s).
+  - Not yet run for these profiles: the 640-px check and detectability.
+  - Details are in [BENCHMARK.md](BENCHMARK.md#backbone-comparison-mobilenetv3-small).
 
 ## 4. Showcase handoff
 
@@ -130,8 +139,11 @@ Each fixture was checked with the public CLI in fresh processes:
 
 - **Content-adaptive allocation** (fewer bits on flat tiles). This is the obvious fix for the
   `china` and stress failures. It is untested.
-- **Alternative frozen models** (for example ResNet-18 or MobileNetV3). Not tried in this pass.
-  SqueezeNet was kept for its pinned checkpoint and the legacy compatibility.
+- **Other frozen models.** Done afterwards; see §3. Still open:
+  - ResNet-18 at 143 B (cap 2) qualified, but was not held out.
+  - The MobileNetV3 ladder above 494 B.
+  - DINOv2, which was left out to avoid running hub code.
+  SqueezeNet remains the reader for the legacy frames and the `sw-` profiles.
 - **PNG interoperability.** Re-serialization at other compression levels is covered by tests.
   Third-party encoders and colour-managed viewers re-saving with an ICC profile are not covered.
   JPEG, resizing and cropping are out of scope, and the profiles have no robustness to them.
