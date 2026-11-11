@@ -12,6 +12,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 import numpy as np
@@ -43,38 +44,48 @@ def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-# Demo-site fixtures: three held-out covers, one message per mode each.
+# Demo-site fixtures: three held-out covers, one message per mode each. Subtle and Long use the
+# MobileNetV3-Small profiles (docs/BENCHMARK.md#backbone-comparison-mobilenetv3-small).
 DEMO_OUT = ROOT / "demo-photos" / "fixtures"
 DEMO = {
     "coffee-beans": [
         dict(stem="classic", profile="legacy-v1", cap=8, message="Beans at six."),
-        dict(stem="subtle", profile="sw-l2-c10x8b16p48", cap=2,
+        dict(stem="subtle", profile="bb-mobilenet_v3_small-l2-b16p48", cap=2,
              message="The roaster on Via Lucca is ours. Order the dark blend and pay in cash."),
-        dict(stem="long", profile="sw-l8-c10x8b40p64", cap=8,
+        dict(stem="long", profile="bb-mobilenet_v3_small-l8-b64p112", cap=8,
              message=("Courier, your contact runs the coffee stall by the east gate of the market. "
                       "Order a double roast, no sugar, and leave a folded newspaper on the counter. "
                       "If she asks about the rain in Vienna, say it stopped on Tuesday. She will pass "
-                      "you a paper bag. Do not open it until you are across the river.")),
+                      "you a paper bag. Do not open it until you are across the river. Inside is a brass key "
+                      "and a ticket for the night train to Trieste. Board the third carriage, take the "
+                      "window seat and wait for a man reading yesterday's paper. Give him the key; keep "
+                      "the stub.")),
     ],
     "milky-way": [
         dict(stem="classic", profile="legacy-v1", cap=8, message="Eyes on Orion"),
-        dict(stem="subtle", profile="sw-l2-c10x8b16p48", cap=2,
+        dict(stem="subtle", profile="bb-mobilenet_v3_small-l2-b16p48", cap=2,
              message="Signal from the fence line at 02:00. Two flashes mean the road is clear."),
-        dict(stem="long", profile="sw-l8-c10x8b40p64", cap=8,
+        dict(stem="long", profile="bb-mobilenet_v3_small-l8-b64p112", cap=8,
              message=("Night team: the drop is at the last fence post on the ridge, under the flat "
                       "stone. Arrive after moonset and use no torches. If the sky is clear, wait for "
                       "the satellite to pass overhead, then move. If you see headlights on the "
-                      "road, abort and return at the same hour tomorrow. Burn this after reading.")),
+                      "road, abort and return at the same hour tomorrow. Burn this after reading. Bring the "
+                      "red lamp and a spare radio battery. Two short flashes mean all clear; one long "
+                      "flash means wait. The farmer at the gate knows nothing. Leave the field by the "
+                      "north path.")),
     ],
     "antonello-portrait-of-a-man": [
         dict(stem="classic", profile="legacy-v1", cap=8, message="Trust no one."),
-        dict(stem="subtle", profile="sw-l2-c10x8b16p48", cap=2,
+        dict(stem="subtle", profile="bb-mobilenet_v3_small-l2-b16p48", cap=2,
              message="The man in the red cap knows the code. Meet him in Room 4 at closing time."),
-        dict(stem="long", profile="sw-l8-c10x8b40p64", cap=8,
+        dict(stem="long", profile="bb-mobilenet_v3_small-l8-b64p112", cap=8,
              message=("Agent, the portrait is the key. The gallery guard on the night shift is one of "
                       "ours; tell him you admire the red cap and he will let you stay past closing. "
                       "Behind the frame you will find a list of names. Photograph it, put everything "
-                      "back exactly as it was, and leave by the river door before midnight.")),
+                      "back exactly as it was, and leave by the river door before midnight. Avoid the lift; "
+                      "the cameras on the back stairs are off from eleven to twelve. If stopped, say you "
+                      "are from the restoration team. Bring the list to the bookshop on Charing Cross "
+                      "Road at nine.")),
     ],
 }
 
@@ -97,11 +108,14 @@ def build(cover_path, fixtures, out_dir, original, manifest, source):
             message = fx["message"].encode()
             assert len(message) <= capacity(fx["profile"]), (fx["stem"], len(message))
             marked = out_dir / f"{fx['stem']}.png"
+            encode_s = None
             if not marked.exists():
                 (tmp / "msg").write_bytes(message)
+                started = time.perf_counter()
                 run = cli("encode", cover_path, marked, "--profile", fx["profile"],
                           "--message-file", tmp / "msg", "--passphrase-file", good)
                 assert run.returncode == 0, run.stderr.decode()
+                encode_s = round(time.perf_counter() - started, 1)
             pixels = np.asarray(Image.open(marked).convert("RGB"), dtype=np.int16)
             delta = np.abs(pixels - cover.astype(np.int16))
             assert delta.max() <= fx["cap"], delta.max()
@@ -120,6 +134,7 @@ def build(cover_path, fixtures, out_dir, original, manifest, source):
             legacy = fx["profile"].startswith("legacy")
             entries.append(dict(
                 carrier="ghostframe-png", profile=fx["profile"],
+                backbone="squeezenet1_1" if fx["profile"] in LEGACY else PROFILES[fx["profile"]].backbone,
                 status="legacy default" if legacy else "recommended experimental",
                 original=original.name, encoded=marked.name, difference=diff.name,
                 amplification=AMPLIFY // fx["cap"], cap=fx["cap"], max_rgb_delta=int(delta.max()),
@@ -127,7 +142,8 @@ def build(cover_path, fixtures, out_dir, original, manifest, source):
                 recovered_message=fx["message"], payload_bytes=len(message),
                 profile_capacity=capacity(fx["profile"]), source=source,
                 original_authenticates=False, checks=checks,
-                sha256={p.name: sha256(p) for p in (original, marked, diff)}))
+                sha256={p.name: sha256(p) for p in (original, marked, diff)},
+                **({"encode_s_cli": encode_s} if encode_s is not None else {})))
             print(out_dir.name, fx["stem"], "verified", checks, flush=True)
     manifest.write_text(json.dumps(entries, indent=2) + "\n")
 

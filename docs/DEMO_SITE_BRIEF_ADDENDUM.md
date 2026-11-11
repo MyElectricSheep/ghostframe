@@ -1,5 +1,13 @@
 # Demo site brief: addendum (small photos and hosting)
 
+> **Engine update, 2026-11-11.** Subtle and Long now use the MobileNetV3-Small profiles
+> (`bb-mobilenet_v3_small-l2-b16p48`, 79 B, and `bb-mobilenet_v3_small-l8-b64p112`, **494 B**).
+> Encodes are about 1.6× faster, and Classic is unchanged. Where this brief gives SqueezeNet
+> profile names, the 302 B limit or encode times, the current figures are in
+> [design-handoff/mobilenet-v3/](../design-handoff/mobilenet-v3/README.md). The product rules,
+> states and copy here still apply.
+
+
 This adds to [DEMO_SITE_BRIEF.md](DEMO_SITE_BRIEF.md). Where they disagree, this file wins.
 It covers two new findings:
 1. How the engine behaves on smaller photos.

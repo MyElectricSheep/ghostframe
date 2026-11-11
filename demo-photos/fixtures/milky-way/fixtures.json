@@ -2,6 +2,7 @@
   {
     "carrier": "ghostframe-png",
     "profile": "legacy-v1",
+    "backbone": "squeezenet1_1",
     "status": "legacy default",
     "original": "original.png",
     "encoded": "classic.png",
@@ -29,7 +30,8 @@
   },
   {
     "carrier": "ghostframe-png",
-    "profile": "sw-l2-c10x8b16p48",
+    "profile": "bb-mobilenet_v3_small-l2-b16p48",
+    "backbone": "mobilenet_v3_small",
     "status": "recommended experimental",
     "original": "original.png",
     "encoded": "subtle.png",
@@ -37,7 +39,7 @@
     "amplification": 96,
     "cap": 2,
     "max_rgb_delta": 2,
-    "changed_channel_fraction": 0.914,
+    "changed_channel_fraction": 0.9145,
     "recovered_message": "Signal from the fence line at 02:00. Two flashes mean the road is clear.",
     "payload_bytes": 72,
     "profile_capacity": 79,
@@ -51,13 +53,15 @@
     },
     "sha256": {
       "original.png": "2c806c48fa650246466e0eddc32290fc673e0f8bc0e65e4e809e72886d4a4500",
-      "subtle.png": "3b49f4a0901f62b756c9ea011bc82a5de61866b79f26e0a11a6abcc0ef2d5428",
-      "subtle-difference.png": "9655462f3d12176f82904615d886de9c028fb856d9d8a5d0025ce7618ea962c0"
-    }
+      "subtle.png": "c71a745651be3c70e50c197f606deec515236c18bca332c4dd1d6b10e31f539a",
+      "subtle-difference.png": "840be771083ff35f4e25d607bda53d1a434d7f5036ab6d193fa61adbbac08db8"
+    },
+    "encode_s_cli": 29.4
   },
   {
     "carrier": "ghostframe-png",
-    "profile": "sw-l8-c10x8b40p64",
+    "profile": "bb-mobilenet_v3_small-l8-b64p112",
+    "backbone": "mobilenet_v3_small",
     "status": "recommended experimental",
     "original": "original.png",
     "encoded": "long.png",
@@ -65,10 +69,10 @@
     "amplification": 24,
     "cap": 8,
     "max_rgb_delta": 8,
-    "changed_channel_fraction": 0.9194,
-    "recovered_message": "Night team: the drop is at the last fence post on the ridge, under the flat stone. Arrive after moonset and use no torches. If the sky is clear, wait for the satellite to pass overhead, then move. If you see headlights on the road, abort and return at the same hour tomorrow. Burn this after reading.",
-    "payload_bytes": 300,
-    "profile_capacity": 302,
+    "changed_channel_fraction": 0.9182,
+    "recovered_message": "Night team: the drop is at the last fence post on the ridge, under the flat stone. Arrive after moonset and use no torches. If the sky is clear, wait for the satellite to pass overhead, then move. If you see headlights on the road, abort and return at the same hour tomorrow. Burn this after reading. Bring the red lamp and a spare radio battery. Two short flashes mean all clear; one long flash means wait. The farmer at the gate knows nothing. Leave the field by the north path.",
+    "payload_bytes": 480,
+    "profile_capacity": 494,
     "source": "../../milky-way.jpg",
     "original_authenticates": false,
     "checks": {
@@ -79,8 +83,9 @@
     },
     "sha256": {
       "original.png": "2c806c48fa650246466e0eddc32290fc673e0f8bc0e65e4e809e72886d4a4500",
-      "long.png": "67ecd1d27f08e0d33f1928ff65e175b8ab49d0e136312ac58317ef68e579233f",
-      "long-difference.png": "4d2a99fd1e1151f4ba9b94d36023fb98310d90ba404a530f4974c7f5c9e7c584"
-    }
+      "long.png": "1d90e59ecead45b59698dde14ccfa44c4c4d1be709bb4196b565fa7c43f908bf",
+      "long-difference.png": "93ce697b48581f1411c78f5d872241f6a8ad7eeccd54b864c8677987aef60e45"
+    },
+    "encode_s_cli": 41.8
   }
 ]
