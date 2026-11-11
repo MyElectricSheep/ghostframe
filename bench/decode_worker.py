@@ -48,6 +48,13 @@ def main():
 
     model = load_model("cpu")
     load_s = perf_counter() - started
+
+    def model_for(profile):
+        if profile.backbone == "squeezenet1_1":
+            return model
+        from ghostframe_png import backbones
+        return backbones.load(profile.backbone)
+
     jobs = json.loads(args.jobs.read_text())
     with args.out.open("a") as out:
         for job in jobs:
@@ -63,7 +70,8 @@ def main():
                 else:
                     profile = from_spec(job["spec"])
                     info = {}
-                    message = core.decode_message(core.load_png(job["png"]), password, profile, model, report=info)
+                    message = core.decode_message(core.load_png(job["png"]), password, profile,
+                                                  model_for(profile), report=info)
                     received = info.pop("received")
                 row.update(ok=True, message=message.hex())
             except Exception as exc:  # Record every failure; a failure never yields plaintext.
@@ -71,7 +79,8 @@ def main():
                 if received is None and job["profile"] not in LEGACY:
                     try:
                         profile = from_spec(job["spec"])
-                        received = core.scores_to_bytes(core.read_scores(core.load_png(job["png"]), profile, model))[0]
+                        received = core.scores_to_bytes(core.read_scores(core.load_png(job["png"]), profile,
+                                                                         model_for(profile)))[0]
                     except Exception:
                         pass
             row.update(decode_s=perf_counter() - t, received=None if received is None else bytes(received).hex(),

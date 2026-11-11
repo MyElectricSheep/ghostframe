@@ -60,6 +60,7 @@ def suites():
         variant(L8, "sw-l8-c12x10b40p96", cols=12, rows=10, bits=40, parity=96),
         variant(L8, "sw-l8-c14x12b32p96", cols=14, rows=12, bits=32, parity=96),
     ]
+    s["backbones"] = [p for rungs in backbone_ladder().values() for p in rungs]
     by_name = {p.name: p for suite in s.values() for p in suite}
     s["finalists-tune"] = [by_name[n] for n in (
         "sw-l2-c10x8b20p48", "sw-l2-c12x10b12p36", "sw-l2-c10x8b16p32",
@@ -67,3 +68,24 @@ def suites():
     # All three 2-level candidates above failed china; next in capacity order (screen 6/6 each).
     s["finalists-tune-l2b"] = [by_name["sw-l2-c10x8b16p48"], L2, by_name["sw-l2-c8x6b20p32"]]
     return s
+
+
+# Backbone screen (bench/PREREGISTRATION-BACKBONES.md). Margins are scaled per backbone.
+BACKBONE_SCALE = {'mobilenet_v3_small': 1.0805, 'efficientnet_b0': 0.7251, 'resnet18': 0.9546, 'convnext_tiny': 0.651}  # median clean |score| / SqueezeNet's (tools/score_scale.py)
+LADDER = {2: [(16, 48), (20, 48), (24, 64), (32, 80)], 8: [(40, 64), (48, 80), (56, 96), (64, 112)]}
+BACKBONE_NAMES = ("squeezenet1_1", "mobilenet_v3_small", "efficientnet_b0", "resnet18", "convnext_tiny")
+
+
+def backbone_ladder():
+    """(backbone, cap) -> ascending rungs."""
+    base = PROFILES["sw-l2-c10x8b16p48"]
+    out = {}
+    for backbone in BACKBONE_NAMES:
+        scale = 1.0 if backbone == "squeezenet1_1" else BACKBONE_SCALE.get(backbone)
+        if scale is None:
+            continue
+        for cap, rungs in LADDER.items():
+            out[backbone, cap] = [variant(base, f"bb-{backbone}-l{cap}-b{b}p{p}", bits=b, parity=p, epsilon=cap,
+                                          backbone=backbone, margin=base.margin * scale,
+                                          safety=base.safety * scale) for b, p in rungs]
+    return out

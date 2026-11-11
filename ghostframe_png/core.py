@@ -15,6 +15,7 @@ import torch
 import torch.nn.functional as F
 
 from ghostframe import SHA256 as CHECKPOINT_SHA256, embedding
+from ghostframe_png import backbones
 
 MAX_PIXELS = 4_000_000
 SALT_BYTES = 16
@@ -55,6 +56,7 @@ class Profile:
     experimental: bool = True
     notes: str = ""
     aad_extra: tuple = field(default=(), compare=False)
+    backbone: str = "squeezenet1_1"  # frozen feature extractor; others live in backbones.py
 
     @property
     def codeword_bytes(self):
@@ -85,9 +87,19 @@ class Profile:
 
     @property
     def identity(self):
+        if self.backbone != "squeezenet1_1":  # SqueezeNet identities stay exactly as scored
+            backbone = backbones.BACKBONES[self.backbone]
+            fields = (self.name, self.cols, self.rows, self.bits, self.parity, int(self.centered),
+                      self.backbone, backbone.sha256[:16],
+                      backbones.calibration_mean(backbone)[1][:16] if self.centered else "-")
+            return "ghostframe-png/v1/" + "/".join(map(str, fields))
         fields = (self.name, self.cols, self.rows, self.bits, self.parity, int(self.centered),
                   CHECKPOINT_SHA256[:16], _calibration_digest()[:16] if self.centered else "-")
         return "ghostframe-png/v1/" + "/".join(map(str, fields))
+
+    @property
+    def dim(self):
+        return 512 if self.backbone == "squeezenet1_1" else backbones.BACKBONES[self.backbone].dim
 
     def validate(self):
         if self.cols * self.rows * self.bits % 8:
@@ -96,8 +108,8 @@ class Profile:
             raise ValueError(f"{self.name}: parity leaves no data in a block")
         if self.capacity < 1:
             raise ValueError(f"{self.name}: no room for a payload")
-        if not 1 <= self.bits <= 512:
-            raise ValueError(f"{self.name}: bits per tile must be 1-512")
+        if not 1 <= self.bits <= self.dim:
+            raise ValueError(f"{self.name}: bits per tile must be 1-{self.dim}")
 
 
 def _p(name, cols, rows, bits, parity, epsilon, **kw):
@@ -271,11 +283,12 @@ def carriers(profile, index):
         for bit in range(profile.bits):
             domain = f"{profile.identity}/tile/{index}/bit/{bit}".encode()
             digest = hmac.digest(b"ghostframe-png public carriers", domain, hashlib.sha256)
-            signs = np.unpackbits(np.frombuffer(hashlib.shake_256(digest).digest(64), np.uint8))
+            signs = np.unpackbits(np.frombuffer(hashlib.shake_256(digest).digest(profile.dim // 8), np.uint8))
             rows.append(signs.astype(np.float32) * 2 - 1)
         matrix = torch.from_numpy(np.stack(rows))
         if profile.centered:
-            mean = _calibration()
+            mean = _calibration() if profile.backbone == "squeezenet1_1" else \
+                backbones.calibration_mean(backbones.BACKBONES[profile.backbone])[0]
             matrix = matrix - (matrix @ mean)[:, None] * mean
         _carrier_cache[key] = matrix / matrix.norm(dim=1, keepdim=True)
     return _carrier_cache[key]
@@ -394,12 +407,17 @@ def _tensor(rgb):
     return torch.from_numpy(np.ascontiguousarray(rgb)).permute(2, 0, 1)[None].float() / 255
 
 
+def _embed(model, image):
+    embed = getattr(model, "ghostframe_embed", None)
+    return embed(image) if embed else embedding(model, image)
+
+
 def read_scores(rgb, profile, model):
     """Signed scores for every carrier bit, tile-major. One independent forward pass per tile."""
     out = []
     with torch.inference_mode():
         for index, (l, t, r, b) in enumerate(tile_boxes(rgb.shape, profile)):
-            out.append((embedding(model, _tensor(rgb[t:b, l:r])) @ carriers(profile, index).T)[0])
+            out.append((_embed(model, _tensor(rgb[t:b, l:r])) @ carriers(profile, index).T)[0])
     return torch.cat(out).numpy()
 
 
@@ -433,7 +451,7 @@ def _optimize(model, cover_tiles, start_tiles, directions, targets, profile, ste
             candidate = (cover_tiles[chunk] + d).clamp(0, 1)
             quantized = (candidate * 255).round() / 255
             straight = quantized.detach() + (candidate - candidate.detach())
-            signed = torch.einsum("bd,bnd->bn", embedding(model, straight), directions[chunk]) * targets[chunk]
+            signed = torch.einsum("bd,bnd->bn", _embed(model, straight), directions[chunk]) * targets[chunk]
             worst = signed.detach().min(dim=1).values
             key = torch.minimum(worst, torch.tensor(profile.margin))
             improve = key > best_key[chunk]

@@ -7,11 +7,13 @@ interrupted run resumes. Every attempted encode is recorded, including failures.
 Payloads and salts are derived from the trial key here, in benchmark code only.
 """
 import argparse
+import contextlib
 import hashlib
 import io
 import json
 from pathlib import Path
 import resource
+import signal
 import subprocess
 import sys
 from time import perf_counter
@@ -84,6 +86,31 @@ def encode_legacy(name, cover_path, message, model):
     return buffer.getvalue(), codeword, np.asarray(image)
 
 
+@contextlib.contextmanager
+def deadline(seconds):
+    if not seconds:
+        yield
+        return
+
+    def expire(signum, frame):
+        raise TimeoutError(f"Encode exceeded the {seconds:.0f} s limit. No output written.")
+
+    previous = signal.signal(signal.SIGALRM, expire)
+    signal.setitimer(signal.ITIMER_REAL, seconds)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous)
+
+
+def model_for(profile, default):
+    if profile.backbone == "squeezenet1_1":
+        return default
+    from ghostframe_png import backbones
+    return backbones.load(profile.backbone)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--suite", required=True, help="suite name from bench.configs, or comma-separated legacy names")
@@ -96,6 +123,7 @@ def main():
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--no-decode", action="store_true")
+    parser.add_argument("--timeout", type=float, help="hard per-encode limit in seconds; counts as a failure")
     args = parser.parse_args()
     torch.set_num_threads(args.threads)
     from ghostframe import load_model
@@ -143,11 +171,12 @@ def main():
                             cover = core.load_cover(path, info)
                             row["colour_conversion"] = info.get("colour_conversion")
                             salt = hashlib.sha256(f"salt/{trial}".encode()).digest()[:core.SALT_BYTES]
-                            data = core.encode_message(cover, message, PASSPHRASE, profile, model,
-                                                       report=report, _salt=salt)
+                            with deadline(args.timeout):
+                                data = core.encode_message(cover, message, PASSPHRASE, profile,
+                                                           model_for(profile, model), report=report, _salt=salt)
                             codeword = report["codeword"]
                         row["status"] = "encoded"
-                    except (core.CapacityError, core.InputError, ValueError) as exc:
+                    except (core.CapacityError, core.InputError, ValueError, TimeoutError) as exc:
                         row["status"] = f"encode_failed: {type(exc).__name__}: {exc}"
                         data, codeword = None, report.get("codeword")
                     row["encode_s"] = perf_counter() - t
