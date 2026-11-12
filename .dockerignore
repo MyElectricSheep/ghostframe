@@ -1,0 +1,10 @@
+# Only what server/Dockerfile copies.
+*
+!pyproject.toml
+!README.md
+!ghostframe.py
+!ghostframe_png/
+!experiments/
+!server/
+**/__pycache__
+server/Dockerfile

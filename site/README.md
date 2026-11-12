@@ -7,6 +7,7 @@ The public page for Ghostframe, built from the design handoff in
 |---|---|---|
 | Page | `site/` | Vite + React + TypeScript, built to a static `site/dist/` |
 | Engine API | `server/` | Python (Starlette) around the real encoder and decoder, both models kept loaded |
+| Hosting | `site/wrangler.jsonc`, `site/worker/`, `server/Dockerfile` | A Cloudflare Worker serves `dist/` and passes `/api/*` to one Cloudflare Container running the engine |
 
 ## Run it locally
 
@@ -57,13 +58,47 @@ is released as soon as the page fetches it, and anything left expires after 15 m
 `legacy-v1` (Short) encoder writes one temporary file inside a private temporary directory and
 deletes it immediately.
 
+## Deploy
+
+Live behind Cloudflare Access at https://ghostframe.electric-sheep.workers.dev (Access app
+`ghostframe`, policy "Only Ben").
+
+```sh
+sudo systemctl start docker              # Docker is off on the VPS; wrangler builds the engine image with it
+cd site
+CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… npm run deploy   # build + verify-dist + wrangler deploy
+sudo systemctl stop docker
+```
+
+- **One engine.** The Worker sends every `/api/*` request to a single Durable Object (`engine`), which
+  starts the container and waits until it answers. There is one container, so the queue, the caps
+  and one-encode-at-a-time hold as on a single server.
+- **Size and sleep.** 4 vCPU, 4 GiB memory, 4 GB disk (an encode peaked at about 1 GB). The container
+  stops after 10 minutes without requests; the next visitor wakes it.
+- **No Internet from the container.** Both checkpoints are baked into the image and checked against
+  their pinned SHA-256 at build time. Outbound access is turned on only when `GF_TURNSTILE_SECRET` is
+  set, because Turnstile verification is the only outbound call.
+- **Two locks.** Access sits in front of the hostname, and the Worker also checks every request's
+  Access token (signature, audience, expiry) before serving anything, assets included. Set
+  `ACCESS_AUD` to `off` in `wrangler.jsonc` only when the site is opened up.
+- **Config.** The caps and the time limit are `vars` in `wrangler.jsonc`, passed to the container
+  when it starts. The Turnstile secret is a Worker secret: `npx wrangler secret put GF_TURNSTILE_SECRET`.
+- **Testing the live site.** Create a temporary Access service token, allow it on the app, then run
+  `CF_ACCESS_CLIENT_ID=… CF_ACCESS_CLIENT_SECRET=… node tests/e2e.mjs https://ghostframe.electric-sheep.workers.dev/ Subtle`.
+  Delete the token afterwards.
+
+Measured on the live container (2026-11-12, 1920 × 1080 sample photo): Subtle 26.8 s, Long 59.7 s,
+Short 48.5 s; every download read back exactly. A cold start took about 23 s until the models were
+loaded.
+
 ## Before launch
 
-- **Hosting is not decided.** Measure encode times on the chosen host: the copy says "usually
-  under 2 minutes", and medians were 19 s / 33 s on the 4-vCPU test server. Also measure the
-  engine's wake-up time, which the copy puts at "10–20 seconds".
+- **Wake-up copy.** The copy promises "10–20 seconds"; a cold start measured about 23 s.
+- **Daily caps live in the container's memory**, so they start again whenever the container
+  sleeps and wakes. Before opening up, keep the counts in the Durable Object's storage.
 - **Keep the live site behind Cloudflare Access** until it is opened up.
-- **Serve every PNG byte for byte.** Turn off Polish, Image Resizing and any WebP/AVIF
-  conversion on this hostname. The API already sends `Cache-Control: no-store, no-transform`.
+- **Serve every PNG byte for byte.** `workers.dev` has no Polish. On a custom domain, turn off
+  Polish, Image Resizing and any WebP/AVIF conversion. The API already sends
+  `Cache-Control: no-store, no-transform`.
 - **The three link placeholders** (`[REPOSITORY_URL]`, `docs/BENCHMARK.md`,
   `docs/AUDIT_REPORT.md`) stay as in the design until the repository is public.

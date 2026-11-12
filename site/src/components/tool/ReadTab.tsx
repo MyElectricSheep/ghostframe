@@ -172,7 +172,7 @@ export function ReadTab() {
               </div>
             </>)}
             {rFailed && (
-              // COPY NOT IN THE DESIGN: proposed wording for a server error, pending approval.
+              // Not in the design: wording for a server error, approved 2026-11-12.
               <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px', padding: '16px', borderRadius: '8px', background: '#f1eee9', border: '1.5px solid rgba(18,16,14,0.55)' })}>
                 <span style={S({ fontSize: '17px', fontWeight: '700' })}>Something went wrong</span>
                 <p style={S({ margin: '0', fontSize: '14px', lineHeight: '1.5' })}>The reader couldn’t finish. Try again in a minute.</p>
