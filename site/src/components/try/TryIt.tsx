@@ -34,7 +34,7 @@ export function TryIt({ state, set, pick }: {
     return () => ro.disconnect();
   }, [state.photo, state.view]);
   return (
-    <section id="try" data-screen-label="Try it" style={S({ maxWidth: '1568px', margin: '0 auto', padding: 'clamp(32px,4.5vw,52px) clamp(16px,4vw,40px) clamp(18px,2.5vw,26px)', scrollMarginTop: '60px' })}>
+    <section id="try" data-screen-label="Try it" style={S({ maxWidth: '1240px', margin: '0 auto', padding: 'clamp(32px,4.5vw,52px) clamp(16px,4vw,40px) clamp(18px,2.5vw,26px)', scrollMarginTop: '60px' })}>
   <div style={S({ display: 'flex', flexDirection: 'column', gap: '22px' })}>
     <div style={S({ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px 32px' })}>
     <div style={S({ display: 'flex', flexDirection: 'column', gap: '8px', flex: '1 1 420px', minWidth: '0', maxWidth: '46em' })}>
@@ -43,8 +43,8 @@ export function TryIt({ state, set, pick }: {
         <p style={S({ margin: '0', fontSize: '16px', lineHeight: '1.55', color: '#625c57', textWrap: 'pretty' })}>Three photos, each with a message already hidden in it in three different ways. Compare each with its original, look at the amplified changes, and see how differently the model now describes each part of the photo.</p>
       </div>
   </div>
-    {/* On wide screens the columns stay 32 px apart and the section is capped at the widest the
-        three can use (controls 164 + stage 900 + panel 440 + gaps), centred on the page. */}
+    {/* Same 1240 px column as every other section, so all left edges line up; the columns stay
+        32 px apart. */}
     <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '24px 32px', alignItems: 'flex-start', justifyContent: 'flex-start' })}>
       <Controls v={v} />
       <Stage v={v} />
