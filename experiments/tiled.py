@@ -59,14 +59,18 @@ def tile_key(index):
     return f"ghostframe-tiled-public-v1/{index}"
 
 
-def embed_tiles(image, bits, model, epsilon):
+def embed_tiles(image, bits, model, epsilon, progress=None):
+    # progress(fraction) only observes; it may raise to cancel.
     if len(bits) != 8 * FRAME_BYTES:
         raise ValueError("Incorrect frame length")
     marked = image.copy()
-    for index, box in enumerate(tile_boxes(image.size)):
+    boxes = tile_boxes(image.size)
+    for index, box in enumerate(boxes):
         start = index * TILE_BITS
         tile = encode(image.crop(box), bits[start:start+TILE_BITS], tile_key(index), model, epsilon=epsilon)
         marked.paste(tile, box[:2])
+        if progress is not None:
+            progress((index + 1) / len(boxes))
     return marked
 
 
