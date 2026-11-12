@@ -34,6 +34,7 @@ details[open] > summary svg{transform:rotate(180deg)}
       <span style="font-weight:700;font-size:16px;letter-spacing:-0.2px">Ghostframe</span>
     </a>
     <span style="font:500 11px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;border:1px dashed rgba(24,20,17,0.30);padding:4px 8px;border-radius:999px">engineering experiment</span>
+    <sc-if value="{{ mWide }}" hint-placeholder-val="{{ true }}">
     <nav aria-label="Sections" style="margin-left:auto;display:flex;gap:2px;flex-wrap:wrap">
       <a href="#try" style="font-size:14px;font-weight:600;color:rgba(18,16,14,0.96);text-decoration:none;padding:8px 10px;border-radius:4px" style-hover="background:rgba(0,0,0,0.05)">Try it</a>
       <a href="#tool" onClick="{{ navHide }}" style="font-size:14px;font-weight:600;color:rgba(18,16,14,0.96);text-decoration:none;padding:8px 10px;border-radius:4px" style-hover="background:rgba(0,0,0,0.05)">Hide</a>
@@ -41,7 +42,27 @@ details[open] > summary svg{transform:rotate(180deg)}
       <a href="#how" style="font-size:14px;font-weight:600;color:rgba(18,16,14,0.96);text-decoration:none;padding:8px 10px;border-radius:4px" style-hover="background:rgba(0,0,0,0.05)">How it works</a>
       <a href="#limits" style="font-size:14px;font-weight:600;color:rgba(18,16,14,0.96);text-decoration:none;padding:8px 10px;border-radius:4px" style-hover="background:rgba(0,0,0,0.05)">Limits and evidence</a>
     </nav>
+    </sc-if>
+    <sc-if value="{{ mNarrow }}" hint-placeholder-val="{{ false }}">
+      <button type="button" onClick="{{ mMenuToggle }}" aria-expanded="{{ mMenuOpenStr }}" aria-controls="gf-menu" aria-label="{{ mMenuAria }}" style="margin-left:auto;width:44px;height:44px;border:0;background:none;border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(18,16,14,0.96);cursor:pointer;margin-right:-8px">
+        <sc-if value="{{ mMenuOpen }}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></sc-if>
+        <sc-if value="{{ mMenuClosed }}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></sc-if>
+      </button>
+    </sc-if>
   </div>
+  <sc-if value="{{ mNarrow }}" hint-placeholder-val="{{ false }}">
+    <div id="gf-menu" style="position:absolute;top:100%;left:0;right:0;height:100vh;background:#f6f4f1;border-top:1px solid rgba(24,20,17,0.10);display:flex;flex-direction:column;overflow-y:auto;transition:opacity 220ms ease, transform 220ms ease;opacity:{{ mMenuOp }};transform:{{ mMenuTy }};pointer-events:{{ mMenuPe }};visibility:{{ mMenuVis }}">
+      <nav aria-label="Sections" style="display:flex;flex-direction:column;padding:8px 0">
+        <sc-for list="{{ mLinks }}" as="l" hint-placeholder-count="5">
+          <a href="{{ l.href }}" onClick="{{ l.onClick }}" style="display:flex;align-items:baseline;gap:14px;padding:18px 20px;border-bottom:1px solid rgba(24,20,17,0.10);text-decoration:none;color:rgba(18,16,14,0.96)">
+            <span style="font:500 12px/1 'IBM Plex Mono',ui-monospace,monospace;color:#3f648c;width:20px;flex:none">{{ l.n }}</span>
+            <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:24px;font-weight:700;letter-spacing:-0.3px">{{ l.t }}</span><span style="font-size:13.5px;color:#625c57">{{ l.d }}</span></span>
+          </a>
+        </sc-for>
+      </nav>
+      <p style="margin:0;padding:20px;font-size:13px;line-height:1.5;color:#625c57">Ghostframe is an engineering experiment by <a href="https://electricsheep.id" target="_blank" rel="noopener">Ben Paget</a>.</p>
+    </div>
+  </sc-if>
 </header>
 
 <section id="top" data-screen-label="Intro" style="max-width:1240px;margin:0 auto;padding:clamp(28px,4.5vw,56px) clamp(16px,4vw,40px) clamp(20px,3vw,28px);display:flex;flex-wrap:wrap;gap:24px 56px;align-items:center">
@@ -81,6 +102,7 @@ details[open] > summary svg{transform:rotate(180deg)}
   </div>
     <div style="display:flex;flex-wrap:wrap;gap:24px 32px;align-items:flex-start;justify-content:space-between">
 
+      <sc-if value="{{ mWide }}" hint-placeholder-val="{{ true }}">
               <div style="display:flex;flex-direction:column;gap:18px;width:164px;flex:none">
           <div role="group" aria-label="Cover" style="display:flex;flex-direction:column;gap:6px">
             <span style="font:500 10.5px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">01 · cover</span>
@@ -120,7 +142,15 @@ details[open] > summary svg{transform:rotate(180deg)}
           </div>
         </div>
 
+      </sc-if>
       <div style="display:flex;flex-direction:column;gap:10px;flex:1 1 {{ wStageW }};max-width:{{ wStageMax }};min-width:0">
+        <sc-if value="{{ mNarrow }}" hint-placeholder-val="{{ false }}">
+          <button type="button" onClick="{{ mSheetOpen }}" aria-haspopup="dialog" style="display:flex;align-items:center;gap:10px;padding:8px 10px 8px 8px;min-height:56px;border:1px solid rgba(24,20,17,0.14);border-radius:8px;background:#fff;text-align:left;color:rgba(18,16,14,0.96);cursor:pointer">
+            <img src="{{ mThumb }}" alt="" style="width:40px;height:40px;object-fit:cover;object-position:{{ mThumbPos }};border-radius:4px;display:block;flex:none">
+            <span style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:0"><span style="font-size:14.5px;font-weight:600">{{ mSum }}</span><span style="font:500 11px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ mCap }}</span></span>
+            <span style="font-size:14px;font-weight:600;color:#3f648c">Change</span>
+          </button>
+        </sc-if>
         <div style="background:#312e2b;border-radius:{{ wFrameRadius }};padding:10px;display:flex;flex-direction:column;gap:8px">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font:500 11px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#d9d3cc"><span>{{ wFrameL }}</span>
             <span style="display:flex;align-items:center;gap:8px">{{ wFrameR }}
@@ -167,6 +197,33 @@ details[open] > summary svg{transform:rotate(180deg)}
           </div>
         </div>
         
+        <sc-if value="{{ mNarrow }}" hint-placeholder-val="{{ false }}">
+          <div role="radiogroup" aria-label="View" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;background:rgba(24,20,17,0.07);border-radius:8px;padding:3px">
+            <sc-for list="{{ mViews }}" as="v" hint-placeholder-count="3">
+              <button type="button" role="radio" aria-checked="{{ v.pressed }}" aria-label="{{ v.label }}" onClick="{{ v.onClick }}" style="min-height:44px;border:0;border-radius:6px;background:{{ v.sbg }};box-shadow:{{ v.sh }};color:{{ v.sc }};font-size:13.5px;font-weight:600;cursor:pointer">{{ v.short }}</button>
+            </sc-for>
+          </div>
+          <div onClick="{{ mSheetClose }}" style="position:fixed;inset:0;z-index:40;background:rgba(18,16,14,0.38);transition:opacity 240ms ease;opacity:{{ mScrim }};pointer-events:{{ mSheetPe }}"></div>
+          <div role="dialog" aria-label="Photo and mode" aria-hidden="{{ mSheetHidden }}" style="position:fixed;left:0;right:0;bottom:0;z-index:41;max-height:88vh;overflow-y:auto;background:#f6f4f1;border-radius:18px 18px 0 0;padding:10px 16px 20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 -10px 30px rgba(18,16,14,0.16);transition:transform 280ms cubic-bezier(0.22,0.61,0.36,1), visibility 280ms;transform:{{ mSheet }};visibility:{{ mSheetVis }}">
+            <span aria-hidden="true" style="align-self:center;width:40px;height:4px;border-radius:2px;background:rgba(24,20,17,0.20)"></span>
+            <span style="font:500 11px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">01 · photo</span>
+            <div role="group" aria-label="Photo" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+              <sc-for list="{{ wCovers }}" as="c" hint-placeholder-count="3">
+                <button type="button" aria-pressed="{{ c.pressed }}" onClick="{{ c.onClick }}" style="display:flex;flex-direction:column;gap:6px;padding:4px 4px 8px;border:1.5px solid {{ c.bd }};background:{{ c.bg }};border-radius:7px;color:rgba(18,16,14,0.96);cursor:pointer"><img src="{{ c.src }}" alt="" style="width:100%;height:54px;object-fit:cover;object-position:{{ c.pos }};border-radius:4px;display:block"><span style="font-size:12.5px;font-weight:600">{{ c.label }}</span></button>
+              </sc-for>
+            </div>
+            <span style="font:500 11px/1.4 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;margin-top:4px">02 · mode · how much the message can hold, and how much the pixels may change</span>
+            <div role="radiogroup" aria-label="Mode" style="display:flex;flex-direction:column;border:1px solid rgba(24,20,17,0.12);border-radius:8px;overflow:hidden;background:#fff">
+              <sc-for list="{{ mModes }}" as="m" hint-placeholder-count="3">
+                <button type="button" role="radio" aria-checked="{{ m.pressed }}" onClick="{{ m.onClick }}" style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:0;border-bottom:1px solid rgba(24,20,17,0.08);background:{{ m.rbg }};text-align:left;color:rgba(18,16,14,0.96);cursor:pointer">
+                  <span aria-hidden="true" style="flex:none;width:16px;height:16px;margin-top:2px;border-radius:50%;border:{{ m.dotBd }};box-sizing:border-box;background:#fff"></span>
+                  <span style="display:flex;flex-direction:column;gap:3px;flex:1"><span style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:14.5px;font-weight:600">{{ m.label }}</span><span style="font:500 11px/1.4 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ m.capTxt }}</span></span><span style="font-size:13px;line-height:1.45;color:#625c57">{{ m.tip }}</span></span>
+                </button>
+              </sc-for>
+            </div>
+            <button type="button" onClick="{{ mSheetClose }}" style="min-height:48px;border:0;border-radius:6px;background:#3f648c;color:#fff;font-size:15px;font-weight:600;cursor:pointer">Show this photo</button>
+          </div>
+        </sc-if>
         <sc-if value="{{ wEmbed }}" hint-placeholder-val="{{ false }}">
           <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center">
             <div aria-hidden="true" style="height:10px;width:100%;box-sizing:border-box;border-radius:2px;background:linear-gradient(90deg,rgba(63,100,140,0.06),rgba(63,100,140,0.84));border:1px solid rgba(24,20,17,0.10)"></div>
@@ -327,6 +384,7 @@ details[open] > summary svg{transform:rotate(180deg)}
       <p style="margin:0;font-size:16px;line-height:1.55;color:#625c57;text-wrap:pretty">A frozen, public image model, <a href="https://arxiv.org/abs/1905.02244" target="_blank" rel="noopener">MobileNetV3-Small</a> (or, <a href="https://github.com/forresti/SqueezeNet/tree/master/SqueezeNet_v1.1" target="_blank" rel="noopener">SqueezeNet 1.1</a> for Short mode) looks at the photo one tile at a time. For each tile it produces an embedding: the list of numbers the model uses to describe that tile. The encoder nudges pixels until those numbers spell out the encrypted message. The model’s weights never change. Only the pixels do.</p>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+      <sc-if value="{{ mWide }}" hint-placeholder-val="{{ true }}">
       <figure style="flex:1 1 440px;min-width:0;max-width:600px;margin:0;display:flex;flex-direction:column;gap:10px">
         <div style="background:#312e2b;border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:8px">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font:500 11px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#d9d3cc">
@@ -342,7 +400,47 @@ details[open] > summary svg{transform:rotate(180deg)}
         </div>
         <figcaption style="font-size:12px;line-height:1.5;color:#625c57;text-wrap:pretty">Illustration. The message, grid sizes and pixel cap are real; the numbers inside the model are simplified.</figcaption>
       </figure>
+      </sc-if>
+      <sc-if value="{{ mNarrow }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:12px;width:calc(100% + 32px);margin:0 -16px">
+          <div ref="{{ howCarRef }}" onScroll="{{ onHowCar }}" aria-label="Steps" style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px;scroll-padding:0 16px;scrollbar-width:none">
+            <sc-for list="{{ mCards }}" as="c" hint-placeholder-count="5">
+              <div role="group" aria-label="{{ c.aria }}" style="flex:none;width:min(340px, calc(100vw - 56px));scroll-snap-align:start;display:flex;flex-direction:column;gap:12px;background:#fff;border:1px solid {{ c.bd }};border-radius:10px;padding:8px 8px 16px;box-sizing:border-box">
+                <div style="background:#312e2b;border-radius:6px;padding:6px;display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;gap:8px;justify-content:space-between;font:500 10.5px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#d9d3cc;padding:2px 2px 0"><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.hdr }}</span><span style="white-space:nowrap">{{ c.time }}</span></div>
+                  <div style="position:relative;border:3px solid #f6f4f1;line-height:0;background:#f6f4f1;aspect-ratio:4 / 3">
+                    <sc-if value="{{ c.on }}" hint-placeholder-val="{{ false }}">
+                      <canvas ref="{{ c.cref }}" width="1120" height="840" role="img" aria-label="{{ howAria }}" style="width:100%;height:100%;display:block"></canvas>
+                      <button type="button" onClick="{{ howReplay }}" aria-label="Replay this step" style="position:absolute;top:8px;right:8px;display:flex;align-items:center;gap:6px;padding:7px 11px 7px 9px;border:0;border-radius:999px;background:rgba(18,16,14,0.82);color:#fff;font:600 12.5px/1 Inter,sans-serif;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 3v6h6"></path></svg>Replay</button>
+                      <div aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(18,16,14,0.10)"><div ref="{{ c.bref }}" style="height:100%;width:0%;background:#3f648c"></div></div>
+                    </sc-if>
+                    <sc-if value="{{ c.off }}" hint-placeholder-val="{{ true }}">
+                      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;line-height:1.3">
+                        <span style="font:500 36px/1 'IBM Plex Mono',ui-monospace,monospace;color:#a39b93">{{ c.n }}</span>
+                        <span style="font-size:12.5px;color:#625c57">Plays when this card is in view</span>
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+                <div style="padding:0 8px;display:flex;flex-direction:column;gap:6px">
+                  <span style="font:500 11px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ c.who }} · {{ c.n }} / 05</span>
+                  <span style="font-size:16.5px;font-weight:700;line-height:1.3">{{ c.t }}</span>
+                  <span style="font-size:14px;line-height:1.5;color:#625c57;text-wrap:pretty">{{ c.d }}</span>
+                </div>
+              </div>
+            </sc-for>
+            <div aria-hidden="true" style="flex:none;width:calc(100% - min(340px, calc(100vw - 56px)) - 44px)"></div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:6px">
+            <sc-for list="{{ mDots }}" as="d" hint-placeholder-count="5">
+              <button type="button" onClick="{{ d.onClick }}" aria-label="{{ d.aria }}" aria-current="{{ d.cur }}" style="width:40px;height:40px;border:0;border-radius:50%;background:{{ d.bg }};color:{{ d.fg }};font:500 11px/1 'IBM Plex Mono',ui-monospace,monospace;cursor:pointer">{{ d.n }}</button>
+            </sc-for>
+          </div>
+          <span style="padding:0 16px;font-size:12px;line-height:1.5;color:#625c57;text-wrap:pretty">Swipe for the next step. Illustration. The message, grid sizes and pixel cap are real; the numbers inside the model are simplified.</span>
+        </div>
+      </sc-if>
       <ol aria-label="Steps" style="flex:1 1 420px;min-width:0;margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+        <sc-if value="{{ mWide }}" hint-placeholder-val="{{ true }}">
         <sc-for list="{{ steps }}" as="f" hint-placeholder-count="5">
           <li style="display:grid;grid-template-columns:32px 1fr;gap:14px;cursor:pointer" onClick="{{ f.onClick }}">
             <div style="display:flex;flex-direction:column;align-items:center">
@@ -358,8 +456,9 @@ details[open] > summary svg{transform:rotate(180deg)}
             </div>
           </li>
         </sc-for>
+        </sc-if>
         <li>
-          <details style="border-top:1px solid rgba(24,20,17,0.10);padding-top:14px;margin-left:46px">
+          <details style="border-top:1px solid rgba(24,20,17,0.10);padding-top:14px;margin-left:{{ mTechML }}">
             <summary style="font-size:15px;font-weight:600;color:#355574">Technical detail</summary>
             <ul style="margin:12px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.55">
               <li><strong>Models:</strong> MobileNetV3-Small for Subtle and Long (<a href="https://arxiv.org/abs/1905.02244" target="_blank" rel="noopener">Howard et al., <em>Searching for MobileNetV3</em>, ICCV 2019</a>), torchvision checkpoint (sha256 <span style="font-family:'IBM Plex Mono',ui-monospace,monospace">047dcff4…</span>), and <a href="https://github.com/forresti/SqueezeNet/tree/master/SqueezeNet_v1.1" target="_blank" rel="noopener">SqueezeNet 1.1</a> for Short (<a href="https://arxiv.org/abs/1602.07360" target="_blank" rel="noopener">original paper</a>), checkpoint (sha256 <span style="font-family:'IBM Plex Mono',ui-monospace,monospace">b8a52dc0…</span>). Each has its own pinned calibration file. PyTorch 2.7.1 CPU, torchvision 0.22.1.</li>
@@ -1245,7 +1344,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.reduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
-    this.onResize = () => { const w = window.innerWidth >= 960; if (w !== this.state.wide) this.setState({ wide:w }); const n = window.innerWidth < 760; if (n !== this.state.narrow) this.setState(n ? { narrow:n, tCmp:'ab' } : { narrow:n }); };
+    this.onResize = () => { const w = window.innerWidth >= 960; if (w !== this.state.wide) this.setState({ wide:w }); const n = window.innerWidth < 760; if (n !== this.state.narrow) { this.setState(n ? { narrow:n } : { narrow:n, menu:false, mSheet:false }); if (!n) try { document.body.style.overflow = ''; } catch (e) {} } };
     window.addEventListener('resize', this.onResize); this.onResize();
     this.applyParams();
     setTimeout(() => { this.howInit(); this.heroInit(); }, 0);
@@ -1437,7 +1536,48 @@ class Component extends DCLogic {
     return { bs:'dashed', bd:'rgba(24,20,17,0.25)', bg:'#f6f4f1' };
   }
 
-  renderVals() {
+  howCarRef = React.createRef();
+  setMenu(open) { this.setState({ menu:open }); try { document.body.style.overflow = open ? 'hidden' : ''; } catch (e) {} }
+  onHowCar = () => {
+    const el = this.howCarRef.current; if (!el || !el.firstElementChild) return;
+    const step = el.firstElementChild.offsetWidth + 12, atEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - 2;
+    const i = atEnd && this.carTarget == null ? 4 : Math.max(0, Math.min(4, Math.round(el.scrollLeft / step)));
+    if (this.carTarget != null) { if (i !== this.carTarget) return; this.carTarget = null; }
+    if (i !== (this.state.howStep || 0)) this.howStart(i);
+  };
+  goHowCard(i) {
+    const el = this.howCarRef.current;
+    if (el && el.firstElementChild) { this.carTarget = i; el.scrollTo({ left:i * (el.firstElementChild.offsetWidth + 12), behavior:'smooth' }); setTimeout(() => { this.carTarget = null; }, 900); }
+    this.howStart(i);
+  }
+  mob(v) {
+    const s = this.state, open = !!s.menu, cur = s.howStep || 0, sheet = !!s.mSheet;
+    const close = () => this.setMenu(false);
+    const P = v.wCovers.find(c => c.pressed === 'true') || v.wCovers[0], M = v.wModeList.find(m => m.pressed === 'true') || v.wModeList[0];
+    const SHORT = { 'Original vs encoded':'Compare', 'Amplified difference':'Difference', 'What the model sees':'Model' };
+    return {
+      mNarrow:!!s.narrow, mWide:!s.narrow,
+      mMenuOpen:open, mMenuClosed:!open, mMenuOpenStr:open ? 'true' : 'false', mMenuAria:open ? 'Close menu' : 'Open menu',
+      mMenuToggle:() => this.setMenu(!open), mMenuOp:open ? 1 : 0, mMenuPe:open ? 'auto' : 'none', mMenuVis:open ? 'visible' : 'hidden', mMenuTy:open ? 'translateY(0)' : 'translateY(-8px)',
+      mLinks:[
+        { n:'01', t:'Try it', d:'Spot the difference in three photos', href:'#try', onClick:close },
+        { n:'02', t:'How it works', d:'Five steps, each animated', href:'#how', onClick:close },
+        { n:'03', t:'Hide a message', d:'In your own photo', href:'#tool', onClick:() => { close(); v.navHide(); } },
+        { n:'04', t:'Read a message', d:'From a PNG you were sent', href:'#tool', onClick:() => { close(); v.navRead(); } },
+        { n:'05', t:'Limits and evidence', d:'What it can’t do, and the numbers', href:'#limits', onClick:close }
+      ],
+      mSum:P.label + ' · ' + M.label, mCap:'up to ' + M.max + ' B · ≤ ' + M.cap + '/255', mThumb:P.src, mThumbPos:P.pos,
+      mSheetOpen:() => this.setState({ mSheet:true }), mSheetClose:() => this.setState({ mSheet:false }),
+      mSheet:sheet ? 'translateY(0)' : 'translateY(105%)', mSheetVis:sheet ? 'visible' : 'hidden', mScrim:sheet ? 1 : 0, mSheetPe:sheet ? 'auto' : 'none', mSheetHidden:sheet ? 'false' : 'true',
+      mModes:v.wModeList.map(m => { const on = m.pressed === 'true'; return { ...m, capTxt:'up to ' + m.max + ' B · ≤ ' + m.cap + '/255', rbg:on ? '#f5f8fb' : '#fff', dotBd:on ? '5px solid ' + BLUE : '1.5px solid #a39b93' }; }),
+      mViews:v.wViewList.map(x => { const on = x.pressed === 'true'; return { ...x, short:SHORT[x.label] || x.label, sbg:on ? '#fff' : 'transparent', sh:on ? '0 1px 2px rgba(18,16,14,0.16)' : 'none', sc:on ? 'rgba(18,16,14,0.96)' : '#625c57' }; }),
+      howCarRef:this.howCarRef, onHowCar:this.onHowCar, mTechML:s.narrow ? '0' : '46px',
+      mCards:v.steps.map((f, i) => { const on = i === cur; return { ...f, on, off:!on, cref:on ? this.howRef : null, bref:on ? this.howBarRef : null, hdr:HOW_LABELS[i], time:on ? v.howTime : '0 / ' + (HOW_DUR[i] / 1000) + ' s', bd:on ? 'rgba(63,100,140,0.5)' : 'rgba(24,20,17,0.12)', aria:'Step ' + f.n + ' of 05' }; }),
+      mDots:v.steps.map((f, i) => { const on = i === cur; return { n:f.n, cur:on ? 'step' : 'false', aria:'Step ' + f.n, bg:on ? BLUE : 'rgba(24,20,17,0.07)', fg:on ? '#fff' : '#625c57', onClick:() => this.goHowCard(i) }; })
+    };
+  }
+  renderVals() { const v = this.baseVals(); return { ...v, ...this.mob(v) }; }
+  baseVals() {
     const s = this.state, TM = MODES[s.tMode], HM = MODES[s.hMode], TP = PHOTOS[s.tPhoto], fi = String(PORDER.indexOf(s.tPhoto) * 3 + ORDER.indexOf(s.tMode) + 2).padStart(2, '0');
     const TF = FIX[s.tPhoto][s.tMode], tBytes = TF[1];
     const mmss = (ms) => { const t = Math.max(0, Math.round(ms / 1000 * 6)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
