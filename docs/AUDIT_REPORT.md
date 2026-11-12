@@ -36,7 +36,7 @@ Legacy wire formats and decoding are unchanged. The original fixtures still deco
   - Frame: salt ‖ AES-256-GCM, with scrypt deriving both the key and the nonce. The AAD is the
     full profile identity. Overhead is 33 bytes, against 47 for the legacy capacity frames.
   - Error correction: interleaved multi-block Reed–Solomon, with soft erasure retries. The
-    decoder tries at most eight distinct salts.
+    decoder tries at most five distinct salts.
   - **Centered carriers.** SqueezeNet features are non-negative, so random ±1 directions were
     biased: 11 % of bits were almost constant on clean tiles. Projecting out a pinned mean from
     the screen and tune covers fixed this. It is the main source of the capacity gain. Matched
