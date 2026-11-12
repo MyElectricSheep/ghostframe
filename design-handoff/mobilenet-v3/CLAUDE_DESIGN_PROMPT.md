@@ -37,11 +37,6 @@ Repository `MyElectricSheep/ghostframe`, branch `main`.
 | Per-tile embedding data for the "What the model sees" view | `demo-photos/fixtures/EMBEDDINGS.md` and `demo-photos/fixtures/embeddings/*.json` |
 | Benchmark write-up | `docs/BENCHMARK.md`, section "Backbone comparison: MobileNetV3-Small" |
 
-**Pending values.** A few values, written ⟨LIKE_THIS⟩ below, come from runs that were still in
-progress when this prompt was written: the 640-px small-photo check and the detector. Fill them
-from `small640` and `detect` in `design-data.json` if those keys are filled. Otherwise leave the
-old sentence in place, add a visible `TODO(data)`, and say so.
-
 Use the numbers in `design-data.json` as they are. Do not round them differently, re-derive them
 or invent any. If something you need is missing, leave a visible `TODO(data)` and say so.
 
@@ -174,13 +169,14 @@ unchanged.
 - "Short messages only." note: `13, 79 or 302 bytes` → **`13, 79 or 494 bytes`**.
 - "Not every photo works." note: `hard images: Subtle 3/9, Long 6/9 · 640 px photos: Subtle
   40/41, Long 41/41` → **`hard images: Subtle 4/9, Long 6/9 · 640 px photos: Subtle
-  ⟨SMALL640_SUBTLE⟩, Long ⟨SMALL640_LONG⟩`** (from `small640` in `design-data.json`).
+  41/41, Long 41/41`** (from `small640` in `design-data.json`).
 - The hard-image dot rows (`hardRows`): Subtle **4** of 9 (was 3), Long 6 of 9.
 - The paragraph under "Flat, synthetic or tiny images": "At 640 px wide, ordinary photos did
-  well: Subtle 40/41 (one refusal, a neon sign at night), Long 41/41." →
-  **⟨SMALL640_SENTENCE⟩**
+  well: Subtle 40/41 (one refusal, a neon sign at night), Long 41/41." → **"At 640 px wide,
+  ordinary photos did well: Subtle and Long each read back 41 of 41."**
 - "Not invisible to software." note: "a detection test separated marked from clean photos 100%
-  of the time" → **⟨DETECT_NOTE⟩** (from `detect`).
+  of the time" is **unchanged**: the detector re-run on the MobileNetV3 profiles again separated
+  all 41 marked photos from their clean originals (AUC 1.0, `detect` in `design-data.json`).
 - "Subtle and Long are experimental." note: `123 of 123 held-out trials each` is unchanged.
 - "How long it takes → encode": "usually a few minutes; stopped after 5 min" → **"usually under 2
   minutes; stopped after 5 min"**.

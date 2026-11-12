@@ -102,8 +102,9 @@ layout, the states and the interactions:
   - Decode: about 2 s per mode.
   - Memory: about 0.9–1.0 GB RSS for a MobileNetV3 encode; plan 2 GB per worker with both
     models resident.
-  - Refusals on hard images take 3½–5 minutes. Small photos (640 px) are slower: see
-    `small640` in `design-data.json`.
+  - Refusals on hard images take 3½–5 minutes.
+  - Small photos (640 px): encode median 21 s (Subtle) and 37 s (Long), slowest 110 s and 51 s,
+    with 41/41 read back in each mode.
 - **"Try all modes"** on Read tries Classic, Subtle and Long. Use the warm models; it's about 6 s.
 - Thread-count determinism was verified, with 1 and 4 threads giving identical results on this
   CPU and torch build. Pin `torch==2.7.1`, `torchvision==0.22.1`, `numpy==2.3.5` and

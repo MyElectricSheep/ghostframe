@@ -104,7 +104,7 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
     median encode 33 s.
   - 302 B and 79 B: the same sizes as the finalists, with matching distortion and about 1.6×
     faster encodes (25 s and 19 s).
-  - Not yet run for these profiles: the 640-px check and detectability.
+  - 640-px covers: 41/41 for both demo profiles (SqueezeNet 79 B was 40/41). The detector still reaches AUC 1.0.
   - Details are in [BENCHMARK.md](BENCHMARK.md#backbone-comparison-mobilenetv3-small).
 
 ## 4. Showcase handoff
