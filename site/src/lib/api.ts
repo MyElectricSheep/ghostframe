@@ -22,6 +22,12 @@ export async function status(): Promise<{ engine_ready: boolean; site_open: bool
   return json(await fetch('/api/status', { cache: 'no-store' }));
 }
 
+export interface Quota { left: number; limit: number; resets_at: string }
+/** Site-wide encodes left today (GET /api/quota). Rejects when there is no cap or no answer. */
+export async function quota(): Promise<Quota> {
+  return json(await fetch('/api/quota', { cache: 'no-store' }));
+}
+
 export async function startEncode(file: Blob, name: string, mode: ModeKey, message: string, passphrase: string, token?: string): Promise<JobView> {
   const form = new FormData();
   form.set('mode', mode); form.set('message', message); form.set('passphrase', passphrase);

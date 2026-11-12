@@ -37,6 +37,7 @@ node tests/e2e.mjs http://127.0.0.1:5178/ Subtle      # Hide -> download -> Read
 node tests/e2e.mjs http://127.0.0.1:5178/ Short 'Meet at dawn.'
 node tests/a11y.mjs                                   # divider and tile keyboard paths, tooltips, tabs, live regions
 node tests/phone.mjs                                  # below 760 px: menu, Try it sheet and switch, How it works cards (focus, Escape, scroll lock)
+node tests/counter.mjs                                # daily encode counter: when it fetches, 0 on "site limit", hidden on failure
 node scripts/touch-targets.mjs /tmp/touch.png         # every control >= 44 px on touch
 node scripts/compare.mjs try 1280,768,375 /tmp/cmp    # side by side with the prototype (serve it on :5190)
 ```
@@ -45,7 +46,7 @@ node scripts/compare.mjs try 1280,768,375 /tmp/cmp    # side by side with the pr
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `GF_SITE_DAILY_CAP` | 50 (placeholder) | encodes per UTC day for the whole site; `none` for no cap |
+| `GF_SITE_DAILY_CAP` | 50 (placeholder) | encodes per UTC day for the whole site; `none` for no cap. `GET /api/quota` returns `{ left, limit, resets_at }` from the same counter (404 with no cap), and the page's daily counter shows it |
 | `GF_VISITOR_DAILY_CAP` | 3 (placeholder) | encodes per UTC day per visitor (keyed IP hash, key replaced daily, never stored) |
 | `GF_ENCODE_TIMEOUT_S` | 300 | hard stop per encode; the copy promises 5 minutes |
 | `GF_TURNSTILE_SECRET` | unset | when set, encode and decode need a Turnstile token (build the page with `VITE_TURNSTILE_SITEKEY`) |
