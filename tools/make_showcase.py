@@ -79,13 +79,13 @@ DEMO = {
         dict(stem="subtle", profile="bb-mobilenet_v3_small-l2-b16p48", cap=2,
              message="The man in the red cap knows the code. Meet him in Room 4 at closing time."),
         dict(stem="long", profile="bb-mobilenet_v3_small-l8-b64p112", cap=8,
-             message=("Agent, the portrait is the key. The gallery guard on the night shift is one of "
-                      "ours; tell him you admire the red cap and he will let you stay past closing. "
-                      "Behind the frame you will find a list of names. Photograph it, put everything "
-                      "back exactly as it was, and leave by the river door before midnight. Avoid the lift; "
-                      "the cameras on the back stairs are off from eleven to twelve. If stopped, say you "
-                      "are from the restoration team. Bring the list to the bookshop on Charing Cross "
-                      "Road at nine.")),
+             message=("Birthday team: the portrait is the first clue. Find the man in the red cap in "
+                      "Room 4 and count the buttons on his coat; that number opens the padlock on the "
+                      "blue box in the cloakroom. Inside is a map of the museum garden. Follow it to the "
+                      "bench by the fountain, where a paper crown and a tin of lemon biscuits are waiting "
+                      "for you. Bring both to the café by the river door before four, and start singing "
+                      "when Maya walks in. If she guesses early, give her the biscuits anyway. Well done, "
+                      "team!")),
     ],
 }
 
