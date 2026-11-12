@@ -119,9 +119,10 @@ The frame format and threat model are in [docs/THREAT_MODEL.md](docs/THREAT_MODE
   reuses the same 41 photos, which had by then been scored for the SqueezeNet profiles. Long was
   the preregistered candidate; Subtle was added by an amendment after screening and before its
   held-out run. The raw records were committed after the runs, so the order is shown by the rule
-  commits, not by the records. The history was rewritten once (2026-11-11) to change the author
-  email; trees and dates were kept. These timestamps are my own and are not independently
-  notarised.
+  commits, not by the records. The history was rewritten twice, keeping dates: on 2026-11-11 to
+  change the author email, and on 2026-11-12 to remove local file paths from the benchmark records
+  (which changes the hashes of later commits; the ones above are current). These timestamps are
+  my own and are not independently notarised.
 - [docs/BENCHMARK.md](docs/BENCHMARK.md): every result, the 640-px check, the detector, and the
   commands to reproduce them.
 - [docs/AUDIT_REPORT.md](docs/AUDIT_REPORT.md): an adversarial review of the earlier prototype's
