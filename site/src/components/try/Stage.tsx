@@ -30,7 +30,7 @@ export function Stage({ v, above, below }: { v: TryItView; above?: React.ReactNo
           <div ref={wStageRef} style={S({ position: 'relative', aspectRatio: wAspect, background: '#4a4541', overflow: 'hidden', border: '3px solid #f6f4f1', userSelect: 'none', touchAction: 'pan-y' })}>
             <img src={wOrig} alt={wStageAlt} style={S({ position: 'absolute', inset: '0', width: '100%', height: '100%', objectFit: 'cover', display: wOrigDisp })} />
             <img src={wMarked} alt="" style={S({ position: 'absolute', inset: '0', width: '100%', height: '100%', objectFit: 'cover', display: wMarkedDisp, clipPath: `inset(0 0 0 ${wClip})` })} />
-            <img src={wDiff} alt="" style={S({ position: 'absolute', inset: '0', width: '100%', height: '100%', objectFit: 'cover', display: wDiffDisp })} />
+            <img src={wDiff} alt="Amplified difference, right of the divider" style={S({ position: 'absolute', inset: '0', width: '100%', height: '100%', objectFit: 'cover', display: wDiffDisp, clipPath: `inset(0 0 0 ${wClip})` })} />
             {wEmbed && (<>
               <div role="group" onKeyDown={wTileKeys} aria-label="Tiles. Choose one to see how far its embedding turned." style={S({ position: 'absolute', inset: '0', display: 'grid', gridTemplateColumns: `repeat(${wCols},1fr)`, gridTemplateRows: `repeat(${wRows},1fr)` })}>
                 {wCells.map((c, i) => (<React.Fragment key={i}>
@@ -50,7 +50,7 @@ export function Stage({ v, above, below }: { v: TryItView; above?: React.ReactNo
             <span style={S({ position: 'absolute', left: '8px', bottom: '8px', font: '500 11.5px/1 \'IBM Plex Mono\',ui-monospace,monospace', background: 'rgba(18,16,14,0.82)', color: '#fff', padding: '6px 8px', borderRadius: '3px', pointerEvents: 'none', zIndex: '3', display: wTagLDisp })}>{wTagL}</span>
             <span style={S({ position: 'absolute', right: '8px', bottom: '8px', font: '500 11.5px/1 \'IBM Plex Mono\',ui-monospace,monospace', background: wTagRBg, color: '#fff', padding: '6px 8px', borderRadius: '3px', pointerEvents: 'none', zIndex: '3' })}>{wTagR}</span>
             {wDiffOn && (<>
-              <div aria-hidden="true" style={S({ position: 'absolute', inset: '0', border: '2px dashed #3f648c', pointerEvents: 'none' })}></div>
+              <div aria-hidden="true" style={S({ position: 'absolute', top: '0', right: '0', bottom: '0', left: wSplitPct, border: '2px dashed #3f648c', pointerEvents: 'none' })}></div>
             </>)}
           </div>
         </div>

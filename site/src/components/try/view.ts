@@ -68,7 +68,8 @@ export function useTryItView(s: TryItState, set: (patch: Partial<TryItState>) =>
   const [bx, by] = pt(b0, 150), [ax, ay] = pt(b0 + th, 150), [x1, y1] = pt(b0, 46), [x2, y2] = pt(b0 + th, 46), [tx, ty] = pt(b0 + th / 2, 62);
   const degs = fl.map((v) => Math.acos(v) * 180 / Math.PI).sort((a, b) => a - b), dg = Math.round(th * 180 / Math.PI), med = Math.round(degs[Math.floor(degs.length / 2)]);
   const FX = fixture(s.photo, s.mode), embed = s.view === 'embed', diff = s.view === 'diff', cmp = s.view === 'compare';
-  const slider = cmp || embed;
+  // Every view has the divider: original on the left; marked, tinted or amplified difference on the right.
+  const slider = cmp || embed || diff;
   const mLabel = M.label;
   const dir = (f: string) => fixturePath(s.photo, f);
 
@@ -132,11 +133,11 @@ export function useTryItView(s: TryItState, set: (patch: Partial<TryItState>) =>
     // stage
     wStageRef: stageRef, wHandleDown, wFrameRadius: '6px',
     wStageW: s.photo === 'antonello' ? '420px' : '560px', wStageMax: s.photo === 'antonello' ? '600px' : '900px', wAspect: P.aspect,
-    wCompare: cmp, wEmbed: embed, wNotEmbed: !embed, wDiffOn: diff, wDivider: slider, wSliderHint: cmp,
+    wCompare: cmp, wEmbed: embed, wNotEmbed: !embed, wDiffOn: diff, wDivider: slider, wSliderHint: cmp || diff,
     wOrig: dir('original.png'), wMarked: dir(s.mode + '.png'), wDiff: dir(s.mode + '-difference.png'),
-    wOrigDisp: !diff ? 'block' : 'none', wMarkedDisp: slider ? 'block' : 'none', wDiffDisp: diff ? 'block' : 'none', wClip: slider ? s.split + '%' : '0%',
+    wOrigDisp: 'block', wMarkedDisp: cmp || embed ? 'block' : 'none', wDiffDisp: diff ? 'block' : 'none', wClip: slider ? s.split + '%' : '0%',
     wStageAlt: P.label + ' · ' + mLabel,
-    wFrameL: diff ? (narrow ? '×' + amp + ' · not the photo' : 'amplified difference ×' + amp) : 'original', wFrameR: embed ? 'embedding change · ' + mLabel.toLowerCase() : diff ? (narrow ? '' : 'real maximum ' + cap + '/255 · not the photo') : mLabel.toLowerCase() + ' · marked',
+    wFrameL: 'original', wFrameR: embed ? 'embedding change · ' + mLabel.toLowerCase() : diff ? (narrow ? '×' + amp + ' · not the photo' : 'amplified ×' + amp + ' · real maximum ' + cap + '/255 · not the photo') : mLabel.toLowerCase() + ' · marked',
     wTagL: 'Original', wTagLDisp: slider ? 'block' : 'none',
     wTagR: diff ? 'Amplified difference ×' + amp : embed ? 'Marked · embedding change' : 'Encoded', wTagRBg: diff || embed ? BLUE : 'rgba(18,16,14,0.82)',
     wSplit: s.split, wSplitPct: s.split + '%', wSplitText: s.split + '% original', wOnSplit: (e: React.ChangeEvent<HTMLInputElement>) => set({ split: +e.target.value }),
