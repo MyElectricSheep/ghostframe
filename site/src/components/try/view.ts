@@ -102,7 +102,21 @@ export function useTryItView(s: TryItState, set: (patch: Partial<TryItState>) =>
     set({ pt: { fx: Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), fy: Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)) } });
   };
 
+  // Arrow keys move between tiles (the tiles are buttons; Tab reaches them).
+  const wTileKeys = (e: React.KeyboardEvent<HTMLElement>) => {
+    const from = Number((e.target as HTMLElement).dataset.index);
+    if (Number.isNaN(from)) return;
+    const step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -cols, ArrowDown: cols }[e.key];
+    if (step === undefined) return;
+    const to = from + step;
+    if (to < 0 || to >= fl.length || (Math.abs(step) === 1 && Math.floor(to / cols) !== Math.floor(from / cols))) return;
+    e.preventDefault();
+    set({ sel: to });
+    (e.currentTarget.querySelector(`[data-index="${to}"]`) as HTMLElement | null)?.focus();
+  };
+
   return {
+    wTileKeys,
     // controls
     wCovers: PORDER.map((k) => { const p = PHOTOS[k], on = k === s.photo; return { label: p.label, src: p.thumb, pos: p.pos, pressed: on, bd: on ? BLUE : 'rgba(24,20,17,0.12)', bg: on ? '#f5f8fb' : '#fff', onClick: () => pick(k, s.mode) }; }),
     wModeList: ORDER.map((k) => { const m = MODES[k], on = k === s.mode; return { label: m.label, cap: m.cap, bytes: fixture(s.photo, k).bytes, pressed: on, bd: on ? BLUE : 'rgba(24,20,17,0.12)', bg: on ? '#f5f8fb' : '#fff', onClick: () => pick(s.photo, k),

@@ -7,3 +7,4 @@ __pycache__/
 /site/dist/
 /site/public/demo-photos/
 /site/src/generated/
+/site/compare-out/

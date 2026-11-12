@@ -52,7 +52,7 @@ export function EmbedPanel({ v }: { v: TryItView }) {
               <path d={`M 20 160 L ${t4MedX} ${t4MedY}`} stroke="#8a837c" strokeWidth="1" strokeDasharray="3 3" />
             </svg>
             {t4Dots.map((d, i) => (<React.Fragment key={i}>
-              <button type="button" aria-label={d.aria} onClick={d.onClick} style={S({ position: 'absolute', left: d.x, top: d.y, width: d.s, height: d.s, margin: d.m, padding: '0', border: d.bd, borderRadius: '50%', background: d.bg, cursor: 'pointer', zIndex: d.z })}></button>
+              <button type="button" className="hit-44" aria-label={d.aria} onClick={d.onClick} style={S({ position: 'absolute', left: d.x, top: d.y, width: d.s, height: d.s, margin: d.m, padding: '0', border: d.bd, borderRadius: '50%', background: d.bg, cursor: 'pointer', zIndex: d.z })}></button>
             </React.Fragment>))}
             <span style={S({ position: 'absolute', left: '168px', top: '146px', font: '400 10px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', whiteSpace: 'nowrap' })}>0° · unchanged</span>
             <span style={S({ position: 'absolute', left: '26px', top: '8px', font: '400 10px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', whiteSpace: 'nowrap' })}>90° · unrelated</span>

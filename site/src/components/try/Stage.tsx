@@ -3,7 +3,7 @@ import { S } from '../../lib/style';
 import type { TryItView } from './view';
 
 export function Stage({ v }: { v: TryItView }) {
-  const { infoBd, infoBg, infoDisp, infoFg, infoHide, infoOpenStr, infoShow, infoToggle, wAspect, wCap, wCells, wChanged, wClip, wCols, wDiff, wDiffDisp, wDiffOn, wDivider, wEmbed, wFrameL, wFrameR, wFrameRadius, wHandleDown, wKnobBlur, wKnobFocus, wKnobRing, wMarked, wMarkedDisp, wModel, wOnSplit, wOrig, wOrigDisp, wProfile, wRes, wRows, wSliderHint, wSplit, wSplitPct, wSplitText, wStageAlt, wStageMax, wStageRef, wStageW, wTagL, wTagLDisp, wTagR, wTagRBg } = v;
+  const { wTileKeys, infoBd, infoBg, infoDisp, infoFg, infoHide, infoOpenStr, infoShow, infoToggle, wAspect, wCap, wCells, wChanged, wClip, wCols, wDiff, wDiffDisp, wDiffOn, wDivider, wEmbed, wFrameL, wFrameR, wFrameRadius, wHandleDown, wKnobBlur, wKnobFocus, wKnobRing, wMarked, wMarkedDisp, wModel, wOnSplit, wOrig, wOrigDisp, wProfile, wRes, wRows, wSliderHint, wSplit, wSplitPct, wSplitText, wStageAlt, wStageMax, wStageRef, wStageW, wTagL, wTagLDisp, wTagR, wTagRBg } = v;
   return (
 <>
       <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px', flex: `1 1 ${wStageW}`, maxWidth: wStageMax, minWidth: '0' })}>
@@ -11,7 +11,7 @@ export function Stage({ v }: { v: TryItView }) {
           <div style={S({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', font: '500 11px/1.3 \'IBM Plex Mono\',ui-monospace,monospace', color: '#d9d3cc' })}><span>{wFrameL}</span>
             <span style={S({ display: 'flex', alignItems: 'center', gap: '8px' })}>{wFrameR}
               <span onMouseEnter={infoShow} onMouseLeave={infoHide} style={S({ position: 'relative', display: 'inline-flex' })}>
-                <button type="button" onClick={infoToggle} onFocus={infoShow} onBlur={infoHide} aria-label="About this file" aria-expanded={infoOpenStr} aria-describedby="gf-info" style={S({ width: '22px', height: '22px', padding: '0', borderRadius: '50%', border: `1.5px solid ${infoBd}`, background: infoBg, color: infoFg, font: '700 11px/1 Inter,sans-serif', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' })}>i</button>
+                <button type="button" className="hit-44" onClick={infoToggle} onFocus={infoShow} onBlur={infoHide} aria-label="About this file" aria-expanded={infoOpenStr} aria-describedby="gf-info" style={S({ width: '22px', height: '22px', padding: '0', borderRadius: '50%', border: `1.5px solid ${infoBd}`, background: infoBg, color: infoFg, font: '700 11px/1 Inter,sans-serif', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' })}>i</button>
                 <div id="gf-info" role="tooltip" style={S({ position: 'absolute', top: 'calc(100% + 10px)', right: '-6px', width: '300px', maxWidth: 'calc(100vw - 48px)', padding: '14px 16px', background: '#fff', color: 'rgba(18,16,14,0.96)', borderRadius: '8px', boxShadow: '0 8px 24px rgba(0,0,0,0.22)', zIndex: '30', display: infoDisp, flexDirection: 'column', gap: '10px' })}>
                   <span aria-hidden="true" style={S({ position: 'absolute', top: '-5px', right: '12px', width: '10px', height: '10px', background: '#fff', transform: 'rotate(45deg)', display: 'block' })}></span>
                   <span style={S({ font: '600 13px/1.2 Inter,sans-serif' })}>About this file</span>
@@ -30,9 +30,9 @@ export function Stage({ v }: { v: TryItView }) {
             <img src={wMarked} alt="" style={S({ position: 'absolute', inset: '0', width: '100%', height: '100%', objectFit: 'cover', display: wMarkedDisp, clipPath: `inset(0 0 0 ${wClip})` })} />
             <img src={wDiff} alt="" style={S({ position: 'absolute', inset: '0', width: '100%', height: '100%', objectFit: 'cover', display: wDiffDisp })} />
             {wEmbed && (<>
-              <div role="grid" aria-label="Tiles. Choose one to see how far its embedding turned." style={S({ position: 'absolute', inset: '0', display: 'grid', gridTemplateColumns: `repeat(${wCols},1fr)`, gridTemplateRows: `repeat(${wRows},1fr)` })}>
+              <div role="group" onKeyDown={wTileKeys} aria-label="Tiles. Choose one to see how far its embedding turned." style={S({ position: 'absolute', inset: '0', display: 'grid', gridTemplateColumns: `repeat(${wCols},1fr)`, gridTemplateRows: `repeat(${wRows},1fr)` })}>
                 {wCells.map((c, i) => (<React.Fragment key={i}>
-                  <button type="button" aria-label={c.aria} aria-pressed={c.pressed} onClick={c.onClick} style={S({ padding: '0', margin: '0', minWidth: '0', minHeight: '0', border: '0', borderRight: `1px solid ${c.line}`, borderBottom: `1px solid ${c.line}`, background: c.bg, boxShadow: c.sh, cursor: 'pointer', transition: 'background 200ms' })} className="hover-tile"></button>
+                  <button type="button" data-index={i} aria-label={c.aria} aria-pressed={c.pressed} onClick={c.onClick} style={S({ padding: '0', margin: '0', minWidth: '0', minHeight: '0', border: '0', borderRight: `1px solid ${c.line}`, borderBottom: `1px solid ${c.line}`, background: c.bg, boxShadow: c.sh, cursor: 'pointer', transition: 'background 200ms' })} className="tile hover-tile"></button>
                 </React.Fragment>))}
               </div>
             </>)}

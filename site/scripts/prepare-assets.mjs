@@ -4,7 +4,7 @@
 //   - the fixture PNGs are copied byte for byte and checked against those hashes.
 // Writes site/public/demo-photos/ (copies) and site/src/generated/site-data.json.
 import { createHash } from 'node:crypto';
-import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -27,7 +27,6 @@ function pngSize(path) {
 }
 
 const design = JSON.parse(readFileSync(DATA, 'utf8'));
-rmSync(OUT_PHOTOS, { recursive: true, force: true });
 const fixtures = {};
 
 for (const [key, dir] of Object.entries(COVERS)) {
@@ -41,7 +40,8 @@ for (const [key, dir] of Object.entries(COVERS)) {
     if (!(mode in STEMS)) throw new Error(`Unexpected fixture ${entry.encoded}`);
     for (const [file, hash] of Object.entries(entry.sha256)) {
       if (sha256(join(src, file)) !== hash) throw new Error(`Hash mismatch: ${dir}/${file}`);
-      copyFileSync(join(src, file), join(dst, file));
+      // Copy only when missing or different, so a running dev server keeps serving the files.
+      if (!existsSync(join(dst, file)) || sha256(join(dst, file)) !== hash) copyFileSync(join(src, file), join(dst, file));
       if (sha256(join(dst, file)) !== hash) throw new Error(`Copy changed bytes: ${dir}/${file}`);
     }
     modes[mode] = {

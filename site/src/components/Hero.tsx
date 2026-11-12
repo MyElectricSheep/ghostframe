@@ -12,11 +12,11 @@ function useHeroAnimation() {
     if (!canvas) return;
     const reduced = prefersReducedMotion();
     const img = new Image();
-    img.src = '/demo-photos/coffee-beans.jpg';
     const t0 = performance.now();
-    let raf = 0, visible = true;
+    let raf = 0, visible = true, alive = true;
     const frame = (now: number) => {
       raf = 0;
+      if (!alive) return;
       const t = reduced ? 0.95 : ((now - t0) % DURATION) / DURATION;
       drawHero(canvas.getContext('2d')!, img.complete && img.naturalWidth ? img : null, t);
       if (!reduced && visible) raf = requestAnimationFrame(frame);
@@ -27,8 +27,9 @@ function useHeroAnimation() {
     }, { threshold: 0.05 });
     io.observe(canvas);
     img.onload = () => { if (reduced) frame(performance.now()); };
+    img.src = '/demo-photos/coffee-beans.jpg';
     raf = requestAnimationFrame(frame);
-    return () => { cancelAnimationFrame(raf); io.disconnect(); };
+    return () => { alive = false; cancelAnimationFrame(raf); io.disconnect(); img.onload = null; };
   }, []);
   return ref;
 }

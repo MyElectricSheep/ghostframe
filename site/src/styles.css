@@ -33,3 +33,15 @@ details[open] > summary svg{transform:rotate(180deg)}
 .hover-primary:hover{background:#355574 !important}
 .hover-pill:hover{background:#3f648c !important}
 .hover-card:hover{border-color:rgba(63,100,140,0.45) !important}
+
+/* Touch: every control is at least 44 px tall (handoff README, accessibility). Desktop layout is
+   unchanged. Tiles fill their grid cell, and acronyms stay inline in running text. */
+@media (pointer: coarse) {
+  button:not(.tile):not(.hit-44):not([data-abbr]), select, a[href].hover-tint, a[href].hover-primary-link, a[href].hover-secondary, a[href].logo-invert {
+    min-height: 44px !important;
+  }
+  header nav a[href] { display: inline-flex; align-items: center; }
+  /* Small targets keep their look; an invisible ring around them takes the tap. */
+  .hit-44 { position: relative; }
+  .hit-44::after { content: ''; position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; transform: translate(-50%, -50%); }
+}
