@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { drawHow, HOW_DUR, HOW_LABELS } from '../canvas/how';
+import { drawHow, drawHowNarrow, HOW_DUR, HOW_LABELS, HOW_NARROW_H, HOW_NARROW_W } from '../canvas/how';
 import { BLUE, GRAY } from '../data';
 import { prefersReducedMotion, S } from '../lib/style';
 import { useAbbr } from './Abbr';
@@ -12,10 +12,28 @@ const STEPS = [
   { who: 'recipient', t: 'Reading back runs the same model on each tile.', d: 'It repairs a few wrong bits, then unlocks with the passphrase. A wrong passphrase or altered message gives “No message found.”' },
 ];
 
+const PHONE = '(max-width: 559.98px)';
+
+/** Draws one frame. On phones the canvas is sized to its real pixels and gets the 4:5 composition;
+ *  otherwise the design's 1120 × 840 drawing, scaled by CSS. */
+function paint(cv: HTMLCanvasElement, img: HTMLImageElement | null, step: number, t: number) {
+  const x = cv.getContext('2d')!;
+  if (window.matchMedia(PHONE).matches) {
+    const dpr = window.devicePixelRatio || 1, w = Math.round((cv.clientWidth || HOW_NARROW_W) * dpr), h = Math.round(w * HOW_NARROW_H / HOW_NARROW_W);
+    if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+    x.setTransform(w / HOW_NARROW_W, 0, 0, h / HOW_NARROW_H, 0, 0);
+    drawHowNarrow(x, img, step, t);
+  } else {
+    if (cv.width !== 1120 || cv.height !== 840) { cv.width = 1120; cv.height = 840; }
+    x.setTransform(1, 0, 0, 1, 0, 0);
+    drawHow(x, img, step, t);
+  }
+}
+
 /** Five 7–9 s step animations. Autoplays once when scrolled into view; static frames under reduced motion. */
 function useHowAnimation() {
   const howRef = useRef<HTMLCanvasElement>(null), howBarRef = useRef<HTMLDivElement>(null), sectionRef = useRef<HTMLElement>(null);
-  const img = useRef<HTMLImageElement | null>(null), raf = useRef(0), playing = useRef(false), secShown = useRef(-1);
+  const img = useRef<HTMLImageElement | null>(null), raf = useRef(0), playing = useRef(false), secShown = useRef(-1), last = useRef({ s: 0, t: 1 });
   const [step, setStep] = useState(0), [done, setDone] = useState(false), [sec, setSec] = useState(0);
   const stepRef = useRef(0);
   const start = useCallback((s: number) => {
@@ -25,7 +43,8 @@ function useHowAnimation() {
     const frame = (now: number) => {
       const cv = howRef.current; if (!cv) { raf.current = requestAnimationFrame(frame); return; }
       const t = reduced ? 1 : Math.min(1, (now - t0) / dur);
-      drawHow(cv.getContext('2d')!, img.current && img.current.complete ? img.current : null, s, t);
+      last.current = { s, t };
+      paint(cv, img.current && img.current.complete ? img.current : null, s, t);
       if (howBarRef.current) howBarRef.current.style.width = (t * 100) + '%';
       const n = Math.round(t * dur / 1000); if (n !== secShown.current) { secShown.current = n; setSec(n); }
       if (t < 1) raf.current = requestAnimationFrame(frame); else { playing.current = false; setDone(true); }
@@ -35,13 +54,16 @@ function useHowAnimation() {
   }, []);
   useEffect(() => {
     const im = new Image(); img.current = im;
-    im.onload = () => { if (!playing.current && howRef.current) drawHow(howRef.current.getContext('2d')!, im, 0, 1); };
+    im.onload = () => { if (!playing.current && howRef.current) paint(howRef.current, im, last.current.s, last.current.t); };
     im.src = '/demo-photos/antonello-portrait-of-a-man.jpg';
     let seen = false;
     const io = new IntersectionObserver((en) => { if (en.some((e) => e.isIntersecting) && !seen) { seen = true; start(stepRef.current); } }, { threshold: 0.35 });
     if (sectionRef.current) io.observe(sectionRef.current);
-    const first = window.setTimeout(() => { const cv = howRef.current; if (cv && !seen) drawHow(cv.getContext('2d')!, null, 0, 1); }, 50);
-    return () => { io.disconnect(); cancelAnimationFrame(raf.current); window.clearTimeout(first); };
+    const first = window.setTimeout(() => { const cv = howRef.current; if (cv && !seen) paint(cv, null, 0, 1); }, 50);
+    // Redraw the current frame when the canvas changes size or crosses the phone breakpoint.
+    const ro = new ResizeObserver(() => { const cv = howRef.current; if (cv && !playing.current) paint(cv, img.current && img.current.complete ? img.current : null, last.current.s, last.current.t); });
+    if (howRef.current) ro.observe(howRef.current);
+    return () => { io.disconnect(); ro.disconnect(); cancelAnimationFrame(raf.current); window.clearTimeout(first); };
   }, [start]);
   return { howRef, howBarRef, sectionRef, step, done, sec, start };
 }
@@ -63,10 +85,10 @@ export function HowItWorks() {
       <p style={S({ margin: '0', fontSize: '16px', lineHeight: '1.55', color: '#625c57', textWrap: 'pretty' })}>A frozen, public image model, <a href="https://arxiv.org/abs/1905.02244" target="_blank" rel="noopener">MobileNetV3-Small</a> (or, <a href="https://github.com/forresti/SqueezeNet/tree/master/SqueezeNet_v1.1" target="_blank" rel="noopener">SqueezeNet 1.1</a> for Short mode) looks at the photo one tile at a time. For each tile it produces an embedding: the list of numbers the model uses to describe that tile. The encoder nudges pixels until those numbers spell out the encrypted message. The model’s weights never change. Only the pixels do.</p>
     </div>
     <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'flex-start' })}>
-      <figure style={S({ flex: '1 1 440px', minWidth: '0', maxWidth: '600px', margin: '0', display: 'flex', flexDirection: 'column', gap: '10px' })}>
+      <figure className="gf-how-figure" style={S({ flex: '1 1 440px', minWidth: '0', maxWidth: '600px', margin: '0', display: 'flex', flexDirection: 'column', gap: '10px' })}>
         <div style={S({ background: '#312e2b', borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px' })}>
           <div style={S({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', font: '500 11px/1.3 \'IBM Plex Mono\',ui-monospace,monospace', color: '#d9d3cc' })}>
-            <span>{howLabel}</span><span>{howTime}</span>
+            <span style={S({ minWidth: '0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' })}>{howLabel}</span><span style={S({ flex: 'none', whiteSpace: 'nowrap' })}>{howTime}</span>
           </div>
           <div style={S({ position: 'relative', border: '3px solid #f6f4f1', lineHeight: '0', background: '#f6f4f1' })}>
             <canvas ref={howRef} width="1120" height="840" role="img" aria-label={howAria} style={S({ width: '100%', height: 'auto', display: 'block' })} />

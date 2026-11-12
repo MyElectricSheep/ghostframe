@@ -7,16 +7,16 @@ import { fileURLToPath } from 'node:url';
 const SITE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const data = JSON.parse(readFileSync(join(SITE, 'src', 'generated', 'site-data.json'), 'utf8'));
 let checked = 0;
-for (const { dir, modes } of Object.values(data.fixtures)) {
+for (const { dir, modes, served } of Object.values(data.fixtures)) {
   for (const { sha256 } of Object.values(modes)) {
-    for (const [file, hash] of Object.entries(sha256)) {
-      const path = join(SITE, 'dist', 'demo-photos', 'fixtures', dir, file);
-      if (!existsSync(path)) throw new Error(`Missing from dist: ${dir}/${file}`);
+    for (const [file, hash] of Object.entries(sha256)) for (const name of [file, served[file]]) {
+      const path = join(SITE, 'dist', 'demo-photos', 'fixtures', dir, name);
+      if (!existsSync(path)) throw new Error(`Missing from dist: ${dir}/${name}`);
       if (createHash('sha256').update(readFileSync(path)).digest('hex') !== hash) {
-        throw new Error(`dist changed bytes: ${dir}/${file}`);
+        throw new Error(`dist changed bytes: ${dir}/${name}`);
       }
       checked++;
     }
   }
 }
-console.log(`dist: ${checked} fixture files byte-identical to fixtures.json`);
+console.log(`dist: ${checked} fixture files (originals and visitor-named copies) byte-identical to fixtures.json`);

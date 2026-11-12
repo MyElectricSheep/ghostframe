@@ -37,11 +37,42 @@ details[open] > summary svg{transform:rotate(180deg)}
 /* Touch: every control is at least 44 px tall (handoff README, accessibility). Desktop layout is
    unchanged. Tiles fill their grid cell, and acronyms stay inline in running text. */
 @media (pointer: coarse) {
-  button:not(.tile):not(.hit-44):not([data-abbr]), select, a[href].hover-tint, a[href].hover-primary-link, a[href].hover-secondary, a[href].logo-invert {
+  button:not(.tile):not(.hit-44):not([data-abbr]), select, a[href].hover-tint, a[href].hover-primary-link, a[href].hover-secondary, a[href].logo-invert, a[href].gf-touch-44 {
     min-height: 44px !important;
   }
   header nav a[href] { display: inline-flex; align-items: center; }
   /* Small targets keep their look; an invisible ring around them takes the tap. */
   .hit-44 { position: relative; }
   .hit-44::after { content: ''; position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; transform: translate(-50%, -50%); }
+}
+
+/* Header on one line (corrective pass 8, 9). */
+.gf-nav{scrollbar-width:none}
+.gf-nav::-webkit-scrollbar{display:none}
+.gf-nav a{white-space:nowrap;flex:none}
+.gf-nav.gf-fade-end{mask-image:linear-gradient(to right,#000 calc(100% - 32px),transparent)}
+.gf-nav.gf-fade-start{mask-image:linear-gradient(to left,#000 calc(100% - 32px),transparent)}
+.gf-nav.gf-fade-both{mask-image:linear-gradient(to right,transparent,#000 32px,#000 calc(100% - 32px),transparent)}
+@media (max-width:899.98px){.gf-badge{display:none!important}}
+/* Hero animation full width once the hero stacks (corrective pass 20). */
+@media (max-width:975.98px){.gf-hero-figure{max-width:none!important}}
+/* Entry links: full-width buttons of the same size on phones (corrective pass 21). */
+@media (max-width:759.98px){.gf-entry-buttons{flex:1 1 100%!important;flex-direction:column}.gf-entry-buttons a{justify-content:center}}
+/* Mode tooltip in Try it (corrective pass 4): never past the viewport edge; under 760 px it opens
+   below the mode row across the content width, with its arrow pointing up. */
+.gf-mode-tip{max-width:calc(100vw - 32px);box-sizing:border-box}
+@media (max-width:759.98px){
+  .gf-mode-tip{left:0!important;top:calc(100% + 8px)!important;transform:none!important;width:calc(100vw - 2 * clamp(16px,4vw,40px))!important}
+  .gf-mode-tip-arrow{left:24px!important;top:-5px!important;margin-top:0!important}
+}
+/* Try it side panel below the stage: full width, cards in columns (corrective pass 12). */
+.gf-side.gf-side-wrapped:not([data-measure]){flex:1 1 100%!important;max-width:none!important;display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));align-items:start}
+/* How it works animation full width once the steps stack under it (corrective pass 20). */
+@media (max-width:975.98px){.gf-how-figure{max-width:none!important}}
+/* Hide: mode cards in one column on small phones (17); Show beside the passphrase fields (16). */
+@media (max-width:479.98px){
+  .gf-hmodes{grid-template-columns:1fr!important}
+  .gf-hpass{grid-template-columns:minmax(0,1fr) auto!important}
+  .gf-hpass > div:nth-child(2){grid-column:1 / -1;grid-row:2}
+  .gf-hpass > .gf-hshow{grid-column:2;grid-row:1}
 }

@@ -3,6 +3,7 @@
 // w* = the image stage, t4* = the dot strip, t5* = the pixel inspector.
 import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
+import { useNarrow } from '../../hooks/useNarrow';
 import { BLUE, fixture, fixturePath, heat, INK, MODES, ORDER, PHOTOS, PORDER, resultLine } from '../../data';
 import type { ModeKey, PhotoKey } from '../../data';
 
@@ -45,6 +46,7 @@ function usePixels(photo: PhotoKey, mode: ModeKey): Pixels {
 }
 
 export function useTryItView(s: TryItState, set: (patch: Partial<TryItState>) => void, pick: (photo: PhotoKey, mode: ModeKey) => void) {
+  const narrow = useNarrow();
   const stageRef = useRef<HTMLDivElement>(null);
   const D = usePixels(s.photo, s.mode);
   const P = PHOTOS[s.photo], M = MODES[s.mode];
@@ -75,7 +77,7 @@ export function useTryItView(s: TryItState, set: (patch: Partial<TryItState>) =>
   const sorted = [...ang].sort((a, b) => a - b), t4med = sorted[Math.floor(sorted.length / 2)];
   const lab = (i: number) => 'Tile row ' + (Math.floor(i / cols) + 1) + ', column ' + (i % cols + 1) + ', ' + Math.round(ang[i]) + ' degrees';
   const Pd = (deg: number, r: number) => { const a = deg * Math.PI / 180; return [20 + r * Math.cos(a), 160 - r * Math.sin(a)]; };
-  const [mdx, mdy] = Pd(t4med, 150), [mlx, mly] = Pd(t4med, 156);
+  const [mdx, mdy] = Pd(t4med, 150), [mlx, mly] = Pd(t4med, 162);
   const jit = (i: number) => ((i * 37) % 11) / 11;
 
   // ---- pixel inspector (t5Vals)
@@ -119,8 +121,10 @@ export function useTryItView(s: TryItState, set: (patch: Partial<TryItState>) =>
     wTileKeys,
     // controls
     wCovers: PORDER.map((k) => { const p = PHOTOS[k], on = k === s.photo; return { label: p.label, src: p.thumb, pos: p.pos, pressed: on, bd: on ? BLUE : 'rgba(24,20,17,0.12)', bg: on ? '#f5f8fb' : '#fff', onClick: () => pick(k, s.mode) }; }),
-    wModeList: ORDER.map((k) => { const m = MODES[k], on = k === s.mode; return { label: m.label, cap: m.cap, bytes: fixture(s.photo, k).bytes, pressed: on, bd: on ? BLUE : 'rgba(24,20,17,0.12)', bg: on ? '#f5f8fb' : '#fff', onClick: () => pick(s.photo, k),
+    wModeList: ORDER.map((k) => { const m = MODES[k], on = k === s.mode; return { label: m.label, cap: m.cap, pressed: on, bd: on ? BLUE : 'rgba(24,20,17,0.12)', bg: on ? '#f5f8fb' : '#fff', onClick: () => { pick(s.photo, k); set({ tip: k }); },
       tipId: 'tip-' + k, tip: m.tip, max: m.bytes, grid: m.cols + ' × ' + m.rows, status: '', tipDisp: s.tip === k ? 'flex' : 'none', onEnter: () => set({ tip: k }), onLeave: () => { if (s.tip === k) set({ tip: null }); } }; }),
+    // Tooltips open on hover, focus or tap; a tap outside or Esc closes them (Controls).
+    wTip: s.tip, wTipClose: () => set({ tip: null }),
     wViewList: VIEWS.map(([k, l]) => { const on = k === s.view; return { label: l, pressed: on, bg: on ? '#f5f8fb' : 'transparent', dot: on ? BLUE : '#fff', dotBd: on ? BLUE : '#a39b93', weight: on ? 600 : 500, onClick: () => set({ view: k }) }; }),
     // stage
     wStageRef: stageRef, wHandleDown, wFrameRadius: '6px',
@@ -129,7 +133,7 @@ export function useTryItView(s: TryItState, set: (patch: Partial<TryItState>) =>
     wOrig: dir('original.png'), wMarked: dir(s.mode + '.png'), wDiff: dir(s.mode + '-difference.png'),
     wOrigDisp: !diff ? 'block' : 'none', wMarkedDisp: slider ? 'block' : 'none', wDiffDisp: diff ? 'block' : 'none', wClip: slider ? s.split + '%' : '0%',
     wStageAlt: P.label + ' · ' + mLabel,
-    wFrameL: diff ? 'amplified difference ×' + amp : 'original', wFrameR: embed ? 'embedding change · ' + mLabel.toLowerCase() : diff ? 'real maximum ' + cap + '/255 · not the photo' : mLabel.toLowerCase() + ' · marked',
+    wFrameL: diff ? (narrow ? '×' + amp + ' · not the photo' : 'amplified difference ×' + amp) : 'original', wFrameR: embed ? 'embedding change · ' + mLabel.toLowerCase() : diff ? (narrow ? '' : 'real maximum ' + cap + '/255 · not the photo') : mLabel.toLowerCase() + ' · marked',
     wTagL: 'Original', wTagLDisp: slider ? 'block' : 'none',
     wTagR: diff ? 'Amplified difference ×' + amp : embed ? 'Marked · embedding change' : 'Encoded', wTagRBg: diff || embed ? BLUE : 'rgba(18,16,14,0.82)',
     wSplit: s.split, wSplitPct: s.split + '%', wSplitText: s.split + '% original', wOnSplit: (e: React.ChangeEvent<HTMLInputElement>) => set({ split: +e.target.value }),

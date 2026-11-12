@@ -25,7 +25,7 @@ interface SiteData {
   stress: Record<'subtle' | 'long', { encoded: number; of: number }>;
   small640: Partial<Record<'subtle' | 'long', { read_back: number; of: number }>>;
   detect: Partial<Record<'subtle' | 'long', { auc: number; pairs: number }>>;
-  fixtures: Record<PhotoKey, { dir: string; size: { w: number; h: number }; modes: Record<ModeKey, FixtureMode> }>;
+  fixtures: Record<PhotoKey, { dir: string; size: { w: number; h: number }; modes: Record<ModeKey, FixtureMode>; served: Record<string, string> }>;
 }
 const D = raw as unknown as SiteData;
 
@@ -52,7 +52,9 @@ export const PHOTOS = Object.fromEntries(PORDER.map((k) => {
   return [k, { key: k, ...PHOTO_UI[k], dir: f.dir, w: f.size.w, h: f.size.h, jpg: `/demo-photos/${f.dir}.jpg`, thumb: `/thumbs/${k}.jpg`, aspect: `${f.size.w} / ${f.size.h}` }];
 })) as Record<PhotoKey, Photo>;
 
-export const fixturePath = (p: PhotoKey, file: string) => `/demo-photos/fixtures/${PHOTOS[p].dir}/${file}`;
+/** URL of a fixture under its visitor-facing name (e.g. classic.png → portrait-short.png), a byte-identical copy. */
+export const servedName = (p: PhotoKey, file: string) => D.fixtures[p].served[file] ?? file;
+export const fixturePath = (p: PhotoKey, file: string) => `/demo-photos/fixtures/${PHOTOS[p].dir}/${servedName(p, file)}`;
 export const fixture = (p: PhotoKey, m: ModeKey) => D.fixtures[p].modes[m];
 export const heat = (p: PhotoKey, m: ModeKey) => D.heat[p][m];
 export const rawNumbers = (p: PhotoKey) => D.raw[p];

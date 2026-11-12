@@ -1,9 +1,15 @@
-// Hero animation, carried over unchanged from the design reference (drawHero).
+// Hero animation from the design reference (drawHero). The caption row (message → hidden in the
+// tiles → looks the same → read back) is HTML under the canvas, so it stays readable on phones;
+// drawHero returns the active step for it. The canvas is cropped above the old caption band.
 const HG_MAP = ['..XXX..', '.XXXXX.', 'XXXXXXX', 'XX.X*XX', 'XXXXXXX', 'XXXXXXX', 'XXXXXXX', 'X.X.X.X'];
 const HG_PIX: { r: number; c: number; eye: boolean; tile: number; delay: number }[] = []; HG_MAP.forEach((row, r) => [...row].forEach((ch, c) => { if (ch !== '.') HG_PIX.push({ r, c, eye:ch === '*', tile:0, delay:0 }); }));
 (function () { let seed = 7; const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }; const used = new Set<number>(); HG_PIX.forEach(p => { let k; do { k = Math.floor(rnd() * 80); } while (used.has(k)); used.add(k); p.tile = k; p.delay = rnd(); }); })();
-export function drawHero(x: CanvasRenderingContext2D, img: HTMLImageElement | null, t: number) {
-  const W = 1080, H = 760; x.fillStyle = '#312e2b'; x.fillRect(0, 0, W, H);
+export const HERO_W = 1080, HERO_H = 668;
+export const HERO_STEPS = ['message', 'hidden in the tiles', 'looks the same', 'read back'];
+
+/** Draws frame t (0–1) and returns the active caption step. labelPx: canvas font size for the photo label. */
+export function drawHero(x: CanvasRenderingContext2D, img: HTMLImageElement | null, t: number, labelPx = 20): number {
+  const W = HERO_W, H = HERO_H; x.fillStyle = '#312e2b'; x.fillRect(0, 0, W, H);
   const PX = 380, PY = 150, PW = 640, PH = 480, cols = 10, rows = 8, tw = PW / cols, th = PH / rows;
   x.fillStyle = '#f6f4f1'; x.fillRect(PX - 8, PY - 8, PW + 16, PH + 16);
   if (img) { const r = Math.max(PW / img.naturalWidth, PH / img.naturalHeight), dw = img.naturalWidth * r, dh = img.naturalHeight * r; x.save(); x.beginPath(); x.rect(PX, PY, PW, PH); x.clip(); x.drawImage(img, PX + (PW - dw) / 2, PY + (PH - dh) / 2, dw, dh); x.restore(); } else { x.fillStyle = '#6b625a'; x.fillRect(PX, PY, PW, PH); }
@@ -25,12 +31,7 @@ export function drawHero(x: CanvasRenderingContext2D, img: HTMLImageElement | nu
     x.globalAlpha = a; x.fillStyle = col; x.fillRect(px + 1, py + 1, sz, sz); x.globalAlpha = 1;
   });
   if (t < 0.14 || t >= 0.86) { HG_MAP.forEach((row, r) => [...row].forEach((ch, c) => { if (ch === '.' && r === 3) { x.fillStyle = '#312e2b'; x.fillRect(GX + c * S + 1, GY + r * S + 1, S - 2, S - 2); } })); }
-  const label = (s: string, X: number, on: boolean) => { x.font = '500 22px "IBM Plex Mono", ui-monospace, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = on ? '#f6f4f1' : 'rgba(246,244,241,0.38)'; x.fillText(s, X, 700); x.textBaseline = 'alphabetic'; };
   const phase = t < 0.12 ? 0 : t < 0.52 ? 1 : t < 0.58 ? 2 : t < 0.88 ? 3 : 4;
-  const LX = [135, 405, 675, 945];
-  label('message', LX[0], phase === 0 || phase === 4); label('hidden in the tiles', LX[1], phase === 1); label('looks the same', LX[2], phase === 2); label('read back', LX[3], phase === 3);
-  x.font = '500 22px "IBM Plex Mono", ui-monospace, monospace';
-  const LW = ['message', 'hidden in the tiles', 'looks the same', 'read back'].map(s => x.measureText(s).width);
-  for (let i = 0; i < 3; i++) { const end = LX[i] + LW[i] / 2, start = LX[i + 1] - LW[i + 1] / 2; label('→', (end + start) / 2, false); }
-  x.font = '500 20px "IBM Plex Mono", ui-monospace, monospace'; x.fillStyle = 'rgba(246,244,241,0.55)'; x.textAlign = 'left'; x.fillText('marked photo · ≤ 2/255 per pixel', PX, PY - 26);
+  x.font = `500 ${labelPx}px "IBM Plex Mono", ui-monospace, monospace`; x.fillStyle = 'rgba(246,244,241,0.55)'; x.textAlign = 'left'; x.fillText('marked photo · ≤ 2/255 per pixel', PX, PY - 26);
+  return phase === 4 ? 0 : phase;
 }

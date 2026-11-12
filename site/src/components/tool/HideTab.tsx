@@ -108,8 +108,9 @@ export function HideTab({ navRead }: { navRead: () => void }) {
   const stage = job && jobBusy ? job.state : null;
   const stDefs: [string, string][] = [['queued', 'Waiting in line'], ...(cold ? [['starting', 'Starting the engine'] as [string, string]] : []), ['encoding', 'Encoding and checking the saved file'], ['done', 'Ready to download']];
   const stageIdx = stDefs.findIndex((d) => d[0] === stage);
+  // Done: a check. Now: a ring with a pulsing centre. Upcoming: an outline (corrective pass 14).
   const hStages = stDefs.map((d, i) => ({ label: d[1], status: i < stageIdx ? 'done' : i === stageIdx ? 'now' : '', fg: i <= stageIdx ? INK : GRAY, weight: i === stageIdx ? 600 : 400,
-    bd: i <= stageIdx ? BLUE : '#c9c2ba', fill: i < stageIdx ? BLUE : 'transparent', anim: i === stageIdx && !prefersReducedMotion() ? 'gfpulse 1s ease-in-out infinite' : 'none' }));
+    kind: i < stageIdx ? 'done' : i === stageIdx ? 'now' : 'next', anim: i === stageIdx && !prefersReducedMotion() ? 'gfpulse 1s ease-in-out infinite' : 'none' }));
   const pos = job?.position ?? 0, slow = !!job?.slow;
   const hHead = stage === 'queued' ? (pos === 0 ? 'You’re next in line' : pos + (pos === 1 ? ' person' : ' people') + ' ahead of you') : stage === 'starting' ? 'Starting the engine…' : slow ? 'This photo is a tough one. Still working…' : 'Encoding your photo';
   const hSub = stage === 'queued' ? 'Only one photo is encoded at a time. Your place is kept while this tab stays open.' : stage === 'starting' ? 'The engine sleeps when nobody has used it for a while. Waking it adds 10–20 seconds.' : slow ? 'Some photos need much longer. If it can’t finish within 5 minutes, it stops and no file is produced. You can cancel at any time.' : 'This usually takes under 2 minutes. You can keep this tab open.';
@@ -152,7 +153,7 @@ export function HideTab({ navRead }: { navRead: () => void }) {
   const hShowProg = stage === 'encoding', hProgN = prog, hProgPct = prog + '%';
   const hCardBd = slow ? 'rgba(18,16,14,0.55)' : 'rgba(24,20,17,0.12)', hCancelBd = slow ? '#3f648c' : 'rgba(24,20,17,0.18)';
   const hCancel = useCallback(() => { if (jobId.current) cancelJob(jobId.current).catch(() => {}); setPhase('cancelled'); }, []);
-  const hStop = !!STOP, hStopTitle = STOP ? STOP.t : '', hStopBody = STOP ? STOP.b : '', hStopMeta = STOP ? STOP.m : '', hStopActions = STOP ? STOP.a.map(([label, onClick]) => ({ label, onClick })) : [];
+  const hStop = !!STOP && !(phase === 'slimit' && siteClosed), hStopTitle = STOP ? STOP.t : '', hStopBody = STOP ? STOP.b : '', hStopMeta = STOP ? STOP.m : '', hStopActions = STOP ? STOP.a.map(([label, onClick]) => ({ label, onClick })) : [];
   const hDone = phase === 'done' && !!result, hAmp = HM.amp, hCap = HM.cap, hModeLabel = HM.label, hModel = HM.backbone, hProfile = HM.profile;
   const hStageLabel = hView === 'orig' ? 'Your photo · original' : 'Marked PNG · ' + HM.label;
   const hStageSrc = hView === 'orig' ? hf?.url : result?.marked, hDiffSrc = result?.diff;
@@ -168,7 +169,7 @@ export function HideTab({ navRead }: { navRead: () => void }) {
             <span style={S({ fontSize: '14px', lineHeight: '1.5' })}>The demo has hit today’s limit. Encoding comes back tomorrow (UTC). Decoding still works.</span>
           </div>
           <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '8px' })}>
-            <a href="#try" style={S({ fontSize: '14px', fontWeight: '600', padding: '9px 14px', minHeight: '40px', boxSizing: 'border-box', display: 'inline-flex', alignItems: 'center', border: '1px solid rgba(63,100,140,0.22)', borderRadius: '4px', background: '#fff', color: '#355574', textDecoration: 'none' })}>Try the ready-made examples</a>
+            <a href="#try" className="gf-touch-44" style={S({ fontSize: '14px', fontWeight: '600', padding: '9px 14px', minHeight: '40px', boxSizing: 'border-box', display: 'inline-flex', alignItems: 'center', border: '1px solid rgba(63,100,140,0.22)', borderRadius: '4px', background: '#fff', color: '#355574', textDecoration: 'none' })}>Try the ready-made examples</a>
             <button type="button" onClick={navRead} style={S({ fontSize: '14px', fontWeight: '600', padding: '9px 14px', minHeight: '40px', border: '1px solid rgba(63,100,140,0.22)', borderRadius: '4px', background: '#fff', color: '#355574', cursor: 'pointer' })}>Read a message</button>
           </div>
         </div>
@@ -212,7 +213,7 @@ export function HideTab({ navRead }: { navRead: () => void }) {
 
           <div role="group" aria-label="Mode" style={S({ display: 'flex', flexDirection: 'column', gap: '8px' })}>
             <span style={S({ fontSize: '14px', fontWeight: '600' })}><span style={S({ font: '500 11.5px \'IBM Plex Mono\',ui-monospace,monospace', color: '#3f648c', marginRight: '8px' })}>02</span>Choose a mode</span>
-            <div style={S({ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))', gap: '8px' })}>
+            <div className="gf-hmodes" style={S({ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))', gap: '8px' })}>
               {hModes.map((m, i) => (<React.Fragment key={i}>
                 <button type="button" aria-pressed={m.pressed} onClick={m.onClick} style={S({ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '6px', padding: '12px', borderRadius: '6px', border: `1.5px solid ${m.bd}`, background: m.bg, cursor: 'pointer', textAlign: 'left', color: 'rgba(18,16,14,0.96)' })}>
                   <span style={S({ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' })}><span style={S({ fontSize: '15px', fontWeight: '600' })}>{m.label}</span><span style={S({ marginLeft: 'auto', font: '500 10.5px/1 \'IBM Plex Mono\',ui-monospace,monospace', padding: '3px 6px', borderRadius: '999px', border: `1px ${m.tagBs} #8a837c`, color: '#625c57', display: m.tagDisp })}>{m.status}</span></span>
@@ -237,15 +238,16 @@ export function HideTab({ navRead }: { navRead: () => void }) {
 
           <div style={S({ display: 'flex', flexDirection: 'column', gap: '8px' })}>
             <span style={S({ fontSize: '14px', fontWeight: '600' })}><span style={S({ font: '500 11.5px \'IBM Plex Mono\',ui-monospace,monospace', color: '#3f648c', marginRight: '8px' })}>04</span>Set a passphrase</span>
-            <div style={S({ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: '8px' })}>
+            <div className="gf-hpass" style={S({ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr) auto', gap: '8px', alignItems: 'end' })}>
               <div style={S({ display: 'flex', flexDirection: 'column', gap: '4px' })}><label htmlFor="gf-hp1" style={S({ fontSize: '12.5px', color: '#625c57' })}>Passphrase</label><input id="gf-hp1" type={hPassType} value={hPass} onChange={onHPass} autoComplete="new-password" aria-describedby="gf-hstrength" style={S({ fontSize: '15px', padding: '10px 12px', minHeight: '44px', boxSizing: 'border-box', border: '1px solid #dddddd', borderRadius: '4px', background: '#fff', color: 'rgba(18,16,14,0.9)', width: '100%' })} /></div>
               <div style={S({ display: 'flex', flexDirection: 'column', gap: '4px' })}><label htmlFor="gf-hp2" style={S({ fontSize: '12.5px', color: '#625c57' })}>Repeat passphrase</label><input id="gf-hp2" type={hPassType} value={hPass2} onChange={onHPass2} autoComplete="new-password" aria-describedby="gf-hmatch" style={S({ fontSize: '15px', padding: '10px 12px', minHeight: '44px', boxSizing: 'border-box', border: `1px solid ${hMatchBd}`, borderRadius: '4px', background: '#fff', color: 'rgba(18,16,14,0.9)', width: '100%' })} /></div>
+              <button type="button" className="gf-hshow" onClick={toggleHPass} aria-pressed={hShowStr} style={S({ fontSize: '13.5px', fontWeight: '600', padding: '0 12px', minHeight: '44px', border: '0', borderRadius: '4px', background: 'rgba(0,0,0,0.05)', color: 'rgba(18,16,14,0.96)', cursor: 'pointer' })}>{hShowLabel}</button>
             </div>
             <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '8px 14px', alignItems: 'center', justifyContent: 'space-between' })}>
               <span id="gf-hstrength" style={S({ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: '#625c57' })}>
                 <span aria-hidden="true" style={S({ display: 'flex', gap: '2px' })}><span style={S({ width: '18px', height: '4px', borderRadius: '1px', background: str.c1, display: 'block' })}></span><span style={S({ width: '18px', height: '4px', borderRadius: '1px', background: str.c2, display: 'block' })}></span><span style={S({ width: '18px', height: '4px', borderRadius: '1px', background: str.c3, display: 'block' })}></span></span>{str.text}
               </span>
-              <button type="button" onClick={toggleHPass} aria-pressed={hShowStr} style={S({ fontSize: '13.5px', fontWeight: '600', padding: '6px 10px', minHeight: '36px', border: '0', borderRadius: '4px', background: 'rgba(0,0,0,0.05)', color: 'rgba(18,16,14,0.96)', cursor: 'pointer' })}>{hShowLabel}</button>
+              
             </div>
             <span id="gf-hmatch" style={S({ fontSize: '12.5px', lineHeight: '1.5', color: hMatchFg })}>{hMatchText}</span>
           </div>
@@ -265,7 +267,7 @@ export function HideTab({ navRead }: { navRead: () => void }) {
 
       <div id="gf-hresult" role="status" aria-live="polite" style={S({ marginTop: '24px', scrollMarginTop: '72px' })}>
         {hJobActive && (<>
-          <div style={S({ display: 'flex', flexDirection: 'column', gap: '14px', padding: '20px', border: `1px solid ${hCardBd}`, borderRadius: '8px', background: '#f6f4f1', maxWidth: '640px' })}>
+          <div style={S({ display: 'flex', flexDirection: 'column', gap: '14px', padding: '20px', border: `1px solid ${hCardBd}`, borderRadius: '8px', background: '#f6f4f1' })}>
             <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '8px 16px', alignItems: 'baseline', justifyContent: 'space-between' })}>
               <span style={S({ fontSize: '18px', fontWeight: '700', lineHeight: '1.3' })}>{hHead}</span>
               <span style={S({ font: '500 12.5px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}>elapsed {hElapsed}</span>
@@ -279,9 +281,12 @@ export function HideTab({ navRead }: { navRead: () => void }) {
             </>)}
             <ol style={S({ margin: '0', padding: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' })}>
               {hStages.map((st, i) => (<React.Fragment key={i}>
-                <li style={S({ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14.5px', color: st.fg })}>
-                  <span aria-hidden="true" style={S({ width: '14px', height: '14px', borderRadius: '50%', border: `1.5px solid ${st.bd}`, background: st.fill, display: 'block', flex: 'none', animation: st.anim })}></span>
-                  <span style={S({ fontWeight: st.weight })}>{st.label}</span><span style={S({ font: '400 11.5px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', marginLeft: 'auto' })}>{st.status}</span>
+                <li style={S({ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '14.5px', lineHeight: '20px', color: st.fg })}>
+                  <span aria-hidden="true" style={S({ width: '16px', height: '16px', marginTop: '2px', borderRadius: '50%', boxSizing: 'border-box', border: `1.5px solid ${st.kind === 'next' ? '#c9c2ba' : BLUE}`, background: st.kind === 'done' ? BLUE : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' })}>
+                    {st.kind === 'done' && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5L20 7" /></svg>}
+                    {st.kind === 'now' && <span style={S({ width: '7px', height: '7px', borderRadius: '50%', background: BLUE, display: 'block', animation: st.anim })} />}
+                  </span>
+                  <span style={S({ fontWeight: st.weight, minWidth: '0' })}>{st.label}</span><span style={S({ font: '400 11.5px/20px \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', marginLeft: 'auto', flex: 'none' })}>{st.status}</span>
                 </li>
               </React.Fragment>))}
             </ol>
@@ -293,7 +298,7 @@ export function HideTab({ navRead }: { navRead: () => void }) {
         </>)}
 
         {hStop && (<>
-          <div style={S({ display: 'flex', flexDirection: 'column', gap: '12px', padding: '20px', borderRadius: '8px', background: '#f1eee9', border: '1.5px solid rgba(18,16,14,0.55)', maxWidth: '640px' })}>
+          <div style={S({ display: 'flex', flexDirection: 'column', gap: '12px', padding: '20px', borderRadius: '8px', background: '#f1eee9', border: '1.5px solid rgba(18,16,14,0.55)' })}>
             <span style={S({ display: 'flex', gap: '10px', alignItems: 'center', fontSize: '17px', fontWeight: '700' })}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(18,16,14,0.96)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={S({ flex: 'none' })}><path d="M12 2 2 20h20Z" /><path d="M12 9v5" /><path d="M12 17.5h.01" /></svg>{hStopTitle}</span>
             <p style={S({ margin: '0', fontSize: '15px', lineHeight: '1.55', textWrap: 'pretty' })}>{hStopBody}</p>
             <span style={S({ font: '400 12px/1.4 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}>{hStopMeta}</span>
@@ -319,11 +324,12 @@ export function HideTab({ navRead }: { navRead: () => void }) {
                 </div>
               </div>
               <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '8px 14px', alignItems: 'center', justifyContent: 'space-between' })}>
-                <div role="group" aria-label="Left view" style={S({ display: 'flex', gap: '2px', background: 'rgba(0,0,0,0.05)', padding: '3px', borderRadius: '6px' })}>
+                <span style={S({ display: 'flex', alignItems: 'center', gap: '8px' })}><span id="gf-hleft" style={S({ fontSize: '13px', fontWeight: '600', color: '#625c57' })}>Left image</span>
+                <div role="group" aria-labelledby="gf-hleft" style={S({ display: 'flex', gap: '2px', background: 'rgba(0,0,0,0.05)', padding: '3px', borderRadius: '6px' })}>
                   {hViewSeg.map((o, i) => (<React.Fragment key={i}>
                     <button type="button" aria-pressed={o.pressed} onClick={o.onClick} style={S({ fontSize: '13.5px', fontWeight: '600', padding: '8px 11px', minHeight: '38px', border: '0', borderRadius: '4px', background: o.bg, color: o.fg, boxShadow: o.sh, cursor: 'pointer' })}>{o.label}</button>
                   </React.Fragment>))}
-                </div>
+                </div></span>
                 <span style={S({ font: '500 12px/1.3 \'IBM Plex Mono\',ui-monospace,monospace', color: '#355574' })}>differences ×{hAmp}, real maximum {hCap}/255</span>
               </div>
             </figure>

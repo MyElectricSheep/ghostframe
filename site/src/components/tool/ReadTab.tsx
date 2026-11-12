@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { BLUE, fixturePath, GRAY, INK, MODES, ORDER, PASS_FIXTURE } from '../../data';
+import { BLUE, fixturePath, GRAY, servedName, INK, MODES, ORDER, PASS_FIXTURE } from '../../data';
 import type { ModeKey } from '../../data';
 import { ApiError, decode } from '../../lib/api';
 import { inspect, issueOf, withDims } from '../../lib/image';
@@ -23,7 +23,8 @@ export function ReadTab() {
   const readFile = async (file?: File) => { if (file) setFile(await inspect(file, file.name)); };
   const useSample = async () => {
     const blob = await (await fetch(fixturePath('antonello', 'classic.png'))).blob();
-    setFile(await inspect(new File([blob], 'classic.png', { type: 'image/png' }), 'classic.png', true));
+    const name = servedName('antonello', 'classic.png');
+    setFile(await inspect(new File([blob], name, { type: 'image/png' }), name, true));
   };
 
   const list: ModeKey[] = rMode === 'auto' ? ORDER : [rMode];
@@ -70,7 +71,7 @@ export function ReadTab() {
   const rRunning = rState === 'running', rFound = rState === 'found' && !!found, rNone = rState === 'none';
   const reduced = prefersReducedMotion();
   const rSteps = list.map((k, i) => ({ label: 'Trying ' + MODES[k].label, status: i < rStep ? 'nothing' : i === rStep ? 'now' : '', fg: i <= rStep ? INK : GRAY, bd: i <= rStep ? BLUE : '#c9c2ba', fill: i < rStep ? '#c9c2ba' : 'transparent', anim: i === rStep && !reduced ? 'gfpulse 1s ease-in-out infinite' : 'none' }));
-  const rMessage = found?.message ?? '', rFoundMeta = found && hit ? found.bytes + ' bytes · ' + hit.label + ' · ' + found.profile : '';
+  const rMessage = found?.message ?? '', rFoundMeta = found && hit ? found.bytes + ' bytes · ' + hit.label + ' · ' + hit.backbone : '', rFoundProfile = found?.profile ?? '';
   const rCopy = () => { try { navigator.clipboard.writeText(rMessage); } catch { /* clipboard unavailable */ } setCopied(true); };
   const rCopyLabel = copied ? 'Copied' : 'Copy';
   const rNoneModeNote = ranMode === 'auto' ? '' : ' (you chose ' + MODES[ranMode].label + ' only)';
@@ -156,7 +157,7 @@ export function ReadTab() {
                   <p style={S({ margin: '0', flex: '1', fontSize: '18px', fontWeight: '600', lineHeight: '1.4', padding: '10px 12px', background: '#fff', border: '1px solid rgba(63,100,140,0.14)', borderRadius: '4px', whiteSpace: 'pre-wrap', wordBreak: 'break-word' })}>{rMessage}</p>
                   <button type="button" onClick={rCopy} style={S({ fontSize: '14px', fontWeight: '600', padding: '0 14px', minHeight: '44px', border: '1px solid rgba(63,100,140,0.22)', borderRadius: '4px', background: '#fff', color: '#355574', cursor: 'pointer' })}>{rCopyLabel}</button>
                 </div>
-                <span style={S({ font: '400 12px/1.4 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}>{rFoundMeta}</span>
+                <span style={S({ font: '400 12px/1.4 \'IBM Plex Mono\',ui-monospace,monospace', color: 'rgba(18,16,14,0.96)', overflowWrap: 'anywhere' })}>{rFoundMeta} <span style={S({ color: '#625c57' })}>· {rFoundProfile}</span></span>
               </div>
             </>)}
             {rNone && (<>

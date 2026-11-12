@@ -17,6 +17,14 @@ const OUT_DATA = join(SITE, 'src', 'generated', 'site-data.json');
 
 const COVERS = { antonello: 'antonello-portrait-of-a-man', coffee: 'coffee-beans', milky: 'milky-way' };
 const STEMS = { classic: 'classic', subtle: 'subtle', long: 'long' };
+// Visitor-facing file names (corrective pass 6): the page never shows the internal key `classic`.
+// Each is a byte-identical copy of the fixture, checked like the original.
+const SLUGS = { antonello: 'portrait', coffee: 'coffee-beans', milky: 'milky-way' };
+const LABELS = { classic: 'short', subtle: 'subtle', long: 'long' };
+const servedName = (key, file) => {
+  const m = file.match(/^(classic|subtle|long)(-difference)?\.png$/);
+  return m ? `${SLUGS[key]}-${LABELS[m[1]]}${m[2] || ''}.png` : `${SLUGS[key]}-${file}`;
+};
 
 const sha256 = (path) => createHash('sha256').update(readFileSync(path)).digest('hex');
 
@@ -34,7 +42,7 @@ for (const [key, dir] of Object.entries(COVERS)) {
   const dst = join(OUT_PHOTOS, 'fixtures', dir);
   mkdirSync(dst, { recursive: true });
   const entries = JSON.parse(readFileSync(join(src, 'fixtures.json'), 'utf8'));
-  const modes = {};
+  const modes = {}, served = {};
   for (const entry of entries) {
     const mode = entry.encoded.replace(/\.png$/, '');
     if (!(mode in STEMS)) throw new Error(`Unexpected fixture ${entry.encoded}`);
@@ -43,6 +51,9 @@ for (const [key, dir] of Object.entries(COVERS)) {
       // Copy only when missing or different, so a running dev server keeps serving the files.
       if (!existsSync(join(dst, file)) || sha256(join(dst, file)) !== hash) copyFileSync(join(src, file), join(dst, file));
       if (sha256(join(dst, file)) !== hash) throw new Error(`Copy changed bytes: ${dir}/${file}`);
+      const name = served[file] = servedName(key, file);
+      if (!existsSync(join(dst, name)) || sha256(join(dst, name)) !== hash) copyFileSync(join(src, file), join(dst, name));
+      if (sha256(join(dst, name)) !== hash) throw new Error(`Copy changed bytes: ${dir}/${name}`);
     }
     modes[mode] = {
       profile: entry.profile,
@@ -56,7 +67,7 @@ for (const [key, dir] of Object.entries(COVERS)) {
     };
   }
   for (const jpg of [`${dir}.jpg`]) copyFileSync(join(PHOTOS, jpg), join(OUT_PHOTOS, jpg));
-  fixtures[key] = { dir, size: pngSize(join(src, 'original.png')), modes };
+  fixtures[key] = { dir, size: pngSize(join(src, 'original.png')), modes, served };
 }
 
 const out = {
