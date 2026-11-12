@@ -67,6 +67,25 @@ await page.getByRole('radio', { name: 'What the model sees' }).click(); await pa
 ok(await page.getByRole('radio', { name: 'What the model sees' }).getAttribute('aria-checked') === 'true', 'switch names are the full labels and select the view');
 for (const v of await views.all()) ok((await v.boundingBox()).height >= 44, 'switch option ≥ 44 px');
 
+// ---- Pixel inspector: a finger held down and dragged moves the marker (Compare and Difference)
+const cdp = await page.context().newCDPSession(page);
+const drag = async (box) => {
+  const y = box.y + box.height * 0.5, pts = [0.15, 0.4, 0.65, 0.85].map((f) => ({ x: box.x + box.width * f, y }));
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [pts[0]] });
+  for (const p of pts.slice(1)) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [p] }); await page.waitForTimeout(60); }
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+};
+for (const [view, alt] of [['Original vs encoded', 'Marked photo. Point to inspect a pixel.'], ['Amplified difference', 'Amplified difference. Point to zoom.']]) {
+  await page.getByRole('radio', { name: view }).click(); await page.waitForTimeout(400);
+  const pic = page.locator(`#try img[alt="${alt}"]`);
+  await pic.scrollIntoViewIfNeeded(); await page.waitForTimeout(300);
+  const marker = pic.locator('xpath=following-sibling::span[1]');
+  await drag(await pic.boundingBox());
+  const left = await marker.evaluate((m) => parseFloat(m.style.left));
+  ok(left > 80 && left < 90, `${view}: a finger drag moves the marker across the picture (now at ${left.toFixed(0)}%)`);
+}
+await page.getByRole('radio', { name: 'What the model sees' }).click(); await page.waitForTimeout(300);
+
 // ---- How it works cards
 const how = page.locator('#how');
 await how.scrollIntoViewIfNeeded(); await page.waitForTimeout(600);

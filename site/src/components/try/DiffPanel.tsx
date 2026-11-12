@@ -24,8 +24,8 @@ export function DiffPanel({ v }: { v: TryItView }) {
         </div>
         <div style={S({ display: 'flex', flexDirection: 'column', gap: '6px' })}>
           <span style={S({ fontSize: '12.5px', fontWeight: '600' })}>Zoomed in: {t5ZoomLabel}</span>
-          <div onMouseMove={t5Move} onClick={t5Move} style={S({ display: 'flex', gap: '10px', alignItems: 'flex-start' })}>
-            <div style={S({ position: 'relative', lineHeight: '0', borderRadius: '4px', overflow: 'hidden', cursor: 'crosshair', width: '110px', flex: 'none' })}>
+          <div onPointerDown={t5Move} onPointerMove={t5Move} style={S({ display: 'flex', gap: '10px', alignItems: 'flex-start' })}>
+            <div style={S({ position: 'relative', lineHeight: '0', borderRadius: '4px', overflow: 'hidden', cursor: 'crosshair', width: '110px', flex: 'none', touchAction: 'none' })}>
               <img src={t5DiffSrc} alt="Amplified difference. Point to zoom." style={S({ width: '100%', display: 'block' })} />
               <span aria-hidden="true" style={S({ position: 'absolute', left: t5Lx, top: t5Ly, width: '10px', height: '10px', margin: '-5px 0 0 -5px', border: '1.5px solid #fff', boxShadow: '0 0 0 1px rgba(18,16,14,0.7)', pointerEvents: 'none' })}></span>
             </div>

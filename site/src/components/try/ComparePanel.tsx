@@ -10,7 +10,7 @@ export function ComparePanel({ v }: { v: TryItView }) {
           <span style={S({ fontSize: '14px', fontWeight: '600' })}>Same photo, two files</span>
           <span style={S({ fontSize: '12.5px', lineHeight: '1.5', color: '#625c57' })}>The divider shows the untouched original on the left and the marked file on the right. Point at any spot to compare the exact colour values.</span>
         </div>
-        <div onMouseMove={t5Move} onClick={t5Move} style={S({ position: 'relative', lineHeight: '0', borderRadius: '4px', overflow: 'hidden', cursor: 'crosshair', alignSelf: 'center', width: t5ThumbW })}>
+        <div onPointerDown={t5Move} onPointerMove={t5Move} style={S({ position: 'relative', lineHeight: '0', borderRadius: '4px', overflow: 'hidden', cursor: 'crosshair', alignSelf: 'center', width: t5ThumbW, touchAction: 'none' })}>
           <img src={t5Marked} alt="Marked photo. Point to inspect a pixel." style={S({ width: '100%', display: 'block' })} />
           <span aria-hidden="true" style={S({ position: 'absolute', left: t5Lx, top: t5Ly, width: '14px', height: '14px', margin: '-7px 0 0 -7px', border: '2px solid #fff', boxShadow: '0 0 0 1px rgba(18,16,14,0.7)', borderRadius: '50%', pointerEvents: 'none' })}></span>
         </div>

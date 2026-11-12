@@ -99,7 +99,10 @@ export function useTryItView(s: TryItState, set: (patch: Partial<TryItState>) =>
   } else for (let k = 0; k < 49; k++) patch.push({ v: '', bg: '#ddd', fg: '#000' });
   const sw: { d: string; bg: string }[] = [];
   for (let d = -cap; d <= cap; d += cap > 4 ? 2 : 1) { const g = Math.max(0, Math.min(255, 128 + d * amp)); sw.push({ d: (d > 0 ? '+' : d < 0 ? '−' : '') + Math.abs(d), bg: 'rgb(' + g + ',' + g + ',' + g + ')' }); }
-  const t5Move = (e: React.MouseEvent<HTMLElement>) => {
+  // Pixel inspector: follows the mouse, and a finger or pen held down and dragged across the picture
+  // (the pointer is captured, so the drag keeps tracking even past the picture's edge).
+  const t5Move = (e: React.PointerEvent<HTMLElement> | React.MouseEvent<HTMLElement>) => {
+    if ('pointerType' in e && e.pointerType !== 'mouse' && e.type === 'pointerdown') e.currentTarget.setPointerCapture(e.pointerId);
     const r = e.currentTarget.querySelector('img')!.getBoundingClientRect();
     set({ pt: { fx: Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), fy: Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)) } });
   };
