@@ -75,8 +75,9 @@ CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… npm run deploy   # build + ve
 - **One engine.** The Worker sends every `/api/*` request to a single Durable Object (`engine`), which
   starts the container and waits until it answers. There is one container, so the queue, the caps
   and one-encode-at-a-time hold as on a single server.
-- **Size and sleep.** 4 vCPU, 4 GiB memory, 4 GB disk (an encode peaked at about 1 GB). The container
-  stops after 10 minutes without requests; the next visitor wakes it.
+- **Size and sleep.** 4 vCPU, 2 GiB memory, 4 GB disk. The engine peaked at 1,416 MiB with three Long
+  encodes of a 4 MP photo queued and six decodes alongside. The container stops after 3 minutes
+  without requests (memory is billed while it is awake); the next visitor wakes it in about 12 s.
 - **No Internet from the container.** Both checkpoints are baked into the image and checked against
   their pinned SHA-256 at build time. Outbound access is turned on only when `GF_TURNSTILE_SECRET` is
   set, because Turnstile verification is the only outbound call.
