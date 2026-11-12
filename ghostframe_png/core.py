@@ -434,12 +434,13 @@ def scores_to_bytes(scores):
     return np.packbits(bits).tobytes(), confidence
 
 
-def _optimize(model, cover_tiles, start_tiles, directions, targets, profile, steps, batch=16):
+def _optimize(model, cover_tiles, start_tiles, directions, targets, profile, steps, batch=16, on_step=None):
     """Sign-margin optimization on quantized pixels (straight-through estimator).
 
     Tiles leave the batch as soon as every signed score reaches the margin, and the
     remaining active tiles are re-batched each step, so finished tiles cost nothing.
     Adam runs per tile (bias-corrected by each tile's own step count).
+    `on_step(finished, steps_done)` is called after every step; it only observes.
     """
     eps, lr = profile.epsilon / 255, profile.lr / 255
     n = len(cover_tiles)
@@ -479,6 +480,8 @@ def _optimize(model, cover_tiles, start_tiles, directions, targets, profile, ste
                 c1 = (1 - 0.9 ** t[live]).view(-1, 1, 1, 1)
                 c2 = (1 - 0.999 ** t[live]).view(-1, 1, 1, 1)
                 delta[live] = (delta[live] - lr * (m[live] / c1) / ((v[live] / c2).sqrt() + 1e-8)).clamp(-eps, eps)
+        if on_step is not None:
+            on_step(int((~active).sum()), step + 1)
     return best
 
 
@@ -496,9 +499,21 @@ def safety_report(signed_bits, profile):
 BATCH = 16  # tiles per optimizer pass; memory and speed only, each tile is optimized independently
 
 
-def embed(cover, codeword, profile, model, *, batch=None):
+def _round_span(round_index, rounds):
+    """Share of the progress bar for each round: the first round does almost all the work."""
+    if round_index == 0:
+        return 0.0, 0.9 if rounds > 1 else 1.0
+    step = 0.1 / (rounds - 1)
+    return 0.9 + step * (round_index - 1), 0.9 + step * round_index
+
+
+def embed(cover, codeword, profile, model, *, batch=None, progress=None):
+    """Return marked RGB pixels and per-round diagnostics. Cover is HxWx3 uint8.
+
+    `progress(fraction)` is called with an estimate in [0, 1]. It only observes: the pixels are
+    the same with or without it. It may raise to cancel; nothing is returned or written then.
+    """
     batch = batch or BATCH
-    """Return marked RGB pixels and per-round diagnostics. Cover is HxWx3 uint8."""
     boxes = tile_boxes(cover.shape, profile)
     bits = np.unpackbits(np.frombuffer(codeword, np.uint8)).reshape(len(boxes), profile.bits)
     targets = torch.from_numpy(bits.astype(np.float32) * 2 - 1)
@@ -506,6 +521,8 @@ def embed(cover, codeword, profile, model, *, batch=None):
     pending = list(range(len(boxes)))
     history = []
     for round_index in range(profile.rounds):
+        low, high = _round_span(round_index, profile.rounds)
+        total, finished_groups = max(1, len(pending)), 0
         groups = {}
         for i in pending:
             l, t, r, b = boxes[i]
@@ -513,8 +530,14 @@ def embed(cover, codeword, profile, model, *, batch=None):
         for group in groups.values():
             take = lambda array: torch.cat([_tensor(array[boxes[i][1]:boxes[i][3], boxes[i][0]:boxes[i][2]])
                                            for i in group])
+            on_step = None
+            if progress is not None:
+                def on_step(finished, steps_done, size=len(group), base=finished_groups):
+                    share = max(finished / size, steps_done / (profile.steps + 1))
+                    progress(low + (high - low) * (base + share * size) / total)
             result = _optimize(model, take(cover), take(marked), torch.stack([carriers(profile, i) for i in group]),
-                               targets[group], profile, profile.steps, batch)
+                               targets[group], profile, profile.steps, batch, on_step)
+            finished_groups += len(group)
             for i, tile in zip(group, result, strict=True):
                 l, t, r, b = boxes[i]
                 marked[t:b, l:r] = (tile.permute(1, 2, 0) * 255).round().to(torch.uint8).numpy()
@@ -557,15 +580,30 @@ def decode_message(rgb, passphrase, profile, model, *, soft=True, report=None):
     raise DecodeError("No authenticated message recovered")
 
 
-def encode_message(cover, message, passphrase, profile, model, *, attempts=2, report=None, _salt=None):
-    """Mark a cover and return PNG bytes that were verified to authenticate after reopening."""
+def encode_message(cover, message, passphrase, profile, model, *, attempts=2, report=None, progress=None, _salt=None):
+    """Mark a cover and return PNG bytes that were verified to authenticate after reopening.
+
+    `progress(fraction)` receives a non-decreasing estimate in [0, 1], ending at 1.0 on success.
+    It never changes the result, and it may raise to cancel the encode.
+    """
     if isinstance(profile, str):
         profile = PROFILES[profile]
     tile_boxes(cover.shape, profile)
+    shown = [0.0]
+
+    def report_progress(fraction, start=0.0):
+        value = min(1.0, start + (1 - start) * fraction)
+        if value > shown[0]:
+            shown[0] = value
+            progress(value)
+
     for attempt in range(attempts):
         frame = seal(message, passphrase, profile, _salt=_salt if attempt == 0 else None)
         codeword = rs_encode(frame, profile)
-        marked, history = embed(cover, codeword, profile, model)
+        # A second attempt continues from where the bar stopped instead of going backwards.
+        start = shown[0]
+        on_progress = None if progress is None else (lambda f, start=start: report_progress(0.98 * f, start))
+        marked, history = embed(cover, codeword, profile, model, progress=on_progress)
         data = png_bytes(marked)
         reopened = np.asarray(Image.open(io.BytesIO(data)).convert("RGB"))
         info = {}
@@ -581,5 +619,7 @@ def encode_message(cover, message, passphrase, profile, model, *, attempts=2, re
                 corrected_symbols=info.get("corrected_symbols"), erasures=info.get("erasures")))
             report["codeword"] = codeword
         if ok:
+            if progress is not None:
+                report_progress(1.0)
             return data
     raise CapacityError("Encoding budget exhausted before the saved PNG authenticated. No output written.")

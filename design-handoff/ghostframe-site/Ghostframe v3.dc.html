@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2242%22%20height%3D%2242%22%20rx%3D%223%22%20fill%3D%22%2312100e%22%3E%3C%2Frect%3E%3Crect%20x%3D%2218.30%22%20y%3D%227.50%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2222.20%22%20y%3D%227.50%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2226.10%22%20y%3D%227.50%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2214.40%22%20y%3D%2211.40%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2218.30%22%20y%3D%2211.40%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2222.20%22%20y%3D%2211.40%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2226.10%22%20y%3D%2211.40%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2230.00%22%20y%3D%2211.40%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2210.50%22%20y%3D%2215.30%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2214.40%22%20y%3D%2215.30%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2218.30%22%20y%3D%2215.30%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2222.20%22%20y%3D%2215.30%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2226.10%22%20y%3D%2215.30%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2230.00%22%20y%3D%2215.30%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2233.90%22%20y%3D%2215.30%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2210.50%22%20y%3D%2219.20%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2214.40%22%20y%3D%2219.20%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2222.20%22%20y%3D%2219.20%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2226.10%22%20y%3D%2219.20%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%233f648c%22%3E%3C%2Frect%3E%3Crect%20x%3D%2230.00%22%20y%3D%2219.20%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2233.90%22%20y%3D%2219.20%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2210.50%22%20y%3D%2223.10%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2214.40%22%20y%3D%2223.10%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2218.30%22%20y%3D%2223.10%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2222.20%22%20y%3D%2223.10%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2226.10%22%20y%3D%2223.10%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2230.00%22%20y%3D%2223.10%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2233.90%22%20y%3D%2223.10%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2210.50%22%20y%3D%2227.00%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2214.40%22%20y%3D%2227.00%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2218.30%22%20y%3D%2227.00%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2222.20%22%20y%3D%2227.00%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2226.10%22%20y%3D%2227.00%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2230.00%22%20y%3D%2227.00%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2233.90%22%20y%3D%2227.00%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2210.50%22%20y%3D%2230.90%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2214.40%22%20y%3D%2230.90%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2218.30%22%20y%3D%2230.90%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2222.20%22%20y%3D%2230.90%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2226.10%22%20y%3D%2230.90%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2230.00%22%20y%3D%2230.90%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2233.90%22%20y%3D%2230.90%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2210.50%22%20y%3D%2234.80%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2218.30%22%20y%3D%2234.80%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2226.10%22%20y%3D%2234.80%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3Crect%20x%3D%2233.90%22%20y%3D%2234.80%22%20width%3D%223.90%22%20height%3D%223.90%22%20fill%3D%22%23f6f4f1%22%3E%3C%2Frect%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#f6f4f1;color:rgba(18,16,14,0.96);font-family:Inter,-apple-system,system-ui,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;font-feature-settings:"lnum"}
+a{color:#3f648c;text-underline-offset:3px}
+a:hover{color:#355574}
+*:focus-visible{outline:2px solid #3f648c;outline-offset:2px}
+button,input,textarea,select{font-family:inherit}
+summary{cursor:pointer}
+summary::-webkit-details-marker{display:none}
+details[open] > summary svg{transform:rotate(180deg)}
+@keyframes gfpulse{0%,100%{opacity:.3}50%{opacity:1}}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#f6f4f1">
+
+<header style="position:sticky;top:0;z-index:30;background:#f6f4f1;border-bottom:1px solid rgba(24,20,17,0.10)">
+  <div style="max-width:1240px;margin:0 auto;padding:10px clamp(16px,4vw,40px);display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap">
+    <a href="#top" aria-label="Ghostframe, back to top" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:rgba(18,16,14,0.96);--gfa:rgba(18,16,14,0.96);--gfb:#f6f4f1" style-hover="--gfa:#f6f4f1;--gfb:rgba(18,16,14,0.96)" style-focus="--gfa:#f6f4f1;--gfb:rgba(18,16,14,0.96)">
+      <svg width="24" height="24" viewBox="0 0 48 48" aria-hidden="true" style="display:block;flex:none"><g shape-rendering="crispEdges"><rect x="3" y="3" width="42" height="42" rx="3" stroke="rgba(18,16,14,0.96)" stroke-width="3" style="fill:var(--gfa,rgba(18,16,14,0.96));transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="18.30" y="7.50" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="22.20" y="7.50" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="26.10" y="7.50" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="14.40" y="11.40" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="18.30" y="11.40" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="22.20" y="11.40" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="26.10" y="11.40" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="30.00" y="11.40" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="10.50" y="15.30" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="14.40" y="15.30" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="18.30" y="15.30" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="22.20" y="15.30" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="26.10" y="15.30" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="30.00" y="15.30" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="33.90" y="15.30" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="10.50" y="19.20" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="14.40" y="19.20" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="22.20" y="19.20" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="26.10" y="19.20" width="3.90" height="3.90" fill="#3f648c"></rect><rect x="30.00" y="19.20" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="33.90" y="19.20" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="10.50" y="23.10" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="14.40" y="23.10" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="18.30" y="23.10" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="22.20" y="23.10" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="26.10" y="23.10" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="30.00" y="23.10" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="33.90" y="23.10" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="10.50" y="27.00" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="14.40" y="27.00" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="18.30" y="27.00" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="22.20" y="27.00" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="26.10" y="27.00" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="30.00" y="27.00" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="33.90" y="27.00" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="10.50" y="30.90" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="14.40" y="30.90" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="18.30" y="30.90" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="22.20" y="30.90" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="26.10" y="30.90" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="30.00" y="30.90" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="33.90" y="30.90" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="10.50" y="34.80" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="18.30" y="34.80" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="26.10" y="34.80" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect><rect x="33.90" y="34.80" width="3.90" height="3.90" style="fill:var(--gfb,#f6f4f1);transition:fill 520ms cubic-bezier(0.22,0.61,0.36,1)"></rect></g></svg>
+      <span style="font-weight:700;font-size:16px;letter-spacing:-0.2px">Ghostframe</span>
+    </a>
+    <span style="font:500 11px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;border:1px dashed rgba(24,20,17,0.30);padding:4px 8px;border-radius:999px">engineering experiment</span>
+    <nav aria-label="Sections" style="margin-left:auto;display:flex;gap:2px;flex-wrap:wrap">
+      <a href="#try" style="font-size:14px;font-weight:600;color:rgba(18,16,14,0.96);text-decoration:none;padding:8px 10px;border-radius:4px" style-hover="background:rgba(0,0,0,0.05)">Try it</a>
+      <a href="#tool" onClick="{{ navHide }}" style="font-size:14px;font-weight:600;color:rgba(18,16,14,0.96);text-decoration:none;padding:8px 10px;border-radius:4px" style-hover="background:rgba(0,0,0,0.05)">Hide</a>
+      <a href="#tool" onClick="{{ navRead }}" style="font-size:14px;font-weight:600;color:rgba(18,16,14,0.96);text-decoration:none;padding:8px 10px;border-radius:4px" style-hover="background:rgba(0,0,0,0.05)">Read</a>
+      <a href="#how" style="font-size:14px;font-weight:600;color:rgba(18,16,14,0.96);text-decoration:none;padding:8px 10px;border-radius:4px" style-hover="background:rgba(0,0,0,0.05)">How it works</a>
+      <a href="#limits" style="font-size:14px;font-weight:600;color:rgba(18,16,14,0.96);text-decoration:none;padding:8px 10px;border-radius:4px" style-hover="background:rgba(0,0,0,0.05)">Limits and evidence</a>
+    </nav>
+  </div>
+</header>
+
+<section id="top" data-screen-label="Intro" style="max-width:1240px;margin:0 auto;padding:clamp(28px,4.5vw,56px) clamp(16px,4vw,40px) clamp(20px,3vw,28px);display:flex;flex-wrap:wrap;gap:24px 56px;align-items:center">
+  <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:14px">
+    <span style="font:500 12px/1.4 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">An experiment in embedding-based steganography</span>
+    <h1 style="margin:0;font-size:clamp(36px,4.8vw,56px);font-weight:700;line-height:1.03;letter-spacing:-0.035em;text-wrap:balance">A secret message, hidden in plain pixels.</h1>
+    <p style="margin:0;font-size:clamp(16px,1.5vw,18.5px);line-height:1.5;color:#625c57;max-width:38em;text-wrap:pretty">An AI image model turns every part of a photo into a vector embedding, a list of numbers describing what it sees. Ghostframe nudges the pixels, by at most 2 or 8 levels out of 255, until those numbers spell out a short encrypted message. The same frozen model reads it back. The message is private and tamper-evident.</p>
+  </div>
+  <figure style="flex:1 1 380px;min-width:0;max-width:540px;margin:0;display:flex;flex-direction:column;gap:8px">
+    <canvas ref="{{ heroRef }}" width="1080" height="760" role="img" aria-label="Animation: a pixel ghost breaks into the tiles of a photo, the photo looks unchanged, then a scan reads the tiles and the ghost reassembles." style="width:100%;height:auto;display:block;border-radius:8px;background:#312e2b"></canvas>
+  </figure>
+</section>
+
+<section id="start" data-screen-label="Use your own photo" style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,40px) clamp(28px,4vw,44px)">
+  <div style="display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;justify-content:space-between;padding:18px 22px;background:#fff;border:1px solid rgba(24,20,17,0.10);border-radius:8px">
+    <div style="display:flex;flex-direction:column;gap:4px;flex:1 1 320px;min-width:0">
+      <span style="font-size:16px;font-weight:700">Try it with your own photo</span>
+      <span style="font-size:14px;line-height:1.5;color:#625c57;text-wrap:pretty">Hide a short message in a picture, or read one you were sent. Or start with the ready-made examples below.</span>
+    </div>
+    <div style="flex:0 1 auto;display:flex;flex-wrap:wrap;gap:8px">
+      <a href="#tool" onClick="{{ navHide }}" style="display:inline-flex;align-items:center;gap:8px;background:#3f648c;color:#fff;text-decoration:none;font-size:15px;font-weight:600;padding:12px 18px;border-radius:4px" style-hover="background:#355574;color:#fff">Hide a message</a>
+      <a href="#tool" onClick="{{ navRead }}" style="display:inline-flex;align-items:center;background:rgba(0,0,0,0.05);color:rgba(18,16,14,0.96);text-decoration:none;font-size:15px;font-weight:600;padding:12px 16px;border-radius:4px" style-hover="background:rgba(0,0,0,0.08);color:rgba(18,16,14,0.96)">Read a message</a>
+    </div>
+  </div>
+</section>
+
+<div aria-hidden="true" style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,40px)"><div style="border-top:1px dashed rgba(24,20,17,0.22)"></div></div>
+
+<section id="try" data-screen-label="Try it" style="margin:0;padding:clamp(32px,4.5vw,52px) clamp(16px,4vw,40px) clamp(18px,2.5vw,26px);scroll-margin-top:60px">
+  <div style="display:flex;flex-direction:column;gap:22px">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:16px 32px">
+    <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 420px;min-width:0;max-width:46em">
+        <span style="font:500 11.5px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">Try it · no upload needed</span>
+        <h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-0.02em;line-height:1.1">Can you spot the difference?</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#625c57;text-wrap:pretty">Three photos, each with a message already hidden in it in three different ways. Compare each with its original, look at the amplified changes, and see how differently the model now describes each part of the photo.</p>
+      </div>
+  </div>
+    <div style="display:flex;flex-wrap:wrap;gap:24px 32px;align-items:flex-start;justify-content:space-between">
+
+              <div style="display:flex;flex-direction:column;gap:18px;width:164px;flex:none">
+          <div role="group" aria-label="Cover" style="display:flex;flex-direction:column;gap:6px">
+            <span style="font:500 10.5px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">01 · cover</span>
+            <sc-for list="{{ wCovers }}" as="c" hint-placeholder-count="3">
+              <button type="button" aria-pressed="{{ c.pressed }}" onClick="{{ c.onClick }}" style="display:flex;align-items:center;gap:8px;padding:3px 8px 3px 3px;border-radius:4px;border:1.5px solid {{ c.bd }};background:{{ c.bg }};cursor:pointer;color:rgba(18,16,14,0.96)">
+                <img src="{{ c.src }}" alt="" style="width:36px;height:30px;object-fit:cover;object-position:{{ c.pos }};border-radius:2px;display:block;flex:none">
+                <span style="font-size:12.5px;font-weight:600">{{ c.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div role="radiogroup" aria-label="Mode" style="display:flex;flex-direction:column;gap:6px">
+            <span style="font:500 10.5px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">02 · mode</span>
+            <span style="font-size:11px;line-height:1.4;color:#625c57">How much data the message can hold, and how much the pixels may change.</span>
+            <sc-for list="{{ wModeList }}" as="m" hint-placeholder-count="3">
+              <div onMouseEnter="{{ m.onEnter }}" onMouseLeave="{{ m.onLeave }}" style="position:relative">
+                <button type="button" role="radio" aria-checked="{{ m.pressed }}" aria-describedby="{{ m.tipId }}" onClick="{{ m.onClick }}" onFocus="{{ m.onEnter }}" onBlur="{{ m.onLeave }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:6px;padding:8px;border-radius:4px;border:1.5px solid {{ m.bd }};background:{{ m.bg }};cursor:pointer;color:rgba(18,16,14,0.96)">
+                  <span style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:600">{{ m.label }}</span><span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;border:1.25px solid #8a837c;color:#625c57;font:600 9px/12px Inter,sans-serif;text-align:center;box-sizing:border-box;display:block">i</span></span>
+                  <span style="font:400 10px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ m.bytes }} B · ≤{{ m.cap }}</span>
+                </button>
+                <div id="{{ m.tipId }}" role="tooltip" style="position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);width:230px;padding:10px 12px;background:#312e2b;color:#f6f4f1;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,0.18);z-index:20;display:{{ m.tipDisp }};flex-direction:column;gap:6px;pointer-events:none">
+                  <span aria-hidden="true" style="position:absolute;left:-5px;top:50%;margin-top:-5px;width:10px;height:10px;background:#312e2b;transform:rotate(45deg);display:block"></span>
+                  <span style="font-size:13px;font-weight:700">{{ m.label }}</span>
+                  <span style="font-size:12px;line-height:1.5;text-wrap:pretty">{{ m.tip }}</span>
+                  <span style="font:400 10.5px/1.4 'IBM Plex Mono',ui-monospace,monospace;color:#d9d3cc">up to {{ m.max }} bytes · ≤{{ m.cap }}/255 · {{ m.grid }} tiles{{ m.status }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div role="radiogroup" aria-label="View" style="display:flex;flex-direction:column;gap:4px">
+            <span style="font:500 10.5px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">03 · view</span>
+            <sc-for list="{{ wViewList }}" as="v" hint-placeholder-count="3">
+              <button type="button" role="radio" aria-checked="{{ v.pressed }}" onClick="{{ v.onClick }}" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:4px;border:0;background:{{ v.bg }};cursor:pointer;color:rgba(18,16,14,0.96);text-align:left">
+                <span style="width:12px;height:12px;border-radius:50%;border:2px solid {{ v.dotBd }};background:{{ v.dot }};box-sizing:border-box;display:block;flex:none"></span>
+                <span style="font-size:12.5px;font-weight:{{ v.weight }}">{{ v.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;flex:1 1 {{ wStageW }};max-width:{{ wStageMax }};min-width:0">
+        <div style="background:#312e2b;border-radius:{{ wFrameRadius }};padding:10px;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font:500 11px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#d9d3cc"><span>{{ wFrameL }}</span>
+            <span style="display:flex;align-items:center;gap:8px">{{ wFrameR }}
+              <span onMouseEnter="{{ infoShow }}" onMouseLeave="{{ infoHide }}" style="position:relative;display:inline-flex">
+                <button type="button" onClick="{{ infoToggle }}" onFocus="{{ infoShow }}" onBlur="{{ infoHide }}" aria-label="About this file" aria-expanded="{{ infoOpenStr }}" aria-describedby="gf-info" style="width:22px;height:22px;padding:0;border-radius:50%;border:1.5px solid {{ infoBd }};background:{{ infoBg }};color:{{ infoFg }};font:700 11px/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center">i</button>
+                <div id="gf-info" role="tooltip" style="position:absolute;top:calc(100% + 10px);right:-6px;width:300px;max-width:calc(100vw - 48px);padding:14px 16px;background:#fff;color:rgba(18,16,14,0.96);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.22);z-index:30;display:{{ infoDisp }};flex-direction:column;gap:10px">
+                  <span aria-hidden="true" style="position:absolute;top:-5px;right:12px;width:10px;height:10px;background:#fff;transform:rotate(45deg);display:block"></span>
+                  <span style="font:600 13px/1.2 Inter,sans-serif">About this file</span>
+                  <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;padding:0;border:0;background:transparent;font:400 12px/1.45 'IBM Plex Mono',ui-monospace,monospace">
+            <dt style="color:#625c57">max change</dt><dd style="margin:0;font-weight:500">{{ wCap }} / 255 per channel</dd>
+            <dt style="color:#625c57">profile</dt><dd style="margin:0;overflow-wrap:anywhere">{{ wModel }} <span style="color:#625c57">· {{ wProfile }}</span></dd>
+            <dt style="color:#625c57">this file</dt><dd style="margin:0">{{ wChanged }}</dd>
+            <dt style="color:#625c57">this cover</dt><dd style="margin:0">{{ wRes }}</dd>
+            <dt style="color:#625c57"></dt><dd style="margin:0;display:flex"><span style="display:inline-flex;align-items:center;gap:5px;font:500 10px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#fff;padding:3px 7px;border-radius:999px;background:#312e2b"><span aria-hidden="true" style="width:5px;height:5px;border-radius:50%;background:#fff;display:block"></span>Measured on this exact file</span></dd>
+          </dl>
+                </div>
+              </span>
+            </span></div>
+          <div ref="{{ wStageRef }}" style="position:relative;aspect-ratio:{{ wAspect }};background:#4a4541;overflow:hidden;border:3px solid #f6f4f1;user-select:none;touch-action:pan-y">
+            <img src="{{ wOrig }}" alt="{{ wStageAlt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:{{ wOrigDisp }}">
+            <img src="{{ wMarked }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:{{ wMarkedDisp }};clip-path:inset(0 0 0 {{ wClip }})">
+            <img src="{{ wDiff }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:{{ wDiffDisp }}">
+            <sc-if value="{{ wEmbed }}" hint-placeholder-val="{{ false }}">
+              <div role="grid" aria-label="Tiles. Choose one to see how far its embedding turned." style="position:absolute;inset:0;display:grid;grid-template-columns:repeat({{ wCols }},1fr);grid-template-rows:repeat({{ wRows }},1fr)">
+                <sc-for list="{{ wCells }}" as="c" hint-placeholder-count="80">
+                  <button type="button" aria-label="{{ c.aria }}" aria-pressed="{{ c.pressed }}" onClick="{{ c.onClick }}" style="padding:0;margin:0;min-width:0;min-height:0;border:0;border-right:1px solid {{ c.line }};border-bottom:1px solid {{ c.line }};background:{{ c.bg }};box-shadow:{{ c.sh }};cursor:pointer;transition:background 200ms" style-hover="background:rgba(255,255,255,0.28)"></button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ wDivider }}" hint-placeholder-val="{{ true }}">
+              <div onPointerDown="{{ wHandleDown }}" aria-hidden="true" style="position:absolute;top:0;bottom:0;left:{{ wSplitPct }};width:44px;margin-left:-22px;cursor:ew-resize;touch-action:none;z-index:2">
+                <div style="position:absolute;top:0;bottom:0;left:21px;width:2px;background:#fff;box-shadow:0 0 0 1px rgba(18,16,14,0.35)"></div>
+                <div style="position:absolute;top:50%;left:2px;width:40px;height:40px;margin-top:-20px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;outline:{{ wKnobRing }};outline-offset:2px">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(18,16,14,0.96)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18-6-6 6-6"></path><path d="m15 6 6 6-6 6"></path></svg>
+                </div>
+              </div>
+              <input type="range" min="0" max="100" value="{{ wSplit }}" onChange="{{ wOnSplit }}" onFocus="{{ wKnobFocus }}" onBlur="{{ wKnobBlur }}" aria-label="Divider" aria-valuetext="{{ wSplitText }}" style="position:absolute;left:0;top:0;width:1px;height:1px;margin:0;opacity:0;overflow:hidden;pointer-events:none">
+            </sc-if>
+            <span style="position:absolute;left:8px;bottom:8px;font:500 11.5px/1 'IBM Plex Mono',ui-monospace,monospace;background:rgba(18,16,14,0.82);color:#fff;padding:6px 8px;border-radius:3px;pointer-events:none;z-index:3;display:{{ wTagLDisp }}">{{ wTagL }}</span>
+            <span style="position:absolute;right:8px;bottom:8px;font:500 11.5px/1 'IBM Plex Mono',ui-monospace,monospace;background:{{ wTagRBg }};color:#fff;padding:6px 8px;border-radius:3px;pointer-events:none;z-index:3">{{ wTagR }}</span>
+            <sc-if value="{{ wDiffOn }}" hint-placeholder-val="{{ false }}">
+              <div aria-hidden="true" style="position:absolute;inset:0;border:2px dashed #3f648c;pointer-events:none"></div>
+            </sc-if>
+          </div>
+        </div>
+        
+        <sc-if value="{{ wEmbed }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center">
+            <div aria-hidden="true" style="height:10px;width:100%;box-sizing:border-box;border-radius:2px;background:linear-gradient(90deg,rgba(63,100,140,0.06),rgba(63,100,140,0.84));border:1px solid rgba(24,20,17,0.10)"></div>
+            <div style="display:flex;justify-content:space-between;width:100%;font:400 11px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#625c57"><span>barely turned</span><span>turned most</span></div>
+            <span style="font-size:12px;line-height:1.5;color:#625c57;text-wrap:balance">Tiles are clickable on both sides of the divider; the tint shows only on the marked side.</span>
+          </div>
+        </sc-if>
+        <sc-if value="{{ wSliderHint }}" hint-placeholder-val="{{ true }}">
+            <span style="font-size:12px;line-height:1.5;color:#625c57;text-align:center">Drag the divider, or Tab to it and use the arrow keys.</span>
+          </sc-if>
+      </div>
+
+      <div style="flex:1 1 300px;max-width:440px;min-width:280px;display:flex;flex-direction:column;gap:12px">
+        <sc-if value="{{ wEmbed }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:10px;padding:14px;border:1px solid rgba(24,20,17,0.10);border-radius:8px;background:#fff">
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <span style="font:500 11.5px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">tile r{{ wR }} c{{ wC }}</span>
+              <span style="font-size:14.5px;font-weight:600">{{ wHeadline }}</span>
+            </div>
+            <div style="position:relative;width:220px;height:190px">
+              <svg width="220" height="190" viewBox="0 0 220 190" role="img" aria-label="{{ wDialAria }}" style="display:block">
+                <line x1="20" y1="175" x2="200" y2="175" stroke="rgba(24,20,17,0.12)" stroke-width="1"></line>
+                <path d="{{ wArc }}" fill="none" stroke="#3f648c" stroke-width="1.5" stroke-dasharray="3 3"></path>
+                <line x1="20" y1="175" x2="{{ wBx }}" y2="{{ wBy }}" stroke="#8a837c" stroke-width="2.5" stroke-linecap="round"></line>
+                <circle cx="{{ wBx }}" cy="{{ wBy }}" r="4" fill="#8a837c"></circle>
+                <line x1="20" y1="175" x2="{{ wAx }}" y2="{{ wAy }}" stroke="#3f648c" stroke-width="2.5" stroke-linecap="round"></line>
+                <circle cx="{{ wAx }}" cy="{{ wAy }}" r="4" fill="#3f648c"></circle>
+                <text x="{{ wBlx }}" y="{{ wBly }}" font-family="IBM Plex Mono, monospace" font-size="11" fill="#625c57">before</text>
+                <text x="{{ wAlx }}" y="{{ wAly }}" font-family="IBM Plex Mono, monospace" font-size="11" fill="#3f648c">after</text>
+              </svg>
+              <span aria-hidden="true" style="position:absolute;left:{{ wDegLeft }};top:{{ wDegTop }};font:500 12.5px/1 'IBM Plex Mono',ui-monospace,monospace;background:rgba(255,255,255,0.85);padding:1px 2px">{{ wDeg }}</span>
+            </div>
+            <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font:400 12px/1.4 'IBM Plex Mono',ui-monospace,monospace">
+              <dt style="color:#625c57">cosine</dt><dd style="margin:0;font-weight:500">{{ wCos }}</dd>
+              <dt style="color:#625c57">turned</dt><dd style="margin:0">{{ wDeg }} of a possible 180°</dd>
+              <dt style="color:#625c57">pixels</dt><dd style="margin:0">at most {{ wCap }}/255</dd>
+              <dt style="color:#625c57">all tiles</dt><dd style="margin:0">median {{ wMed }}°, most {{ wMax }}°</dd>
+                  <dt style="color:#625c57">model</dt><dd style="margin:0">read by {{ wModel }}</dd>
+            </dl>
+            <details style="border-top:1px solid rgba(24,20,17,0.10)">
+              <summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0 2px;font-size:13px;font-weight:600;cursor:pointer">What the angle means<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#625c57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
+              <div style="display:flex;flex-direction:column;gap:6px;padding-top:8px">
+                <p style="margin:0;font-size:12.5px;line-height:1.55">The model describes each tile with a list of numbers, its embedding: {{ wDim }} for {{ wModeLabel }}, read by {{ wModel }}. Think of those numbers as an arrow: tiles that look alike to the model point in similar directions. The angle is how differently the model now describes the same tile. 0° would mean no change; 90° would mean an unrelated description.</p>
+                <p style="margin:0;font-size:12.5px;line-height:1.55">Here the pixels moved by at most {{ wCap }}/255, yet this tile’s arrow turned {{ wDeg }}. The hidden bits are read from the direction the arrow now points.</p>
+              </div>
+            </details>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding:14px 0 12px;border:1px solid rgba(24,20,17,0.10);border-radius:8px;background:#fff;overflow:hidden">
+            <div style="display:flex;flex-direction:column;gap:2px;padding:0 14px">
+              <span style="font-size:13.5px;font-weight:600">Every tile’s turn</span>
+              <span style="font-size:12px;line-height:1.45;color:#625c57">Each dot is one tile. Click a dot to pick it.</span>
+            </div>
+            <div style="position:relative;width:298px;height:170px">
+            <svg width="300" height="170" viewBox="0 0 300 170" aria-hidden="true" style="position:absolute;inset:0;display:block">
+              <path d="M 20 160 L 280 160" stroke="rgba(24,20,17,0.15)" stroke-width="1"></path>
+              <path d="M 160 160 A 140 140 0 0 0 20 20" fill="none" stroke="rgba(24,20,17,0.15)" stroke-width="1"></path>
+              <path d="M 20 160 L 20 14" stroke="rgba(24,20,17,0.15)" stroke-width="1"></path>
+              <path d="M 20 160 L {{ t4MedX }} {{ t4MedY }}" stroke="#8a837c" stroke-width="1" stroke-dasharray="3 3"></path>
+            </svg>
+            <sc-for list="{{ t4Dots }}" as="d" hint-placeholder-count="80">
+              <button type="button" aria-label="{{ d.aria }}" onClick="{{ d.onClick }}" style="position:absolute;left:{{ d.x }};top:{{ d.y }};width:{{ d.s }};height:{{ d.s }};margin:{{ d.m }};padding:0;border:{{ d.bd }};border-radius:50%;background:{{ d.bg }};cursor:pointer;z-index:{{ d.z }}"></button>
+            </sc-for>
+            <span style="position:absolute;left:168px;top:146px;font:400 10px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;white-space:nowrap">0° · unchanged</span>
+            <span style="position:absolute;left:26px;top:8px;font:400 10px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;white-space:nowrap">90° · unrelated</span>
+            <span style="position:absolute;left:{{ t4MedLx }};top:{{ t4MedLy }};font:400 10px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">median {{ wMed }}°</span>
+          </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ wNotEmbed }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ wCompare }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid rgba(24,20,17,0.10);border-radius:8px;background:#fff">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:14px;font-weight:600">Same photo, two files</span>
+          <span style="font-size:12.5px;line-height:1.5;color:#625c57">The divider shows the untouched original on the left and the marked file on the right. Point at any spot to compare the exact colour values.</span>
+        </div>
+        <div onMouseMove="{{ t5Move }}" onClick="{{ t5Move }}" style="position:relative;line-height:0;border-radius:4px;overflow:hidden;cursor:crosshair;align-self:center;width:{{ t5ThumbW }}">
+          <img src="{{ t5Marked }}" alt="Marked photo. Point to inspect a pixel." style="width:100%;display:block">
+          <span aria-hidden="true" style="position:absolute;left:{{ t5Lx }};top:{{ t5Ly }};width:14px;height:14px;margin:-7px 0 0 -7px;border:2px solid #fff;box-shadow:0 0 0 1px rgba(18,16,14,0.7);border-radius:50%;pointer-events:none"></span>
+        </div>
+        <div role="table" aria-label="Colour values at the chosen pixel" style="display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:6px 10px;align-items:center;font:400 12px/1.2 'IBM Plex Mono',ui-monospace,monospace">
+          <span></span><span style="color:#625c57;text-align:right">R</span><span style="color:#625c57;text-align:right">G</span><span style="color:#625c57;text-align:right">B</span>
+          <span style="display:flex;align-items:center;gap:6px;color:#625c57"><span aria-hidden="true" style="width:12px;height:12px;border-radius:2px;background:{{ t5OSw }};display:block"></span>original</span><span style="text-align:right">{{ t5O0 }}</span><span style="text-align:right">{{ t5O1 }}</span><span style="text-align:right">{{ t5O2 }}</span>
+          <span style="display:flex;align-items:center;gap:6px;color:#3f648c"><span aria-hidden="true" style="width:12px;height:12px;border-radius:2px;background:{{ t5MSw }};display:block"></span>marked</span><span style="text-align:right;color:#3f648c">{{ t5M0 }}</span><span style="text-align:right;color:#3f648c">{{ t5M1 }}</span><span style="text-align:right;color:#3f648c">{{ t5M2 }}</span>
+          <span style="color:#625c57">change</span><span style="text-align:right;font-weight:500">{{ t5D0 }}</span><span style="text-align:right;font-weight:500">{{ t5D1 }}</span><span style="text-align:right;font-weight:500">{{ t5D2 }}</span>
+        </div>
+        <span style="font-size:12px;line-height:1.5;color:#625c57">{{ t5Line }}</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ wDiffOn }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid rgba(24,20,17,0.10);border-radius:8px;background:#fff">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:14px;font-weight:600">What changed, made visible</span>
+          <span style="font-size:12.5px;line-height:1.5;color:#625c57">The changes are too small to see, so each one is multiplied by ×{{ t5Amp }} and drawn around mid-grey. This picture is a map of the changes, not the photo.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:grid;grid-template-columns:repeat({{ t5SwN }},1fr);gap:4px">
+            <sc-for list="{{ t5Sw }}" as="w" hint-placeholder-count="5">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                <span aria-hidden="true" style="width:100%;height:28px;border-radius:3px;background:{{ w.bg }};border:1px solid rgba(24,20,17,0.12);display:block"></span>
+                <span style="font:500 11px/1 'IBM Plex Mono',ui-monospace,monospace">{{ w.d }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11.5px;color:#625c57"><span>darker = value lowered</span><span>lighter = raised</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:12.5px;font-weight:600">Zoomed in: {{ t5ZoomLabel }}</span>
+          <div onMouseMove="{{ t5Move }}" onClick="{{ t5Move }}" style="display:flex;gap:10px;align-items:flex-start">
+            <div style="position:relative;line-height:0;border-radius:4px;overflow:hidden;cursor:crosshair;width:110px;flex:none">
+              <img src="{{ t5DiffSrc }}" alt="Amplified difference. Point to zoom." style="width:100%;display:block">
+              <span aria-hidden="true" style="position:absolute;left:{{ t5Lx }};top:{{ t5Ly }};width:10px;height:10px;margin:-5px 0 0 -5px;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(18,16,14,0.7);pointer-events:none"></span>
+            </div>
+            <div role="img" aria-label="Green-channel change for a 7 by 7 patch" style="display:grid;grid-template-columns:repeat(7,22px);grid-auto-rows:22px;gap:1px;background:rgba(24,20,17,0.12);padding:1px">
+              <sc-for list="{{ t5Patch }}" as="c" hint-placeholder-count="49">
+                <span style="background:{{ c.bg }};color:{{ c.fg }};font:500 9px/22px 'IBM Plex Mono',ui-monospace,monospace;text-align:center">{{ c.v }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <span style="font-size:11.5px;line-height:1.45;color:#625c57">Numbers are the real change in the green channel at each pixel.</span>
+        </div>
+            </div>
+          </sc-if>
+          
+          
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="reveal" data-screen-label="Reveal" style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,40px) clamp(40px,6vw,64px);scroll-margin-top:60px">
+  <div style="display:flex;flex-direction:column;gap:14px;padding:clamp(18px,3vw,28px);background:#fff;border:1px solid rgba(24,20,17,0.10);border-radius:10px">
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px">
+      <h3 style="margin:0;font-size:clamp(20px,2vw,24px);font-weight:700;letter-spacing:-0.01em;line-height:1.2">Hidden in this photo</h3>
+      <span style="font:500 12px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ rvCtx }}</span>
+    </div>
+    <div role="status" aria-live="polite" style="padding:16px 18px;background:#f6f4f1;border:1px solid rgba(24,20,17,0.12);border-radius:6px;min-height:28px;max-height:{{ rvMaxH }};overflow:hidden">
+      <span style="font:600 {{ rvSize }}/1.45 'IBM Plex Mono',ui-monospace,monospace;color:rgba(18,16,14,0.96);letter-spacing:0.02em;word-break:break-word">{{ rvText }}</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px">
+      <button type="button" onClick="{{ rvClick }}" disabled="{{ rvBusy }}" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;padding:12px 18px;min-height:44px;border:0;border-radius:4px;background:#3f648c;color:#fff;cursor:pointer;flex:none" style-hover="background:#355574"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg><span>{{ rvLabel }}</span></button>
+      <sc-if value="{{ rvCanExpand }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ rvExpand }}" style="font-size:14px;font-weight:600;padding:10px 4px;min-height:44px;background:none;border:0;color:#3f648c;cursor:pointer">{{ rvExpandLabel }}</button></sc-if>
+      <span style="font:400 11.5px/1.45 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ rvMeta }}</span>
+      <sc-if value="{{ rvDone }}" hint-placeholder-val="{{ false }}">
+        <span style="display:inline-flex;align-items:center;gap:5px;font:500 10.5px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#fff;padding:3px 8px;border-radius:999px;background:#312e2b;margin-left:auto">Recorded result</span>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<div aria-hidden="true" style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,40px)"><div style="border-top:1px dashed rgba(24,20,17,0.22)"></div></div>
+
+<section id="how" data-screen-label="How it works" style="scroll-margin-top:56px">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:46em">
+      <h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-0.02em;line-height:1.1">How it works</h2>
+      <p style="margin:0;font-size:16px;line-height:1.55;color:#625c57;text-wrap:pretty">A frozen, public image model, <a href="https://arxiv.org/abs/1905.02244" target="_blank" rel="noopener">MobileNetV3-Small</a> (or, <a href="https://github.com/forresti/SqueezeNet/tree/master/SqueezeNet_v1.1" target="_blank" rel="noopener">SqueezeNet 1.1</a> for Short mode) looks at the photo one tile at a time. For each tile it produces an embedding: the list of numbers the model uses to describe that tile. The encoder nudges pixels until those numbers spell out the encrypted message. The model’s weights never change. Only the pixels do.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+      <figure style="flex:1 1 440px;min-width:0;max-width:600px;margin:0;display:flex;flex-direction:column;gap:10px">
+        <div style="background:#312e2b;border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font:500 11px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#d9d3cc">
+            <span>{{ howLabel }}</span><span>{{ howTime }}</span>
+          </div>
+          <div style="position:relative;border:3px solid #f6f4f1;line-height:0;background:#f6f4f1">
+            <canvas ref="{{ howRef }}" width="1120" height="840" role="img" aria-label="{{ howAria }}" style="width:100%;height:auto;display:block"></canvas>
+            <button type="button" onClick="{{ howReplay }}" aria-label="Replay this step" style="position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:6px;padding:7px 11px 7px 9px;border:0;border-radius:999px;background:rgba(18,16,14,0.82);color:#fff;font:600 12.5px/1 Inter,sans-serif;cursor:pointer" style-hover="background:#3f648c">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 3v6h6"></path></svg>Replay
+            </button>
+            <div aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(18,16,14,0.10)"><div ref="{{ howBarRef }}" style="height:100%;width:0%;background:#3f648c"></div></div>
+          </div>
+        </div>
+        <figcaption style="font-size:12px;line-height:1.5;color:#625c57;text-wrap:pretty">Illustration. The message, grid sizes and pixel cap are real; the numbers inside the model are simplified.</figcaption>
+      </figure>
+      <ol aria-label="Steps" style="flex:1 1 420px;min-width:0;margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+        <sc-for list="{{ steps }}" as="f" hint-placeholder-count="5">
+          <li style="display:grid;grid-template-columns:32px 1fr;gap:14px;cursor:pointer" onClick="{{ f.onClick }}">
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <span style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',ui-monospace,monospace;border:1.5px solid {{ f.bd }};background:{{ f.bg }};color:{{ f.numFg }};flex:none">{{ f.n }}</span>
+              <span aria-hidden="true" style="flex:1;width:1.5px;background:rgba(24,20,17,0.15);display:{{ f.line }};min-height:16px"></span>
+            </div>
+            <div style="padding:0 0 14px">
+              <button type="button" aria-pressed="{{ f.pressed }}" onClick="{{ f.onClick }}" style="width:100%;display:flex;flex-direction:column;gap:4px;padding:10px 12px;margin:-6px 0 0 -12px;border:1.5px solid {{ f.cardBd }};border-radius:8px;background:{{ f.cardBg }};cursor:pointer;text-align:left;color:rgba(18,16,14,0.96);font:inherit;transition:background 160ms,border-color 160ms" style-hover="border-color:rgba(63,100,140,0.45)">
+                <span style="display:flex;justify-content:space-between;gap:8px;font:500 11px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57"><span>{{ f.who }}</span><span style="color:#3f648c">{{ f.playing }}</span></span>
+                <span style="font-size:17px;font-weight:600;line-height:1.3">{{ f.t }}</span>
+                <span style="font-size:14.5px;line-height:1.55;color:#625c57;text-wrap:pretty">{{ f.d }}</span>
+              </button>
+            </div>
+          </li>
+        </sc-for>
+        <li>
+          <details style="border-top:1px solid rgba(24,20,17,0.10);padding-top:14px;margin-left:46px">
+            <summary style="font-size:15px;font-weight:600;color:#355574">Technical detail</summary>
+            <ul style="margin:12px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.55">
+              <li><strong>Models:</strong> MobileNetV3-Small for Subtle and Long (<a href="https://arxiv.org/abs/1905.02244" target="_blank" rel="noopener">Howard et al., <em>Searching for MobileNetV3</em>, ICCV 2019</a>), torchvision checkpoint (sha256 <span style="font-family:'IBM Plex Mono',ui-monospace,monospace">047dcff4…</span>), and <a href="https://github.com/forresti/SqueezeNet/tree/master/SqueezeNet_v1.1" target="_blank" rel="noopener">SqueezeNet 1.1</a> for Short (<a href="https://arxiv.org/abs/1602.07360" target="_blank" rel="noopener">original paper</a>), checkpoint (sha256 <span style="font-family:'IBM Plex Mono',ui-monospace,monospace">b8a52dc0…</span>). Each has its own pinned calibration file. PyTorch 2.7.1 CPU, torchvision 0.22.1.</li>
+              <li>Encryption: <button type="button" data-abbr="1" onClick="{{ abOpen.AES }}" aria-expanded="{{ abExp.AES }}" aria-controls="gf-abbr" style="font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;border-bottom:1px dashed currentColor;cursor:help;line-height:inherit">AES-256-GCM</button>. The key is derived from the passphrase with <button type="button" data-abbr="1" onClick="{{ abOpen.scrypt }}" aria-expanded="{{ abExp.scrypt }}" aria-controls="gf-abbr" style="font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;border-bottom:1px dashed currentColor;cursor:help;line-height:inherit">scrypt</button>, which makes guessing deliberately slow.</li>
+              <li>Tamper evidence: if the hidden message is altered, authentication fails and the reader returns “No message found.” instead of a wrong message.</li>
+              <li>The encoder is a standard optimiser. The model only reads; it never writes anything.</li>
+              <li><strong>Related work.</strong> Ghostframe builds on an established idea: hide data by optimising an image so a frozen network reads it out. See Vukotić et al. (WIFS 2018) and <a href="https://arxiv.org/abs/2112.09581" target="_blank" rel="noopener">Fernandez et al. (ICASSP 2022)</a>, whose fixed “carrier” directions in a pretrained feature space are close to ours. <a href="https://openreview.net/forum?id=hcMvApxGSzZ" target="_blank" rel="noopener">Kishore et al. (ICLR 2022)</a> apply the same principle to steganography (FNNS), and <a href="https://openreview.net/forum?id=8MY_s2y_v9" target="_blank" rel="noopener">Luo et al. (ACM MM 2023)</a> add a key. What’s ours is the engineering and the testing, not the method.
+                <span style="display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font:400 12px/1.5 'IBM Plex Mono',ui-monospace,monospace;color:#625c57"><span>Also:</span><a href="https://github.com/varshakishore/FNNS" target="_blank" rel="noopener">FNNS code</a><a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/12033233" target="_blank" rel="noopener">FNNS variants (US patent 12,033,233)</a><a href="https://arxiv.org/abs/2407.11405" target="_blank" rel="noopener">Cs-FNNS follow-up</a></span>
+              </li>
+              <li>Encoding and decoding run on a server. Browser decoding hasn’t been validated.</li>
+            </ul>
+          </details>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="tool" data-screen-label="Hide and read" style="background:#fff;border-top:1px dashed rgba(24,20,17,0.22);border-bottom:1px dashed rgba(24,20,17,0.22);scroll-margin-top:56px">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(32px,5vw,56px) clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:22px">
+    <div style="display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end;justify-content:space-between">
+      <div style="display:flex;flex-direction:column;gap:8px;max-width:40em">
+        <h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-0.02em;line-height:1.1">Use your own photo</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#625c57;text-wrap:pretty">Nothing is stored. Photos, messages, passphrases and results are deleted as soon as the job finishes, and no one else can see your images.</p>
+      </div>
+      <span style="display:inline-flex;align-items:center;gap:6px;font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;padding:4px 9px;border:1px dashed #8a837c;border-radius:999px"><span aria-hidden="true" style="width:7px;height:7px;border:1.25px dashed #625c57;border-radius:50%;display:block"></span>Prototype · server responses are simulated</span>
+    </div>
+
+    <div role="tablist" aria-label="Hide or read" onKeyDown="{{ onTabKey }}" style="display:flex;border-bottom:1px solid rgba(24,20,17,0.10)">
+      <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="2">
+        <button type="button" role="tab" id="{{ tb.id }}" aria-selected="{{ tb.selected }}" aria-controls="gf-tabpanel" tabIndex="{{ tb.tabIndex }}" onClick="{{ tb.onClick }}" style="font-size:16px;font-weight:600;padding:14px 16px;background:transparent;border:0;border-bottom:2px solid {{ tb.bar }};margin-bottom:-1px;color:{{ tb.fg }};cursor:pointer">{{ tb.label }}</button>
+      </sc-for>
+    </div>
+
+    <div id="gf-tabpanel" role="tabpanel" aria-labelledby="{{ tabLabelledBy }}">
+    <sc-if value="{{ isHide }}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{ hSiteClosed }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;padding:16px 18px;margin-bottom:24px;border-radius:8px;background:#f1eee9;border:1.5px solid rgba(18,16,14,0.55)">
+          <div style="display:flex;flex-direction:column;gap:4px;flex:1 1 320px;min-width:0">
+            <span style="font-size:16px;font-weight:700">Encoding is closed for today</span>
+            <span style="font-size:14px;line-height:1.5">The demo has hit today’s limit. Encoding comes back tomorrow (UTC). Decoding still works.</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <a href="#try" style="font-size:14px;font-weight:600;padding:9px 14px;min-height:40px;box-sizing:border-box;display:inline-flex;align-items:center;border:1px solid rgba(63,100,140,0.22);border-radius:4px;background:#fff;color:#355574;text-decoration:none">Try the ready-made examples</a>
+            <button type="button" onClick="{{ navRead }}" style="font-size:14px;font-weight:600;padding:9px 14px;min-height:40px;border:1px solid rgba(63,100,140,0.22);border-radius:4px;background:#fff;color:#355574;cursor:pointer">Read a message</button>
+          </div>
+        </div>
+      </sc-if>
+      <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+        <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:14px;font-weight:600"><span style="font:500 11.5px 'IBM Plex Mono',ui-monospace,monospace;color:#3f648c;margin-right:8px">01</span>Upload a photo</span>
+            <div onDragOver="{{ hDragOver }}" onDragLeave="{{ hDragLeave }}" onDrop="{{ hDrop }}" style="min-height:200px;border-radius:8px;border:1.5px {{ hDz.bs }} {{ hDz.bd }};background:{{ hDz.bg }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;text-align:center;box-sizing:border-box">
+              <input ref="{{ hFileRef }}" type="file" accept="image/png,image/jpeg" onChange="{{ hFileInput }}" aria-label="Choose a photo" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+              <sc-if value="{{ hEmpty }}" hint-placeholder-val="{{ true }}">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#625c57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m17 8-5-5-5 5"></path><path d="M12 3v12"></path></svg>
+                <span style="font-size:15px;font-weight:600">{{ hDzTitle }}</span>
+                <span style="font-size:13px;line-height:1.5;color:#625c57">PNG or JPEG, up to 4 megapixels. At least 1000 px on the long side works best.</span>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center">
+                  <button type="button" onClick="{{ hPick }}" style="font-size:14px;font-weight:600;padding:9px 14px;min-height:40px;border:1px solid rgba(63,100,140,0.22);border-radius:4px;background:#fff;color:#355574;cursor:pointer">Choose photo</button>
+                  <button type="button" onClick="{{ hUseSample }}" style="font-size:14px;font-weight:600;padding:9px 12px;min-height:40px;border:0;border-radius:4px;background:transparent;color:rgba(18,16,14,0.96);cursor:pointer;text-decoration:underline;text-underline-offset:3px">Use a sample photo</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ hHasFile }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:14px;align-items:center;width:100%;text-align:left">
+                  <img src="{{ hFile.url }}" alt="Selected photo" style="width:96px;height:96px;object-fit:cover;border-radius:4px;border:1px solid rgba(24,20,17,0.10);display:block;flex:none">
+                  <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1">
+                    <span style="font-size:14.5px;font-weight:600;word-break:break-all">{{ hFile.name }}</span>
+                    <span style="font:400 12px/1.35 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ hFile.type }} · {{ hFile.dims }} · {{ hFile.mp }} MP</span>
+                    <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:{{ hCheck.fg }}"><span aria-hidden="true" style="width:14px;height:14px;display:flex;align-items:center;justify-content:center;border-radius:{{ hCheck.radius }};background:{{ hCheck.fg }};color:#fff;font-size:10px;font-weight:700;flex:none">{{ hCheck.glyph }}</span>{{ hCheck.text }}</span>
+                  </div>
+                </div>
+                <sc-if value="{{ hIssue }}" hint-placeholder-val="{{ false }}">
+                  <p role="alert" style="margin:0;font-size:13.5px;line-height:1.5;text-align:left;width:100%;color:rgba(18,16,14,0.96)">{{ hIssueText }}</p>
+                </sc-if>
+                <sc-for list="{{ hNotes }}" as="n" hint-placeholder-count="0">
+                  <p style="margin:0;font-size:13px;line-height:1.5;text-align:left;width:100%;color:#355574;background:#eaf1f7;padding:8px 10px;border-radius:4px;box-sizing:border-box">{{ n }}</p>
+                </sc-for>
+                <div style="display:flex;gap:6px;align-self:flex-start"><button type="button" onClick="{{ hPick }}" style="font-size:13.5px;font-weight:600;padding:8px 12px;min-height:36px;border:0;border-radius:4px;background:rgba(0,0,0,0.05);color:rgba(18,16,14,0.96);cursor:pointer">Replace</button><button type="button" onClick="{{ hClear }}" style="font-size:13.5px;font-weight:600;padding:8px 12px;min-height:36px;border:0;border-radius:4px;background:transparent;color:rgba(18,16,14,0.96);cursor:pointer">Remove</button></div>
+              </sc-if>
+            </div>
+          </div>
+
+          <p style="margin:-14px 0 0;font-size:12.5px;line-height:1.5;color:#625c57;text-wrap:pretty"><span style="font-weight:600;color:rgba(18,16,14,0.96)">Tip:</span> busy, detailed photos work best, such as food, textures, crowds or foliage. Flat skies, plain walls, logos and screenshots are often refused.</p>
+
+          <div role="group" aria-label="Mode" style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:14px;font-weight:600"><span style="font:500 11.5px 'IBM Plex Mono',ui-monospace,monospace;color:#3f648c;margin-right:8px">02</span>Choose a mode</span>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">
+              <sc-for list="{{ hModes }}" as="m" hint-placeholder-count="3">
+                <button type="button" aria-pressed="{{ m.pressed }}" onClick="{{ m.onClick }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px;border-radius:6px;border:1.5px solid {{ m.bd }};background:{{ m.bg }};cursor:pointer;text-align:left;color:rgba(18,16,14,0.96)">
+                  <span style="display:flex;align-items:center;gap:8px;width:100%"><span style="font-size:15px;font-weight:600">{{ m.label }}</span><span style="margin-left:auto;font:500 10.5px/1 'IBM Plex Mono',ui-monospace,monospace;padding:3px 6px;border-radius:999px;border:1px {{ m.tagBs }} #8a837c;color:#625c57;display:{{ m.tagDisp }}">{{ m.status }}</span></span>
+                  <span style="font:400 11.5px/1.45 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">up to {{ m.bytes }} bytes<br>change ≤ {{ m.cap }}/255</span>
+                  <span style="font-size:12.5px;line-height:1.4;color:#625c57">{{ m.blurb }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline">
+              <label for="gf-hmsg" style="font-size:14px;font-weight:600"><span style="font:500 11.5px 'IBM Plex Mono',ui-monospace,monospace;color:#3f648c;margin-right:8px">03</span>Type the message</label>
+              <span id="gf-hcount" aria-live="polite" style="font:500 12.5px/1 'IBM Plex Mono',ui-monospace,monospace;color:{{ bc.fg }}">{{ bc.n }} / {{ bc.limit }} bytes</span>
+            </div>
+            <textarea id="gf-hmsg" rows="3" value="{{ hMsg }}" onChange="{{ onHMsg }}" aria-describedby="gf-hcount gf-hhelp" placeholder="Meet at dawn." style="font-size:15px;line-height:1.45;padding:10px 12px;border:1px solid {{ bc.bd }};border-radius:4px;resize:vertical;min-height:72px;color:rgba(18,16,14,0.9);background:#fff"></textarea>
+            <div aria-hidden="true" style="height:4px;background:#e6e1da;border-radius:2px;overflow:hidden"><div style="height:100%;width:{{ bc.pct }};background:{{ bc.bar }};transition:width 160ms cubic-bezier(0.22,0.61,0.36,1)"></div></div>
+            <span id="gf-hhelp" style="font-size:12.5px;line-height:1.5;color:{{ bc.helpFg }}">{{ bc.help }}</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:14px;font-weight:600"><span style="font:500 11.5px 'IBM Plex Mono',ui-monospace,monospace;color:#3f648c;margin-right:8px">04</span>Set a passphrase</span>
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px">
+              <div style="display:flex;flex-direction:column;gap:4px"><label for="gf-hp1" style="font-size:12.5px;color:#625c57">Passphrase</label><input id="gf-hp1" type="{{ hPassType }}" value="{{ hPass }}" onChange="{{ onHPass }}" autocomplete="new-password" aria-describedby="gf-hstrength" style="font-size:15px;padding:10px 12px;min-height:44px;box-sizing:border-box;border:1px solid #dddddd;border-radius:4px;background:#fff;color:rgba(18,16,14,0.9);width:100%"></div>
+              <div style="display:flex;flex-direction:column;gap:4px"><label for="gf-hp2" style="font-size:12.5px;color:#625c57">Repeat passphrase</label><input id="gf-hp2" type="{{ hPassType }}" value="{{ hPass2 }}" onChange="{{ onHPass2 }}" autocomplete="new-password" aria-describedby="gf-hmatch" style="font-size:15px;padding:10px 12px;min-height:44px;box-sizing:border-box;border:1px solid {{ hMatchBd }};border-radius:4px;background:#fff;color:rgba(18,16,14,0.9);width:100%"></div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between">
+              <span id="gf-hstrength" style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:#625c57">
+                <span aria-hidden="true" style="display:flex;gap:2px"><span style="width:18px;height:4px;border-radius:1px;background:{{ str.c1 }};display:block"></span><span style="width:18px;height:4px;border-radius:1px;background:{{ str.c2 }};display:block"></span><span style="width:18px;height:4px;border-radius:1px;background:{{ str.c3 }};display:block"></span></span>{{ str.text }}
+              </span>
+              <button type="button" onClick="{{ toggleHPass }}" aria-pressed="{{ hShowStr }}" style="font-size:13.5px;font-weight:600;padding:6px 10px;min-height:36px;border:0;border-radius:4px;background:rgba(0,0,0,0.05);color:rgba(18,16,14,0.96);cursor:pointer">{{ hShowLabel }}</button>
+            </div>
+            <span id="gf-hmatch" style="font-size:12.5px;line-height:1.5;color:{{ hMatchFg }}">{{ hMatchText }}</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center">
+              <button type="button" onClick="{{ hEncode }}" disabled="{{ hDisabled }}" style="font-size:15px;font-weight:600;padding:12px 20px;min-height:44px;border:0;border-radius:4px;background:{{ hBtn.bg }};color:{{ hBtn.fg }};cursor:{{ hBtn.cursor }}"><span style="font:500 11.5px 'IBM Plex Mono',ui-monospace,monospace;margin-right:8px;opacity:0.8">05</span>Encode</button>
+              <span style="display:inline-flex;align-items:center;gap:8px;padding:0 10px;min-height:44px;border:1px dashed rgba(24,20,17,0.25);border-radius:4px;font:400 11.5px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;background:#f6f4f1"><span aria-hidden="true" style="width:14px;height:14px;border:1.5px solid #625c57;border-radius:3px;display:block;flex:none"></span>[Turnstile check]</span>
+            </div>
+            <div>
+              <span style="font-size:13px;line-height:1.45;color:#625c57">{{ hBlocker }}</span>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:6px;padding:12px 14px;border:1px dashed #8a837c;border-radius:6px">
+            <span style="font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">Prototype control · simulated server response</span>
+            <div role="group" aria-label="Simulated encode response" style="display:flex;flex-wrap:wrap;gap:4px">
+              <sc-for list="{{ hSimSeg }}" as="o" hint-placeholder-count="5">
+                <button type="button" aria-pressed="{{ o.pressed }}" onClick="{{ o.onClick }}" style="font-size:12.5px;font-weight:600;padding:6px 10px;min-height:32px;border:1px solid {{ o.bd }};border-radius:4px;background:{{ o.bg }};color:{{ o.fg }};cursor:pointer">{{ o.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="gf-hresult" role="status" aria-live="polite" style="margin-top:24px;scroll-margin-top:72px">
+        <sc-if value="{{ hJobActive }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:14px;padding:20px;border:1px solid {{ hCardBd }};border-radius:8px;background:#f6f4f1;max-width:640px">
+            <div style="display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between">
+              <span style="font-size:18px;font-weight:700;line-height:1.3">{{ hHead }}</span>
+              <span style="font:500 12.5px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">elapsed {{ hElapsed }}</span>
+            </div>
+            <p style="margin:0;font-size:14.5px;line-height:1.55;text-wrap:pretty">{{ hSub }}</p>
+            <sc-if value="{{ hShowProg }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div role="progressbar" aria-label="Encoding progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ hProgN }}" style="height:8px;background:#e6e1da;border-radius:2px;overflow:hidden"><div style="height:100%;width:{{ hProgPct }};background:#3f648c;transition:width 200ms linear"></div></div>
+                <span style="font:500 12px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ hProgPct }} · reported by the encoder</span>
+              </div>
+            </sc-if>
+            <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ hStages }}" as="st" hint-placeholder-count="3">
+                <li style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:{{ st.fg }}">
+                  <span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;border:1.5px solid {{ st.bd }};background:{{ st.fill }};display:block;flex:none;animation:{{ st.anim }}"></span>
+                  <span style="font-weight:{{ st.weight }}">{{ st.label }}</span><span style="font:400 11.5px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;margin-left:auto">{{ st.status }}</span>
+                </li>
+              </sc-for>
+            </ol>
+            <div style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center">
+              <button type="button" onClick="{{ hCancel }}" style="font-size:14px;font-weight:600;padding:9px 14px;min-height:40px;border:1px solid {{ hCancelBd }};border-radius:4px;background:#fff;color:rgba(18,16,14,0.96);cursor:pointer">Cancel</button>
+              <span style="font-size:12.5px;line-height:1.45;color:#625c57">Stops after 5 minutes if it can’t finish. This prototype runs about 15× faster than real time.</span>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ hStop }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:12px;padding:20px;border-radius:8px;background:#f1eee9;border:1.5px solid rgba(18,16,14,0.55);max-width:640px">
+            <span style="display:flex;gap:10px;align-items:center;font-size:17px;font-weight:700"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(18,16,14,0.96)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 2 2 20h20Z"></path><path d="M12 9v5"></path><path d="M12 17.5h.01"></path></svg>{{ hStopTitle }}</span>
+            <p style="margin:0;font-size:15px;line-height:1.55;text-wrap:pretty">{{ hStopBody }}</p>
+            <span style="font:400 12px/1.4 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ hStopMeta }}</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ hStopActions }}" as="a" hint-placeholder-count="2">
+                <button type="button" onClick="{{ a.onClick }}" style="font-size:14px;font-weight:600;padding:9px 14px;min-height:40px;border:1px solid rgba(63,100,140,0.22);border-radius:4px;background:#fff;color:#355574;cursor:pointer">{{ a.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ hDone }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;padding:20px;border-radius:8px;border:1.5px solid #3f648c;background:#f5f8fb">
+            <figure style="flex:1.4 1 460px;min-width:0;max-width:780px;margin:0;display:flex;flex-direction:column;gap:8px">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;background:#312e2b;border-radius:6px;padding:10px">
+                <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                  <span style="font:500 11px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#d9d3cc">{{ hStageLabel }}</span>
+                  <div style="border:3px solid #f6f4f1;line-height:0"><canvas ref="{{ hCRef }}" width="640" height="480" role="img" aria-label="{{ hStageLabel }}" style="width:100%;height:auto;display:block"></canvas></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                  <span style="font:500 11px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#d9d3cc">Amplified difference ×{{ hAmp }} · not the photo</span>
+                  <div style="position:relative;border:3px solid #f6f4f1;line-height:0"><canvas ref="{{ hDRef }}" width="640" height="480" role="img" aria-label="Amplified difference" style="width:100%;height:auto;display:block"></canvas><div aria-hidden="true" style="position:absolute;inset:0;border:2px dashed #3f648c;pointer-events:none"></div></div>
+                </div>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between">
+                <div role="group" aria-label="Left view" style="display:flex;gap:2px;background:rgba(0,0,0,0.05);padding:3px;border-radius:6px">
+                  <sc-for list="{{ hViewSeg }}" as="o" hint-placeholder-count="2">
+                    <button type="button" aria-pressed="{{ o.pressed }}" onClick="{{ o.onClick }}" style="font-size:13.5px;font-weight:600;padding:8px 11px;min-height:38px;border:0;border-radius:4px;background:{{ o.bg }};color:{{ o.fg }};box-shadow:{{ o.sh }};cursor:pointer">{{ o.label }}</button>
+                  </sc-for>
+                </div>
+                <span style="font:500 12px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#355574">differences ×{{ hAmp }}, real maximum {{ hCap }}/255</span>
+              </div>
+              <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;padding:3px 8px;border:1px dashed #8a837c;border-radius:999px"><span aria-hidden="true" style="width:7px;height:7px;border:1.25px dashed #625c57;border-radius:50%;display:block"></span>Simulated preview · not real encoder output</span>
+            </figure>
+            <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:16px">
+              <span style="display:flex;gap:10px;align-items:center;font-size:19px;font-weight:700"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3f648c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m8 12 3 3 5-6"></path></svg>Done. Your message is hidden.</span>
+              <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font:400 12.5px/1.4 'IBM Plex Mono',ui-monospace,monospace">
+                <dt style="color:#625c57">mode</dt><dd style="margin:0;overflow-wrap:anywhere">{{ hModeLabel }} · {{ hModel }} <span style="color:#625c57">· {{ hProfile }}</span></dd>
+                <dt style="color:#625c57">message</dt><dd style="margin:0">{{ bc.n }} bytes, encrypted</dd>
+                <dt style="color:#625c57">checked</dt><dd style="margin:0">saved file reopened and read back</dd>
+                <dt style="color:#625c57">output</dt><dd style="margin:0">PNG, no metadata</dd>
+              </dl>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                <button type="button" disabled="{{ true }}" aria-describedby="gf-dlwhy" style="font-size:15px;font-weight:600;padding:12px 18px;min-height:44px;border:0;border-radius:4px;background:#3f648c;color:#fff;opacity:0.55;cursor:not-allowed">Download PNG</button>
+                <span id="gf-dlwhy" style="font-size:12.5px;color:#625c57">Simulated: no file was produced.</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;background:#fff;border:1px solid rgba(24,20,17,0.12);border-radius:6px">
+                <span style="font-size:14.5px;font-weight:700">Keep the PNG file exact</span>
+                <p style="margin:0;font-size:13.5px;line-height:1.5">The message survives only an exact copy of this file.</p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;font-size:13px;line-height:1.45">
+                  <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;display:flex;gap:6px;align-items:center"><span aria-hidden="true" style="font-weight:700;color:#3f648c">✓</span>Keeps it</span><span>Email attachment, file-sharing link, AirDrop, USB</span></div>
+                  <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;display:flex;gap:6px;align-items:center"><span aria-hidden="true" style="font-weight:700">✕</span>Destroys it</span><span>WhatsApp, Instagram, Messenger and most chat apps, screenshots, saving as JPEG, resizing, cropping, filters, some “optimise” tools</span></div>
+                </div>
+              </div>
+              <p style="margin:0;font-size:13.5px;line-height:1.5;color:#625c57;text-wrap:pretty">The photo still looks like a photo, but anyone with the public reader can tell it carries a message. Your photo and the result are deleted from the server shortly after the job finishes.</p>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isRead }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+        <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:14px;font-weight:600"><span style="font:500 11.5px 'IBM Plex Mono',ui-monospace,monospace;color:#3f648c;margin-right:8px">01</span>Upload a PNG</span>
+          <div onDragOver="{{ rDragOver }}" onDragLeave="{{ rDragLeave }}" onDrop="{{ rDrop }}" style="min-height:200px;border-radius:8px;border:1.5px {{ rDz.bs }} {{ rDz.bd }};background:{{ rDz.bg }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;text-align:center;box-sizing:border-box">
+            <input ref="{{ rFileRef }}" type="file" accept="image/png,image/jpeg" onChange="{{ rFileInput }}" aria-label="Choose a PNG" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+            <sc-if value="{{ rEmpty }}" hint-placeholder-val="{{ true }}">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#625c57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m17 8-5-5-5 5"></path><path d="M12 3v12"></path></svg>
+              <span style="font-size:15px;font-weight:600">{{ rDzTitle }}</span>
+              <span style="font-size:13px;line-height:1.5;color:#625c57">The exact PNG file you received. Screenshots and re-saved copies won’t work.</span>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center">
+                <button type="button" onClick="{{ rPick }}" style="font-size:14px;font-weight:600;padding:9px 14px;min-height:40px;border:1px solid rgba(63,100,140,0.22);border-radius:4px;background:#fff;color:#355574;cursor:pointer">Choose PNG</button>
+                <button type="button" onClick="{{ rUseSample }}" style="font-size:14px;font-weight:600;padding:9px 12px;min-height:40px;border:0;border-radius:4px;background:transparent;color:rgba(18,16,14,0.96);cursor:pointer;text-decoration:underline;text-underline-offset:3px">Use the portrait sample</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ rHasFile }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:14px;align-items:center;width:100%;text-align:left">
+                <img src="{{ rFile.url }}" alt="Selected file" style="width:80px;height:96px;object-fit:cover;border-radius:4px;border:1px solid rgba(24,20,17,0.10);display:block;flex:none">
+                <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1">
+                  <span style="font-size:14.5px;font-weight:600;word-break:break-all">{{ rFile.name }}</span>
+                  <span style="font:400 12px/1.35 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ rFile.type }} · {{ rFile.dims }}</span>
+                  <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:{{ rCheck.fg }}"><span aria-hidden="true" style="width:14px;height:14px;display:flex;align-items:center;justify-content:center;border-radius:{{ rCheck.radius }};background:{{ rCheck.fg }};color:#fff;font-size:10px;font-weight:700;flex:none">{{ rCheck.glyph }}</span>{{ rCheck.text }}</span>
+                </div>
+              </div>
+              <sc-if value="{{ rIssue }}" hint-placeholder-val="{{ false }}">
+                <p role="alert" style="margin:0;font-size:13.5px;line-height:1.5;text-align:left;width:100%">{{ rIssueText }}</p>
+              </sc-if>
+              <div style="display:flex;gap:6px;align-self:flex-start"><button type="button" onClick="{{ rPick }}" style="font-size:13.5px;font-weight:600;padding:8px 12px;min-height:36px;border:0;border-radius:4px;background:rgba(0,0,0,0.05);color:rgba(18,16,14,0.96);cursor:pointer">Replace</button><button type="button" onClick="{{ rClear }}" style="font-size:13.5px;font-weight:600;padding:8px 12px;min-height:36px;border:0;border-radius:4px;background:transparent;color:rgba(18,16,14,0.96);cursor:pointer">Remove</button></div>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label for="gf-rpass" style="font-size:14px;font-weight:600"><span style="font:500 11.5px 'IBM Plex Mono',ui-monospace,monospace;color:#3f648c;margin-right:8px">02</span>Enter the passphrase</label>
+            <div style="display:flex;gap:6px">
+              <input id="gf-rpass" type="{{ rPassType }}" value="{{ rPass }}" onChange="{{ onRPass }}" autocomplete="current-password" style="flex:1;min-width:0;font-size:15px;padding:10px 12px;min-height:44px;box-sizing:border-box;border:1px solid #dddddd;border-radius:4px;background:#fff;color:rgba(18,16,14,0.9)">
+              <button type="button" onClick="{{ toggleRPass }}" aria-pressed="{{ rShowStr }}" style="font-size:14px;font-weight:600;padding:0 12px;min-height:44px;border:0;border-radius:4px;background:rgba(0,0,0,0.05);color:rgba(18,16,14,0.96);cursor:pointer">{{ rShowLabel }}</button>
+            </div>
+            <sc-if value="{{ rIsSample }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:12.5px;line-height:1.5;color:#625c57">The sample uses the public passphrase <span style="font-family:'IBM Plex Mono',ui-monospace,monospace">ghostframe public benchmark fixture</span>. <button type="button" onClick="{{ rFillSample }}" style="font:inherit;font-weight:600;color:#3f648c;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px">Fill it in</button></span>
+            </sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label for="gf-rmode" style="font-size:14px;font-weight:600"><span style="font:500 11.5px 'IBM Plex Mono',ui-monospace,monospace;color:#3f648c;margin-right:8px">03</span>Mode</label>
+            <select id="gf-rmode" value="{{ rMode }}" onChange="{{ onRMode }}" style="font-size:15px;padding:10px 12px;min-height:44px;border:1px solid #dddddd;border-radius:4px;background:#fff;color:rgba(18,16,14,0.9)">
+              <option value="auto">Try all modes (about 6–12 s)</option>
+              <option value="classic">Short · SqueezeNet 1.1 · legacy-v1</option>
+              <option value="subtle">Subtle · MobileNetV3-Small · bb-mobilenet_v3_small-l2-b16p48</option>
+              <option value="long">Long · MobileNetV3-Small · bb-mobilenet_v3_small-l8-b64p112</option>
+            </select>
+            <span style="font-size:12.5px;color:#625c57">Choosing the mode the sender used is faster.</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px dashed rgba(24,20,17,0.25);border-radius:4px;font:400 12px/1.4 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;background:#f6f4f1"><span aria-hidden="true" style="width:16px;height:16px;border:1.5px solid #625c57;border-radius:3px;display:block;flex:none"></span>[Bot check · Cloudflare Turnstile widget]</div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center">
+              <button type="button" onClick="{{ rRun }}" disabled="{{ rDisabled }}" style="font-size:15px;font-weight:600;padding:12px 20px;min-height:44px;border:0;border-radius:4px;background:{{ rBtn.bg }};color:{{ rBtn.fg }};cursor:{{ rBtn.cursor }}">{{ rBtnLabel }}</button>
+              <span style="font-size:13px;color:#625c57">{{ rBlocker }}</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding:12px 14px;border:1px dashed #8a837c;border-radius:6px">
+            <span style="font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">Prototype control · simulated server response</span>
+            <div role="group" aria-label="Simulated decode response" style="display:flex;flex-wrap:wrap;gap:4px">
+              <sc-for list="{{ rSimSeg }}" as="o" hint-placeholder-count="2">
+                <button type="button" aria-pressed="{{ o.pressed }}" onClick="{{ o.onClick }}" style="font-size:12.5px;font-weight:600;padding:6px 10px;min-height:32px;border:1px solid {{ o.bd }};border-radius:4px;background:{{ o.bg }};color:{{ o.fg }};cursor:pointer">{{ o.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div id="gf-rresult" role="status" aria-live="polite" style="scroll-margin-top:72px">
+            <sc-if value="{{ rRunning }}" hint-placeholder-val="{{ false }}">
+              <ol style="margin:0;padding:14px 16px;list-style:none;display:flex;flex-direction:column;gap:10px;border:1px solid rgba(24,20,17,0.12);border-radius:8px;background:#f6f4f1">
+                <sc-for list="{{ rSteps }}" as="st" hint-placeholder-count="3">
+                  <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:{{ st.fg }}">
+                    <span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;border:1.5px solid {{ st.bd }};background:{{ st.fill }};display:block;flex:none;animation:{{ st.anim }}"></span>
+                    <span>{{ st.label }}</span><span style="font:400 11.5px/1 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;margin-left:auto">{{ st.status }}</span>
+                  </li>
+                </sc-for>
+              </ol>
+            </sc-if>
+            <sc-if value="{{ rFound }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:8px;background:#f5f8fb;border:1.5px solid #3f648c">
+                <span style="display:flex;gap:10px;align-items:center;font-size:17px;font-weight:700"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3f648c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m8 12 3 3 5-6"></path></svg>Message found and unlocked</span>
+                <div style="display:flex;gap:8px;align-items:stretch">
+                  <p style="margin:0;flex:1;font-size:18px;font-weight:600;line-height:1.4;padding:10px 12px;background:#fff;border:1px solid rgba(63,100,140,0.14);border-radius:4px;white-space:pre-wrap;word-break:break-word">{{ rMessage }}</p>
+                  <button type="button" onClick="{{ rCopy }}" style="font-size:14px;font-weight:600;padding:0 14px;min-height:44px;border:1px solid rgba(63,100,140,0.22);border-radius:4px;background:#fff;color:#355574;cursor:pointer">{{ rCopyLabel }}</button>
+                </div>
+                <span style="font:400 12px/1.4 'IBM Plex Mono',ui-monospace,monospace;color:#625c57">{{ rFoundMeta }}</span>
+                <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;padding:3px 8px;border:1px dashed #8a837c;border-radius:999px;background:#fff"><sc-if value="{{ rSimulated }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="width:7px;height:7px;border:1.25px dashed #625c57;border-radius:50%;display:block"></span>Simulated response</span></sc-if><sc-if value="{{ rRecorded }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#fff;padding:4px 9px;border-radius:999px;background:#312e2b"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:#fff;display:block"></span>Recorded result · verified fixture</span></sc-if>
+              </div>
+            </sc-if>
+            <sc-if value="{{ rNone }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:8px;background:#f1eee9;border:1.5px solid rgba(18,16,14,0.55)">
+                <span style="display:flex;gap:10px;align-items:center;font-size:17px;font-weight:700"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(18,16,14,0.96)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m4.9 4.9 14.2 14.2"></path></svg>No message found.</span>
+                <p style="margin:0;font-size:14px;line-height:1.5">Any of these give the same result, and the reader can’t tell which one applies:</p>
+                <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px;line-height:1.5">
+                  <li>a different passphrase</li>
+                  <li>a different mode{{ rNoneModeNote }}</li>
+                  <li>the file was re-saved, compressed, resized or cropped on the way</li>
+                  <li>the photo never carried a message</li>
+                </ul>
+                <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;padding:3px 8px;border:1px dashed #8a837c;border-radius:999px;background:#fff"><sc-if value="{{ rSimulated }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="width:7px;height:7px;border:1.25px dashed #625c57;border-radius:50%;display:block"></span>Simulated response</span></sc-if><sc-if value="{{ rRecorded }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#fff;padding:4px 9px;border-radius:999px;background:#312e2b"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:#fff;display:block"></span>Recorded result · wrong-passphrase check</span></sc-if>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+    </div>
+  </div>
+</section>
+
+<section id="limits" data-screen-label="Limits and evidence" style="background:#fff;border-top:1px dashed rgba(24,20,17,0.22);border-bottom:1px dashed rgba(24,20,17,0.22);scroll-margin-top:56px">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:46em">
+      <h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-0.02em;line-height:1.1">Limits and evidence</h2>
+      <p style="margin:0;font-size:16px;line-height:1.55;color:#625c57;text-wrap:pretty">Numbers from our own experiments and benchmarks. Held-out trials used 41 photographs the system had never seen, all 1280 px wide, with three messages per photo, read back by a separate program given only the file and the passphrase.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+      <ul style="flex:1 1 380px;min-width:0;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;border-top:1px solid rgba(24,20,17,0.10)">
+        <sc-for list="{{ limits }}" as="l" hint-placeholder-count="5">
+          <li style="display:flex;flex-direction:column;gap:4px;padding:14px 0;border-bottom:1px solid rgba(24,20,17,0.10)">
+            <span style="font-size:16px;font-weight:700">{{ l.t }}</span>
+            <span style="font-size:14.5px;line-height:1.55;text-wrap:pretty">{{ l.d }}</span>
+            <span style="font:500 12px/1.4 'IBM Plex Mono',ui-monospace,monospace;color:#355574">{{ l.n }}</span>
+          </li>
+        </sc-for>
+      </ul>
+      <div style="flex:1.4 1 480px;min-width:0;display:flex;flex-direction:column;gap:20px">
+        <div style="overflow-x:auto;border:1px solid rgba(24,20,17,0.10);border-radius:8px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(24,20,17,0.10)">
+            <span style="display:inline-flex;align-items:center;gap:6px;font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#fff;padding:4px 9px;border-radius:999px;background:#312e2b"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:#fff;display:block"></span>Measured</span>
+            <span id="gf-modes-cap" style="font-size:13px;color:#625c57">Modes, held-out evidence and median image quality</span>
+          </div>
+          <table aria-labelledby="gf-modes-cap" style="width:100%;border-collapse:collapse;min-width:560px">
+            <thead>
+              <tr>
+                <th scope="col" style="text-align:left;padding:10px 14px;font-size:12.5px;font-weight:600;color:#625c57;border-bottom:1px solid rgba(24,20,17,0.10)">Mode</th>
+                <th scope="col" style="text-align:right;padding:10px 14px;font-size:12.5px;font-weight:600;color:#625c57;border-bottom:1px solid rgba(24,20,17,0.10)">Max message</th>
+                <th scope="col" style="text-align:right;padding:10px 14px;font-size:12.5px;font-weight:600;color:#625c57;border-bottom:1px solid rgba(24,20,17,0.10)">Max change</th>
+                <th scope="col" style="text-align:left;padding:10px 14px;font-size:12.5px;font-weight:600;color:#625c57;border-bottom:1px solid rgba(24,20,17,0.10)">Read back</th>
+                <th scope="col" style="text-align:right;padding:10px 14px;font-size:12.5px;font-weight:600;color:#625c57;border-bottom:1px solid rgba(24,20,17,0.10)"><button type="button" data-abbr="1" onClick="{{ abOpen.PSNR }}" aria-expanded="{{ abExp.PSNR }}" aria-controls="gf-abbr" style="font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;border-bottom:1px dashed currentColor;cursor:help;line-height:inherit">PSNR</button> · <button type="button" data-abbr="1" onClick="{{ abOpen.SSIM }}" aria-expanded="{{ abExp.SSIM }}" aria-controls="gf-abbr" style="font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;border-bottom:1px dashed currentColor;cursor:help;line-height:inherit">SSIM</button></th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ modeRows }}" as="r" hint-placeholder-count="3">
+                <tr>
+                  <th scope="row" style="text-align:left;padding:12px 14px;border-bottom:1px solid rgba(24,20,17,0.07);vertical-align:top">
+                    <span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14.5px;font-weight:600">{{ r.label }}</span><span style="font:400 11px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#625c57"><span style="color:rgba(18,16,14,0.96)">{{ r.backbone }}</span> · {{ r.profile }}{{ r.statusSfx }}</span></span>
+                  </th>
+                  <td style="text-align:right;padding:12px 14px;border-bottom:1px solid rgba(24,20,17,0.07);font:500 13px/1.3 'IBM Plex Mono',ui-monospace,monospace;vertical-align:top;white-space:nowrap">{{ r.bytes }} B</td>
+                  <td style="text-align:right;padding:12px 14px;border-bottom:1px solid rgba(24,20,17,0.07);font:500 13px/1.3 'IBM Plex Mono',ui-monospace,monospace;vertical-align:top;white-space:nowrap">{{ r.cap }} / 255</td>
+                  <td style="padding:12px 14px;border-bottom:1px solid rgba(24,20,17,0.07);vertical-align:top">
+                    <span style="display:flex;flex-direction:column;gap:5px"><span style="font:500 13px/1.3 'IBM Plex Mono',ui-monospace,monospace">{{ r.ev }}</span><span aria-hidden="true" style="height:6px;width:120px;background:#3f648c;border-radius:1px;display:block"></span><span style="font-size:11.5px;color:#625c57">{{ r.evUnit }}</span></span>
+                  </td>
+                  <td style="text-align:right;padding:12px 14px;border-bottom:1px solid rgba(24,20,17,0.07);font:500 13px/1.3 'IBM Plex Mono',ui-monospace,monospace;vertical-align:top;white-space:nowrap">{{ r.psnr }} · {{ r.ssim }}</td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+          <p style="margin:0;padding:10px 14px;font-size:12.5px;line-height:1.5;color:#625c57">Higher <button type="button" data-abbr="1" onClick="{{ abOpen.PSNR }}" aria-expanded="{{ abExp.PSNR }}" aria-controls="gf-abbr" style="font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;border-bottom:1px dashed currentColor;cursor:help;line-height:inherit">PSNR</button> and <button type="button" data-abbr="1" onClick="{{ abOpen.SSIM }}" aria-expanded="{{ abExp.SSIM }}" aria-controls="gf-abbr" style="font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;border-bottom:1px dashed currentColor;cursor:help;line-height:inherit">SSIM</button> mean closer to the original. Long changes the image visibly more than Subtle.</p>
+          <p style="margin:0;padding:0 14px 14px;font-size:12.5px;line-height:1.5;color:#625c57;text-wrap:pretty">Subtle and Long moved from SqueezeNet 1.1 to MobileNetV3-Small after a preregistered comparison of five image models. Same held-out reliability, 494 B instead of 302 B in Long, and about 1.6× faster encodes.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+          <div style="display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid rgba(24,20,17,0.10);border-radius:8px;background:#f6f4f1">
+            <span style="font-size:13px;font-weight:600">How long it takes</span>
+            <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font:400 12.5px/1.45 'IBM Plex Mono',ui-monospace,monospace">
+              <dt style="color:#625c57">encode</dt><dd style="margin:0">usually under 2 minutes; stopped after 5 min</dd>
+              <dt style="color:#625c57">queue</dt><dd style="margin:0">one encode at a time, with a daily cap</dd>
+              <dt style="color:#625c57">decode</dt><dd style="margin:0">a few seconds</dd>
+            </dl>
+            <span style="font-size:11.5px;line-height:1.45;color:#625c57">Times vary with the photo and with how busy the demo server is.</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid rgba(24,20,17,0.10);border-radius:8px;background:#f6f4f1">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px">
+              <span style="font-size:13px;font-weight:600">Flat, synthetic or tiny images</span>
+              <span style="display:inline-flex;align-items:center;gap:5px;font:500 10.5px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#9f3b3b;padding:3px 8px;border:1px solid rgba(159,59,59,0.45);border-radius:999px;background:#fff"><span aria-hidden="true" style="font-weight:700">!</span>Known limitation</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ hardRows }}" as="h" hint-placeholder-count="2">
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <span style="display:flex;justify-content:space-between;font:500 12.5px/1.2 'IBM Plex Mono',ui-monospace,monospace"><span>{{ h.label }}</span><span>{{ h.n }}/9 encoded</span></span>
+                  <span aria-hidden="true" style="display:grid;grid-template-columns:repeat(9,1fr);gap:2px">
+                    <sc-for list="{{ h.cells }}" as="c" hint-placeholder-count="9"><span style="height:10px;background:{{ c }};border-radius:1px;display:block"></span></sc-for>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+            <span style="font-size:12px;line-height:1.45;color:#625c57">Blank backgrounds, solid colours, colour bars, line art and near-minimum sizes. At 640 px wide, ordinary photos did well: Subtle and Long each read back 41 of 41.</span>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(24,20,17,0.10)">
+          <sc-for list="{{ links }}" as="l" hint-placeholder-count="3">
+            <div style="display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid rgba(24,20,17,0.10)">
+              <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{ l.t }}</span><span style="font-size:13px;color:#625c57">{{ l.d }}</span></span>
+              <span style="font:500 12px/1.3 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;background:#f1eee9;padding:4px 8px;border-radius:3px">{{ l.ph }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#f6f4f1">
+  <div style="max-width:1240px;margin:0 auto;padding:24px clamp(16px,4vw,40px) 40px;display:flex;flex-wrap:wrap;gap:10px 32px;justify-content:space-between;font-size:12.5px;line-height:1.55;color:#625c57">
+    <span style="max-width:36em;display:flex;flex-direction:column;gap:4px"><span>Ghostframe is an engineering experiment by <a href="https://electricsheep.id" target="_blank" rel="noopener">Ben Paget</a>.</span><span>No accounts, nothing stored. Don’t use it to hide illegal content.</span></span>
+    <span style="max-width:40em">Antonello da Messina, Portrait of a Man (about 1475), The National Gallery, London, public domain. “Roasted coffee beans” by MarkSweep, public domain. “Milky Way Night Sky” by Guillaume (Unsplash), CC0. Upload sample “Wellington Railway Station, NSW Platform” by Abesty, CC0. All via Wikimedia Commons.</span>
+  </div>
+</footer>
+<div id="gf-abbr" role="tooltip" style="position:fixed;left:{{ abX }};top:{{ abY }};width:260px;box-sizing:border-box;padding:12px 14px;background:#312e2b;color:#f6f4f1;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.25);z-index:60;display:{{ abDisp }};flex-direction:column;gap:5px">
+  <span style="font:600 13px/1.25 Inter,sans-serif">{{ abTitle }}</span>
+  <span style="font-size:12.5px;line-height:1.5;text-wrap:pretty">{{ abText }}</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const MODES = {
+  classic: { key:'classic', label:'Short', profile:'legacy-v1', statusSfx:'', backbone:'SqueezeNet 1.1', dim:512, bytes:13, cap:8, amp:24, grid:[6,5], ev:'41 / 41', evUnit:'held-out photos', psnr:'36.5 dB', ssim:'0.924', status:'verified', blurb:'A short phrase. Larger tiles.' },
+  subtle: { key:'subtle', label:'Subtle', profile:'bb-mobilenet_v3_small-l2-b16p48', backbone:'MobileNetV3-Small', dim:576, bytes:79, cap:2, amp:96, grid:[10,8], ev:'123 / 123', evUnit:'held-out trials', psnr:'43.0 dB', ssim:'0.979', status:'experimental', blurb:'Smallest changes, a sentence or two.' },
+  long: { key:'long', label:'Long', profile:'bb-mobilenet_v3_small-l8-b64p112', backbone:'MobileNetV3-Small', dim:576, bytes:494, cap:8, amp:24, grid:[10,8], ev:'123 / 123', evUnit:'held-out trials', psnr:'34.1 dB', ssim:'0.872', status:'experimental', blurb:'A long paragraph. More visible change.' }
+};
+const ORDER = ['classic','subtle','long'];
+const PHOTOS = {
+  antonello: { key:'antonello', code:'P', label:'Portrait', src:'demo-photos/antonello-portrait-of-a-man.jpg', w:1280, h:1782, pos:'50% 25%', credit:'Antonello da Messina · Portrait of a Man, about 1475 · National Gallery, London · public domain' },
+  coffee: { key:'coffee', code:'C', label:'Coffee beans', src:'demo-photos/coffee-beans.jpg', w:1280, h:960, pos:'50% 50%', credit:'“Roasted coffee beans” · MarkSweep · public domain' },
+  milky: { key:'milky', code:'M', label:'Milky Way', src:'demo-photos/milky-way.jpg', w:1280, h:848, pos:'50% 50%', credit:'“Milky Way Night Sky” · Guillaume (Unsplash) · CC0' }
+};
+const PORDER = ['antonello','coffee','milky'];
+const SUM = {"antonello":{"classic":[30,480,0.617,0.397,0.875,250],"subtle":[80,1280,0.678,0.218,0.803,645],"long":[80,5120,0.534,0.169,0.965,2507]},"coffee":{"classic":[30,480,0.759,0.625,0.695,239],"subtle":[80,1280,0.787,0.566,0.652,639],"long":[80,5120,0.627,0.38,0.863,2559]},"milky":{"classic":[30,480,0.589,0.447,0.907,246],"subtle":[80,1280,0.798,0.449,0.635,668],"long":[80,5120,0.572,0.337,0.925,2580]}};
+const HEAT = {"antonello":{"classic":[[0.64,0.59,0.61,0.69,0.64,0.62],[0.43,0.84,0.65,0.71,0.65,0.52],[0.4,0.67,0.6,0.42,0.53,0.48],[0.58,0.72,0.7,0.77,0.67,0.46],[0.8,0.57,0.62,0.58,0.6,0.72]],"subtle":[[0.82,0.73,0.49,0.39,0.59,0.61,0.57,0.75,0.71,0.69],[0.84,0.56,0.44,0.81,0.68,0.73,0.78,0.55,0.75,0.32],[0.55,0.29,0.84,0.88,0.84,0.82,0.55,0.62,0.63,0.79],[0.71,0.71,0.6,0.56,0.79,0.74,0.79,0.68,0.73,0.84],[0.77,0.74,0.68,0.84,0.68,0.28,0.76,0.51,0.87,0.64],[0.67,0.39,0.45,0.82,0.7,0.87,0.7,0.61,0.54,0.76],[0.6,0.65,0.65,0.61,0.56,0.84,0.7,0.22,0.73,0.45],[0.67,0.59,0.74,0.67,0.54,0.6,0.44,0.72,0.54,0.67]],"long":[[0.45,0.5,0.38,0.44,0.49,0.5,0.59,0.43,0.4,0.69],[0.4,0.51,0.58,0.52,0.72,0.74,0.32,0.57,0.51,0.48],[0.58,0.58,0.51,0.72,0.56,0.61,0.61,0.66,0.44,0.61],[0.62,0.64,0.65,0.59,0.67,0.46,0.44,0.67,0.45,0.46],[0.39,0.45,0.53,0.64,0.59,0.59,0.34,0.5,0.71,0.57],[0.59,0.63,0.31,0.5,0.55,0.43,0.56,0.54,0.43,0.51],[0.44,0.51,0.43,0.63,0.59,0.62,0.36,0.39,0.48,0.64],[0.65,0.62,0.55,0.62,0.59,0.49,0.39,0.17,0.5,0.64]]},"coffee":{"classic":[[0.73,0.77,0.66,0.81,0.73,0.62],[0.86,0.66,0.72,0.78,0.8,0.72],[0.71,0.78,0.83,0.78,0.77,0.78],[0.7,0.72,0.79,0.74,0.75,0.73],[0.75,0.78,0.76,0.81,0.82,0.75]],"subtle":[[0.65,0.88,0.57,0.73,0.85,0.73,0.72,0.76,0.75,0.78],[0.71,0.81,0.86,0.85,0.68,0.89,0.76,0.71,0.84,0.76],[0.78,0.82,0.85,0.8,0.82,0.83,0.89,0.87,0.64,0.68],[0.68,0.85,0.87,0.9,0.82,0.84,0.74,0.76,0.87,0.79],[0.87,0.71,0.83,0.75,0.86,0.78,0.78,0.83,0.87,0.79],[0.85,0.74,0.76,0.81,0.89,0.81,0.77,0.83,0.71,0.81],[0.66,0.77,0.79,0.79,0.72,0.68,0.62,0.67,0.76,0.85],[0.85,0.7,0.73,0.8,0.82,0.57,0.83,0.79,0.71,0.75]],"long":[[0.6,0.61,0.67,0.61,0.44,0.61,0.65,0.65,0.57,0.68],[0.65,0.77,0.57,0.57,0.77,0.65,0.63,0.58,0.62,0.51],[0.75,0.66,0.68,0.63,0.59,0.75,0.71,0.59,0.6,0.45],[0.64,0.7,0.63,0.67,0.57,0.7,0.55,0.57,0.71,0.52],[0.65,0.7,0.66,0.68,0.62,0.66,0.66,0.59,0.73,0.57],[0.7,0.64,0.62,0.65,0.69,0.61,0.65,0.57,0.62,0.56],[0.55,0.71,0.74,0.75,0.64,0.42,0.64,0.55,0.54,0.45],[0.65,0.54,0.53,0.62,0.38,0.59,0.69,0.58,0.64,0.4]]},"milky":{"classic":[[0.58,0.62,0.52,0.59,0.72,0.53],[0.48,0.57,0.66,0.71,0.68,0.58],[0.66,0.47,0.55,0.66,0.59,0.6],[0.76,0.68,0.57,0.45,0.57,0.5],[0.58,0.74,0.69,0.79,0.82,0.54]],"subtle":[[0.74,0.72,0.87,0.68,0.83,0.83,0.66,0.82,0.76,0.45],[0.68,0.64,0.87,0.8,0.75,0.72,0.87,0.74,0.69,0.72],[0.83,0.45,0.9,0.87,0.84,0.69,0.7,0.62,0.64,0.86],[0.88,0.82,0.82,0.83,0.84,0.9,0.73,0.82,0.76,0.84],[0.8,0.79,0.72,0.81,0.75,0.78,0.74,0.8,0.82,0.58],[0.84,0.78,0.86,0.82,0.83,0.8,0.64,0.73,0.75,0.84],[0.76,0.87,0.83,0.88,0.78,0.83,0.77,0.84,0.64,0.6],[0.77,0.8,0.78,0.91,0.8,0.95,0.87,0.67,0.85,0.77]],"long":[[0.61,0.34,0.5,0.41,0.68,0.67,0.46,0.49,0.61,0.51],[0.39,0.43,0.52,0.68,0.66,0.58,0.54,0.64,0.42,0.63],[0.66,0.63,0.6,0.6,0.48,0.6,0.35,0.64,0.46,0.61],[0.56,0.49,0.43,0.56,0.62,0.62,0.42,0.39,0.57,0.46],[0.59,0.66,0.5,0.76,0.47,0.41,0.53,0.67,0.35,0.47],[0.55,0.6,0.52,0.62,0.6,0.47,0.61,0.65,0.59,0.66],[0.62,0.57,0.75,0.49,0.67,0.61,0.44,0.74,0.46,0.59],[0.59,0.51,0.53,0.64,0.55,0.52,0.65,0.51,0.58,0.57]]}};
+const eTint = (cos) => { const t = Math.max(0, Math.min(1, (0.95 - cos) / 0.80)); return 'rgba(63,100,140,' + (0.06 + 0.8 * t).toFixed(3) + ')'; };
+const FIX = {"antonello":{"dir":"antonello-portrait-of-a-man","classic":["Trust no one.",13,0.9258],"subtle":["The man in the red cap knows the code. Meet him in Room 4 at closing time.",74,0.9254],"long":["Agent, the portrait is the key. The gallery guard on the night shift is one of ours; tell him you admire the red cap and he will let you stay past closing. Behind the frame you will find a list of names. Photograph it, put everything back exactly as it was, and leave by the river door before midnight. Avoid the lift; the cameras on the back stairs are off from eleven to twelve. If stopped, say you are from the restoration team. Bring the list to the bookshop on Charing Cross Road at nine.",493,0.9367]},"coffee":{"dir":"coffee-beans","classic":["Beans at six.",13,0.9314],"subtle":["The roaster on Via Lucca is ours. Order the dark blend and pay in cash.",71,0.9349],"long":["Courier, your contact runs the coffee stall by the east gate of the market. Order a double roast, no sugar, and leave a folded newspaper on the counter. If she asks about the rain in Vienna, say it stopped on Tuesday. She will pass you a paper bag. Do not open it until you are across the river. Inside is a brass key and a ticket for the night train to Trieste. Board the third carriage, take the window seat and wait for a man reading yesterday's paper. Give him the key; keep the stub.",488,0.9375]},"milky":{"dir":"milky-way","classic":["Eyes on Orion",13,0.9111],"subtle":["Signal from the fence line at 02:00. Two flashes mean the road is clear.",72,0.9145],"long":["Night team: the drop is at the last fence post on the ridge, under the flat stone. Arrive after moonset and use no torches. If the sky is clear, wait for the satellite to pass overhead, then move. If you see headlights on the road, abort and return at the same hour tomorrow. Burn this after reading. Bring the red lamp and a spare radio battery. Two short flashes mean all clear; one long flash means wait. The farmer at the gate knows nothing. Leave the field by the north path.",480,0.9182]}};
+const fixPath = (p, f) => 'demo-photos/fixtures/' + FIX[p].dir + '/' + f;
+const PASS_FIXTURE = 'ghostframe public benchmark fixture';
+const BLUE = '#3f648c', INK = 'rgba(18,16,14,0.96)', GRAY = '#625c57', RED = '#9f3b3b';
+const SPEED = 15;
+const bytesOf = (s) => new TextEncoder().encode(s || '').length;
+function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function simulate(src, cap, cols, rows, seed) {
+  const W = src.width, H = src.height, d = src.data, out = new ImageData(new Uint8ClampedArray(d), W, H), o = out.data;
+  const L = new Float32Array(W * H); for (let i = 0; i < W * H; i++) L[i] = 0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2];
+  const r = rng(seed), tw = W / cols, th = H / rows, ph = [];
+  for (let t = 0; t < cols * rows; t++) ph.push([r() * 6.28, r() * 6.28, 0.12 + r() * 0.25, 0.12 + r() * 0.25]);
+  for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) {
+    const i = y * W + x, g = Math.min(1, (Math.abs(L[i + 1] - L[i - 1]) + Math.abs(L[i + W] - L[i - W])) / 36), w = 0.3 + 0.7 * g;
+    const p = ph[Math.min(rows - 1, Math.floor(y / th)) * cols + Math.min(cols - 1, Math.floor(x / tw))];
+    for (let c = 0; c < 3; c++) {
+      const n = Math.sin(x * p[2] + y * 0.07 * (c + 1) + p[0]) * Math.cos(y * p[3] - x * 0.05 * c + p[1]) * 1.4 + (r() - 0.5) * 0.5;
+      const v = d[i * 4 + c]; let dl = Math.round(Math.max(-cap, Math.min(cap, cap * w * n)));
+      if (v + dl < 0 || v + dl > 255) dl = -dl;
+      o[i * 4 + c] = v + dl;
+    }
+  }
+  return out;
+}
+function diffOf(a, b, amp) {
+  const out = new ImageData(a.width, a.height), q = out.data, x = a.data, y = b.data;
+  for (let i = 0; i < x.length; i += 4) { for (let c = 0; c < 3; c++) q[i + c] = 128 + (y[i + c] - x[i + c]) * amp; q[i + 3] = 255; }
+  return out;
+}
+function toData(img, maxSide) {
+  const s = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight)), w = Math.round(img.naturalWidth * s), h = Math.round(img.naturalHeight * s);
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d', { willReadFrequently:true }); x.drawImage(img, 0, 0, w, h);
+  return x.getImageData(0, 0, w, h);
+}
+const ISSUE = {
+  type: () => 'This file isn’t a PNG or JPEG. Ghostframe accepts PNG or JPEG photos.',
+  big: (f) => 'This photo is ' + f.mp + ' megapixels. The limit is 4 MP, for example 2448 × 1632. Scale it down and try again.',
+  small: (f, m) => 'This photo is ' + f.dims + '. ' + MODES[m].label + ' needs at least 160 × 128.',
+  alpha: () => 'This image has transparent pixels. Place it on a solid background, save it again and retry.',
+  deep: () => '16-bit and HDR images aren’t supported. Export an 8-bit PNG or JPEG and try again.',
+  cmyk: () => 'CMYK and Lab images aren’t supported. Convert the photo to RGB and try again.',
+  jpegRead: () => 'This is a JPEG, and a JPEG can never contain a readable Ghostframe message. Ghostframe only writes PNG files, and saving one as JPEG destroys the message. Use the exact PNG you were sent.'
+};
+
+const PH = [
+  { key:'antonello', label:'Portrait', src:'demo-photos/antonello-portrait-of-a-man.jpg', pos:'50% 25%', aspect:'1280 / 1782' },
+  { key:'coffee', label:'Coffee beans', src:'demo-photos/coffee-beans.jpg', pos:'50% 50%', aspect:'1280 / 960' },
+  { key:'milky', label:'Milky Way', src:'demo-photos/milky-way.jpg', pos:'50% 50%', aspect:'1280 / 848' }
+];
+
+const MO = [ { key:'classic', label:'Short', cap:8 }, { key:'subtle', label:'Subtle', cap:2 }, { key:'long', label:'Long', cap:8 } ];
+
+const VIEWS = [['compare', 'Original vs encoded'], ['diff', 'Amplified difference'], ['embed', 'What the model sees']];
+
+const RES = {"antonello":{"classic":"1 / 1 read back","subtle":"3 / 3 read back · 0 wrong bytes · SSIM ≥ 0.976 · encode ≤ 20 s","long":"3 / 3 read back · 0 wrong bytes · SSIM ≥ 0.863 · encode ≤ 31 s"},"coffee":{"classic":"1 / 1 read back","subtle":"3 / 3 read back · 0 wrong bytes · SSIM ≥ 0.983 · encode ≤ 18 s","long":"3 / 3 read back · 0 wrong bytes · SSIM ≥ 0.899 · encode ≤ 27 s"},"milky":{"classic":"1 / 1 read back","subtle":"3 / 3 read back · 0 wrong bytes · SSIM ≥ 0.989 · encode ≤ 20 s","long":"3 / 3 read back · 0 wrong bytes · SSIM ≥ 0.924 · encode ≤ 32 s"}};
+
+const PROF = { classic:'legacy-v1', subtle:'bb-mobilenet_v3_small-l2-b16p48', long:'bb-mobilenet_v3_small-l8-b64p112' };
+
+const DIRS = { antonello:'antonello-portrait-of-a-man', coffee:'coffee-beans', milky:'milky-way' };
+
+const AMP = { classic:24, subtle:96, long:24 };
+
+
+const wTint = (cos) => { const t = Math.max(0, Math.min(1, (0.95 - cos) / 0.80)); return 'rgba(63,100,140,' + (0.06 + 0.8 * t).toFixed(3) + ')'; };
+
+const RAW = {"antonello":{"u10":[-0.012,-0.0347,-0.0239,-0.0391,-0.0259,0.0244,-0.0331,-0.0115,0.0096,-0.0259,-0.0288,-0.0278],"subtle":[-0.0176,-0.0207,-0.011,-0.0269,0.0158,0.027,-0.02,-0.0307,-0.0064,-0.0206,-0.0197,-0.0254],"long":[-0.0193,-0.0307,0.0675,-0.0333,-0.0278,-0.0098,-0.0252,0.0312,-0.0108,0.02,-0.0263,-0.0101],"u6":[0.0003,0.0029,0.0005,0.0001,0.0025,0,0.0103,0.018,0,0.088,0.0215,0.0029],"classic":[0.0101,0.0259,0.0273,0.0038,0.0046,0.0001,0.0144,0.0691,0,0.0522,0.0516,0]},"coffee":{"u10":[-0.0014,-0.0114,-0.0066,0.0094,-0.0078,-0.0053,0.0073,0.0397,0.0039,0.017,0.0589,-0.0206],"subtle":[-0.008,-0.0112,-0.0066,0.0017,-0.0262,-0.0086,-0.0132,-0.008,-0.0072,-0.0189,0.0044,-0.0257],"long":[0.0032,-0.0133,0.003,0.0138,0.0298,0.0269,0.0483,0.054,-0.0077,0.039,0.0152,-0.0148],"u6":[0.1269,0.0889,0.0172,0.0211,0.0293,0.0047,0.0014,0.0365,0.0022,0.0064,0,0.0012],"classic":[0.0748,0.0199,0,0.0092,0.013,0.0017,0.001,0.0834,0.0031,0.0099,0.0014,0.0284]},"milky":{"u10":[0.0143,-0.0339,-0.0217,-0.041,-0.0371,-0.0176,0,-0.0425,-0.0164,-0.0389,-0.0471,-0.0438],"subtle":[0.0204,-0.0185,-0.0205,-0.0276,0.0599,-0.0299,-0.006,-0.0388,-0.0344,-0.0079,-0.0379,-0.0402],"long":[-0.0223,-0.0294,0.0007,-0.0319,-0.0434,-0.0114,-0.0171,-0.0351,-0.0336,-0.0245,-0.0379,0.0071],"u6":[0.0052,0,0.0008,0,0.0008,0,0.0414,0.0016,0,0.0164,0.0558,0.0014],"classic":[0.0184,0.0427,0.0103,0,0.0191,0,0.0044,0.1154,0,0.0364,0.0241,0.0001]}};
+const ABBR = {
+  PSNR:['PSNR · peak signal-to-noise ratio', 'How close the marked photo is to the original, measured in decibels. Higher means closer; at around 40 dB and above, differences are usually very hard to see.'],
+  SSIM:['SSIM · structural similarity', 'Compares local patterns of brightness, contrast and texture between two images. 1 means identical.'],
+  AES:['AES-256-GCM', 'A widely used encryption standard. It keeps the message secret, and any change to the hidden data is detected instead of producing a wrong message.'],
+  scrypt:['scrypt', 'A deliberately slow way of turning a passphrase into an encryption key, so trying many passphrases takes a very long time.']
+};
+const TIPS = {
+  classic:{ max:13, grid:'6 × 5', status:'', tip:'Holds a short phrase. Pixels change by up to 8 levels out of 255, and the model reads a coarser grid of larger tiles.' },
+  subtle:{ max:79, grid:'10 × 8', status:'', tip:'The gentlest change to the picture: at most 2 levels out of 255. Holds a sentence or two.' },
+  long:{ max:494, grid:'10 × 8', status:'', tip:'Holds a long paragraph, about 80 words. Pixels change by up to 8 levels out of 255, so the picture changes more than with Subtle.' }
+};
+
+const HOW_DUR = [8000, 7000, 7000, 9000, 9000];
+const HOW_LABELS = ['01 · the passphrase locks the message', '02 · error-correction bytes are added', '03 · the photo is split into tiles', '04 · tiles are nudged until the model reads the bits', '05 · reading back with the same model'];
+const hClamp = (v) => Math.max(0, Math.min(1, v));
+const hSeg = (t, a, b) => hClamp((t - a) / (b - a));
+const hEase = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const HINK = 'rgba(18,16,14,0.96)', HGRAY = '#625c57', HBLUE = '#3f648c', HPAPER = '#f6f4f1', HRED = '#9f3b3b';
+const HMSG = 'Trust no one.', HHEX = ['9f', '3a', 'c7', '1e', '58', 'b2', '04', 'e9', '7d', 'a1', '6c', 'f0', '2b'];
+const HBITS = [1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1], HSTART = [0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1];
+function hRound(x, X, Y, W, H, r) { x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + W, Y, X + W, Y + H, r); x.arcTo(X + W, Y + H, X, Y + H, r); x.arcTo(X, Y + H, X, Y, r); x.arcTo(X, Y, X + W, Y, r); x.closePath(); }
+function hText(x, s, X, Y, size, color, opts) { opts = opts || {}; x.font = (opts.weight || 500) + ' ' + size + 'px ' + (opts.mono ? '"IBM Plex Mono", ui-monospace, monospace' : 'Inter, system-ui, sans-serif'); x.fillStyle = color; x.textAlign = opts.align || 'left'; x.textBaseline = opts.base || 'alphabetic'; x.globalAlpha = opts.alpha == null ? 1 : opts.alpha; x.fillText(s, X, Y); x.globalAlpha = 1; }
+function hLock(x, cx, cy, s, closed, color) { x.save(); x.strokeStyle = color; x.fillStyle = color; x.lineWidth = s * 0.12; hRound(x, cx - s / 2, cy - s * 0.1, s, s * 0.75, s * 0.1); x.fill(); x.beginPath(); const lift = (1 - closed) * s * 0.35; x.arc(cx, cy - s * 0.1 - lift, s * 0.3, Math.PI, 0); x.lineTo(cx + s * 0.3, cy - s * 0.1 - lift + (closed > 0.5 ? 0 : 0)); x.stroke(); x.restore(); }
+function hPhoto(x, img, X, Y, W, H) { if (!img) { x.fillStyle = '#d9d3cc'; x.fillRect(X, Y, W, H); return; } const r = Math.max(W / img.naturalWidth, H / img.naturalHeight), dw = img.naturalWidth * r, dh = img.naturalHeight * r; x.save(); x.beginPath(); x.rect(X, Y, W, H); x.clip(); x.drawImage(img, X + (W - dw) / 2, Y + (H - dh) / 2, dw, dh); x.restore(); }
+function hBitRow(x, bits, X, Y, cell, colorFn) { bits.forEach((b, i) => { const c = colorFn ? colorFn(i, b) : null; hRound(x, X + i * (cell + 6), Y, cell, cell, 5); x.fillStyle = c && c.bg || '#fff'; x.fill(); x.strokeStyle = c && c.bd || 'rgba(24,20,17,0.2)'; x.lineWidth = 2; x.stroke(); if (b != null) hText(x, String(b), X + i * (cell + 6) + cell / 2, Y + cell / 2 + 1, cell * 0.5, c && c.fg || HINK, { mono:true, align:'center', base:'middle' }); }); }
+function drawHow(x, img, step, t) {
+  const W = 1120, H = 840; x.clearRect(0, 0, W, H); x.fillStyle = HPAPER; x.fillRect(0, 0, W, H);
+  if (step === 0) {
+    const a = hSeg(t, 0.04, 0.3), n = Math.round(a * HMSG.length);
+    hText(x, 'message', 160, 150, 26, HGRAY, { mono:true });
+    hRound(x, 160, 170, 800, 110, 14); x.fillStyle = '#fff'; x.fill(); x.strokeStyle = 'rgba(24,20,17,0.15)'; x.lineWidth = 2; x.stroke();
+    const enc = hSeg(t, 0.48, 0.78), nEnc = Math.floor(enc * HMSG.length);
+    for (let i = 0; i < HMSG.length; i++) { const isHex = i < nEnc; const s = isHex ? HHEX[i] : (i < n ? HMSG[i] : ''); hText(x, s, 200 + i * 58, 240, isHex ? 30 : 44, isHex ? HBLUE : HINK, { mono:true, weight:isHex ? 500 : 600 }); }
+    const p = hSeg(t, 0.25, 0.42);
+    hText(x, 'passphrase', 160, 380, 26, HGRAY, { mono:true, alpha:p });
+    hRound(x, 160, 400, 380, 84, 14); x.globalAlpha = p; x.fillStyle = '#fff'; x.fill(); x.strokeStyle = 'rgba(24,20,17,0.15)'; x.stroke(); x.globalAlpha = 1;
+    for (let i = 0; i < Math.round(p * 9); i++) { x.beginPath(); x.arc(200 + i * 34, 442, 9, 0, Math.PI * 2); x.fillStyle = HINK; x.fill(); }
+    const k = hSeg(t, 0.38, 0.5);
+    if (k > 0) { x.globalAlpha = k; x.strokeStyle = HGRAY; x.lineWidth = 3; x.setLineDash([8, 8]); x.beginPath(); x.moveTo(560, 442); x.lineTo(660, 442); x.stroke(); x.setLineDash([]);
+      hRound(x, 680, 400, 280, 84, 14); x.fillStyle = '#eaf1f7'; x.fill(); x.strokeStyle = HBLUE; x.lineWidth = 2; x.stroke();
+      hText(x, 'key (scrypt)', 820, 452, 28, HBLUE, { mono:true, align:'center' }); x.globalAlpha = 1;
+      x.strokeStyle = HBLUE; x.lineWidth = 3; x.beginPath(); x.moveTo(820, 400); x.lineTo(820, 300); x.stroke(); x.beginPath(); x.moveTo(808, 314); x.lineTo(820, 296); x.lineTo(832, 314); x.stroke(); }
+    if (enc > 0) hText(x, 'encrypted bytes', 960, 150, 26, HBLUE, { mono:true, align:'right', alpha:enc });
+    const lk = hSeg(t, 0.8, 0.92);
+    if (lk > 0) { x.globalAlpha = lk; hLock(x, 1010, 220, 60, hEase(lk), HBLUE); x.globalAlpha = 1; }
+    hText(x, 'Without the passphrase, nothing can be read.', 560, 640, 34, HINK, { align:'center', weight:600, alpha:hSeg(t, 0.85, 0.97) });
+    hText(x, 'AES-256-GCM: tampering is detected, not just hidden.', 560, 690, 24, HGRAY, { align:'center', alpha:hSeg(t, 0.88, 1) });
+  } else if (step === 1) {
+    const cell = 46, gap = 6, n = 13, ecc = 6, X0 = 560 - ((n + ecc) * (cell + gap) - gap) / 2, Y0 = 330;
+    const a = hSeg(t, 0.02, 0.3);
+    hText(x, 'encrypted message', X0, Y0 - 30, 24, HGRAY, { mono:true, alpha:a });
+    for (let i = 0; i < n; i++) { const p = hSeg(a, i / n * 0.6, i / n * 0.6 + 0.4); x.globalAlpha = p; const bad = i === 5 && t > 0.62 && t < 0.86; hRound(x, X0 + i * (cell + gap), Y0 + (1 - p) * 30, cell, cell, 8); x.fillStyle = bad ? '#fbecec' : '#fff'; x.fill(); x.strokeStyle = bad ? HRED : 'rgba(24,20,17,0.2)'; x.lineWidth = 2; x.stroke(); hText(x, bad ? '??' : HHEX[i], X0 + i * (cell + gap) + cell / 2, Y0 + cell / 2 + 8 + (1 - p) * 30, 20, bad ? HRED : HINK, { mono:true, align:'center' }); x.globalAlpha = 1; }
+    const b = hSeg(t, 0.32, 0.55);
+    if (b > 0) hText(x, 'repair bytes', X0 + n * (cell + gap), Y0 - 30, 24, HBLUE, { mono:true, alpha:b });
+    for (let i = 0; i < ecc; i++) { const p = hSeg(b, i / ecc * 0.6, i / ecc * 0.6 + 0.4); if (p <= 0) continue; x.globalAlpha = p; const X = X0 + (n + i) * (cell + gap); hRound(x, X, Y0 - (1 - p) * 40, cell, cell, 8); x.fillStyle = '#eaf1f7'; x.fill(); x.strokeStyle = HBLUE; x.lineWidth = 2; x.stroke(); hText(x, '+', X + cell / 2, Y0 + cell / 2 + 12 - (1 - p) * 40, 34, HBLUE, { mono:true, align:'center' }); x.globalAlpha = 1; }
+    const dmg = hSeg(t, 0.6, 0.68), fix = hSeg(t, 0.82, 0.9);
+    if (dmg > 0 && fix < 1) { hText(x, 'a byte gets damaged on the way', 560, 520, 30, HRED, { align:'center', weight:600, alpha:dmg * (1 - fix) }); }
+    if (fix > 0) { hText(x, 'the repair bytes fix it', 560, 520, 30, HBLUE, { align:'center', weight:600, alpha:fix }); const X = X0 + 5 * (cell + gap) + cell / 2; x.globalAlpha = fix; x.strokeStyle = HBLUE; x.lineWidth = 4; x.beginPath(); x.moveTo(X - 14, Y0 + cell + 30); x.lineTo(X - 4, Y0 + cell + 40); x.lineTo(X + 16, Y0 + cell + 18); x.stroke(); x.globalAlpha = 1; }
+    hText(x, 'Only a few wrong bits can be repaired. Too many, and nothing is shown.', 560, 640, 24, HGRAY, { align:'center', alpha:hSeg(t, 0.9, 1) });
+  } else if (step === 2 || step === 4) {
+    const PW = 400, PH2 = Math.round(PW * 1782 / 1280), PX = step === 2 ? 360 : 120, PY = (H - PH2) / 2;
+    hPhoto(x, img, PX, PY, PW, PH2);
+    const cols = 10, rows = 8, tw = PW / cols, th = PH2 / rows;
+    if (step === 2) {
+      const gv = hEase(hSeg(t, 0.06, 0.4)), gh = hEase(hSeg(t, 0.3, 0.62));
+      x.strokeStyle = 'rgba(255,255,255,0.85)'; x.lineWidth = 2;
+      for (let c = 1; c < cols; c++) { x.beginPath(); x.moveTo(PX + c * tw, PY); x.lineTo(PX + c * tw, PY + PH2 * gv); x.stroke(); }
+      for (let r = 1; r < rows; r++) { x.beginPath(); x.moveTo(PX, PY + r * th); x.lineTo(PX + PW * gh, PY + r * th); x.stroke(); }
+      const wave = hSeg(t, 0.62, 0.82);
+      if (wave > 0 && wave < 1) for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) { const d = (r + c) / (rows + cols - 2), a = Math.max(0, 1 - Math.abs(wave * 1.3 - d) * 6); if (a > 0) { x.fillStyle = 'rgba(63,100,140,' + (0.45 * a) + ')'; x.fillRect(PX + c * tw, PY + r * th, tw, th); } }
+      const hl = hSeg(t, 0.82, 0.92);
+      if (hl > 0) { x.globalAlpha = hl; x.strokeStyle = '#fff'; x.lineWidth = 4; x.strokeRect(PX + 4 * tw, PY + 3 * th, tw, th); x.strokeStyle = HBLUE; x.lineWidth = 3; x.strokeRect(PX + 4 * tw - 3, PY + 3 * th - 3, tw + 6, th + 6); x.globalAlpha = 1; }
+      hText(x, '10 × 8 = 80 tiles', PX + PW + 40, PY + 90, 34, HINK, { weight:600, alpha:hSeg(t, 0.62, 0.74) });
+      hText(x, 'for Subtle and Long', PX + PW + 40, PY + 130, 24, HGRAY, { alpha:hSeg(t, 0.64, 0.76) });
+      hText(x, '6 × 5 = 30 tiles', PX + PW + 40, PY + 200, 30, HINK, { weight:600, alpha:hSeg(t, 0.72, 0.84) });
+      hText(x, 'for Short', PX + PW + 40, PY + 236, 24, HGRAY, { alpha:hSeg(t, 0.74, 0.86) });
+      hText(x, 'Each tile is read', PX + PW + 40, PY + 330, 26, HBLUE, { weight:600, alpha:hSeg(t, 0.86, 0.96) });
+      hText(x, 'on its own.', PX + PW + 40, PY + 364, 26, HBLUE, { weight:600, alpha:hSeg(t, 0.86, 0.96) });
+    } else {
+      x.strokeStyle = 'rgba(255,255,255,0.6)'; x.lineWidth = 1.5;
+      for (let c = 1; c < cols; c++) { x.beginPath(); x.moveTo(PX + c * tw, PY); x.lineTo(PX + c * tw, PY + PH2); x.stroke(); }
+      for (let r = 1; r < rows; r++) { x.beginPath(); x.moveTo(PX, PY + r * th); x.lineTo(PX + PW, PY + r * th); x.stroke(); }
+      const scan = hSeg(t, 0.04, 0.56), total = cols * rows, k = Math.floor(scan * total);
+      for (let i = 0; i < Math.min(k, total); i++) { const r = Math.floor(i / cols), c = i % cols; x.fillStyle = 'rgba(63,100,140,0.22)'; x.fillRect(PX + c * tw, PY + r * th, tw, th); }
+      if (k < total && scan > 0) { const r = Math.floor(k / cols), c = k % cols; x.strokeStyle = '#fff'; x.lineWidth = 4; x.strokeRect(PX + c * tw, PY + r * th, tw, th); }
+      const RX = 600;
+      hText(x, 'same frozen model', RX, 170, 24, HGRAY, { mono:true });
+      hText(x, 'reads each tile', RX, 210, 34, HINK, { weight:600 });
+      const nb = Math.floor(scan * 32);
+      for (let i = 0; i < 32; i++) { const r = Math.floor(i / 8), c = i % 8, X = RX + c * 52, Y = 250 + r * 52; hRound(x, X, Y, 44, 44, 6); x.fillStyle = i < nb ? '#eaf1f7' : '#fff'; x.fill(); x.strokeStyle = i < nb ? HBLUE : 'rgba(24,20,17,0.15)'; x.lineWidth = 2; x.stroke(); if (i < nb) hText(x, String((HBITS[i % 16] + (i >> 4)) % 2), X + 22, Y + 31, 24, HBLUE, { mono:true, align:'center' }); }
+      const rep = hSeg(t, 0.58, 0.68), un = hSeg(t, 0.7, 0.82), msg = hSeg(t, 0.82, 0.94);
+      hText(x, '✓ repaired', RX, 500, 28, HBLUE, { weight:600, alpha:rep });
+      if (un > 0) { x.globalAlpha = un; hLock(x, RX + 30, 570, 50, 1 - hEase(un), HBLUE); x.globalAlpha = 1; hText(x, 'unlocked with the passphrase', RX + 80, 584, 26, HINK, { alpha:un }); }
+      if (msg > 0) { x.globalAlpha = msg; hRound(x, RX, 630, 420, 90, 12); x.fillStyle = '#fff'; x.fill(); x.strokeStyle = HBLUE; x.lineWidth = 2.5; x.stroke(); x.globalAlpha = 1; hText(x, HMSG.slice(0, Math.ceil(msg * HMSG.length)), RX + 24, 690, 40, HINK, { mono:true, weight:600 }); }
+      hText(x, 'Wrong passphrase or altered file → “No message found.”', RX, 770, 22, HGRAY, { alpha:hSeg(t, 0.92, 1) });
+    }
+  } else if (step === 3) {
+    const tsH = 520, TY = 140;
+    const ratio = img ? (img.naturalHeight / 8) / (img.naturalWidth / 10) : 1.74, TS = Math.round(tsH / ratio), TX = 90 + Math.round((400 - TS) / 2);
+    if (img) { const sw = img.naturalWidth / 10, sh = img.naturalHeight / 8; x.drawImage(img, 4 * sw, 3 * sh, sw, sh, TX, TY, TS, tsH); }
+    const nudge = hSeg(t, 0.15, 0.8);
+    if (nudge > 0 && nudge < 1) { const rnd = (i) => ((Math.sin(i * 12.9898 + Math.floor(t * 40) * 78.233) * 43758.5453) % 1 + 1) % 1; for (let i = 0; i < 260; i++) { const px = TX + rnd(i) * TS, py = TY + rnd(i + 999) * tsH; x.fillStyle = rnd(i + 3) > 0.5 ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.25)'; x.fillRect(px, py, 6, 6); } }
+    x.strokeStyle = '#fff'; x.lineWidth = 4; x.strokeRect(TX, TY, TS, tsH);
+    hText(x, 'one tile, zoomed', 90, TY - 24, 24, HGRAY, { mono:true });
+    hText(x, 'pixels change by at most 2/255', 90, TY + tsH + 50, 26, HINK, { weight:600, alpha:hSeg(t, 0.1, 0.25) });
+    const OX = 600, OY = 470, L2 = 230, base = 0.25;
+    const target = 0.25 + 0.95, ang = base + (target - base) * hEase(nudge);
+    hText(x, 'embedding of this tile', OX, 130, 24, HGRAY, { mono:true });
+    x.strokeStyle = 'rgba(24,20,17,0.15)'; x.lineWidth = 2; x.beginPath(); x.moveTo(OX, OY); x.lineTo(OX + 420, OY); x.stroke();
+    x.strokeStyle = '#a39b93'; x.lineWidth = 6; x.lineCap = 'round'; x.beginPath(); x.moveTo(OX, OY); x.lineTo(OX + L2 * Math.cos(base), OY - L2 * Math.sin(base)); x.stroke();
+    x.strokeStyle = HBLUE; x.beginPath(); x.moveTo(OX, OY); x.lineTo(OX + L2 * Math.cos(ang), OY - L2 * Math.sin(ang)); x.stroke(); x.lineCap = 'butt';
+    x.setLineDash([6, 6]); x.strokeStyle = HBLUE; x.lineWidth = 2; x.beginPath(); x.arc(OX, OY, 90, -ang, -base); x.stroke(); x.setLineDash([]);
+    hText(x, 'before', OX + L2 * Math.cos(base) + 14, OY - L2 * Math.sin(base) + 8, 24, HGRAY, { mono:true });
+    hText(x, 'after', OX + L2 * Math.cos(ang) + 14, Math.max(190, OY - L2 * Math.sin(ang)), 24, HBLUE, { mono:true, alpha:hSeg(t, 0.2, 0.3) });
+    const flipped = Math.floor(nudge * 16);
+    hText(x, 'bits it reads', OX, 540, 24, HGRAY, { mono:true });
+    hBitRow(x, HSTART.map((b, i) => i < flipped ? HBITS[i] : b), OX, 560, 26, (i, b) => i < flipped ? { bg:'#eaf1f7', bd:HBLUE, fg:HBLUE } : null);
+    hText(x, 'target', OX, 640, 24, HGRAY, { mono:true });
+    hBitRow(x, HBITS, OX, 660, 26, () => ({ bg:'#fff', bd:'rgba(63,100,140,0.35)', fg:HGRAY }));
+    hText(x, '✓ saved as PNG, reopened, read back', OX, 760, 26, HBLUE, { weight:600, alpha:hSeg(t, 0.85, 0.96) });
+  }
+}
+const HG_MAP = ['..XXX..', '.XXXXX.', 'XXXXXXX', 'XX.X*XX', 'XXXXXXX', 'XXXXXXX', 'XXXXXXX', 'X.X.X.X'];
+const HG_PIX = []; HG_MAP.forEach((row, r) => [...row].forEach((ch, c) => { if (ch !== '.') HG_PIX.push({ r, c, eye:ch === '*' }); }));
+(function () { let seed = 7; const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }; const used = new Set(); HG_PIX.forEach(p => { let k; do { k = Math.floor(rnd() * 80); } while (used.has(k)); used.add(k); p.tile = k; p.delay = rnd(); }); })();
+function drawHero(x, img, t) {
+  const W = 1080, H = 760; x.fillStyle = '#312e2b'; x.fillRect(0, 0, W, H);
+  const PX = 380, PY = 150, PW = 640, PH = 480, cols = 10, rows = 8, tw = PW / cols, th = PH / rows;
+  x.fillStyle = '#f6f4f1'; x.fillRect(PX - 8, PY - 8, PW + 16, PH + 16);
+  if (img) { const r = Math.max(PW / img.naturalWidth, PH / img.naturalHeight), dw = img.naturalWidth * r, dh = img.naturalHeight * r; x.save(); x.beginPath(); x.rect(PX, PY, PW, PH); x.clip(); x.drawImage(img, PX + (PW - dw) / 2, PY + (PH - dh) / 2, dw, dh); x.restore(); } else { x.fillStyle = '#6b625a'; x.fillRect(PX, PY, PW, PH); }
+  const ease = (v) => v < 0.5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2, cl = (v) => Math.max(0, Math.min(1, v)), seg = (a, b) => cl((t - a) / (b - a));
+  const bob = Math.sin(t * Math.PI * 6) * 6, S = 26, GX = 70, GY = 220 + bob;
+  const hide = seg(0.12, 0.44), read = seg(0.6, 0.86);
+  const scanX = PX + PW * seg(0.58, 0.84);
+  const gridA = Math.max(seg(0.1, 0.16) * (1 - seg(0.44, 0.52)), seg(0.56, 0.6) * (1 - seg(0.86, 0.94)));
+  if (gridA > 0) { x.strokeStyle = 'rgba(255,255,255,' + (0.5 * gridA) + ')'; x.lineWidth = 1.5; for (let c = 1; c < cols; c++) { x.beginPath(); x.moveTo(PX + c * tw, PY); x.lineTo(PX + c * tw, PY + PH); x.stroke(); } for (let r = 1; r < rows; r++) { x.beginPath(); x.moveTo(PX, PY + r * th); x.lineTo(PX + PW, PY + r * th); x.stroke(); } }
+  if (t > 0.58 && t < 0.86) { x.fillStyle = 'rgba(143,179,217,0.18)'; x.fillRect(PX, PY, scanX - PX, PH); x.fillStyle = '#8fb3d9'; x.fillRect(scanX - 2, PY - 10, 4, PH + 20); }
+  HG_PIX.forEach(p => {
+    const gx = GX + p.c * S, gy = GY + p.r * S, tc = p.tile % cols, tr = Math.floor(p.tile / cols), tx = PX + tc * tw + tw / 2 - S / 2, ty = PY + tr * th + th / 2 - S / 2;
+    const ph = cl((hide - p.delay * 0.55) / 0.45), tileRead = (PX + tc * tw + tw / 2) < scanX, pr = t < 0.6 ? 0 : tileRead ? cl((read - (tc / cols) * 0.75) / 0.3) : 0;
+    let px, py, a = 1, col = p.eye ? '#8fb3d9' : '#f6f4f1', sz = S - 2;
+    if (t < 0.6) { const e = ease(ph); px = gx + (tx - gx) * e; py = gy + (ty - gy) * e - Math.sin(e * Math.PI) * 80; if (ph >= 1) { a = 1 - cl((t - 0.44) / 0.06 + (1 - p.delay) * 0.2); sz = S - 2; } }
+    else { const e = ease(pr); px = tx + (gx - tx) * e; py = ty + (gy - ty) * e - Math.sin(e * Math.PI) * 80; a = pr > 0 ? 1 : 0; }
+    if (t >= 0.86) { px = gx; py = gy; a = 1; }
+    if (a <= 0) return;
+    x.globalAlpha = a; x.fillStyle = col; x.fillRect(px + 1, py + 1, sz, sz); x.globalAlpha = 1;
+  });
+  if (t < 0.14 || t >= 0.86) { HG_MAP.forEach((row, r) => [...row].forEach((ch, c) => { if (ch === '.' && r === 3) { x.fillStyle = '#312e2b'; x.fillRect(GX + c * S + 1, GY + r * S + 1, S - 2, S - 2); } })); }
+  const label = (s, X, on) => { x.font = '500 22px "IBM Plex Mono", ui-monospace, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = on ? '#f6f4f1' : 'rgba(246,244,241,0.38)'; x.fillText(s, X, 700); x.textBaseline = 'alphabetic'; };
+  const phase = t < 0.12 ? 0 : t < 0.52 ? 1 : t < 0.58 ? 2 : t < 0.88 ? 3 : 4;
+  const LX = [135, 405, 675, 945];
+  label('message', LX[0], phase === 0 || phase === 4); label('hidden in the tiles', LX[1], phase === 1); label('looks the same', LX[2], phase === 2); label('read back', LX[3], phase === 3);
+  x.font = '500 22px "IBM Plex Mono", ui-monospace, monospace';
+  const LW = ['message', 'hidden in the tiles', 'looks the same', 'read back'].map(s => x.measureText(s).width);
+  for (let i = 0; i < 3; i++) { const end = LX[i] + LW[i] / 2, start = LX[i + 1] - LW[i + 1] / 2; label('→', (end + start) / 2, false); }
+  x.font = '500 20px "IBM Plex Mono", ui-monospace, monospace'; x.fillStyle = 'rgba(246,244,241,0.55)'; x.textAlign = 'left'; x.fillText('marked photo · ≤ 2/255 per pixel', PX, PY - 26);
+}
+class Component extends DCLogic {
+  state = {
+    photo:'antonello', mode:'subtle', view:'compare', knob:false, sel:null, read:'idle', tip:null, narrow:false, tReady:{}, tPhoto:'antonello', tMode:'subtle', tView:'compare', tCmp:'slider', tAb:'orig', split:50, knobFocus:false, tRead:'idle', tTarget:'encoded',
+    tab:'hide',
+    hFile:null, hMode:'subtle', hMsg:'', hPass:'', hPass2:'', hShow:false, hSim:'success', hCold:false, hFrozen:false, hJob:'idle', hPos:2, hT0:0, hNow:0, hView:'enc', hDrag:false,
+    rFile:null, rPass:'', rShow:false, rMode:'auto', rSim:'found', rState:'idle', rStep:0, copied:false, rDrag:false
+  };
+  fx = {}; bases = {}; timers = [];
+  wStageRef = React.createRef();
+  wHandleDown = (e) => {
+    e.preventDefault();
+    const el = this.wStageRef.current; if (!el) return;
+    const set = (x) => { const r = el.getBoundingClientRect(); this.setState({ split:Math.round(Math.max(0, Math.min(100, (x - r.left) / r.width * 100))) }); };
+    const move = (ev) => set(ev.clientX), up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+    window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
+  };
+  px = {};
+  ensurePx(p, m) {
+    const k = p + '|' + m; if (this.px[k]) return this.px[k] === 'loading' ? null : this.px[k];
+    this.px[k] = 'loading';
+    const dir = 'demo-photos/fixtures/' + DIRS[p] + '/';
+    const load = (f) => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = dir + f; });
+    Promise.all([load('original.png'), load(m + '.png')]).then(([o, mk]) => {
+      const rd = (im) => { const c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight; const x = c.getContext('2d', { willReadFrequently:true }); x.drawImage(im, 0, 0); return x.getImageData(0, 0, c.width, c.height); };
+      this.px[k] = { o:rd(o), m:rd(mk) }; this.forceUpdate();
+    }).catch(() => { this.px[k] = null; });
+    return null;
+  }
+  t5Vals() {
+    const s = this.state, P = PH.find(p => p.key === s.photo), dir = 'demo-photos/fixtures/' + DIRS[s.photo] + '/', cap = MO.find(m => m.key === s.mode).cap, amp = AMP[s.mode];
+    const D = this.ensurePx(s.photo, s.mode), pt = s.t5pt || { fx:0.5, fy:0.42 };
+    let O = ['…', '…', '…'], M = ['…', '…', '…'], Dl = ['', '', ''], line = 'Loading the two files…', patch = [];
+    if (D) {
+      const W = D.o.width, H = D.o.height, x = Math.min(W - 1, Math.floor(pt.fx * W)), y = Math.min(H - 1, Math.floor(pt.fy * H)), i = (y * W + x) * 4;
+      O = [0, 1, 2].map(c => D.o.data[i + c]); M = [0, 1, 2].map(c => D.m.data[i + c]);
+      const dd = [0, 1, 2].map(c => M[c] - O[c]); Dl = dd.map(d => (d > 0 ? '+' : d < 0 ? '−' : '±') + Math.abs(d));
+      const n = dd.filter(d => d !== 0).length;
+      line = 'Pixel ' + x + ', ' + y + ': ' + (n ? n + ' of 3 colour values changed, by at most ' + Math.max(...dd.map(Math.abs)) + ' of 255.' : 'unchanged here.') + ' Cap for this mode: ' + cap + '.';
+      for (let yy = -3; yy <= 3; yy++) for (let xx = -3; xx <= 3; xx++) {
+        const X = Math.max(0, Math.min(W - 1, x + xx)), Y = Math.max(0, Math.min(H - 1, y + yy)), j = (Y * W + X) * 4 + 1, d = D.m.data[j] - D.o.data[j];
+        const g = Math.max(0, Math.min(255, 128 + d * amp));
+        patch.push({ v:d === 0 ? '0' : (d > 0 ? '+' : '−') + Math.abs(d), bg:'rgb(' + g + ',' + g + ',' + g + ')', fg:g > 150 ? 'rgba(18,16,14,0.9)' : '#fff' });
+      }
+    } else for (let k = 0; k < 49; k++) patch.push({ v:'', bg:'#ddd', fg:'#000' });
+    const sw = []; for (let d = -cap; d <= cap; d += cap > 4 ? 2 : 1) { const g = Math.max(0, Math.min(255, 128 + d * amp)); sw.push({ d:(d > 0 ? '+' : d < 0 ? '−' : '') + Math.abs(d), bg:'rgb(' + g + ',' + g + ',' + g + ')' }); }
+    const v = s.view;
+    return {
+      t5Move:(e) => { const r = e.currentTarget.querySelector('img').getBoundingClientRect(); const fx = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), fy = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)); this.setState({ t5pt:{ fx, fy } }); },
+      t5Marked:dir + s.mode + '.png', t5DiffSrc:dir + s.mode + '-difference.png', t5ThumbW:P.key === 'antonello' ? '180px' : '300px',
+      t5Lx:(pt.fx * 100) + '%', t5Ly:(pt.fy * 100) + '%',
+      t5O0:O[0], t5O1:O[1], t5O2:O[2], t5M0:M[0], t5M1:M[1], t5M2:M[2], t5D0:Dl[0], t5D1:Dl[1], t5D2:Dl[2],
+      t5OSw:D ? 'rgb(' + O.join(',') + ')' : '#ddd', t5MSw:D ? 'rgb(' + M.join(',') + ')' : '#ddd', t5Line:line,
+      t5Amp:amp, t5Sw:sw, t5SwN:sw.length, t5Patch:patch, t5ZoomLabel:'7 × 7 pixels around the marker'};
+  }
+  t4Vals() {
+    const s = this.state, fl = [].concat(...HEAT[s.photo][s.mode]), cols = s.mode === 'classic' ? 6 : 10, cap = MO.find(m => m.key === s.mode).cap;
+    let mi = 0; fl.forEach((v, i) => { if (v < fl[mi]) mi = i; });
+    const sel = s.sel != null && s.sel < fl.length ? s.sel : mi;
+    const ang = fl.map(v => Math.acos(v) * 180 / Math.PI), order = ang.map((a, i) => i).sort((a, b) => ang[b] - ang[a]);
+    const mx = 90, sorted = [...ang].sort((a, b) => a - b), med = sorted[Math.floor(sorted.length / 2)], rank = order.indexOf(sel) + 1;
+    const lab = (i) => 'Tile row ' + (Math.floor(i / cols) + 1) + ', column ' + (i % cols + 1) + ', ' + Math.round(ang[i]) + ' degrees';
+    const pick = (i) => () => this.setState({ sel:i });
+    const P = (deg, r) => { const a = deg * Math.PI / 180; return [20 + r * Math.cos(a), 160 - r * Math.sin(a)]; };
+    const [m9x, m9y] = P(90, 140), [mdx, mdy] = P(med, 150), [mlx, mly] = P(med, 156);
+    const jit = (i) => ((i * 37) % 11) / 11;
+    return { t4MedX:mdx.toFixed(1), t4MedY:mdy.toFixed(1),
+      t4MedLx:(mlx + 4).toFixed(0) + 'px', t4MedLy:(mly - 12).toFixed(0) + 'px',
+      t4Dots:fl.map((v, i) => { const r = 70 + jit(i) * 66, [x, y] = P(ang[i], r), on = i === sel, sz = on ? 12 : 8; return { x:x.toFixed(1) + 'px', y:y.toFixed(1) + 'px', s:sz + 'px', m:(-sz / 2) + 'px 0 0 ' + (-sz / 2) + 'px', bg:on ? BLUE : 'rgba(63,100,140,0.35)', bd:on ? '2px solid #fff' : '0', z:on ? 2 : 1, aria:lab(i), onClick:pick(i) }; })
+    };
+  }
+  wVals() {
+    const s = this.state, P = PH.find(p => p.key === s.photo), dir = 'demo-photos/fixtures/' + DIRS[s.photo] + '/';
+    const set = (o) => () => { clearTimeout(this.rt); clearInterval(this.rvI); this.setState({ read:'idle', rv:null, ...o }); };
+    const segOf = (opts, cur, fn) => opts.map(([k, l]) => { const on = k === cur; return { label:l, pressed:on ? 'true' : 'false', bg:on ? '#fff' : 'transparent', fg:on ? INK : GRAY, sh:on ? '0 1px 2px rgba(0,0,0,0.08), 0 0 0 1px rgba(24,20,17,0.08)' : 'none', onClick:fn(k) }; });
+    const fl = [].concat(...HEAT[s.photo][s.mode]), cols = s.mode === 'classic' ? 6 : 10, rows = s.mode === 'classic' ? 5 : 8;
+    let mi = 0; fl.forEach((v, i) => { if (v < fl[mi]) mi = i; });
+    const sel = s.sel != null && s.sel < fl.length ? s.sel : mi, th = Math.acos(fl[sel]), b0 = 12 * Math.PI / 180;
+    const pt = (a, r) => [20 + r * Math.cos(a), 175 - r * Math.sin(a)];
+    const [bx, by] = pt(b0, 150), [ax, ay] = pt(b0 + th, 150), [x1, y1] = pt(b0, 46), [x2, y2] = pt(b0 + th, 46), [tx, ty] = pt(b0 + th / 2, 62);
+    const degs = fl.map(v => Math.acos(v) * 180 / Math.PI).sort((a, b) => a - b), dg = Math.round(th * 180 / Math.PI), med = Math.round(degs[Math.floor(degs.length / 2)]);
+    const FX = FIX[s.photo][s.mode], cap = MO.find(m => m.key === s.mode).cap, embed = s.view === 'embed', diff = s.view === 'diff', cmp = s.view === 'compare';
+    const slider = cmp || embed;
+    const showOrig = !diff, showMarked = cmp || embed;
+    const mLabel = MO.find(m => m.key === s.mode).label;
+    return {
+      wStageRef:this.wStageRef, wHandleDown:this.wHandleDown,
+      wFrameRadius:'6px',
+      wStageW:P.key === 'antonello' ? '420px' : '560px', wStageMax:P.key === 'antonello' ? '600px' : '900px', wAspect:P.aspect,
+      wCovers:PH.map(p => { const on = p.key === s.photo; return { label:p.label, src:p.src, pos:p.pos, pressed:on ? 'true' : 'false', bd:on ? BLUE : 'rgba(24,20,17,0.12)', bg:on ? '#f5f8fb' : '#fff', tabBg:on ? '#312e2b' : 'rgba(0,0,0,0.06)', tabFg:on ? '#fff' : INK, onClick:set({ photo:p.key, sel:null }) }; }),
+      wModeList:MO.map(m => { const on = m.key === s.mode, T = TIPS[m.key]; return { label:m.label, cap:m.cap, bytes:FIX[s.photo][m.key][1], pressed:on ? 'true' : 'false', bd:on ? BLUE : 'rgba(24,20,17,0.12)', bg:on ? '#f5f8fb' : '#fff', onClick:set({ mode:m.key, sel:null }),
+        tipId:'tip-' + m.key, tip:T.tip, max:T.max, grid:T.grid, status:T.status, tipDisp:s.tip === m.key ? 'flex' : 'none', onEnter:() => this.setState({ tip:m.key }), onLeave:() => this.setState(st => st.tip === m.key ? { tip:null } : null) }; }),
+      wViewList:VIEWS.map(([k, l]) => { const on = k === s.view; return { label:l, pressed:on ? 'true' : 'false', bg:on ? '#f5f8fb' : 'transparent', dot:on ? BLUE : '#fff', dotBd:on ? BLUE : '#a39b93', weight:on ? 600 : 500, onClick:set({ view:k }) }; }),
+      wCompare:cmp, wEmbed:embed, wNotEmbed:!embed, wDiffOn:diff, wDivider:slider, wSliderHint:cmp,
+      wOrig:dir + 'original.png', wMarked:dir + s.mode + '.png', wDiff:dir + s.mode + '-difference.png',
+      wOrigDisp:showOrig ? 'block' : 'none', wMarkedDisp:showMarked ? 'block' : 'none', wDiffDisp:diff ? 'block' : 'none', wClip:slider ? s.split + '%' : '0%',
+      wStageAlt:P.label + ' · ' + mLabel,
+      wFrameL:diff ? 'amplified difference ×' + AMP[s.mode] : 'original', wFrameR:embed ? 'embedding change · ' + mLabel.toLowerCase() : diff ? 'real maximum ' + cap + '/255 · not the photo' : mLabel.toLowerCase() + ' · marked',
+      wTagL:'Original', wTagLDisp:slider ? 'block' : 'none',
+      wTagR:diff ? 'Amplified difference ×' + AMP[s.mode] : embed ? 'Marked · embedding change' : 'Encoded', wTagRBg:diff || embed ? BLUE : 'rgba(18,16,14,0.82)',
+      wSplit:s.split, wSplitPct:s.split + '%', wSplitText:s.split + '% original', wOnSplit:(e) => this.setState({ split:+e.target.value }),
+      wKnobFocus:() => this.setState({ knob:true }), wKnobBlur:() => this.setState({ knob:false }), wKnobRing:s.knob ? '2px solid #3f648c' : 'none',
+      wCols:cols, wRows:rows,
+      wCells:fl.map((v, i) => { const right = ((i % cols) + 0.5) / cols * 100 > s.split, on = i === sel; return { aria:'Tile row ' + (Math.floor(i / cols) + 1) + ', column ' + (i % cols + 1) + ', turned ' + Math.round(Math.acos(v) * 180 / Math.PI) + ' degrees', pressed:on ? 'true' : 'false', bg:right ? wTint(v) : 'transparent', line:right ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.12)', sh:on ? 'inset 0 0 0 2px #fff, inset 0 0 0 4px #3f648c' : 'none', onClick:() => this.setState({ sel:i }) }; }),
+      wR:Math.floor(sel / cols) + 1, wC:sel % cols + 1, wCos:fl[sel].toFixed(2), wDeg:dg + '°', wMed:med, wMax:Math.round(degs[degs.length - 1]),
+      wHeadline:sel === mi ? 'The tile that turned most' : dg >= med ? 'Turned more than the median tile' : 'Turned less than the median tile',
+      wBx:bx.toFixed(1), wBy:by.toFixed(1), wAx:ax.toFixed(1), wAy:ay.toFixed(1), wBlx:(bx - 40).toFixed(1), wBly:(by + 22).toFixed(1), wAlx:(ax + 7).toFixed(1), wAly:Math.max(12, ay + 4).toFixed(1),
+      wArc:'M ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A 46 46 0 0 0 ' + x2.toFixed(1) + ' ' + y2.toFixed(1),
+      wDegLeft:((tx + 6) / 220 * 100).toFixed(2) + '%', wDegTop:((ty - 6) / 190 * 100).toFixed(2) + '%', wDialAria:'Before and after arrows ' + dg + ' degrees apart',
+      wCap:cap, wProfile:PROF[s.mode], wChanged:Math.round(FX[2] * 1000) / 10 + '% of colour values changed', wRes:RES[s.photo][s.mode],
+      infoShow:() => { if (!s.info) this.setState({ info:true }); }, infoHide:() => { if (s.info && !s.infoPinned) this.setState({ info:false }); }, infoToggle:() => this.setState({ info:!(s.info && s.infoPinned), infoPinned:!(s.info && s.infoPinned) }),
+      infoDisp:s.info ? 'flex' : 'none', infoOpenStr:s.info ? 'true' : 'false', infoBg:s.info ? '#f6f4f1' : 'transparent', infoFg:s.info ? 'rgba(18,16,14,0.96)' : '#f6f4f1', infoBd:s.info ? '#f6f4f1' : 'rgba(246,244,241,0.6)', wDim:MODES[s.mode].dim, wModel:MODES[s.mode].backbone, wModeLabel:MODES[s.mode].label};
+  }
+  rvRun() {
+    const s = this.state, cur = s.rv || { st:'idle' };
+    clearInterval(this.rvI);
+    if (cur.st === 'done') { this.setState({ rv:null }); return; }
+    const msg = FIX[s.photo][s.mode][0], reduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (reduced) { this.setState({ rv:{ st:'done', n:msg.length } }); return; }
+    let n = 0; this.setState({ rv:{ st:'running', n:0 } });
+    this.rvI = setInterval(() => { n++; if (n >= msg.length) { clearInterval(this.rvI); this.setState({ rv:{ st:'done', n:msg.length } }); } else this.setState({ rv:{ st:'running', n } }); }, Math.max(14, 1500 / msg.length));
+  }
+  rvVals() {
+    const s = this.state, FX = FIX[s.photo][s.mode], msg = FX[0], P = PH.find(p => p.key === s.photo), M = MO.find(m => m.key === s.mode), rv = s.rv || { st:'idle' };
+    const RW = RAW[s.photo], DIG = [...(s.mode === 'classic' ? RW.classic : RW[s.mode]), ...(s.mode === 'classic' ? RW.u6 : RW.u10)].map(v => Math.abs(v).toFixed(4).slice(2)).join('');
+    const scr = (n) => msg.split('').map((ch, i) => i < n ? ch : (ch === ' ' ? ' ' : DIG[(i * 7 + n * 3) % DIG.length])).join('');
+    return {
+      rvCtx:P.label + ' · ' + M.label, rvSize:s.mode === 'classic' ? '26px' : s.mode === 'subtle' ? '19px' : '15px',
+      rvText:rv.st === 'idle' ? msg.replace(/[^ ]/g, '█') : scr(rv.n || 0),
+      rvMaxH:(s.narrow && s.mode === 'long' && !s.rvAll) ? '13em' : 'none', rvCanExpand:s.narrow && s.mode === 'long' && rv.st === 'done', rvExpand:() => this.setState({ rvAll:!s.rvAll }), rvExpandLabel:s.rvAll ? 'Show less' : 'Show all',
+      rvLabel:rv.st === 'done' ? 'Hide the message' : 'Reveal the hidden message', rvBusy:rv.st === 'running', rvClick:() => this.rvRun(), rvDone:rv.st === 'done',
+      rvMeta:rv.st === 'done' ? FX[1] + ' bytes · ' + PROF[s.mode] + ' · passphrase “ghostframe public benchmark fixture” · exact match' : FX[1] + ' bytes hidden · pick a cover and mode above'
+    };
+  }
+  abOpen(k, e) {
+    if (this.state.ab === k) { this.setState({ ab:null }); return; }
+    const r = e.currentTarget.getBoundingClientRect(), W = 260, below = r.bottom + 130 < window.innerHeight;
+    const x = Math.max(12, Math.min(window.innerWidth - W - 12, r.left + r.width / 2 - W / 2));
+    this.setState({ ab:k, abX:x, abY:below ? r.bottom + 8 : Math.max(12, r.top - 8 - 120) });
+    if (!this.abBound) {
+      this.abBound = true;
+      this.abClose = (ev) => { if (!this.state.ab) return; if (ev.type === 'keydown' && ev.key !== 'Escape') return; if (ev.type === 'pointerdown' && ev.target.closest && (ev.target.closest('[data-abbr]') || ev.target.closest('#gf-abbr'))) return; this.setState({ ab:null }); };
+      document.addEventListener('pointerdown', this.abClose); document.addEventListener('keydown', this.abClose); window.addEventListener('scroll', this.abClose, { passive:true });
+    }
+  }
+  heroRef = React.createRef();
+  heroInit() {
+    const reduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const img = new Image(); img.src = 'demo-photos/coffee-beans.jpg';
+    const DUR = 10000; let t0 = performance.now(), visible = true;
+    const el = this.heroRef.current;
+    if (el && window.IntersectionObserver) { this.heroIO = new IntersectionObserver(en => { visible = en.some(e => e.isIntersecting); if (visible && !this.heroRaf && !reduced) this.heroRaf = requestAnimationFrame(frame); }, { threshold:0.05 }); this.heroIO.observe(el); }
+    const frame = (now) => {
+      this.heroRaf = null; const cv = this.heroRef.current; if (!cv) return;
+      const t = reduced ? 0.95 : ((now - t0) % DUR) / DUR;
+      drawHero(cv.getContext('2d'), img.complete && img.naturalWidth ? img : null, t);
+      if (!reduced && visible) this.heroRaf = requestAnimationFrame(frame);
+    };
+    img.onload = () => { if (reduced) frame(performance.now()); };
+    this.heroRaf = requestAnimationFrame(frame);
+  }
+  howRef = React.createRef(); howBarRef = React.createRef();
+  howStart(step) {
+    cancelAnimationFrame(this.howRaf);
+    const reduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const dur = HOW_DUR[step], t0 = performance.now();
+    this.howPlaying = true;
+    const frame = (now) => {
+      const cv = this.howRef.current; if (!cv) { this.howRaf = requestAnimationFrame(frame); return; }
+      const t = reduced ? 1 : Math.min(1, (now - t0) / dur);
+      drawHow(cv.getContext('2d'), this.howImg && this.howImg.complete ? this.howImg : null, step, t);
+      if (this.howBarRef.current) this.howBarRef.current.style.width = (t * 100) + '%';
+      const sec = Math.round(t * dur / 1000); if (sec !== this.howSec) { this.howSec = sec; this.setState({ howSec:sec }); }
+      if (t < 1) this.howRaf = requestAnimationFrame(frame); else { this.howPlaying = false; this.setState({ howDone:true }); }
+    };
+    this.setState({ howStep:step, howDone:false });
+    this.howRaf = requestAnimationFrame(frame);
+  }
+  howInit() {
+    if (this.howInitDone) return; this.howInitDone = true;
+    this.howImg = new Image(); this.howImg.onload = () => { if (!this.howPlaying && this.howRef.current) drawHow(this.howRef.current.getContext('2d'), this.howImg, this.state.howStep || 0, 1); }; this.howImg.src = 'demo-photos/antonello-portrait-of-a-man.jpg';
+    const el = document.getElementById('how');
+    const go = () => this.howStart(this.state.howStep || 0);
+    if (el && window.IntersectionObserver) { this.howIO = new IntersectionObserver((en) => { if (en.some(e => e.isIntersecting) && !this.howSeen) { this.howSeen = true; go(); } }, { threshold:0.35 }); this.howIO.observe(el); }
+    else go();
+    setTimeout(() => { const cv = this.howRef.current; if (cv && !this.howSeen) drawHow(cv.getContext('2d'), null, 0, 1); }, 50);
+  }
+  tARef = React.createRef(); tBRef = React.createRef(); hCRef = React.createRef(); hDRef = React.createRef(); hFileRef = React.createRef(); rFileRef = React.createRef();
+
+  componentDidMount() {
+    this.reduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this.onResize = () => { const w = window.innerWidth >= 960; if (w !== this.state.wide) this.setState({ wide:w }); const n = window.innerWidth < 760; if (n !== this.state.narrow) this.setState(n ? { narrow:n, tCmp:'ab' } : { narrow:n }); };
+    window.addEventListener('resize', this.onResize); this.onResize();
+    this.applyParams();
+    setTimeout(() => { this.howInit(); this.heroInit(); }, 0);
+  }
+  componentWillUnmount() { if (this.abClose) { document.removeEventListener('pointerdown', this.abClose); document.removeEventListener('keydown', this.abClose); window.removeEventListener('scroll', this.abClose); } clearInterval(this.rvI); cancelAnimationFrame(this.heroRaf); if (this.heroIO) this.heroIO.disconnect(); cancelAnimationFrame(this.howRaf); if (this.howIO) this.howIO.disconnect(); window.removeEventListener('resize', this.onResize); this.clear(); clearInterval(this.tick); }
+  componentDidUpdate() { this.paint(); }
+  clear() { this.timers.forEach(clearTimeout); this.timers = []; }
+  later(fn, ms) { this.timers.push(setTimeout(fn, this.reduced ? Math.min(ms, 150) : ms)); }
+
+  loadBase(p) { this.buildFx(p, this.state.tMode); }
+  buildFx(p, m) {
+    const k = p + '|' + m;
+    if (this.fx[k]) return;
+    const load = (f) => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = fixPath(p, f); });
+    this.fx[k] = 'loading';
+    Promise.all([this.bases[p] ? Promise.resolve(this.bases[p]) : load('original.png'), load(m + '.png'), load(m + '-difference.png')]).then(([o, e, d]) => {
+      this.bases[p] = o; this.fx[k] = { enc:e, diff:d };
+      this.setState(s => ({ tReady:{ ...s.tReady, [k]:true } }));
+    }).catch(() => { this.fx[k] = null; });
+  }
+  pickCover(p, m) { this.clear(); this.setState({ tPhoto:p, tMode:m, tRead:'idle' }); setTimeout(() => { if (this.bases[p]) this.buildFx(p, m); else this.loadBase(p); }, 0); }
+  paint() {
+    const s = this.state, F = this.fx[s.tPhoto + '|' + s.tMode], A = this.tARef.current, B = this.tBRef.current, base = this.bases[s.tPhoto];
+    if (F && F !== 'loading' && A && B && base) {
+      [A, B].forEach(cv => { if (cv.width !== base.naturalWidth || cv.height !== base.naturalHeight) { cv.width = base.naturalWidth; cv.height = base.naturalHeight; this.sig = null; } });
+      let a = F.enc, b = null;
+      if (s.tView === 'diff') a = F.diff; else if (s.tView === 'embed' || s.tCmp === 'slider') { a = base; b = F.enc; } else a = s.tAb === 'orig' ? base : F.enc;
+      const sig = [s.tPhoto, s.tMode, s.tView, s.tCmp, s.tAb].join('|');
+      if (this.sig !== sig || this.sigA !== A) { A.getContext('2d').drawImage(a, 0, 0); if (b) B.getContext('2d').drawImage(b, 0, 0); this.sig = sig; this.sigA = A; }
+    }
+    const H = this.hCRef.current, Dc = this.hDRef.current, f = s.hFile;
+    if (H && Dc && f && f.data && s.hJob === 'done') {
+      const key = f.url + s.hMode;
+      if (this.hKey !== key) { const M = MODES[s.hMode]; const enc = simulate(f.data, M.cap, M.grid[0], M.grid[1], 5); this.hRes = { enc, diff:diffOf(f.data, enc, M.amp) }; this.hKey = key; this.hSig = null; }
+      [H, Dc].forEach(cv => { if (cv.width !== f.data.width || cv.height !== f.data.height) { cv.width = f.data.width; cv.height = f.data.height; this.hSig = null; } });
+      const sig = s.hView + key;
+      if (this.hSig !== sig || this.hSigC !== H) { H.getContext('2d').putImageData(s.hView === 'orig' ? f.data : this.hRes.enc, 0, 0); Dc.getContext('2d').putImageData(this.hRes.diff, 0, 0); this.hSig = sig; this.hSigC = H; }
+    }
+  }
+
+  applyParams() {
+    const q = new URLSearchParams(location.search), st = {};
+    if (MODES[q.get('tmode')]) st.tMode = q.get('tmode');
+    if (PHOTOS[q.get('tphoto')]) st.tPhoto = q.get('tphoto');
+    if (st.tMode || st.tPhoto) { this.state.tMode = st.tMode || this.state.tMode; this.state.tPhoto = st.tPhoto || this.state.tPhoto; }
+    if (q.get('tview') === 'diff' || q.get('tview') === 'embed') { st.tView = q.get('tview'); st.view = q.get('tview'); }
+    if (st.tMode) st.mode = st.tMode; if (st.tPhoto) st.photo = st.tPhoto;
+    if (q.get('tcmp') === 'ab') st.tCmp = 'ab';
+    if (q.get('ab') === 'enc') st.tAb = 'enc';
+    if (q.get('tread')) { st.tRead = 'done'; st.tTarget = 'encoded'; }
+    if (q.get('tab') === 'read' || q.get('rfile') || q.get('rstate')) st.tab = 'read';
+    if (MODES[q.get('hmode')]) st.hMode = q.get('hmode');
+    if (q.get('hmsg') != null) st.hMsg = q.get('hmsg');
+    if (q.get('hpass')) { st.hPass = 'harbour lantern orbit'; st.hPass2 = q.get('hpass') === 'mismatch' ? 'harbour lantern' : st.hPass; }
+    if (q.get('hpass') === 'weak') { st.hPass = 'dawn'; st.hPass2 = 'dawn'; }
+    if (Object.keys(st).length) this.setState(st);
+    const hf = q.get('hfile'), herr = q.get('herr'), hjob = q.get('hjob');
+    if (hf || herr) this.loadSample('h', { err:herr, p3:q.get('hp3') === '1', small:herr === 'small', big:herr === 'big', alpha:herr === 'alpha', type:herr === 'type', narrowW:q.get('hnarrow') === '1' }, () => { if (hjob) this.forceJob(hjob); });
+    const rf = q.get('rfile');
+    if (rf) this.loadSample('r', { jpeg:rf === 'jpeg' }, () => {
+      if (rf !== 'jpeg') this.setState({ rPass:PASS_FIXTURE });
+      const rs = q.get('rstate');
+      if (rs === 'running') this.setState({ rState:'running', rStep:1 });
+      else if (rs === 'found' || rs === 'none') this.setState({ rState:rs, rSim:rs });
+    });
+    if (location.hash) {
+      const id = location.hash.slice(1), dy = +q.get('dy') || 0, t0 = Date.now();
+      let user = false;
+      const stop = () => { user = true; };
+      ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, stop, { once:true, passive:true }));
+      const jump = () => { if (user) return; const el = document.getElementById(id); if (!el || document.body.scrollHeight < window.innerHeight * 1.5) return; document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo({ top:el.getBoundingClientRect().top + window.scrollY - 60 + dy, behavior:'instant' }); };
+      const poll = () => { jump(); if (!user && Date.now() - t0 < 120000) setTimeout(poll, 300); else document.documentElement.style.scrollBehavior = ''; };
+      poll();
+      if (window.ResizeObserver) { this.ro = new ResizeObserver(jump); this.ro.observe(document.body); setTimeout(() => this.ro && this.ro.disconnect(), 120000); }
+    }
+  }
+  loadSample(which, o, cb) {
+    const im = new Image();
+    im.onload = () => {
+      const data = toData(im, 800);
+      let f;
+      if (which === 'h') {
+        let w = im.naturalWidth, h = im.naturalHeight, name = 'station-platform.jpg', type = 'JPEG';
+        if (o.small) { w = 150; h = 100; name = 'thumbnail.jpg'; }
+        if (o.big) { w = 3024; h = 4032; name = 'IMG_2041.jpg'; }
+        if (o.narrowW) { w = 800; h = 450; name = 'platform-small.jpg'; }
+        if (o.alpha) { type = 'PNG'; name = 'cutout.png'; }
+        if (o.type) { type = 'HEIC'; name = 'IMG_2041.heic'; }
+        f = { name, type, w, h, url:im.src, data, alpha:!!o.alpha, err:o.type ? 'type' : (o.err === 'deep' || o.err === 'cmyk') ? o.err : null, p3:!!o.p3, sample:true };
+      } else {
+        f = o.jpeg ? { name:'photo-from-chat.jpg', type:'JPEG', w:1280, h:1782, url:im.src, sample:false } : { name:'classic.png', type:'PNG', w:1280, h:1782, url:im.src, sample:true };
+      }
+      this.setFile(which, f); cb && cb();
+    };
+    im.src = which === 'h' ? 'assets/station-wellington.jpg' : o.jpeg ? PHOTOS.antonello.src : fixPath('antonello', 'classic.png');
+  }
+  setFile(which, f) {
+    if (f) { f.dims = f.w + ' × ' + f.h; f.mp = (f.w * f.h / 1e6).toFixed(1); }
+    this.clear();
+    if (which === 'h') this.setState({ hFile:f, hJob:'idle' }); else this.setState({ rFile:f, rState:'idle', copied:false });
+  }
+  readFile(which, file) {
+    if (!file) return;
+    const isPng = file.type === 'image/png', isJpg = file.type === 'image/jpeg';
+    if (!isPng && !isJpg) { this.setFile(which, { name:file.name, type:(file.name.split('.').pop() || 'file').toUpperCase(), w:0, h:0, url:'', err:'type' }); return; }
+    const url = URL.createObjectURL(file), im = new Image();
+    im.onload = () => {
+      const w = im.naturalWidth, h = im.naturalHeight, data = toData(im, 800);
+      let alpha = false;
+      if (isPng) for (let i = 3; i < data.data.length; i += 4) if (data.data[i] < 255) { alpha = true; break; }
+      this.setFile(which, { name:file.name, type:isPng ? 'PNG' : 'JPEG', w, h, url, data, alpha, err:null, p3:false });
+    };
+    im.onerror = () => this.setFile(which, { name:file.name, type:'?', w:0, h:0, url:'', err:'type' });
+    im.src = url;
+  }
+  issue(f, mode, forRead) {
+    if (!f) return null;
+    if (f.err) return f.err;
+    if (forRead && f.type !== 'PNG') return 'jpegRead';
+    if (f.w * f.h > 4e6) return 'big';
+    if (!forRead && (f.w < 160 || f.h < 128)) return 'small';
+    if (f.alpha) return 'alpha';
+    return null;
+  }
+  phase(t, sim, cold) {
+    const Q = 40, E0 = Q + (cold ? 15 : 0);
+    if (t < Q) return { stage:'queued', pos:t < 15 ? 2 : t < 30 ? 1 : 0, prog:0 };
+    if (t < E0) return { stage:'starting', prog:0 };
+    const e = t - E0;
+    if (sim === 'success') return e >= 80 ? { final:'done' } : { stage:'encoding', prog:e / 80 };
+    if (sim === 'refused') return e >= 70 ? { final:'refused' } : { stage:'encoding', prog:Math.min(0.62, e / 115) };
+    if (sim === 'slow') return e >= 200 ? { final:'done' } : { stage:'encoding', slow:e >= 120, prog:e < 120 ? e / 140 : 0.857 + (e - 120) / 80 * 0.14 };
+    if (sim === 'timeout') return e >= 300 ? { final:'timeout' } : { stage:'encoding', slow:e >= 120, prog:e < 120 ? e / 140 : Math.min(0.94, 0.857 + (e - 120) / 900) };
+    return { final:'done' };
+  }
+  forceJob(j) {
+    this.clear(); clearInterval(this.tick);
+    const T = { queued:[5, 'success', false], next:[33, 'success', false], starting:[46, 'success', true], encoding:[80, 'success', false], slow:[190, 'slow', false] }[j];
+    if (T) { const now = Date.now(); this.setState({ hJob:'run', hFrozen:true, hSim:T[1], hCold:T[2], hNow:now, hT0:now - T[0] * 1000 / SPEED }); }
+    else this.setState({ hJob:j, hView:'enc', hSim:j === 'slimit' || j === 'vlimit' ? j : this.state.hSim });
+  }
+  encode = () => {
+    const s = this.state; this.clear(); clearInterval(this.tick);
+    if (s.hSim === 'vlimit' || s.hSim === 'slimit') { this.setState({ hJob:s.hSim }); this.scrollTo('gf-hresult'); return; }
+    const t0 = Date.now(); this.setState({ hJob:'run', hFrozen:false, hT0:t0, hNow:t0 });
+    this.scrollTo('gf-hresult');
+    this.tick = setInterval(() => {
+      const st = this.state, now = Date.now(), ph = this.phase((now - st.hT0) / 1000 * SPEED, st.hSim, st.hCold);
+      if (ph.final) { clearInterval(this.tick); this.setState({ hJob:ph.final, hView:'enc', hNow:now }); } else this.setState({ hNow:now });
+    }, 200);
+  };
+  scrollTo(id) { setTimeout(() => { const el = document.getElementById(id); if (el) { const r = el.getBoundingClientRect(); if (r.top > window.innerHeight - 120 || r.top < 60) window.scrollTo({ top:r.top + window.scrollY - 80, behavior:this.reduced ? 'auto' : 'smooth' }); } }, 60); }
+  readRun = () => {
+    const s = this.state; this.clear();
+    const list = s.rMode === 'auto' ? ORDER : [s.rMode];
+    const rec = !!(s.rFile && s.rFile.sample), recFound = rec && s.rPass === PASS_FIXTURE && (s.rMode === 'auto' || s.rMode === 'classic');
+    this.setState({ rState:'running', rStep:0, copied:false, rRec:rec && (recFound || s.rPass !== PASS_FIXTURE) });
+    this.scrollTo('gf-rresult');
+    const per = 700;
+    if (rec ? recFound : s.rSim === 'found') {
+      const hit = s.rMode === 'auto' ? 0 : 0;
+      this.later(() => this.setState({ rState:'found', rHit:list[hit] }), per * (hit + 1));
+    } else {
+      list.forEach((_, i) => this.later(() => this.setState({ rStep:i + 1 }), per * (i + 1)));
+      this.later(() => this.setState({ rState:'none' }), per * list.length + 100);
+    }
+  };
+  readFixture(target) {
+    if (this.state.tRead === 'running') return;
+    this.clear(); this.setState({ tRead:'running', tTarget:target });
+    this.later(() => this.setState({ tRead:'done' }), 900);
+  }
+
+  seg(opts, cur, set) {
+    return opts.map(o => { const on = o[0] === cur; return { label:o[1], pressed:on ? 'true' : 'false', bg:on ? '#fff' : 'transparent', fg:on ? INK : GRAY, sh:on ? '0 1px 2px rgba(0,0,0,0.08), 0 0 0 1px rgba(24,20,17,0.08)' : 'none', onClick:() => set(o[0]) }; });
+  }
+  chips(opts, cur, set) {
+    return opts.map(o => { const on = o[0] === cur; return { label:o[1], pressed:on ? 'true' : 'false', bd:on ? '#625c57' : 'rgba(24,20,17,0.15)', bg:on ? '#312e2b' : '#fff', fg:on ? '#fff' : INK, onClick:() => set(o[0]) }; });
+  }
+  check(issue, f) {
+    if (!f) return {};
+    if (issue) return { fg:RED, glyph:'!', radius:'2px', text:issue === 'jpegRead' ? 'Can’t be read' : 'Can’t be used' };
+    return { fg:BLUE, glyph:'✓', radius:'50%', text:'Meets the input rules' };
+  }
+  dz(drag, issue, has) {
+    if (drag) return { bs:'dashed', bd:BLUE, bg:'#eaf1f7' };
+    if (issue) return { bs:'solid', bd:RED, bg:'#fff8f8' };
+    if (has) return { bs:'solid', bd:'rgba(24,20,17,0.18)', bg:'#f6f4f1' };
+    return { bs:'dashed', bd:'rgba(24,20,17,0.25)', bg:'#f6f4f1' };
+  }
+
+  renderVals() {
+    const s = this.state, TM = MODES[s.tMode], HM = MODES[s.hMode], TP = PHOTOS[s.tPhoto], fi = String(PORDER.indexOf(s.tPhoto) * 3 + ORDER.indexOf(s.tMode) + 2).padStart(2, '0');
+    const TF = FIX[s.tPhoto][s.tMode], tBytes = TF[1];
+    const mmss = (ms) => { const t = Math.max(0, Math.round(ms / 1000 * 6)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
+
+    const hIss = this.issue(s.hFile, s.hMode, false), hf = s.hFile;
+    const n = bytesOf(s.hMsg), over = n > HM.bytes, near = !over && n >= HM.bytes * 0.85;
+    const words = s.hPass.trim().split(/\s+/).filter(Boolean).length, len = s.hPass.length;
+    const lvl = !len ? 0 : (words >= 3 && len >= 15) || len >= 24 ? 3 : (words >= 2 && len >= 10) || len >= 14 ? 2 : 1;
+    const strText = ['Use three or more random words.', 'Weak. Easy to guess, even with slow key derivation.', 'Fair. Three or more random words is better.', 'Good. Several random words.'][lvl];
+    const mismatch = s.hPass2.length > 0 && s.hPass !== s.hPass2;
+    const blockers = [];
+    if (!hf) blockers.push('add a photo'); else if (hIss) blockers.push('use a different photo');
+    if (!n) blockers.push('type a message'); else if (over) blockers.push('shorten the message');
+    if (!s.hPass) blockers.push('set a passphrase'); else if (s.hPass !== s.hPass2) blockers.push('repeat the passphrase exactly');
+    const jobBusy = s.hJob === 'run', siteClosed = s.hSim === 'slimit';
+    const hDisabled = blockers.length > 0 || jobBusy || siteClosed;
+    const notes = [];
+    if (hf && !hIss && hf.p3) notes.push('This photo uses a wide-gamut colour profile (Display P3). It will be converted to standard sRGB first, so colours may shift very slightly.');
+    if (hf && !hIss && Math.max(hf.w, hf.h) < 1000) notes.push('Small photos take longer and are more likely to be refused. Bigger, busier photos work best.');
+    const tSim = Math.max(0, (s.hNow - s.hT0) / 1000 * SPEED), ph = jobBusy ? this.phase(tSim, s.hSim, s.hCold) : {};
+    const stDefs = [['queued', 'Waiting in line'], ...(s.hCold ? [['starting', 'Starting the engine']] : []), ['encoding', 'Encoding and checking the saved file'], ['done', 'Ready to download']];
+    const stageIdx = stDefs.findIndex(d => d[0] === ph.stage);
+    const stages = stDefs.map((d, i) => ({ label:d[1], status:i < stageIdx ? 'done' : i === stageIdx ? 'now' : '', fg:i <= stageIdx ? INK : GRAY, weight:i === stageIdx ? 600 : 400,
+      bd:i <= stageIdx ? BLUE : '#c9c2ba', fill:i < stageIdx ? BLUE : 'transparent', anim:i === stageIdx ? 'gfpulse 1s ease-in-out infinite' : 'none' }));
+    const head = ph.stage === 'queued' ? (ph.pos === 0 ? 'You’re next in line' : ph.pos + (ph.pos === 1 ? ' person' : ' people') + ' ahead of you') : ph.stage === 'starting' ? 'Starting the engine…' : ph.slow ? 'This photo is a tough one. Still working…' : 'Encoding your photo';
+    const sub = ph.stage === 'queued' ? 'Only one photo is encoded at a time. Your place is kept while this tab stays open.' : ph.stage === 'starting' ? 'The engine sleeps when nobody has used it for a while. Waking it adds 10–20 seconds.' : ph.slow ? 'Some photos need much longer. If it can’t finish within 5 minutes, it stops and no file is produced. You can cancel at any time.' : 'This usually takes under 2 minutes. You can keep this tab open.';
+    const prog = Math.round(Math.min(1, ph.prog || 0) * 100);
+    const toExamples = () => { const el = document.getElementById('try'); if (el) window.scrollTo({ top:el.getBoundingClientRect().top + window.scrollY - 60, behavior:this.reduced ? 'auto' : 'smooth' }); };
+    const toLong = () => this.setState({ hMode:'long', hJob:'idle' });
+    const STOP = {
+      refused: { t:'This picture can’t carry the message', b:'This picture doesn’t have enough texture to carry the message. Try a busier photo, a shorter message, or Long mode.', m:'No file was produced. The encoder never returns a file that fails to read back.', a:[['Choose another photo', () => this.hFileRef.current && this.hFileRef.current.click()], ['Switch to Long', toLong]] },
+      timeout: { t:'This photo took too long', b:'This photo took too long to encode. Try a larger or more detailed photo, or a shorter message.', m:'Stopped at 5:00 · no file produced', a:[['Choose another photo', () => this.hFileRef.current && this.hFileRef.current.click()], ['Switch to Long', toLong]] },
+      cancelled: { t:'Encoding cancelled', b:'Nothing was kept. Change the photo, mode or message and encode again when you’re ready.', m:'cancelled · no file produced', a:[] },
+      vlimit: { t:'You’ve used today’s encodes', b:'You’ve used today’s encodes. You can still decode any image, or try the ready-made examples.', m:'visitor limit reached · resets tomorrow (UTC)', a:[['Try the ready-made examples', toExamples], ['Read a message', () => this.setState({ tab:'read' })]] },
+      slimit: { t:'Encoding is closed for today', b:'The demo has hit today’s limit. Encoding comes back tomorrow (UTC). Decoding still works.', m:'site limit reached', a:[['Try the ready-made examples', toExamples], ['Read a message', () => this.setState({ tab:'read' })]] }
+    }[s.hJob];
+
+    const rIss = this.issue(s.rFile, null, true), rf = s.rFile;
+    const rBlock = []; if (!rf) rBlock.push('add a PNG'); else if (rIss) rBlock.push('use the original PNG'); if (!s.rPass) rBlock.push('enter the passphrase');
+    const rDisabled = rBlock.length > 0 || s.rState === 'running';
+    const rList = s.rMode === 'auto' ? ORDER : [s.rMode];
+    const rHit = MODES[s.rHit || rList[0]], rMsg = s.rRec ? FIX.antonello.classic[0] : 'Meet at dawn.';
+
+    const abK = Object.keys(ABBR);
+    return { ...this.wVals(), ...this.t4Vals(), ...this.t5Vals(), ...this.rvVals(),
+      abOpen:Object.fromEntries(abK.map(k => [k, (e) => this.abOpen(k, e)])), abExp:Object.fromEntries(abK.map(k => [k, s.ab === k ? 'true' : 'false'])),
+      abDisp:s.ab ? 'flex' : 'none', abX:(s.abX || 0) + 'px', abY:(s.abY || 0) + 'px', abTitle:s.ab ? ABBR[s.ab][0] : '', abText:s.ab ? ABBR[s.ab][1] : '',
+      heroRef:this.heroRef, howRef:this.howRef, howBarRef:this.howBarRef, howLabel:HOW_LABELS[s.howStep || 0], howTime:(s.howSec || 0) + ' / ' + (HOW_DUR[s.howStep || 0] / 1000) + ' s', howReplay:() => this.howStart(s.howStep || 0), howAria:'Animation: ' + HOW_LABELS[s.howStep || 0], hCRef:this.hCRef, hFileRef:this.hFileRef, rFileRef:this.rFileRef,
+      navHide:() => this.setState({ tab:'hide' }), navRead:() => this.setState({ tab:'read' }), tBytes,
+
+      tabs:[['hide', 'Hide a message'], ['read', 'Read a message']].map(([id, label]) => ({ id:'gf-tab-' + id, label, selected:s.tab === id ? 'true' : 'false', tabIndex:s.tab === id ? 0 : -1, bar:s.tab === id ? BLUE : 'transparent', fg:s.tab === id ? INK : GRAY, onClick:() => this.setState({ tab:id }) })),
+      onTabKey:(e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); const t = s.tab === 'hide' ? 'read' : 'hide'; this.setState({ tab:t }); setTimeout(() => { const el = document.getElementById('gf-tab-' + t); el && el.focus(); }, 0); } },
+      tabLabelledBy:'gf-tab-' + s.tab, isHide:s.tab === 'hide', isRead:s.tab === 'read',
+
+      hDragOver:(e) => { e.preventDefault(); if (!s.hDrag) this.setState({ hDrag:true }); }, hDragLeave:() => this.setState({ hDrag:false }),
+      hDrop:(e) => { e.preventDefault(); this.setState({ hDrag:false }); this.readFile('h', e.dataTransfer.files[0]); },
+      hFileInput:(e) => { this.readFile('h', e.target.files[0]); e.target.value = ''; },
+      hPick:() => this.hFileRef.current && this.hFileRef.current.click(), hUseSample:() => this.loadSample('h', {}), hClear:() => this.setFile('h', null),
+      hDz:this.dz(s.hDrag, hIss, !!hf), hDzTitle:s.hDrag ? 'Drop to use this photo' : 'Drop a photo here',
+      hEmpty:!hf, hHasFile:!!hf, hFile:hf || {}, hCheck:this.check(hIss, hf), hIssue:!!hIss, hIssueText:hIss ? ISSUE[hIss](hf, s.hMode) : '', hNotes:notes,
+      hModes:ORDER.map(k => { const M = MODES[k], on = k === s.hMode; return { label:M.label, bytes:M.bytes, cap:M.cap, status:M.status, tagBs:'solid', tagDisp:'none', blurb:M.blurb, pressed:on ? 'true' : 'false', bd:on ? BLUE : 'rgba(24,20,17,0.12)', bg:on ? '#f5f8fb' : '#fff', onClick:() => this.setState({ hMode:k, hJob:jobBusy ? s.hJob : 'idle' }) }; }),
+      hMsg:s.hMsg, onHMsg:(e) => this.setState({ hMsg:e.target.value }),
+      bc:{ n, limit:HM.bytes, fg:over ? RED : near ? '#355574' : GRAY, bd:over ? RED : '#dddddd', bar:over ? RED : BLUE, pct:Math.min(100, n / HM.bytes * 100) + '%', helpFg:over ? RED : GRAY,
+        help:over ? 'Too long by ' + (n - HM.bytes) + ' byte' + (n - HM.bytes === 1 ? '' : 's') + ' for ' + HM.label + '.' + (s.hMode !== 'long' && n <= 494 ? ' Long fits up to 494 bytes.' : '') : 'Counted in UTF-8 bytes. Plain letters are 1 byte, accented letters 2, most emoji 4.' },
+      hPass:s.hPass, hPass2:s.hPass2, onHPass:(e) => this.setState({ hPass:e.target.value }), onHPass2:(e) => this.setState({ hPass2:e.target.value }),
+      hPassType:s.hShow ? 'text' : 'password', hShowStr:s.hShow ? 'true' : 'false', hShowLabel:s.hShow ? 'Hide' : 'Show', toggleHPass:() => this.setState({ hShow:!s.hShow }),
+      str:{ text:strText, c1:lvl >= 1 ? (lvl === 1 ? '#8a837c' : BLUE) : '#e6e1da', c2:lvl >= 2 ? BLUE : '#e6e1da', c3:lvl >= 3 ? BLUE : '#e6e1da' },
+      hMatchBd:mismatch ? RED : '#dddddd', hMatchFg:mismatch ? RED : GRAY,
+      hMatchText:mismatch ? 'The two entries don’t match.' : 'Share it with the recipient separately. It is never stored and never goes in a link.',
+      hEncode:this.encode, hDisabled, hDRef:this.hDRef, hSiteClosed:siteClosed, hBtn:{ bg:hDisabled ? 'rgba(0,0,0,0.06)' : BLUE, fg:hDisabled ? '#7a736d' : '#fff', cursor:hDisabled ? 'not-allowed' : 'pointer' },
+      hBlocker:jobBusy ? 'Encoding in progress.' : blockers.length ? 'To continue, ' + blockers.join(', ') + '.' : siteClosed ? 'Encoding is closed for today.' : 'Usually under 2 minutes.',
+      hSimSeg:this.chips([['success', 'Success'], ['slow', 'Slow'], ['refused', 'Refused'], ['timeout', 'Timed out'], ['vlimit', 'Visitor limit'], ['slimit', 'Site limit']], s.hSim, v => this.setState({ hSim:v, hJob:jobBusy ? s.hJob : 'idle' })).concat([{ label:s.hCold ? 'Engine asleep ✓' : 'Engine asleep', pressed:s.hCold ? 'true' : 'false', bd:s.hCold ? '#625c57' : 'rgba(24,20,17,0.15)', bg:s.hCold ? '#312e2b' : '#fff', fg:s.hCold ? '#fff' : INK, onClick:() => this.setState({ hCold:!s.hCold }) }]),
+      hJobActive:jobBusy, hElapsed:Math.floor(tSim / 60) + ':' + String(Math.floor(tSim % 60)).padStart(2, '0'), hStages:stages, hHead:head, hSub:sub, hShowProg:ph.stage === 'encoding', hProgN:prog, hProgPct:prog + '%',
+      hCardBd:ph.slow ? 'rgba(18,16,14,0.55)' : 'rgba(24,20,17,0.12)', hCancelBd:ph.slow ? '#3f648c' : 'rgba(24,20,17,0.18)',
+      hCancel:() => { this.clear(); clearInterval(this.tick); this.setState({ hJob:'cancelled' }); },
+      hStop:!!STOP, hStopTitle:STOP ? STOP.t : '', hStopBody:STOP ? STOP.b : '', hStopMeta:STOP ? STOP.m : '', hStopActions:STOP ? STOP.a.map(([label, onClick]) => ({ label, onClick })) : [],
+      hDone:s.hJob === 'done', hAmp:HM.amp, hCap:HM.cap, hModeLabel:HM.label, hModel:MODES[s.hMode].backbone, hProfile:HM.profile,
+      hStageLabel:s.hView === 'orig' ? 'Your photo · original' : 'Marked PNG · ' + HM.label,
+      hViewSeg:this.seg([['enc', 'Marked'], ['orig', 'Original']], s.hView, v => this.setState({ hView:v })),
+
+      rDragOver:(e) => { e.preventDefault(); if (!s.rDrag) this.setState({ rDrag:true }); }, rDragLeave:() => this.setState({ rDrag:false }),
+      rDrop:(e) => { e.preventDefault(); this.setState({ rDrag:false }); this.readFile('r', e.dataTransfer.files[0]); },
+      rFileInput:(e) => { this.readFile('r', e.target.files[0]); e.target.value = ''; },
+      rPick:() => this.rFileRef.current && this.rFileRef.current.click(), rUseSample:() => this.loadSample('r', {}), rClear:() => this.setFile('r', null),
+      rDz:this.dz(s.rDrag, rIss, !!rf), rDzTitle:s.rDrag ? 'Drop to use this file' : 'Drop a PNG here',
+      rEmpty:!rf, rHasFile:!!rf, rFile:rf || {}, rCheck:this.check(rIss, rf), rIssue:!!rIss, rIssueText:rIss ? ISSUE[rIss](rf) : '',
+      rIsSample:!!(rf && rf.sample), rFillSample:() => this.setState({ rPass:PASS_FIXTURE }),
+      rPass:s.rPass, onRPass:(e) => this.setState({ rPass:e.target.value }), rPassType:s.rShow ? 'text' : 'password', rShowStr:s.rShow ? 'true' : 'false', rShowLabel:s.rShow ? 'Hide' : 'Show', toggleRPass:() => this.setState({ rShow:!s.rShow }),
+      rMode:s.rMode, onRMode:(e) => this.setState({ rMode:e.target.value, rState:'idle' }),
+      rRun:this.readRun, rDisabled, rBtn:{ bg:rDisabled ? 'rgba(0,0,0,0.06)' : BLUE, fg:rDisabled ? '#7a736d' : '#fff', cursor:rDisabled ? 'not-allowed' : 'pointer' },
+      rBtnLabel:s.rState === 'running' ? 'Reading…' : 'Read the message', rBlocker:rBlock.length ? 'To continue, ' + rBlock.join(', ') + '.' : '',
+      rSimSeg:this.chips([['found', 'Message found'], ['none', 'No message found']], s.rSim, v => this.setState({ rSim:v })),
+      rRunning:s.rState === 'running', rFound:s.rState === 'found', rNone:s.rState === 'none',
+      rSteps:rList.map((k, i) => ({ label:'Trying ' + MODES[k].label, status:i < s.rStep ? 'nothing' : i === s.rStep ? 'now' : '', fg:i <= s.rStep ? INK : GRAY, bd:i <= s.rStep ? BLUE : '#c9c2ba', fill:i < s.rStep ? '#c9c2ba' : 'transparent', anim:i === s.rStep ? 'gfpulse 1s ease-in-out infinite' : 'none' })),
+      rMessage:rMsg, rFoundMeta:bytesOf(rMsg) + ' bytes · ' + rHit.label + ' · ' + rHit.profile, rRecorded:!!s.rRec, rSimulated:!s.rRec,
+      rCopy:() => { try { navigator.clipboard.writeText(rMsg); } catch (e) {} this.setState({ copied:true }); }, rCopyLabel:s.copied ? 'Copied' : 'Copy',
+      rNoneModeNote:s.rMode === 'auto' ? '' : ' (you chose ' + MODES[s.rMode].label + ' only)',
+      steps:[
+        { who:'sender', t:'The passphrase locks the message.', d:'The message is encrypted with a key made from the passphrase. Without it, nothing can be read.' },
+        { who:'sender', t:'Error-correction bytes are added.', d:'A few extra bytes let the reader repair a small number of wrong bits later.' },
+        { who:'sender', t:'The photo is split into a grid of tiles.', d:'10 × 8 tiles for Subtle and Long, 6 × 5 for Short.' },
+        { who:'sender', t:'Each tile is nudged until the model reads specific bits.', d:'Pixels change by at most 2 or 8 levels out of 255. The encoder then saves the PNG, reopens it and checks it reads back.' },
+        { who:'recipient', t:'Reading back runs the same model on each tile.', d:'It repairs a few wrong bits, then unlocks with the passphrase. A wrong passphrase or altered message gives “No message found.”' }
+      ].map((f, i, a) => ({ ...f, n:'0' + (i + 1), pressed:(s.howStep || 0) === i ? 'true' : 'false', cardBg:(s.howStep || 0) === i ? '#fff' : 'transparent', cardBd:(s.howStep || 0) === i ? '#3f648c' : 'transparent', playing:(s.howStep || 0) === i ? (s.howDone ? 'played' : 'playing') : 'play', onClick:() => this.howStart(i), bd:(s.howStep || 0) === i ? BLUE : 'rgba(24,20,17,0.2)', bg:(s.howStep || 0) === i ? BLUE : '#fff', numFg:(s.howStep || 0) === i ? '#fff' : GRAY, line:i < a.length - 1 ? 'block' : 'none' })),
+
+      limits:[
+        { t:'Exact PNG copies only.', d:'Recompressing, resizing, cropping, screenshots and most chat apps destroy the message. Email attachments, file links, AirDrop and USB keep it.', n:'' },
+        { t:'Steganography, not a watermark.', d:'The message is meant to stay hidden, not to survive edits. A watermark is built to withstand compression and resizing; Ghostframe deliberately is not.', n:'' },
+        { t:'Not invisible to software.', d:'Anyone with the public reader can tell a photo carries a message. They can’t read or forge it.', n:'a detection test separated marked from clean photos 100% of the time' },
+        { t:'Not every photo works.', d:'Flat, synthetic and small images can be refused. When that happens, no file is produced.', n:'hard images: Subtle 4/9, Long 6/9 · 640 px photos: Subtle 41/41, Long 41/41' },
+        { t:'Short messages only.', d:'Limits are in UTF-8 bytes, not characters.', n:'13, 79 or 494 bytes' }
+      ],
+      modeRows:ORDER.map(k => MODES[k]),
+      hardRows:[['Subtle', 4], ['Long', 6]].map(([label, n]) => ({ label, n, cells:Array.from({ length:9 }, (_, i) => i < n ? BLUE : '#e0dad3') })),
+      links:[
+        { t:'Source code', d:'Engine, CLI and this site', ph:'[REPOSITORY_URL]' },
+        { t:'Benchmark', d:'Held-out trials, image quality, speed', ph:'docs/BENCHMARK.md' },
+        { t:'Method notes', d:'How the experiments were run', ph:'docs/AUDIT_REPORT.md' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

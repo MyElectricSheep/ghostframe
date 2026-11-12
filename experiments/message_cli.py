@@ -74,7 +74,7 @@ def neural_recover(image, password, model, *, ecc=False):
     return tiled_ecc.decode_frame(frame, password)[0] if ecc else tiled.open_frame(frame, password)
 
 
-def neural_encode_file(image, message, password, output, model, *, ecc=False):
+def neural_encode_file(image, message, password, output, model, *, ecc=False, progress=None):
     from reedsolo import RSCodec
     from experiments import tiled, tiled_ecc
 
@@ -88,7 +88,7 @@ def neural_encode_file(image, message, password, output, model, *, ecc=False):
         frame = RSCodec(tiled_ecc.PARITY_BYTES).encode(tiled_ecc.seal(message, password))
     else:
         frame = tiled.seal(message, password)
-    marked = tiled.embed_tiles(image, tiled.bit_string(frame), model, 2 if ecc else 8)
+    marked = tiled.embed_tiles(image, tiled.bit_string(frame), model, 2 if ecc else 8, progress=progress)
     publish_encoded(marked, output, lambda reopened: neural_recover(reopened, password, model, ecc=ecc) == message)
 
 

@@ -217,5 +217,52 @@ class ModelRoundTripTests(unittest.TestCase):
             core.decode_message(swapped, PASS, p, model)
 
 
+class ProgressCallbackTests(unittest.TestCase):
+    """The progress callback the demo site uses must observe only: same bytes with or without it."""
+
+    @classmethod
+    def setUpClass(cls):
+        import torch
+        from ghostframe import load_model
+
+        torch.set_num_threads(4)
+        cls.model = load_model("cpu")
+        cls.cover = np.asarray(Image.open(ROOT / "examples" / "china-sky.png").convert("RGB").resize((192, 160)))
+
+    def test_same_bytes_with_and_without_progress(self):
+        p = profile(epsilon=8, steps=30)
+        message, salt = b"ok", bytes(16)
+        plain = core.encode_message(self.cover, message, PASS, p, self.model, _salt=salt)
+        seen = []
+        observed = core.encode_message(self.cover, message, PASS, p, self.model, _salt=salt, progress=seen.append)
+        self.assertEqual(plain, observed)
+        self.assertTrue(seen)
+        self.assertEqual(seen, sorted(seen))
+        self.assertTrue(all(0 < value <= 1 for value in seen))
+        self.assertEqual(seen[-1], 1.0)
+
+    def test_raising_from_progress_cancels(self):
+        class Cancelled(Exception):
+            pass
+
+        def cancel(fraction):
+            raise Cancelled
+
+        with self.assertRaises(Cancelled):
+            core.encode_message(self.cover, b"x", PASS, profile(epsilon=8, steps=30), self.model, progress=cancel)
+
+    def test_legacy_tiles_same_with_and_without_progress(self):
+        from experiments import tiled
+
+        image = Image.fromarray(self.cover)
+        bits = "".join("01"[(i * 7) % 3 == 0] for i in range(8 * tiled.FRAME_BYTES))
+        seen = []
+        plain = tiled.embed_tiles(image, bits, self.model, 8)
+        observed = tiled.embed_tiles(image, bits, self.model, 8, progress=seen.append)
+        self.assertEqual(np.asarray(plain).tobytes(), np.asarray(observed).tobytes())
+        self.assertEqual(seen[-1], 1.0)
+        self.assertEqual(len(seen), tiled.COLS * tiled.ROWS)
+
+
 if __name__ == "__main__":
     unittest.main()
