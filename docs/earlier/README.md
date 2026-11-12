@@ -13,6 +13,11 @@ negative results matter as much as the positive ones. None of this is needed to 
 | Other ideas | Smooth and transform-aware perturbations, a keyed lattice, multiscale loss, a TrustMark comparison. | [CREATIVE_EXPERIMENTS.md](CREATIVE_EXPERIMENTS.md), [GOAL_STATUS.md](GOAL_STATUS.md) |
 | Summaries | The consolidated report, the first audit, the architecture of that stage and a dated log. | [FULL_REPORT.md](FULL_REPORT.md), [GHOSTFRAME_POC_AUDIT.md](GHOSTFRAME_POC_AUDIT.md), [ARCHITECTURE.md](ARCHITECTURE.md), [PROGRESS.md](PROGRESS.md) |
 
+These experiments ran on a different machine from the current benchmark: an AMD EPYC 9V74
+environment with an 8-CPU quota and 8 GiB of memory. Everything from
+[AUDIT_REPORT.md](../AUDIT_REPORT.md) onward ran on a 4-vCPU Linux VPS, so timings from the two
+periods are not comparable.
+
 The commands below are the ones the earlier README carried. Run them from the repository root.
 
 ## Raw-bit channel (`ghostframe`)
