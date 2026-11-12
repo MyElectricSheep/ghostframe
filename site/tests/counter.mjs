@@ -1,4 +1,4 @@
-// Daily encode counter (DAILY_COUNTER.md): when it fetches, what it shows, and when it hides.
+// Daily encode counter: when it fetches, what it shows, and when it hides.
 //   node tests/counter.mjs [siteUrl]     (site and API running; the API's real /api/quota is used first)
 import { chromium } from 'playwright';
 
