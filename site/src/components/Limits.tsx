@@ -1,6 +1,7 @@
 import React from 'react';
 import { BLUE, DETECT, MODES, ORDER, SMALL640, STRESS } from '../data';
 import { S } from '../lib/style';
+import { useMedia } from '../hooks/useNarrow';
 import { useAbbr } from './Abbr';
 
 // Every number here comes from design-data.json (stress, small640, detect, modes).
@@ -31,6 +32,7 @@ const links = [
 ];
 
 export function Limits() {
+  const phone = useMedia('(max-width: 559.98px)');
   const { abOpen, abExp } = useAbbr();
   return (
 <section id="limits" data-screen-label="Limits and evidence" style={S({ background: '#fff', borderTop: '1px dashed rgba(24,20,17,0.22)', borderBottom: '1px dashed rgba(24,20,17,0.22)', scrollMarginTop: '56px' })}>
@@ -55,6 +57,22 @@ export function Limits() {
             <span style={S({ display: 'inline-flex', alignItems: 'center', gap: '6px', font: '500 11px/1.2 \'IBM Plex Mono\',ui-monospace,monospace', color: '#fff', padding: '4px 9px', borderRadius: '999px', background: '#312e2b' })}><span aria-hidden="true" style={S({ width: '7px', height: '7px', borderRadius: '50%', background: '#fff', display: 'block' })}></span>Measured</span>
             <span id="gf-modes-cap" style={S({ fontSize: '13px', color: '#625c57' })}>Modes, held-out evidence and median image quality</span>
           </div>
+          {phone ? (
+          // Below 560 px each mode is a card with labelled rows, so nothing is cut off (corrective pass 3).
+          <ul aria-labelledby="gf-modes-cap" style={S({ listStyle: 'none', margin: '0', padding: '0' })}>
+            {modeRows.map((r, i) => (<React.Fragment key={i}>
+              <li style={S({ display: 'flex', flexDirection: 'column', gap: '10px', padding: '14px 16px', borderBottom: '1px solid rgba(24,20,17,0.07)' })}>
+                <span style={S({ display: 'flex', flexDirection: 'column', gap: '3px' })}><span style={S({ fontSize: '14.5px', fontWeight: '600' })}>{r.label}</span><span style={S({ font: '400 11px/1.3 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', overflowWrap: 'anywhere' })}><span style={S({ color: 'rgba(18,16,14,0.96)' })}>{r.backbone}</span> · {r.profile}{r.statusSfx}</span></span>
+                <dl style={S({ margin: '0', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '8px 14px', alignItems: 'baseline' })}>
+                  <dt style={S({ fontSize: '12.5px', color: '#625c57' })}>Max message</dt><dd style={S({ margin: '0', font: '500 13px/1.3 \'IBM Plex Mono\',ui-monospace,monospace' })}>{r.bytes} B</dd>
+                  <dt style={S({ fontSize: '12.5px', color: '#625c57' })}>Max change</dt><dd style={S({ margin: '0', font: '500 13px/1.3 \'IBM Plex Mono\',ui-monospace,monospace' })}>{r.cap} / 255</dd>
+                  <dt style={S({ fontSize: '12.5px', color: '#625c57' })}>Read back</dt><dd style={S({ margin: '0', display: 'flex', flexDirection: 'column', gap: '5px' })}><span style={S({ font: '500 13px/1.3 \'IBM Plex Mono\',ui-monospace,monospace' })}>{r.ev}</span><span aria-hidden="true" style={S({ height: '6px', width: '120px', background: '#3f648c', borderRadius: '1px', display: 'block' })}></span><span style={S({ fontSize: '11.5px', color: '#625c57' })}>{r.evUnit}</span></dd>
+                  <dt style={S({ fontSize: '12.5px', color: '#625c57' })}><button type="button" data-abbr="1" onClick={abOpen.PSNR} aria-expanded={abExp.PSNR} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>PSNR</button> · <button type="button" data-abbr="1" onClick={abOpen.SSIM} aria-expanded={abExp.SSIM} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>SSIM</button></dt><dd style={S({ margin: '0', font: '500 13px/1.3 \'IBM Plex Mono\',ui-monospace,monospace' })}>{r.psnr} · {r.ssim}</dd>
+                </dl>
+              </li>
+            </React.Fragment>))}
+          </ul>
+          ) : (
           <table aria-labelledby="gf-modes-cap" style={S({ width: '100%', borderCollapse: 'collapse', minWidth: '560px' })}>
             <thead>
               <tr>
@@ -81,6 +99,7 @@ export function Limits() {
               </React.Fragment>))}
             </tbody>
           </table>
+          )}
           <p style={S({ margin: '0', padding: '10px 14px', fontSize: '12.5px', lineHeight: '1.5', color: '#625c57' })}>Higher <button type="button" data-abbr="1" onClick={abOpen.PSNR} aria-expanded={abExp.PSNR} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>PSNR</button> and <button type="button" data-abbr="1" onClick={abOpen.SSIM} aria-expanded={abExp.SSIM} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>SSIM</button> mean closer to the original. Long changes the image visibly more than Subtle.</p>
           <p style={S({ margin: '0', padding: '0 14px 14px', fontSize: '12.5px', lineHeight: '1.5', color: '#625c57', textWrap: 'pretty' })}>Subtle and Long moved from SqueezeNet 1.1 to MobileNetV3-Small after a preregistered comparison of five image models. Same held-out reliability, {MODES.long.bytes} B instead of 302 B in Long, and about 1.6× faster encodes.</p>
         </div>

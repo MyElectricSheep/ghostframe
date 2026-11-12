@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { fixture, MODES, PHOTOS, rawNumbers } from '../data';
 import type { ModeKey, PhotoKey } from '../data';
 import { useNarrow } from '../hooks/useNarrow';
@@ -35,7 +35,11 @@ export function Reveal({ photo, mode }: { photo: PhotoKey; mode: ModeKey }) {
   };
   const rvCtx = P.label + ' · ' + M.label;
   const rvSize = mode === 'classic' ? '26px' : mode === 'subtle' ? '19px' : '15px';
-  const rvText = rv.st === 'idle' ? msg.replace(/[^ ]/g, '█') : scr(rv.n);
+  // Before the reveal each word is a solid rounded bar of the word's width (corrective pass 24:
+  // drawn, not █ glyphs, which rendered with coloured fringes).
+  const rvText = rv.st === 'idle'
+    ? msg.split(' ').map((w, i) => (<Fragment key={i}>{i > 0 && ' '}<span aria-hidden="true" style={S({ display: 'inline-block', width: `calc(${[...w].length} * (1ch + 0.02em) - 0.02em)`, height: '0.82em', verticalAlign: '-0.08em', background: 'rgba(18,16,14,0.96)', borderRadius: '2px' })} /></Fragment>))
+    : scr(rv.n);
   const rvMaxH = (narrow && mode === 'long' && !all) ? '13em' : 'none';
   const rvCanExpand = narrow && mode === 'long' && rv.st === 'done';
   const rvExpand = () => setAll(!all), rvExpandLabel = all ? 'Show less' : 'Show all';

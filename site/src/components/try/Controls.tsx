@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { S } from '../../lib/style';
 import type { TryItView } from './view';
 
 export function Controls({ v }: { v: TryItView }) {
-  const { wCovers, wModeList, wViewList } = v;
+  const { wCovers, wModeList, wViewList, wTip, wTipClose } = v;
+  const modesRef = useRef<HTMLDivElement>(null);
+  // A tooltip opened by a tap closes on a tap outside the mode list, or on Esc.
+  useEffect(() => {
+    if (!wTip) return;
+    const down = (e: PointerEvent) => { if (!modesRef.current?.contains(e.target as Node)) wTipClose(); };
+    const key = (e: KeyboardEvent) => { if (e.key === 'Escape') wTipClose(); };
+    document.addEventListener('pointerdown', down);
+    document.addEventListener('keydown', key);
+    return () => { document.removeEventListener('pointerdown', down); document.removeEventListener('keydown', key); };
+  }, [wTip]);
   return (
 <>
               <div style={S({ display: 'flex', flexDirection: 'column', gap: '18px', width: '164px', flex: 'none' })}>
@@ -16,17 +26,17 @@ export function Controls({ v }: { v: TryItView }) {
               </button>
             </React.Fragment>))}
           </div>
-          <div role="radiogroup" aria-label="Mode" style={S({ display: 'flex', flexDirection: 'column', gap: '6px' })}>
+          <div ref={modesRef} role="radiogroup" aria-label="Mode" style={S({ display: 'flex', flexDirection: 'column', gap: '6px' })}>
             <span style={S({ font: '500 10.5px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}>02 · mode</span>
             <span style={S({ fontSize: '11px', lineHeight: '1.4', color: '#625c57' })}>How much data the message can hold, and how much the pixels may change.</span>
             {wModeList.map((m, i) => (<React.Fragment key={i}>
               <div onMouseEnter={m.onEnter} onMouseLeave={m.onLeave} style={S({ position: 'relative' })}>
                 <button type="button" role="radio" aria-checked={m.pressed} aria-describedby={m.tipId} onClick={m.onClick} onFocus={m.onEnter} onBlur={m.onLeave} style={S({ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '6px', padding: '8px', borderRadius: '4px', border: `1.5px solid ${m.bd}`, background: m.bg, cursor: 'pointer', color: 'rgba(18,16,14,0.96)' })}>
                   <span style={S({ display: 'flex', alignItems: 'center', gap: '6px' })}><span style={S({ fontSize: '13px', fontWeight: '600' })}>{m.label}</span><span aria-hidden="true" style={S({ width: '14px', height: '14px', borderRadius: '50%', border: '1.25px solid #8a837c', color: '#625c57', font: '600 9px/12px Inter,sans-serif', textAlign: 'center', boxSizing: 'border-box', display: 'block' })}>i</span></span>
-                  <span style={S({ font: '400 10px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}>{m.bytes} B · ≤{m.cap}</span>
+                  <span style={S({ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', font: '400 10px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', whiteSpace: 'nowrap' })}><span>up to {m.max} B</span><span>≤ {m.cap}/255</span></span>
                 </button>
-                <div id={m.tipId} role="tooltip" style={S({ position: 'absolute', left: 'calc(100% + 10px)', top: '50%', transform: 'translateY(-50%)', width: '230px', padding: '10px 12px', background: '#312e2b', color: '#f6f4f1', borderRadius: '6px', boxShadow: '0 4px 14px rgba(0,0,0,0.18)', zIndex: '20', display: m.tipDisp, flexDirection: 'column', gap: '6px', pointerEvents: 'none' })}>
-                  <span aria-hidden="true" style={S({ position: 'absolute', left: '-5px', top: '50%', marginTop: '-5px', width: '10px', height: '10px', background: '#312e2b', transform: 'rotate(45deg)', display: 'block' })}></span>
+                <div id={m.tipId} role="tooltip" className="gf-mode-tip" style={S({ position: 'absolute', left: 'calc(100% + 10px)', top: '50%', transform: 'translateY(-50%)', width: '230px', padding: '10px 12px', background: '#312e2b', color: '#f6f4f1', borderRadius: '6px', boxShadow: '0 4px 14px rgba(0,0,0,0.18)', zIndex: '20', display: m.tipDisp, flexDirection: 'column', gap: '6px', pointerEvents: 'none' })}>
+                  <span aria-hidden="true" className="gf-mode-tip-arrow" style={S({ position: 'absolute', left: '-5px', top: '50%', marginTop: '-5px', width: '10px', height: '10px', background: '#312e2b', transform: 'rotate(45deg)', display: 'block' })}></span>
                   <span style={S({ fontSize: '13px', fontWeight: '700' })}>{m.label}</span>
                   <span style={S({ fontSize: '12px', lineHeight: '1.5', textWrap: 'pretty' })}>{m.tip}</span>
                   <span style={S({ font: '400 10.5px/1.4 \'IBM Plex Mono\',ui-monospace,monospace', color: '#d9d3cc' })}>up to {m.max} bytes · ≤{m.cap}/255 · {m.grid} tiles{m.status}</span>

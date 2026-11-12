@@ -8,7 +8,7 @@ export function EntryLinks({ navHide, navRead }: { navHide: () => void; navRead:
       <span style={S({ fontSize: '16px', fontWeight: '700' })}>Try it with your own photo</span>
       <span style={S({ fontSize: '14px', lineHeight: '1.5', color: '#625c57', textWrap: 'pretty' })}>Hide a short message in a picture, or read one you were sent. Or start with the ready-made examples below.</span>
     </div>
-    <div style={S({ flex: '0 1 auto', display: 'flex', flexWrap: 'wrap', gap: '8px' })}>
+    <div style={S({ flex: '0 1 auto', display: 'flex', flexWrap: 'wrap', gap: '8px' })} className="gf-entry-buttons">
       <a href="#tool" onClick={navHide} style={S({ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#3f648c', color: '#fff', textDecoration: 'none', fontSize: '15px', fontWeight: '600', padding: '12px 18px', borderRadius: '4px' })} className="hover-primary-link">Hide a message</a>
       <a href="#tool" onClick={navRead} style={S({ display: 'inline-flex', alignItems: 'center', background: 'rgba(0,0,0,0.05)', color: 'rgba(18,16,14,0.96)', textDecoration: 'none', fontSize: '15px', fontWeight: '600', padding: '12px 16px', borderRadius: '4px' })} className="hover-secondary">Read a message</a>
     </div>

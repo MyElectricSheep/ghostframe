@@ -26,7 +26,7 @@ export function EmbedPanel({ v }: { v: TryItView }) {
             </div>
             <dl style={S({ margin: '0', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '3px 10px', font: '400 12px/1.4 \'IBM Plex Mono\',ui-monospace,monospace' })}>
               <dt style={S({ color: '#625c57' })}>cosine</dt><dd style={S({ margin: '0', fontWeight: '500' })}>{wCos}</dd>
-              <dt style={S({ color: '#625c57' })}>turned</dt><dd style={S({ margin: '0' })}>{wDeg} of a possible 180°</dd>
+              <dt style={S({ color: '#625c57' })}>turned</dt><dd style={S({ margin: '0' })}>{wDeg}, where 90° is unrelated</dd>
               <dt style={S({ color: '#625c57' })}>pixels</dt><dd style={S({ margin: '0' })}>at most {wCap}/255</dd>
               <dt style={S({ color: '#625c57' })}>all tiles</dt><dd style={S({ margin: '0' })}>median {wMed}°, most {wMax}°</dd>
                   <dt style={S({ color: '#625c57' })}>model</dt><dd style={S({ margin: '0' })}>read by {wModel}</dd>
@@ -44,7 +44,7 @@ export function EmbedPanel({ v }: { v: TryItView }) {
               <span style={S({ fontSize: '13.5px', fontWeight: '600' })}>Every tile’s turn</span>
               <span style={S({ fontSize: '12px', lineHeight: '1.45', color: '#625c57' })}>Each dot is one tile. Click a dot to pick it.</span>
             </div>
-            <div style={S({ position: 'relative', width: '298px', height: '170px' })}>
+            <div style={S({ position: 'relative', width: '298px', height: '170px', margin: '0 auto' })}>
             <svg width="300" height="170" viewBox="0 0 300 170" aria-hidden="true" style={S({ position: 'absolute', inset: '0', display: 'block' })}>
               <path d="M 20 160 L 280 160" stroke="rgba(24,20,17,0.15)" strokeWidth="1" />
               <path d="M 160 160 A 140 140 0 0 0 20 20" fill="none" stroke="rgba(24,20,17,0.15)" strokeWidth="1" />
@@ -56,7 +56,7 @@ export function EmbedPanel({ v }: { v: TryItView }) {
             </React.Fragment>))}
             <span style={S({ position: 'absolute', left: '168px', top: '146px', font: '400 10px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', whiteSpace: 'nowrap' })}>0° · unchanged</span>
             <span style={S({ position: 'absolute', left: '26px', top: '8px', font: '400 10px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', whiteSpace: 'nowrap' })}>90° · unrelated</span>
-            <span style={S({ position: 'absolute', left: t4MedLx, top: t4MedLy, font: '400 10px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}>median {wMed}°</span>
+            <span style={S({ position: 'absolute', left: t4MedLx, top: t4MedLy, font: '400 10px/1 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', background: '#fff', padding: '1px 2px', whiteSpace: 'nowrap' })}>median {wMed}°</span>
           </div>
           </div>
 </>

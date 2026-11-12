@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react';
 import { S } from '../../lib/style';
 import type { ModeKey, PhotoKey } from '../../data';
 import { ComparePanel } from './ComparePanel';
@@ -12,6 +13,26 @@ export function TryIt({ state, set, pick }: {
   state: TryItState; set: (patch: Partial<TryItState>) => void; pick: (photo: PhotoKey, mode: ModeKey) => void;
 }) {
   const v = useTryItView(state, set, pick);
+  // When the side panel no longer fits beside the stage, it spans the full width and lays its
+  // cards out in columns (corrective pass 12). Where it wraps depends on the photo, so measure it.
+  const sideRef = useRef<HTMLDivElement>(null);
+  const [wrapped, setWrapped] = useState(false);
+  useLayoutEffect(() => {
+    const row = sideRef.current?.parentElement;
+    if (!row) return;
+    const check = () => {
+      const stage = row.children[1] as HTMLElement, side = sideRef.current!;
+      // Measure with the side panel in its side-by-side style first.
+      side.dataset.measure = '1';
+      const next = side.offsetTop > stage.offsetTop + 10;
+      delete side.dataset.measure;
+      setWrapped(next);
+    };
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(row);
+    return () => ro.disconnect();
+  }, [state.photo, state.view]);
   return (
     <section id="try" data-screen-label="Try it" style={S({ margin: '0', padding: 'clamp(32px,4.5vw,52px) clamp(16px,4vw,40px) clamp(18px,2.5vw,26px)', scrollMarginTop: '60px' })}>
   <div style={S({ display: 'flex', flexDirection: 'column', gap: '22px' })}>
@@ -25,7 +46,7 @@ export function TryIt({ state, set, pick }: {
     <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '24px 32px', alignItems: 'flex-start', justifyContent: 'space-between' })}>
       <Controls v={v} />
       <Stage v={v} />
-      <div style={S({ flex: '1 1 300px', maxWidth: '440px', minWidth: '280px', display: 'flex', flexDirection: 'column', gap: '12px' })}>
+      <div ref={sideRef} className={wrapped ? 'gf-side gf-side-wrapped' : 'gf-side'} style={S({ flex: '1 1 300px', maxWidth: '440px', minWidth: '280px', display: 'flex', flexDirection: 'column', gap: '12px' })}>
         {v.wEmbed && <EmbedPanel v={v} />}
         {v.wCompare && <ComparePanel v={v} />}
         {v.wDiffOn && <DiffPanel v={v} />}
