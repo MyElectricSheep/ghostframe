@@ -1,164 +1,153 @@
 # Ghostframe
 
-Ghostframe is a proof of concept intended for open-source release for hiding a short message in a PNG so a frozen image model can read it back from its embeddings. The [showcase brief](docs/EMBEDDING_PNG_SHOWCASE.md) centers on that experiment. The [authenticated neural CLI](#authenticate-a-message-in-neural-embeddings) runs it locally. See the [PNG capacity experiments](docs/NEURAL_PNG_CAPACITY.md) for larger research profiles.
+Ghostframe hides a short encrypted message in a photo. It nudges the pixels, by at most 2 or 8
+levels out of 255 per colour channel, until an off-the-shelf image model (MobileNetV3-Small,
+frozen, ImageNet weights) describes the photo with numbers that spell out the message. Reading it
+back needs the PNG, the passphrase and the same public model. The original photo is not needed.
 
-See [measured results](docs/EXPERIMENTS.md), [research](docs/RESEARCH.md), and [progress](docs/PROGRESS.md).
+It is an engineering experiment, not a product. The method is not new (see
+[Related work](#related-work)). What this repository adds is a preregistered benchmark of how
+reliably it works on ordinary CPUs, with every raw result committed.
 
-## Experimental PNG profiles
+![The same photo before and after hiding a 72-byte message, and the difference amplified 96 times](docs/img/milky-way-subtle.jpg)
 
-`ghostframe-png` is a separate CLI with versioned, experimental profiles. On 41 held-out photographs, three independently sealed frames each, an independent decoder process recovered the exact message in every trial: 79 bytes under a 2-level per-channel cap and 302 bytes under an 8-level cap (123/123 each, Wilson 95 % lower bound 97 %). The covers are 1280 px wide. Small, flat or synthetic images can refuse to encode; the encoder then writes nothing. Encoding takes about 30–40 s on a 4-vCPU CPU. The marked images are detectable by anyone running the public reader. The frame is authenticated and encrypted, but its existence is not hidden. The legacy CLI and its formats are unchanged and remain the default showcase.
+## What works and what doesn't
+
+| Mode | Profile | Message | Change per channel | Held-out photos | Encode (4 vCPU) |
+|---|---|---:|---:|---:|---:|
+| Subtle | `bb-mobilenet_v3_small-l2-b16p48` | up to 79 B | ±2 levels | 123/123 | median 19 s |
+| Long | `bb-mobilenet_v3_small-l8-b64p112` | up to 494 B | ±8 levels | 123/123 | median 33 s |
+| Classic | `legacy-v1` (SqueezeNet 1.1) | 13 B | ±8 levels | 41/41 | median 24 s |
+
+"Held-out photos" means 41 photographs, 1280 px wide, that were fixed in a manifest and never used
+while tuning, with three separately encrypted messages each. A separate decoder process recovered
+every one exactly. With zero failures in 41 photos, the data still allow a failure rate of up to
+about 7 % per photo; they do not show that it is zero. Subtle and Long also read back 41/41 on
+those photos resized to 640 px.
+
+Its limits:
+
+- It does not survive edits. It reads exact PNG pixels, so a JPEG save at quality 95, a resize or
+  a crop destroys the message. Most messaging apps and social sites do one of these.
+- It does not hide that a message exists. A simple detector that knows the public profile
+  separates every marked photo from its original (AUC 1.0). This is not steganography in the sense of being
+  undetectable. The passphrase keeps the contents private and makes tampering detectable.
+- It does not work on every photo. Small, flat or synthetic images can be refused. The encoder then
+  writes nothing, rather than a file that will not decode.
+- Other hardware may not read the same bits. Decoding was checked on one x86-64 CPU and one
+  torch build, with 1 and 4 threads. GPUs and Apple CPUs are untested.
+
+## Try it
+
+Ghostframe needs Python 3.11 or 3.12 and runs on a CPU. From a clone of this repository:
 
 ```sh
+python3.12 -m venv .venv && . .venv/bin/activate
+python -m pip install 'torch==2.7.1+cpu' 'torchvision==0.22.1+cpu' \
+  --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
 python -m pip install -e '.[tiled]'
+```
+
+Read a message that is already in one of the sample photos. The first run downloads the
+MobileNetV3-Small weights (about 10 MB) and checks their SHA-256.
+
+```sh
+printf '%s' 'ghostframe public benchmark fixture' > pass.txt
+ghostframe-png decode demo-photos/fixtures/milky-way/subtle.png \
+  --profile bb-mobilenet_v3_small-l2-b16p48 --passphrase-file pass.txt
+# Signal from the fence line at 02:00. Two flashes mean the road is clear.
+```
+
+Hide your own message. This takes about 20 seconds on a 4-core CPU:
+
+```sh
 printf '%s' 'Meet at dawn. The north gate stays open until six.' > message.txt
-ghostframe-png encode examples/grace_hopper.jpg marked.png --profile sw-l2-c10x8b16p48 --message-file message.txt
-ghostframe-png decode marked.png --profile sw-l2-c10x8b16p48
+ghostframe-png encode demo-photos/coffee-beans.jpg marked.png \
+  --profile bb-mobilenet_v3_small-l2-b16p48 --message-file message.txt --passphrase-file pass.txt
+ghostframe-png decode marked.png --profile bb-mobilenet_v3_small-l2-b16p48 --passphrase-file pass.txt
 ```
 
-Profiles, frame format and input contract: [docs/PNG_PROFILES.md](docs/PNG_PROFILES.md). Evidence and reproduction: [docs/BENCHMARK.md](docs/BENCHMARK.md).
+Without `--passphrase-file` the commands ask for the passphrase. Decode prints exactly the
+message bytes and exits 0; a wrong passphrase, a wrong profile or an unmarked image exits 1 with
+no output. `ghostframe-png profiles` lists every profile. The input rules (formats, colour
+profiles, minimum size) are in [docs/PNG_PROFILES.md](docs/PNG_PROFILES.md#input-contract).
 
-## Reproduce on Linux x86-64 CPU
-
-Use Python 3.12. Run these commands from this directory.
+To check all nine published sample files and their negative controls:
 
 ```sh
-python3.12 -m venv .venv
-. .venv/bin/activate
-python -m pip install 'torch==2.7.1+cpu' 'torchvision==0.22.1+cpu' --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
-python -m pip install -e .
-ghostframe encode --image examples/grace_hopper.jpg --bits 1010110011010010 --key test-key --output encoded.png
-ghostframe decode --image encoded.png --key test-key --length 16
-ghostframe benchmark --images examples/grace_hopper.jpg examples/china.jpg examples/flower.jpg --key test-key --output benchmarks/reproduced
-ghostframe benchmark --images examples/china-sky.png --key test-key --output benchmarks/reproduced-low-detail
-for budget in 2 4; do
-  ghostframe benchmark --images examples/grace_hopper.jpg examples/china.jpg examples/flower.jpg examples/china-sky.png --key test-key --epsilon "$budget" --output "benchmarks/reproduced-epsilon-$budget"
-done
-python -m unittest discover -s tests -v
+python -m bench.verify_fixtures --full
 ```
 
-The first call downloads and verifies a 4.7 MiB checkpoint. Later runs use the verified local cache. The decoder uses the marked image, key, bit length, and this version's checkpoint and preprocessing. PNG preserves the 8-bit pixels the optimizer sees. Inputs are EXIF-oriented RGB PNG or JPEG, limited to 4 megapixels. CUDA and MPS are experimental.
+## How it works
 
-## Channel design
+1. The photo is cut into a 10 × 8 grid of tiles.
+2. The frozen model turns each tile into an embedding: a list of 576 numbers that describe it.
+3. Each tile has a fixed set of directions in that space, derived from the profile name. They
+   are public. The sign of the embedding's projection onto each direction is one bit, so a tile
+   holds 16 bits (Subtle) or 64 bits (Long).
+4. The message is encrypted and authenticated (scrypt, then AES-256-GCM), and Reed–Solomon parity
+   is added so that a few wrong bytes can be corrected.
+5. The encoder adjusts the pixels with gradient descent, through the model, until every
+   projection has the right sign with a safety margin. Each pixel stays within the cap of 2 or 8
+   levels per channel. The optimizer works on the rounded 8-bit values, so the saved PNG reads
+   back the same.
+6. Before writing anything, the encoder saves the PNG to memory, decodes it like a stranger
+   would, and checks that it authenticates.
 
-The entire image is resized to 224 × 224 with antialiased bilinear interpolation and normalized with ImageNet RGB statistics. The final convolutional features are spatially averaged and L2-normalized. HMAC-SHA256 and SHAKE256 generate a stable set of unit-length sign vectors from the key. Each projection sign contributes one bit. Adam optimizes pixels within an 8-level per-channel bound by default. A straight-through estimator evaluates the margin on quantized RGB values while providing a gradient to the continuous pixels. The decoder does a single independent forward pass.
+Decoding repeats steps 1 to 3, corrects errors, and decrypts. The model's weights never change.
+The frame format and threat model are in [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md).
 
-The raw channel returns bits even for untouched covers, corruption, or a wrong key. It has no detection or authentication signal. Use dummy payloads and dummy keys. The example key can appear in shell history. Visual fidelity metrics cannot establish secrecy against steganalysis. The protocol carries no framing, encryption, or ECC. The decoder needs the length supplied separately.
+## Evidence
 
-## Reproduce the crop comparison
+- [bench/PREREGISTRATION.md](bench/PREREGISTRATION.md) and
+  [bench/PREREGISTRATION-BACKBONES.md](bench/PREREGISTRATION-BACKBONES.md): the decision rules,
+  committed before any held-out photo was encoded. The git history shows the order (rule in
+  `9628f4d`, held-out results in `3c186e2`); those timestamps are my own and are not
+  independently notarised.
+- [docs/BENCHMARK.md](docs/BENCHMARK.md): every result, the 640-px check, the detector, and the
+  commands to reproduce them.
+- [docs/AUDIT_REPORT.md](docs/AUDIT_REPORT.md): an adversarial review of the earlier prototype's
+  claims, including the ones that did not hold up.
+- `bench/results/`: the raw per-trial records.
 
-Run from this directory after installing the dependencies.
+## Related work
 
-```sh
-python -m experiments.crop_robustness
-```
+Optimising an image so that a frozen network reads out hidden data is an established idea.
+Vukotić, Chappelier and Furon (WIFS 2018) watermarked images through a frozen classifier's
+features, and [Fernandez et al. (ICASSP 2022)](https://arxiv.org/abs/2112.09581) used fixed
+carrier directions in a pretrained feature space, which is close to what Ghostframe does.
+[Kishore et al. (ICLR 2022)](https://openreview.net/forum?id=hcMvApxGSzZ) applied the same
+principle to steganography (Fixed Neural Network Steganography), and
+[Luo et al. (ACM MM 2023)](https://openreview.net/forum?id=8MY_s2y_v9) added a key. The
+differences here are practical: tiles with authenticated encryption and error correction, an
+encoder that refuses rather than writes a bad file, and a held-out benchmark on CPU.
 
-The experiment runs the original optimizer and a crop-aware variant on paired 16- and 32-bit payloads. It saves PNGs and a per-case JSON report under `benchmarks/crop-robustness/`. See [crop robustness results](docs/CROP_ROBUSTNESS.md) for the split, metrics and limitations.
+## Earlier experiments
 
-## Reproduce the encoder screen
+Before these profiles, the project tried a raw-bit channel, a tiled SqueezeNet frame (now
+`legacy-v1`, the Classic mode), and a conventional JPEG-robust brightness carrier that does not
+use a neural network. Their reports, including the negative results, and the commands to rerun
+them are in [docs/earlier/](docs/earlier/README.md). The `ghostframe` command and
+`python -m experiments.message_cli` belong to that work.
 
-```sh
-python -m experiments.encoder_screen
-```
+## Demo site
 
-This experiment downloads and verifies the pretrained MobileNetV3 Small and ResNet-18 checkpoints on first use, then compares their crop stability against SqueezeNet 1.1. It writes the natural-image screen, paired payload results, and marked PNGs under `benchmarks/encoder-screen/`. See [encoder screening results](docs/ENCODER_SCREEN.md).
+`site/` and `server/` hold a small web page that runs the same engine. See
+[site/README.md](site/README.md).
 
-## Reproduce the extended experiments
+## Use it responsibly
 
-```sh
-python -m experiments.extended validation
-python -m experiments.extended capacity
-python -m experiments.extended alternatives
-```
+This is research code. The cryptography has not been audited, the marks are easy to detect, and
+any edit to the image loses the message. Do not rely on it to protect anything that matters, and
+do not use it to hide anything illegal. To report a security problem, see
+[SECURITY.md](SECURITY.md).
 
-The scripts use sample images bundled with scikit-image 0.25.2. Signed projection margins, decoded strings and fidelity metrics are in `benchmarks/extended/`. See [extended results](docs/EXTENDED.md).
+## How this was built
 
-## Reproduce the tiled carrier experiment
+I built Ghostframe with Claude Code. Agents wrote most of the code and ran the experiments,
+benchmarks and audits; I chose the questions, set the decision rules, and checked the results.
 
-```sh
-python -m pip install -e '.[tiled]'
-python -m experiments.tiled
-```
+## Licence
 
-The tiled experiment embeds a fixed-size authenticated frame into a 6×5 grid. It saves the marked PNGs and measures exact authenticated recovery after separate image transformations. Each run draws fresh salt and nonce bytes, so the exact ciphertext and error counts can vary. The main Ghostframe CLI uses the original raw-bit protocol. See [tiled results](docs/TILED.md).
-
-## Reproduce the tiled error-correction experiment
-
-```sh
-python -m pip install -e '.[tiled]'
-python -m experiments.tiled_ecc
-```
-
-The experiment keeps the 480-bit tile grid and reserves 14 bytes for Reed–Solomon parity. It benchmarks a fixed one-byte authenticated message at the two-level RGB budget. See [the experiment report](docs/TILED_ECC.md).
-
-## Reproduce the JPEG carrier experiment
-
-```sh
-python -m pip install -e '.[tiled]'
-python -m experiments.tiled_ecc  # Generates the matched control if absent.
-python -m experiments.jpeg_carrier
-python -m experiments.jpeg_stress
-python -m experiments.jpeg_stress --spacing 3
-```
-
-The JPEG carrier is a separate research experiment using luminance modulation and the same authenticated Reed–Solomon frame as the tiled experiment. See [JPEG carrier results](docs/JPEG_CARRIER.md).
-
-## Reproduce geometry, codec and capacity follow-ups
-
-```sh
-python -m experiments.robustness
-python -m experiments.jpeg_capacity
-```
-
-The follow-ups use the completed JPEG carrier benchmark as their source. See [the robustness report](docs/ROBUSTNESS.md).
-
-## Reproduce the bounded alignment search
-
-```sh
-python -m experiments.alignment_search
-```
-
-This follow-up uses the completed JPEG carrier benchmark as input and tests off-center crops with supplied original dimensions, and resizes without original dimensions. See [the alignment report](docs/ALIGNMENT_SEARCH.md).
-
-## Encode and decode a local message
-
-From the repository root, after installing the tiled extra:
-
-```sh
-printf '%s' 'Meet at the station at 6.' > message.txt
-python -m experiments.message_cli encode examples/china.jpg marked.jpg --message-file message.txt
-python -m experiments.message_cli decode marked.jpg
-```
-
-The command prompts for a passphrase. In a non-interactive environment, supply `--passphrase-file PATH` to each command. Decode writes exactly the authenticated message bytes to stdout, so you can redirect them into a file. Use `--original-size WIDTH HEIGHT` to search for a crop offset or `--try-resize` to test the listed scale factors. See [the command and benchmark notes](docs/MESSAGE_CLI.md).
-
-For intermediate resize factors, run `python -m experiments.message_cli decode marked.jpg --wide-resize`.
-The wider mode tests every integer percentage from 50% to 95%, plus 62.5%, and can take longer. See [the wide resize benchmark](docs/WIDE_RESIZE.md).
-
-## Final experiment sweep
-
-See [the consolidated research report](docs/FULL_REPORT.md) for the neural and conventional carrier results, held-out images, compound edits, detection and reproduction commands. The local message CLI also accepts `--try-exposure` for bounded uniform brightness recovery. Choose one recovery mode per decode.
-
-For damaged frames, add `--soft` to the message decoder, optionally with a recovery mode such as `--wide-resize`. See [confidence-assisted decoding](docs/SOFT_SEARCH.md) for its measured benefit and limits.
-
-If an image was cropped and then resized, supply both the original dimensions and the crop dimensions before resizing. The decoder searches for the crop offset.
-
-```sh
-python -m experiments.message_cli decode received.jpg --original-size 512 512 --crop-size 482 482 --soft
-```
-
-See [compound JPEG recovery](docs/COMPOUND_SEARCH.md) for the tested edits and limits.
-
-## Authenticate a message in neural embeddings
-
-From the repository root, after installing `.[tiled]`:
-
-```sh
-printf '%s' 'Meet at dawn.' > message.txt
-python -m experiments.message_cli encode examples/grace_hopper.jpg marked.png \
-  --carrier neural --message-file message.txt
-python -m experiments.message_cli decode marked.png --carrier neural
-```
-
-Use `--carrier neural` for up to 13 bytes with a maximum change of eight levels per RGB channel, or `--carrier neural-ecc` for one byte with Reed–Solomon parity and a maximum change of two levels per channel. The original SqueezeNet checkpoint is fetched and verified on first use. The neural modes expect preserved PNG pixels and can refuse an encode if the saved file does not authenticate. The separate luminance mode remains the default for the conventional carrier.
-
-See [objective verification](docs/GOAL_STATUS.md), [architecture](docs/ARCHITECTURE.md), and [security and framing](docs/SECURITY.md). The code and results for the optional pretrained-watermark comparator are available via `python -m pip install -e '.[learned]'` and `python -m experiments.learned_baseline`. That comparator downloads verified model assets separately.
+The code is MIT-licensed ([LICENSE](LICENSE)). The photos, fonts and model weights keep their own
+licences; see [CREDITS.md](CREDITS.md). To cite this work, see [CITATION.cff](CITATION.cff).
