@@ -39,7 +39,7 @@ export function Limits() {
   <div style={S({ maxWidth: '1240px', margin: '0 auto', padding: 'clamp(40px,6vw,80px) clamp(16px,4vw,40px)', display: 'flex', flexDirection: 'column', gap: '28px' })}>
     <div style={S({ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '46em' })}>
       <h2 style={S({ margin: '0', fontSize: 'clamp(28px,3.4vw,40px)', fontWeight: '700', letterSpacing: '-0.02em', lineHeight: '1.1' })}>Limits and evidence</h2>
-      <p style={S({ margin: '0', fontSize: '16px', lineHeight: '1.55', color: '#625c57', textWrap: 'pretty' })}>Numbers from our own experiments and benchmarks. Held-out trials used 41 photographs the system had never seen, all 1280 px wide, with three messages per photo, read back by a separate program given only the file and the passphrase.</p>
+      <p style={S({ margin: '0', fontSize: '16px', lineHeight: '1.55', color: '#625c57', textWrap: 'pretty' })}>Numbers from our own experiments and benchmarks. Held-out trials used 41 photographs that were never used for tuning, all 1280 px wide, with three messages per photo for Subtle and Long and one for Short, read back by a separate program given only the file and the passphrase.</p>
     </div>
     <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'flex-start' })}>
       <ul style={S({ flex: '1 1 380px', minWidth: '0', margin: '0', padding: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', borderTop: '1px solid rgba(24,20,17,0.10)' })}>
