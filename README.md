@@ -21,7 +21,8 @@ reliably it works on ordinary CPUs, with every raw result committed.
 | Classic | `legacy-v1` (SqueezeNet 1.1) | 13 B | ±8 levels | 41/41 | median 24 s |
 
 "Held-out photos" means 41 photographs, 1280 px wide, that were fixed in a manifest and never used
-while tuning, with three separately encrypted messages each. A separate decoder process recovered
+to tune any profile (the MobileNetV3 profiles were scored on the same 41 photos after the
+SqueezeNet ones), with three separately encrypted messages each. A separate decoder process recovered
 every one exactly. With zero failures in 41 photos, the data still allow a failure rate of up to
 about 7 % per photo; they do not show that it is zero. Subtle and Long also read back 41/41 on
 those photos resized to 640 px.
@@ -101,10 +102,16 @@ The frame format and threat model are in [docs/THREAT_MODEL.md](docs/THREAT_MODE
 ## Evidence
 
 - [bench/PREREGISTRATION.md](bench/PREREGISTRATION.md) and
-  [bench/PREREGISTRATION-BACKBONES.md](bench/PREREGISTRATION-BACKBONES.md): the decision rules,
-  committed before any held-out photo was encoded. The git history shows the order (rule in
-  `9628f4d`, held-out results in `3c186e2`); those timestamps are my own and are not
-  independently notarised.
+  [bench/PREREGISTRATION-BACKBONES.md](bench/PREREGISTRATION-BACKBONES.md): the decision rules.
+  The first (rule `9628f4d`, results `3c186e2`, raw records `a633374`) covers the SqueezeNet
+  profiles and was committed before any held-out photo was encoded. The second (rule `afceeae`,
+  amended in `4fb6e27`, results `6364357`) covers the MobileNetV3 profiles in the table above. It
+  reuses the same 41 photos, which had by then been scored for the SqueezeNet profiles. Long was
+  the preregistered candidate; Subtle was added by an amendment after screening and before its
+  held-out run. The raw records were committed after the runs, so the order is shown by the rule
+  commits, not by the records. The history was rewritten once (2026-11-11) to change the author
+  email; trees and dates were kept. These timestamps are my own and are not independently
+  notarised.
 - [docs/BENCHMARK.md](docs/BENCHMARK.md): every result, the 640-px check, the detector, and the
   commands to reproduce them.
 - [docs/AUDIT_REPORT.md](docs/AUDIT_REPORT.md): an adversarial review of the earlier prototype's

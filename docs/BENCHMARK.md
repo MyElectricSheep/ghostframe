@@ -1,7 +1,11 @@
 # Ghostframe PNG benchmark
 
 What was measured, on which images, under which rule, and how to reproduce it. The decision
-rule was committed before any held-out image was encoded: [bench/PREREGISTRATION.md](../bench/PREREGISTRATION.md).
+rule for the SqueezeNet profiles was committed before any held-out image was encoded:
+[bench/PREREGISTRATION.md](../bench/PREREGISTRATION.md). The MobileNetV3 profiles have their own
+rule ([bench/PREREGISTRATION-BACKBONES.md](../bench/PREREGISTRATION-BACKBONES.md)), committed
+before their held-out run but after the same 41 held-out photos had been scored for the
+SqueezeNet profiles; see [the backbone comparison](#backbone-comparison-mobilenetv3-small).
 Profiles and the frame format: [PNG_PROFILES.md](PNG_PROFILES.md).
 
 ## Summary
@@ -175,7 +179,9 @@ SIGSTOP while fixtures were built. Peak memory was about 1.2 GB per encode.
 ## Backbone comparison: MobileNetV3-Small
 
 Preregistered in [bench/PREREGISTRATION-BACKBONES.md](../bench/PREREGISTRATION-BACKBONES.md)
-before any alternative-backbone encode. Four torchvision ImageNet backbones were screened on
+(`afceeae`) before any alternative-backbone encode. The 41 held-out covers are the same ones
+already scored for the SqueezeNet profiles above, so they were no longer unseen by the project,
+though no screen or tune record uses them. Four torchvision ImageNet backbones were screened on
 the same 10 × 8 grid and ladder, with the same reliability bar and a 90 s median encode
 budget: MobileNetV3-Small, EfficientNet-B0, ResNet-18 and ConvNeXt-Tiny. Each was read through
 the same tile path, and each margin was scaled by its median clean |score|.
@@ -185,9 +191,12 @@ the same tile path, and each margin was scaled by its median clean |score|.
 - ResNet-18 at 143 B (cap 2): 12/12, median 80 s.
 
 EfficientNet-B0 tied at 79 B. ConvNeXt-Tiny, EfficientNet-B0 at cap 8 and ResNet-18 at cap 8
-were all over the time budget. On the owner's call (Amendment 2), only MobileNetV3-Small was
-held out. ResNet-18 at 143 B stays a qualified, untested candidate: at 80 s it is too slow for
-a small demo host. Raw screen records are in `bench/results/backbones/`.
+were all over the time budget. By the committed rule only the 494 B candidate (capacity
+strictly above SqueezeNet's 302 B) advanced at cap 8, and none at cap 2 besides ResNet-18.
+Amendment 2 (`4fb6e27`, after the screen and before any MobileNetV3 holdout encode), on the
+owner's call, held out MobileNetV3-Small only and added the 302 B and 79 B arms at SqueezeNet's
+sizes. ResNet-18 at 143 B was dropped and stays a qualified, untested candidate: at 80 s it is
+too slow for a small demo host. Raw screen records are in `bench/results/backbones/`.
 
 **Holdout.** 41 covers × 3 frames, decoded by the independent worker. The SqueezeNet
 references are the existing holdout on the same 41 covers.
