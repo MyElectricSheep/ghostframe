@@ -3,6 +3,8 @@ import { S } from '../../lib/style';
 import type { ModeKey, PhotoKey } from '../../data';
 import { ComparePanel } from './ComparePanel';
 import { Controls } from './Controls';
+import { usePhoneControls } from './PhoneControls';
+import { useNarrow } from '../../hooks/useNarrow';
 import { DiffPanel } from './DiffPanel';
 import { EmbedPanel } from './EmbedPanel';
 import { Stage } from './Stage';
@@ -13,6 +15,8 @@ export function TryIt({ state, set, pick }: {
   state: TryItState; set: (patch: Partial<TryItState>) => void; pick: (photo: PhotoKey, mode: ModeKey) => void;
 }) {
   const v = useTryItView(state, set, pick);
+  // Below 760 px the control column gives way to a summary line, a view switch and a sheet (mobile pass 8f).
+  const narrow = useNarrow(), phone = usePhoneControls(v);
   // When the side panel no longer fits beside the stage, it spans the full width and lays its
   // cards out in columns (corrective pass 12). Where it wraps depends on the photo, so measure it.
   const sideRef = useRef<HTMLDivElement>(null);
@@ -21,7 +25,7 @@ export function TryIt({ state, set, pick }: {
     const row = sideRef.current?.parentElement;
     if (!row) return;
     const check = () => {
-      const stage = row.children[1] as HTMLElement, side = sideRef.current!;
+      const side = sideRef.current!, stage = side.previousElementSibling as HTMLElement;
       // Measure with the side panel in its side-by-side style first.
       side.dataset.measure = '1';
       const next = side.offsetTop > stage.offsetTop + 10;
@@ -32,7 +36,7 @@ export function TryIt({ state, set, pick }: {
     const ro = new ResizeObserver(check);
     ro.observe(row);
     return () => ro.disconnect();
-  }, [state.photo, state.view]);
+  }, [state.photo, state.view, narrow]);
   return (
     <section id="try" data-screen-label="Try it" style={S({ maxWidth: '1240px', margin: '0 auto', padding: 'clamp(32px,4.5vw,52px) clamp(16px,4vw,40px) clamp(18px,2.5vw,26px)', scrollMarginTop: '60px' })}>
   <div style={S({ display: 'flex', flexDirection: 'column', gap: '22px' })}>
@@ -46,8 +50,7 @@ export function TryIt({ state, set, pick }: {
     {/* Same 1240 px column as every other section, so all left edges line up; the columns stay
         32 px apart. */}
     <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '24px 32px', alignItems: 'flex-start', justifyContent: 'flex-start' })}>
-      <Controls v={v} />
-      <Stage v={v} />
+      {narrow ? <Stage v={v} above={phone.summaryButton} below={phone.viewSwitch} /> : <><Controls v={v} /><Stage v={v} /></>}
       <div ref={sideRef} className={wrapped ? 'gf-side gf-side-wrapped' : 'gf-side'} style={S({ flex: '1 1 300px', maxWidth: '440px', minWidth: '280px', display: 'flex', flexDirection: 'column', gap: '12px' })}>
         {v.wEmbed && <EmbedPanel v={v} />}
         {v.wCompare && <ComparePanel v={v} />}
@@ -55,6 +58,7 @@ export function TryIt({ state, set, pick }: {
       </div>
     </div>
   </div>
+      {narrow && phone.bottomSheet}
     </section>
   );
 }

@@ -2,11 +2,13 @@ import React from 'react';
 import { S } from '../../lib/style';
 import type { TryItView } from './view';
 
-export function Stage({ v }: { v: TryItView }) {
+/** above / below: phone-only controls placed directly above and under the photo frame. */
+export function Stage({ v, above, below }: { v: TryItView; above?: React.ReactNode; below?: React.ReactNode }) {
   const { wTileKeys, infoBd, infoBg, infoDisp, infoFg, infoHide, infoOpenStr, infoShow, infoToggle, wAspect, wCap, wCells, wChanged, wClip, wCols, wDiff, wDiffDisp, wDiffOn, wDivider, wEmbed, wFrameL, wFrameR, wFrameRadius, wHandleDown, wKnobBlur, wKnobFocus, wKnobRing, wMarked, wMarkedDisp, wModel, wOnSplit, wOrig, wOrigDisp, wProfile, wRes, wRows, wSliderHint, wSplit, wSplitPct, wSplitText, wStageAlt, wStageMax, wStageRef, wStageW, wTagL, wTagLDisp, wTagR, wTagRBg } = v;
   return (
 <>
       <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px', flex: `1 1 ${wStageW}`, maxWidth: wStageMax, minWidth: '0' })}>
+        {above}
         <div style={S({ background: '#312e2b', borderRadius: wFrameRadius, padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px' })}>
           <div style={S({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', font: '500 11px/1.3 \'IBM Plex Mono\',ui-monospace,monospace', color: '#d9d3cc' })}><span>{wFrameL}</span>
             <span style={S({ display: 'flex', alignItems: 'center', gap: '8px' })}>{wFrameR}
@@ -52,7 +54,7 @@ export function Stage({ v }: { v: TryItView }) {
             </>)}
           </div>
         </div>
-        
+        {below}
         {wEmbed && (<>
           <div style={S({ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', textAlign: 'center' })}>
             <div aria-hidden="true" style={S({ height: '10px', width: '100%', boxSizing: 'border-box', borderRadius: '2px', background: 'linear-gradient(90deg,rgba(63,100,140,0.06),rgba(63,100,140,0.84))', border: '1px solid rgba(24,20,17,0.10)' })}></div>

@@ -2,7 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { drawHow, drawHowNarrow, HOW_DUR, HOW_LABELS, HOW_NARROW_H, HOW_NARROW_W } from '../canvas/how';
 import { BLUE, GRAY } from '../data';
 import { prefersReducedMotion, S } from '../lib/style';
+import { useNarrow } from '../hooks/useNarrow';
 import { useAbbr } from './Abbr';
+import { StepCards } from './HowCards';
 
 const STEPS = [
   { who: 'sender', t: 'The passphrase locks the message.', d: 'The message is encrypted with a key made from the passphrase. Without it, nothing can be read.' },
@@ -12,9 +14,10 @@ const STEPS = [
   { who: 'recipient', t: 'Reading back runs the same model on each tile.', d: 'It repairs a few wrong bits, then unlocks with the passphrase. A wrong passphrase or altered message gives “No message found.”' },
 ];
 
-const PHONE = '(max-width: 559.98px)';
+// Below 760 px the steps are swipe cards and each animation is the phone composition.
+const PHONE = '(max-width: 759.98px)';
 
-/** Draws one frame. On phones the canvas is sized to its real pixels and gets the 4:5 composition;
+/** Draws one frame. On phones (the card layout) the canvas is sized to its real pixels and gets the 4:5 composition;
  *  otherwise the design's 1120 × 840 drawing, scaled by CSS. */
 function paint(cv: HTMLCanvasElement, img: HTMLImageElement | null, step: number, t: number) {
   const x = cv.getContext('2d')!;
@@ -32,6 +35,7 @@ function paint(cv: HTMLCanvasElement, img: HTMLImageElement | null, step: number
 
 /** Five 7–9 s step animations. Autoplays once when scrolled into view; static frames under reduced motion. */
 function useHowAnimation() {
+  const narrow = useNarrow();
   const howRef = useRef<HTMLCanvasElement>(null), howBarRef = useRef<HTMLDivElement>(null), sectionRef = useRef<HTMLElement>(null);
   const img = useRef<HTMLImageElement | null>(null), raf = useRef(0), playing = useRef(false), secShown = useRef(-1), last = useRef({ s: 0, t: 1 });
   const [step, setStep] = useState(0), [done, setDone] = useState(false), [sec, setSec] = useState(0);
@@ -61,10 +65,17 @@ function useHowAnimation() {
     if (sectionRef.current) io.observe(sectionRef.current);
     const first = window.setTimeout(() => { const cv = howRef.current; if (cv && !seen) paint(cv, null, 0, 1); }, 50);
     // Redraw the current frame when the canvas changes size or crosses the phone breakpoint.
-    const ro = new ResizeObserver(() => { const cv = howRef.current; if (cv && !playing.current) paint(cv, img.current && img.current.complete ? img.current : null, last.current.s, last.current.t); });
-    if (howRef.current) ro.observe(howRef.current);
-    return () => { io.disconnect(); ro.disconnect(); cancelAnimationFrame(raf.current); window.clearTimeout(first); };
+    return () => { io.disconnect(); cancelAnimationFrame(raf.current); window.clearTimeout(first); };
   }, [start]);
+  // Redraw the current frame when the canvas changes size. On phones the canvas element changes with
+  // the active card, so observe whichever one is mounted.
+  useEffect(() => {
+    const cv = howRef.current;
+    if (!cv) return;
+    const ro = new ResizeObserver(() => { if (!playing.current) paint(cv, img.current && img.current.complete ? img.current : null, last.current.s, last.current.t); });
+    ro.observe(cv);
+    return () => ro.disconnect();
+  }, [step, narrow]);
   return { howRef, howBarRef, sectionRef, step, done, sec, start };
 }
 
@@ -77,6 +88,22 @@ export function HowItWorks() {
     return { ...f, n: '0' + (i + 1), pressed: on, cardBg: on ? '#fff' : 'transparent', cardBd: on ? '#3f648c' : 'transparent', playing: on ? (done ? 'played' : 'playing') : 'play',
       onClick: () => start(i), bd: on ? BLUE : 'rgba(24,20,17,0.2)', bg: on ? BLUE : '#fff', numFg: on ? '#fff' : GRAY, line: i < a.length - 1 ? 'block' : 'none' };
   });
+  const narrow = useNarrow();
+  const technical = (indent: string) => (
+<details style={S({ borderTop: '1px solid rgba(24,20,17,0.10)', paddingTop: '14px', marginLeft: indent })}>
+            <summary style={S({ fontSize: '15px', fontWeight: '600', color: '#355574' })}>Technical detail</summary>
+            <ul style={S({ margin: '12px 0 0', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', lineHeight: '1.55' })}>
+              <li><strong>Models:</strong> MobileNetV3-Small for Subtle and Long (<a href="https://arxiv.org/abs/1905.02244" target="_blank" rel="noopener">Howard et al., <em>Searching for MobileNetV3</em>, ICCV 2019</a>), torchvision checkpoint (sha256 <span style={S({ fontFamily: '\'IBM Plex Mono\',ui-monospace,monospace' })}>047dcff4…</span>), and <a href="https://github.com/forresti/SqueezeNet/tree/master/SqueezeNet_v1.1" target="_blank" rel="noopener">SqueezeNet 1.1</a> for Short (<a href="https://arxiv.org/abs/1602.07360" target="_blank" rel="noopener">original paper</a>), checkpoint (sha256 <span style={S({ fontFamily: '\'IBM Plex Mono\',ui-monospace,monospace' })}>b8a52dc0…</span>). Each has its own pinned calibration file. PyTorch 2.7.1 CPU, torchvision 0.22.1.</li>
+              <li>Encryption: <button type="button" data-abbr="1" onClick={abOpen.AES} aria-expanded={abExp.AES} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>AES-256-GCM</button>. The key is derived from the passphrase with <button type="button" data-abbr="1" onClick={abOpen.scrypt} aria-expanded={abExp.scrypt} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>scrypt</button>, which makes guessing deliberately slow.</li>
+              <li>Tamper evidence: if the hidden message is altered, authentication fails and the reader returns “No message found.” instead of a wrong message.</li>
+              <li>The encoder is a standard optimiser. The model only reads; it never writes anything.</li>
+              <li><strong>Related work.</strong> Ghostframe builds on an established idea: hide data by optimising an image so a frozen network reads it out. See Vukotić et al. (WIFS 2018) and <a href="https://arxiv.org/abs/2112.09581" target="_blank" rel="noopener">Fernandez et al. (ICASSP 2022)</a>, whose fixed “carrier” directions in a pretrained feature space are close to ours. <a href="https://openreview.net/forum?id=hcMvApxGSzZ" target="_blank" rel="noopener">Kishore et al. (ICLR 2022)</a> apply the same principle to steganography (FNNS), and <a href="https://openreview.net/forum?id=8MY_s2y_v9" target="_blank" rel="noopener">Luo et al. (ACM MM 2023)</a> add a key. What’s ours is the engineering and the testing, not the method.
+                <span style={S({ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', marginTop: '6px', font: '400 12px/1.5 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}><span>Also:</span><a href="https://github.com/varshakishore/FNNS" target="_blank" rel="noopener">FNNS code</a><a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/12033233" target="_blank" rel="noopener">FNNS variants (US patent 12,033,233)</a><a href="https://arxiv.org/abs/2407.11405" target="_blank" rel="noopener">Cs-FNNS follow-up</a></span>
+              </li>
+              <li>Encoding and decoding run on a server. Browser decoding hasn’t been validated.</li>
+            </ul>
+          </details>
+  );
   return (
 <section ref={sectionRef} id="how" data-screen-label="How it works" style={S({ scrollMarginTop: '56px' })}>
   <div style={S({ maxWidth: '1240px', margin: '0 auto', padding: 'clamp(40px,6vw,80px) clamp(16px,4vw,40px)', display: 'flex', flexDirection: 'column', gap: '28px' })}>
@@ -84,6 +111,10 @@ export function HowItWorks() {
       <h2 style={S({ margin: '0', fontSize: 'clamp(28px,3.4vw,40px)', fontWeight: '700', letterSpacing: '-0.02em', lineHeight: '1.1' })}>How it works</h2>
       <p style={S({ margin: '0', fontSize: '16px', lineHeight: '1.55', color: '#625c57', textWrap: 'pretty' })}>A frozen, public image model, <a href="https://arxiv.org/abs/1905.02244" target="_blank" rel="noopener">MobileNetV3-Small</a> (or, <a href="https://github.com/forresti/SqueezeNet/tree/master/SqueezeNet_v1.1" target="_blank" rel="noopener">SqueezeNet 1.1</a> for Short mode) looks at the photo one tile at a time. For each tile it produces an embedding: the list of numbers the model uses to describe that tile. The encoder nudges pixels until those numbers spell out the encrypted message. The model’s weights never change. Only the pixels do.</p>
     </div>
+    {narrow ? (<>
+      <StepCards steps={steps} step={step} start={start} howRef={howRef} howBarRef={howBarRef} howTime={howTime} howReplay={howReplay} howAria={howAria} />
+      {technical('0')}
+    </>) : (
     <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'flex-start' })}>
       <figure className="gf-how-figure" style={S({ flex: '1 1 440px', minWidth: '0', maxWidth: '600px', margin: '0', display: 'flex', flexDirection: 'column', gap: '10px' })}>
         <div style={S({ background: '#312e2b', borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px' })}>
@@ -117,22 +148,11 @@ export function HowItWorks() {
           </li>
         </React.Fragment>))}
         <li>
-          <details style={S({ borderTop: '1px solid rgba(24,20,17,0.10)', paddingTop: '14px', marginLeft: '46px' })}>
-            <summary style={S({ fontSize: '15px', fontWeight: '600', color: '#355574' })}>Technical detail</summary>
-            <ul style={S({ margin: '12px 0 0', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', lineHeight: '1.55' })}>
-              <li><strong>Models:</strong> MobileNetV3-Small for Subtle and Long (<a href="https://arxiv.org/abs/1905.02244" target="_blank" rel="noopener">Howard et al., <em>Searching for MobileNetV3</em>, ICCV 2019</a>), torchvision checkpoint (sha256 <span style={S({ fontFamily: '\'IBM Plex Mono\',ui-monospace,monospace' })}>047dcff4…</span>), and <a href="https://github.com/forresti/SqueezeNet/tree/master/SqueezeNet_v1.1" target="_blank" rel="noopener">SqueezeNet 1.1</a> for Short (<a href="https://arxiv.org/abs/1602.07360" target="_blank" rel="noopener">original paper</a>), checkpoint (sha256 <span style={S({ fontFamily: '\'IBM Plex Mono\',ui-monospace,monospace' })}>b8a52dc0…</span>). Each has its own pinned calibration file. PyTorch 2.7.1 CPU, torchvision 0.22.1.</li>
-              <li>Encryption: <button type="button" data-abbr="1" onClick={abOpen.AES} aria-expanded={abExp.AES} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>AES-256-GCM</button>. The key is derived from the passphrase with <button type="button" data-abbr="1" onClick={abOpen.scrypt} aria-expanded={abExp.scrypt} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>scrypt</button>, which makes guessing deliberately slow.</li>
-              <li>Tamper evidence: if the hidden message is altered, authentication fails and the reader returns “No message found.” instead of a wrong message.</li>
-              <li>The encoder is a standard optimiser. The model only reads; it never writes anything.</li>
-              <li><strong>Related work.</strong> Ghostframe builds on an established idea: hide data by optimising an image so a frozen network reads it out. See Vukotić et al. (WIFS 2018) and <a href="https://arxiv.org/abs/2112.09581" target="_blank" rel="noopener">Fernandez et al. (ICASSP 2022)</a>, whose fixed “carrier” directions in a pretrained feature space are close to ours. <a href="https://openreview.net/forum?id=hcMvApxGSzZ" target="_blank" rel="noopener">Kishore et al. (ICLR 2022)</a> apply the same principle to steganography (FNNS), and <a href="https://openreview.net/forum?id=8MY_s2y_v9" target="_blank" rel="noopener">Luo et al. (ACM MM 2023)</a> add a key. What’s ours is the engineering and the testing, not the method.
-                <span style={S({ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', marginTop: '6px', font: '400 12px/1.5 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}><span>Also:</span><a href="https://github.com/varshakishore/FNNS" target="_blank" rel="noopener">FNNS code</a><a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/12033233" target="_blank" rel="noopener">FNNS variants (US patent 12,033,233)</a><a href="https://arxiv.org/abs/2407.11405" target="_blank" rel="noopener">Cs-FNNS follow-up</a></span>
-              </li>
-              <li>Encoding and decoding run on a server. Browser decoding hasn’t been validated.</li>
-            </ul>
-          </details>
+          {technical('46px')}
         </li>
       </ol>
     </div>
+    )}
   </div>
 </section>
 

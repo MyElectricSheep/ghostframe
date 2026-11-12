@@ -36,6 +36,7 @@ cd site
 node tests/e2e.mjs http://127.0.0.1:5178/ Subtle      # Hide -> download -> Read back, wrong passphrase, portrait sample, JPEG refusal
 node tests/e2e.mjs http://127.0.0.1:5178/ Short 'Meet at dawn.'
 node tests/a11y.mjs                                   # divider and tile keyboard paths, tooltips, tabs, live regions
+node tests/phone.mjs                                  # below 760 px: menu, Try it sheet and switch, How it works cards (focus, Escape, scroll lock)
 node scripts/touch-targets.mjs /tmp/touch.png         # every control >= 44 px on touch
 node scripts/compare.mjs try 1280,768,375 /tmp/cmp    # side by side with the prototype (serve it on :5190)
 ```
