@@ -1,4 +1,4 @@
-/* Global rules carried over from the design reference (helmet <style>). */
+/* Global rules. */
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
@@ -23,7 +23,7 @@ details[open] > summary svg{transform:rotate(180deg)}
 @keyframes gfpulse{0%,100%{opacity:.3}50%{opacity:1}}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 
-/* Hover and focus states (style-hover / style-focus in the design reference). */
+/* Hover and focus states. */
 .logo-invert:hover{--gfa:#f6f4f1 !important;--gfb:rgba(18,16,14,0.96) !important}
 .logo-invert-focus:focus-visible{--gfa:#f6f4f1 !important;--gfb:rgba(18,16,14,0.96) !important}
 .hover-tint:hover{background:rgba(0,0,0,0.05) !important}

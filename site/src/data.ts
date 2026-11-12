@@ -59,7 +59,7 @@ export const fixture = (p: PhotoKey, m: ModeKey) => D.fixtures[p].modes[m];
 export const heat = (p: PhotoKey, m: ModeKey) => D.heat[p][m];
 export const rawNumbers = (p: PhotoKey) => D.raw[p];
 
-/** "Recorded result" line for a cover and mode, in the design's format. */
+/** "Recorded result" line for a cover and mode. */
 export function resultLine(p: PhotoKey, m: ModeKey): string {
   if (m === 'classic') {
     const ok = Object.entries(fixture(p, m).checks).filter(([k]) => k.startsWith('decode_')).every(([, v]) => v.startsWith('exit 0'));

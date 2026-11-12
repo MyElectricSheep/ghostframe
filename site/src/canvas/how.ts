@@ -1,4 +1,4 @@
-// "How it works" step animations from the design reference (drawHow, 1120 × 840). Below 560 px the
+// "How it works" step animations (drawHow, 1120 × 840). Below 560 px the
 // page draws drawHowNarrow instead: a 560 × 700 (4:5) composition with the visual on top and the
 // labels below, drawn at the canvas's real size so no text is under 11 CSS px.
 type Ctx = CanvasRenderingContext2D;

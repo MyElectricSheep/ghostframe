@@ -18,7 +18,7 @@ const STEPS = [
 const PHONE = '(max-width: 759.98px)';
 
 /** Draws one frame. On phones (the card layout) the canvas is sized to its real pixels and gets the 4:5 composition;
- *  otherwise the design's 1120 × 840 drawing, scaled by CSS. */
+ *  otherwise the 1120 × 840 drawing, scaled by CSS. */
 function paint(cv: HTMLCanvasElement, img: HTMLImageElement | null, step: number, t: number) {
   const x = cv.getContext('2d')!;
   if (window.matchMedia(PHONE).matches) {

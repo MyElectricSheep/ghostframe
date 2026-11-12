@@ -1,6 +1,6 @@
 # Demo photos
 
-Cover photos for the demo website. All three come from the preregistered held-out benchmark set
+Cover photos for the demo website. Classic, here and in the fixture file names, is the mode the site calls Short. All three come from the preregistered held-out benchmark set
 (`bench/manifest-v1.json`). They are the exact files that were tested, byte for byte (the SHA-256
 hashes match the manifest), and they are free to use. The portrait is a painting, so it shows a face without the consent or privacy questions that a modern photo of a living person would raise.
 

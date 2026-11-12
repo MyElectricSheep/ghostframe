@@ -299,7 +299,26 @@ SPLIT=screen bench/screen.sh            # screening suites
 bench/holdout.sh sw-l2-c10x8b16p48 sw-l8-c10x8b40p64
 python -m bench.summarize runs/holdout-finalists --by-cover
 python -m bench.detect runs/holdout-finalists --profile sw-l2-c10x8b16p48 --out runs/detect-l2.json
+bench/holdout640.sh                     # exploratory 640-px check, SqueezeNet
+python -m bench.score_bias              # clean-tile projection bias (why centering was needed)
 ```
+
+The backbone comparison:
+
+```sh
+python -m bench.backbone_screen screen  # ladders on the screen split (resumable)
+python -m bench.backbone_screen tune    # each backbone's candidates on the tune split
+python -m bench.backbone_screen report
+python -m bench.backbone_secondary      # JPEG re-save survival and 1-thread determinism
+bench/holdout_mobilenet.sh              # MobileNetV3-Small holdout and stress (Amendment 2)
+bench/holdout640_mobilenet.sh           # exploratory 640-px check, MobileNetV3-Small
+```
+
+The scripts in `bench/` call `.venv/bin/python` and write to `runs/`; copy a run into
+`bench/results/` to keep it. Two helpers make the demo material rather than results:
+`python -m tools.dump_embeddings && python -m tools.embeddings_md` writes
+`demo-photos/fixtures/EMBEDDINGS.md`, and `python -m tools.social_preview` writes the link
+preview image (`docs/img/social-preview.png`, `site/public/og.png`).
 
 Raw per-trial records (encode and independent decode, including failures and refusals) are in
 `bench/results/`, one directory per run, with a `summary.json` per run directory.

@@ -1,4 +1,4 @@
-// Hero animation from the design reference (drawHero). The caption row (message → hidden in the
+// Hero animation (drawHero). The caption row (message → hidden in the
 // tiles → looks the same → read back) is HTML under the canvas, so it stays readable on phones;
 // drawHero returns the active step for it. The canvas is cropped above the old caption band.
 const HG_MAP = ['..XXX..', '.XXXXX.', 'XXXXXXX', 'XX.X*XX', 'XXXXXXX', 'XXXXXXX', 'XXXXXXX', 'X.X.X.X'];

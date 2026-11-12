@@ -28,6 +28,12 @@ cd site && npm ci && npm run dev
 After the build, `scripts/verify-dist.mjs` checks the copies in `dist/` again. Nothing on the
 page is typed in by hand except the prose.
 
+The cover-picker thumbnails in `public/thumbs/` are display copies made by
+`.venv/bin/python site/scripts/make_thumbs.py`; they are never decoded.
+
+The mode the page calls Short is `legacy-v1`, named Classic in the main README and in the
+fixture file names (`classic.png`).
+
 ## Tests
 
 ```sh

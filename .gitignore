@@ -7,6 +7,5 @@ __pycache__/
 /site/dist/
 /site/public/demo-photos/
 /site/src/generated/
-/site/compare-out/
 /demo-photos/fixtures/embeddings/
 /site/worker/worker-configuration.d.ts

@@ -25,7 +25,7 @@ used to tune any profile (the MobileNetV3 profiles were scored on the same 41 ph
 SqueezeNet ones). 123 = 41 photos × 3 separately encrypted messages for Subtle and Long; Classic
 is 41 photos × 1. A separate decoder process recovered every one exactly. With zero failures in
 41 photos, the data still allow a per-photo failure rate of about 7 % (one-sided 95 % bound; 9 %
-two-sided); they do not show that it is zero. Subtle and Long also read back 41/41 on
+two-sided); they do not show that it is zero. The demo site calls the Classic mode Short. Subtle and Long also read back 41/41 on
 those photos resized to 640 px.
 
 Encode times are the optimisation alone on a shared 4-vCPU server; the command-line tool adds
@@ -54,6 +54,10 @@ python -m pip install 'torch==2.7.1+cpu' 'torchvision==0.22.1+cpu' \
   --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
 python -m pip install -e '.[tiled]'
 ```
+
+On Debian/Ubuntu, `python3.12 -m venv` needs the `python3.12-venv` package (or use
+`uv venv --python 3.12 --seed .venv`). `uv pip install` works in place of `python -m pip install`;
+the other docs use it.
 
 Read a message that is already in one of the sample photos. The first run downloads the
 MobileNetV3-Small weights (about 10 MB) and checks their SHA-256.

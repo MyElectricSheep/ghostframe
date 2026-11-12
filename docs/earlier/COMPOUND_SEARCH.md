@@ -4,7 +4,7 @@ The 26-byte CLI now supports `--crop-size WIDTH HEIGHT` alongside `--original-si
 
 This benchmark uses the same 14 covers as the final sweep, with a new randomized 96-byte frame carrying the 25-byte test message on each. It writes JPEG 95, removes 13 pixels from the left, 21 from the top, 17 from the right and 9 from the bottom, then resizes the crop to 75% or 67% using Lanczos and saves it as JPEG 70. Both decoder modes read the same saved JPEG. The clean control undergoes the same 75% chain without a payload. The decoder receives both dimension pairs but does not receive the actual offset. One randomized frame and one crop geometry per cover make this a controlled local test.
 
-Run `python -m experiments.compound_search` to reproduce. Per-cover results are in `benchmarks/compound-search/results.json`.
+Run `python -m experiments.compound_search` to reproduce. The per-cover results file (`benchmarks/compound-search/results.json`) was not kept in this repository; rerunning writes it.
 
 | File condition | Regular | With confidence retries | Median regular | Median with retries |
 |---|---:|---:|---:|---:|

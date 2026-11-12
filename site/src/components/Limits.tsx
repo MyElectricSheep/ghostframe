@@ -28,7 +28,7 @@ const REPO = 'https://github.com/MyElectricSheep/ghostframe';
 const links = [
   { t: 'Source code', d: 'Engine, CLI and this site', ph: 'github.com/MyElectricSheep/ghostframe', href: REPO },
   { t: 'Benchmark', d: 'Held-out trials, image quality, speed', ph: 'docs/BENCHMARK.md', href: `${REPO}/blob/main/docs/BENCHMARK.md` },
-  { t: 'Method notes', d: 'How the experiments were run', ph: 'docs/AUDIT_REPORT.md', href: `${REPO}/blob/main/docs/AUDIT_REPORT.md` },
+  { t: 'Audit report', d: 'The earlier prototype’s claims, checked', ph: 'docs/AUDIT_REPORT.md', href: `${REPO}/blob/main/docs/AUDIT_REPORT.md` },
 ];
 
 export function Limits() {
