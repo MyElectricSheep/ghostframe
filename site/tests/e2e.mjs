@@ -1,6 +1,6 @@
 // End-to-end against the real engine: Hide -> download the exact PNG -> Read it back.
 //   node tests/e2e.mjs [siteUrl] [mode] [message]    (site and API must be running; see site/README.md)
-// Against the live site the Turnstile check must pass in the headless browser.
+// Not for the live site: Turnstile gives automated browsers no token, so Hide and Read get 403.
 import { chromium } from 'playwright';
 import { createHash } from 'node:crypto';
 import { mkdtempSync, readFileSync } from 'node:fs';
@@ -16,7 +16,8 @@ const ok = (cond, what) => { if (!cond) throw new Error('FAILED: ' + what); cons
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, acceptDownloads: true });
-await page.goto(SITE, { waitUntil: 'networkidle' });
+// Not 'networkidle': the Turnstile widget keeps the network busy.
+await page.goto(SITE, { waitUntil: 'load' });
 const tool = page.locator('#tool');
 
 // ---- Hide
