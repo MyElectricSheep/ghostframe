@@ -75,21 +75,26 @@ def neural_recover(image, password, model, *, ecc=False):
 
 
 def neural_encode_file(image, message, password, output, model, *, ecc=False, progress=None):
-    from reedsolo import RSCodec
-    from experiments import tiled, tiled_ecc
-
     if output.suffix.lower() != ".png":
         raise ValueError("The neural message carrier requires PNG output")
     if output.exists():
         raise FileExistsError(f"Output already exists: {output}")
     if not output.parent.is_dir():
         raise ValueError(f"Output directory does not exist: {output.parent}")
+    write_new_file(neural_encode_bytes(image, message, password, model, ecc=ecc, progress=progress), output)
+
+
+def neural_encode_bytes(image, message, password, model, *, ecc=False, progress=None):
+    """The marked PNG's exact bytes, verified to read back, without touching the disk."""
+    from reedsolo import RSCodec
+    from experiments import tiled, tiled_ecc
+
     if ecc:
         frame = RSCodec(tiled_ecc.PARITY_BYTES).encode(tiled_ecc.seal(message, password))
     else:
         frame = tiled.seal(message, password)
     marked = tiled.embed_tiles(image, tiled.bit_string(frame), model, 2 if ecc else 8, progress=progress)
-    publish_encoded(marked, output, lambda reopened: neural_recover(reopened, password, model, ecc=ecc) == message)
+    return serialize_verified(marked, ".png", lambda reopened: neural_recover(reopened, password, model, ecc=ecc) == message)
 
 
 def encode_file(image, message, password, output):
@@ -105,7 +110,10 @@ def encode_file(image, message, password, output):
 
 
 def publish_encoded(marked, output, verify):
-    suffix = output.suffix.lower()
+    write_new_file(serialize_verified(marked, output.suffix.lower(), verify), output)
+
+
+def serialize_verified(marked, suffix, verify):
     # Serialize pixels only. The marked image inherits the cover's info dict, and
     # Pillow would otherwise copy its ICC profile into the output file.
     marked = Image.fromarray(np.asarray(marked.convert("RGB")))
@@ -118,6 +126,10 @@ def publish_encoded(marked, output, verify):
     with Image.open(io.BytesIO(encoded)) as reopened:
         if not verify(reopened):
             raise ValueError("Serialized output failed its authentication check")
+    return encoded
+
+
+def write_new_file(encoded, output):
     with NamedTemporaryFile(dir=output.parent, delete=False) as temporary:
         temporary_path = Path(temporary.name)
         try:
