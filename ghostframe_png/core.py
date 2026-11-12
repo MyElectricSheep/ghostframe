@@ -18,6 +18,7 @@ from ghostframe import SHA256 as CHECKPOINT_SHA256, embedding
 from ghostframe_png import backbones
 
 MAX_PIXELS = 4_000_000
+MAX_ICC_BYTES = 1024 * 1024  # real profiles are a few KB; larger ones are refused, not parsed
 SALT_BYTES = 16
 TAG_BYTES = 16
 RS_BLOCK = 255
@@ -177,6 +178,8 @@ def _to_rgb(image, info=None):
     if image.mode not in ("RGB", "L"):
         image = image.convert("RGB")
     icc = image.info.get("icc_profile")
+    if icc and len(icc) > MAX_ICC_BYTES:
+        raise InputError(f"Colour profile is larger than {MAX_ICC_BYTES // 1024} KiB")
     if icc:
         from PIL import ImageCms
 
@@ -322,6 +325,8 @@ def seal(message, passphrase, profile, *, _salt=None):
         raise CapacityError(f"Message is {len(message)} bytes; {profile.name} carries at most {profile.capacity}")
     if not passphrase:
         raise InputError("Passphrase cannot be empty")
+    if _salt is not None and (isinstance(_salt, int) or len(bytes(_salt)) != SALT_BYTES):
+        raise ValueError(f"_salt must be exactly {SALT_BYTES} bytes")  # bytes(16) would be 16 zeros
     salt = os.urandom(SALT_BYTES) if _salt is None else bytes(_salt)
     key, nonce = _keys(passphrase, salt)
     plain = len(message).to_bytes(profile.length_bytes, "big") + bytes(message)
@@ -373,7 +378,13 @@ def rs_encode(frame, profile):
     return codeword.tobytes()
 
 
-def rs_candidates(received, confidence, profile, levels=(0, .25, .5, .75, 1.0)):
+SOFT_LEVELS = (0, .25, .5, .75, 1.0)  # share of each block's parity tried as erasures
+# rs_candidates yields at most one distinct frame per level, so a decode derives at most this many
+# scrypt keys (one per distinct salt). The check in decode_message keeps that bound explicit.
+MAX_KEY_ATTEMPTS = len(SOFT_LEVELS)
+
+
+def rs_candidates(received, confidence, profile, levels=SOFT_LEVELS):
     """Yield (frame, corrected_symbols, erasures) candidates; every one still needs authentication."""
     from reedsolo import RSCodec, ReedSolomonError
 
@@ -564,9 +575,9 @@ def decode_message(rgb, passphrase, profile, model, *, soft=True, report=None):
         profile = PROFILES[profile]
     received, confidence = scores_to_bytes(read_scores(rgb, profile, model))
     keys = {}
-    levels = (0, .25, .5, .75, 1.0) if soft else (0,)
+    levels = SOFT_LEVELS if soft else (0,)
     for frame, corrected, erased in rs_candidates(received, confidence, profile, levels):
-        if len(keys) >= 8:
+        if len(keys) >= MAX_KEY_ATTEMPTS:
             break
         try:
             message = open_frame(frame, passphrase, profile, _key_cache=keys)

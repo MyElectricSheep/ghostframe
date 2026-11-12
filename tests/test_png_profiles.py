@@ -1,10 +1,12 @@
 from importlib.util import find_spec
+import hashlib
 import io
 from pathlib import Path
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
 import unittest
+from unittest import mock
 
 if any(find_spec(name) is None for name in ("cryptography", "reedsolo")):
     raise unittest.SkipTest("Install the tiled experiment extra")
@@ -86,13 +88,66 @@ class FrameTests(unittest.TestCase):
         frame0, corrected, _ = next(core.rs_candidates(bytes(codeword), confidence, p, levels=(0,)))
         self.assertEqual(core.open_frame(frame0, PASS, p), b"payload")
         self.assertEqual(corrected, 24)
-        for i in range(24, 26):
+        self.assertEqual(self.decode(codeword, confidence, p), b"payload")
+        # Beyond the budget, with the soft levels on: 20 errors per block, and the confidence points
+        # the erasures at the intact bytes. Any miscorrection that RS returns fails authentication.
+        for i in range(24, 40):
             codeword[i] ^= 0x5A
-        self.assertFalse(any(core.open_frame(f, PASS, p) == b"payload" if self._authentic(f, p) else False
-                             for f, _, _ in core.rs_candidates(bytes(codeword), confidence, p, levels=(0,))))
+        misleading = np.ones(len(codeword))
+        misleading[:40] = 9.0
+        with self.assertRaises(core.DecodeError):
+            self.decode(codeword, misleading, p)
+        self.assertFalse(any(self._authentic(f, p) for f, _, _ in core.rs_candidates(bytes(codeword), misleading, p)))
         # Low confidence on the damaged bytes lets erasures repair up to the parity budget.
         confidence[:26] = 0
+        codeword[26:40] = core.rs_encode(frame, p)[26:40]
         self.assertTrue(any(self._authentic(f, p) for f, _, _ in core.rs_candidates(bytes(codeword), confidence, p)))
+
+    @staticmethod
+    def decode(codeword, confidence, p, soft=True):
+        """decode_message on a given codeword: the model's scores are replaced by signed confidences."""
+        bits = np.unpackbits(np.frombuffer(bytes(codeword), np.uint8)).astype(np.float32) * 2 - 1
+        scores = bits * np.repeat(np.asarray(confidence, np.float32), 8)
+        with mock.patch.object(core, "read_scores", return_value=scores):
+            return core.decode_message(None, PASS, p, None, soft=soft)
+
+    def test_decode_work_is_bounded(self):
+        # Garbage with soft decoding on: every erasure level can produce a distinct "frame", and each
+        # distinct salt costs one scrypt. The number of key derivations stays within the bound.
+        p = profile(cols=10, rows=8, bits=32, parity=48)
+        rng = np.random.default_rng(3)
+        calls = []
+
+        def counting_keys(passphrase, salt):
+            calls.append(salt)
+            return bytes(32), bytes(12)
+
+        with mock.patch.object(core, "_keys", counting_keys):
+            for trial in range(5):
+                garbage = rng.integers(0, 256, p.codeword_bytes, dtype=np.uint8).tobytes()
+                calls.clear()
+                with self.assertRaises(core.DecodeError):
+                    self.decode(garbage, rng.random(p.codeword_bytes) + 0.01, p)
+                self.assertLessEqual(len(calls), core.MAX_KEY_ATTEMPTS)
+                self.assertLessEqual(sum(1 for _ in core.rs_candidates(garbage, rng.random(p.codeword_bytes), p)),
+                                     len(core.SOFT_LEVELS))
+
+    def test_every_single_bit_flip_is_rejected(self):
+        p = profile()
+        fast = lambda passphrase, salt: (hashlib.sha256(passphrase + salt).digest(), hashlib.sha256(salt).digest()[:12])
+        with mock.patch.object(core, "_keys", fast):
+            frame = core.seal(b"hi", PASS, p)
+            self.assertEqual(core.open_frame(frame, PASS, p), b"hi")
+            for bit in range(len(frame) * 8):  # salt, ciphertext and tag
+                flipped = bytearray(frame)
+                flipped[bit // 8] ^= 0x80 >> (bit % 8)
+                with self.subTest(bit=bit), self.assertRaises(core.DecodeError):
+                    core.open_frame(bytes(flipped), PASS, p)
+
+    def test_fixture_salt_must_be_sixteen_bytes(self):
+        for bad in (16, b"short", bytes(17)):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                core.seal(b"x", PASS, profile(), _salt=bad)
 
     @staticmethod
     def _authentic(frame, p):
@@ -140,6 +195,9 @@ class InputContractTests(unittest.TestCase):
         srgb = ImageCms.ImageCmsProfile(ImageCms.createProfile("sRGB")).tobytes()
         tagged = core.load_cover(self.save(Image.new("RGB", (32, 32), (200, 30, 30)), "s.png", icc_profile=srgb))
         self.assertEqual(tagged[0, 0].tolist(), [200, 30, 30])
+        with mock.patch.object(core, "MAX_ICC_BYTES", len(srgb) - 1):  # oversized profiles are not parsed
+            with self.assertRaises(core.InputError):
+                core.load_cover(self.save(Image.new("RGB", (32, 32)), "big-icc.jpg", icc_profile=srgb))
         lab = ImageCms.ImageCmsProfile(ImageCms.createProfile("LAB")).tobytes()
         with self.assertRaises(core.InputError):  # A non-RGB profile cannot describe RGB pixels.
             core.load_cover(self.save(Image.new("RGB", (32, 32)), "lab.png", icc_profile=lab))
@@ -184,6 +242,38 @@ class CLITests(unittest.TestCase):
             result = self.run_cli("decode", "x.png", "--profile", "nope", "--passphrase-file", str(d / "pw"))
             self.assertEqual(result.returncode, 2)
             self.assertEqual(list(p.name for p in d.iterdir() if p.suffix == ".png"), [])
+
+
+    def test_legacy_input_errors_exit_2(self):
+        with TemporaryDirectory() as directory:
+            d = Path(directory)
+            (d / "pw").write_bytes(b"pw\n")
+            Image.new("RGB", (40, 40)).save(d / "tiny.png")
+            result = self.run_cli("decode", str(d / "tiny.png"), "--profile", "legacy-v1", "--passphrase-file", str(d / "pw"))
+            self.assertEqual(result.returncode, 2, result.stderr)
+            self.assertIn(b"too small", result.stderr)
+            self.assertEqual(result.stdout, b"")
+
+    def test_legacy_profiles_without_a_repository_clone(self):
+        with TemporaryDirectory() as directory:  # a working directory without experiments/
+            d = Path(directory)
+            (d / "pw").write_bytes(b"pw\n")
+            code = ("import sys; sys.path = [p for p in sys.path if p not in ('', '.', %r)]; sys.path.insert(0, %r); "
+                    "sys.modules['experiments'] = None; from ghostframe_png.cli import main; sys.exit(main())") % (str(ROOT), str(ROOT))
+            result = subprocess.run([sys.executable, "-c", code, "decode", "x.png", "--profile", "legacy-v1",
+                                     "--passphrase-file", str(d / "pw")], cwd=d, capture_output=True)
+            self.assertEqual(result.returncode, 2, result.stderr)
+            self.assertIn(b"clone of the repository", result.stderr)
+
+    def test_wrong_passphrase_exits_1_with_nothing_on_stdout(self):
+        with TemporaryDirectory() as directory:
+            pw = Path(directory) / "pw"
+            pw.write_bytes(b"not the fixture passphrase\n")
+            fixture = ROOT / "demo-photos" / "fixtures" / "antonello-portrait-of-a-man" / "subtle.png"
+            result = self.run_cli("decode", str(fixture), "--profile", "bb-mobilenet_v3_small-l2-b16p48",
+                                  "--passphrase-file", str(pw))
+            self.assertEqual(result.returncode, 1, result.stderr)
+            self.assertEqual(result.stdout, b"")
 
 
 class ModelRoundTripTests(unittest.TestCase):
