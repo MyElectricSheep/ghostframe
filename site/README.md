@@ -83,6 +83,11 @@ sudo systemctl stop docker
 - **Two locks.** Access sits in front of the hostname, and the Worker also checks every request's
   Access token (signature, audience, expiry) before serving anything, assets included. Set
   `ACCESS_AUD` to `off` in `wrangler.jsonc` only when the site is opened up.
+- **Daily count.** The site-wide count is saved in the Durable Object's storage after every encode,
+  cancel and job poll, and given back to the container (`/api/internal/limits`, never reachable from
+  outside) before a fresh container serves its first request. It holds for the whole UTC day across
+  sleeps and restarts. A queued job abandoned by a closed tab is given back inside the container
+  without a request, so if the container then sleeps, that one encode stays counted.
 - **Config.** The caps and the time limit are `vars` in `wrangler.jsonc`, passed to the container
   when it starts. The Turnstile secret is a Worker secret: `npx wrangler secret put GF_TURNSTILE_SECRET`.
 - **Review address.** `ghostframe-review.electricsheep.id` has no Access, for design reviews. The
@@ -99,8 +104,9 @@ loaded (the very first start, which also pulled the image, took about 23 s).
 
 ## Before launch
 
-- **Daily caps live in the container's memory**, so they start again whenever the container
-  sleeps and wakes. Before opening up, keep the counts in the Durable Object's storage.
+- **Per-visitor caps reset when the container sleeps.** The site-wide count is persisted (see
+  Deploy); the per-visitor counts stay in memory on purpose, because persisting them would mean
+  storing hashed IP addresses.
 - **Keep the live site behind Cloudflare Access** until it is opened up.
 - **Serve every PNG byte for byte.** Polish, Mirage, WebP and Image Resizing are off on the
   `electricsheep.id` zone, and a configuration rule pins Polish, Mirage, Rocket Loader and email

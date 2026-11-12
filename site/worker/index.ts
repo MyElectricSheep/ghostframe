@@ -41,16 +41,44 @@ export class Engine extends DurableObject<Env> {
       return Response.json({ error: 'unreachable' }, { status: 503, headers: { 'Cache-Control': 'no-store' } });
     }
     const url = new URL(request.url);
+    if (url.pathname.startsWith('/api/internal/')) return new Response('Not found', { status: 404 });
     url.protocol = 'http:';
     url.host = 'container';
     const forwarded = new Request(url, request);
     forwarded.headers.delete('host');
-    return this.ctx.container!.getTcpPort(PORT).fetch(forwarded);
+    const response = await this.ctx.container!.getTcpPort(PORT).fetch(forwarded);
+    // Encodes, cancels and job polls are where the site-wide count changes: save it each time.
+    if (url.pathname === '/api/encode' || url.pathname.startsWith('/api/jobs/')) void this.saveCount();
+    return response;
+  }
+
+  // The site-wide daily count lives in the container's memory while it runs, and in this Durable
+  // Object's storage across sleeps and restarts, so it holds for the whole UTC day. The per-visitor
+  // counts are not persisted: they are keyed by a hashed IP whose key is never stored.
+  restored = false;
+
+  async saveCount(): Promise<void> {
+    try {
+      const r = await this.ctx.container!.getTcpPort(PORT).fetch('http://container/api/internal/limits');
+      if (r.ok) await this.ctx.storage.put('siteCount', await r.json());
+    } catch (error) {
+      console.error('could not save the daily count', error);
+    }
+  }
+
+  async restoreCount(): Promise<void> {
+    const saved = await this.ctx.storage.get<{ day: string; site: number }>('siteCount');
+    if (saved) {
+      const r = await this.ctx.container!.getTcpPort(PORT).fetch('http://container/api/internal/limits', { method: 'POST', body: JSON.stringify(saved), headers: { 'content-type': 'application/json' } });
+      if (!r.ok) throw new Error(`restore returned ${r.status}`);
+    }
+    this.restored = true;
   }
 
   async startAndWait(): Promise<void> {
     const container = this.ctx.container!;
     if (!container.running) {
+      this.restored = false;
       const env: Record<string, string> = {
         GF_SITE_DAILY_CAP: this.env.GF_SITE_DAILY_CAP,
         GF_VISITOR_DAILY_CAP: this.env.GF_VISITOR_DAILY_CAP,
@@ -69,7 +97,8 @@ export class Engine extends DurableObject<Env> {
       try {
         const response = await port.fetch('http://container/api/status', { signal: AbortSignal.timeout(2000) });
         await response.body?.cancel();
-        if (response.ok) return;
+        // Before the first request reaches a fresh container, give it today's saved count.
+        if (response.ok) { if (!this.restored) await this.restoreCount(); return; }
         lastError = new Error(`status returned ${response.status}`);
       } catch (error) {
         lastError = error;
@@ -150,6 +179,7 @@ async function review(request: Request, env: Env): Promise<Response> {
 
 function route(request: Request, env: Env): Promise<Response> {
   const { pathname } = new URL(request.url);
+  if (pathname.startsWith('/api/internal/')) return Promise.resolve(new Response('Not found', { status: 404 }));
   if (pathname.startsWith('/api/')) return env.ENGINE.getByName('engine').fetch(request);
   return env.ASSETS.fetch(request);
 }
