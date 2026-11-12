@@ -1,5 +1,30 @@
 # Research
 
+## Closest prior work
+
+The current `ghostframe-png` profiles use an idea with several precedents: optimise an image's
+pixels so that a frozen network reads hidden data out of its features.
+
+- Vukotić, Chappelier and Furon, "Are deep neural networks good for blind image watermarking?",
+  WIFS 2018: watermarking through the features of a frozen pretrained network.
+- Fernandez et al., [Watermarking Images in Self-Supervised Latent Spaces](https://arxiv.org/abs/2112.09581),
+  ICASSP 2022: fixed carrier directions in a self-supervised feature space. This is the closest
+  to Ghostframe's carriers.
+- Kishore et al., [Fixed Neural Network Steganography](https://openreview.net/forum?id=hcMvApxGSzZ),
+  ICLR 2022 ([code](https://github.com/varshakishore/FNNS)): the same principle applied to
+  steganography, with several decoder variants.
+- Luo et al., [ACM MM 2023](https://openreview.net/forum?id=8MY_s2y_v9): adds a key to FNNS. A
+  later follow-up is [Cs-FNNS](https://arxiv.org/abs/2407.11405).
+
+What Ghostframe adds is engineering and measurement rather than a new method: tiles with
+authenticated encryption and interleaved Reed–Solomon codes, an encoder that verifies the saved
+file before writing it, and a preregistered held-out benchmark on CPU
+([BENCHMARK.md](BENCHMARK.md)).
+
+## Original survey
+
+The section below is the survey written at the start of the project, for the raw-bit channel.
+
 Fernandez et al. are the closest direct precedent. Their ICASSP 2022 system modifies the pixels of an existing photograph through a fixed DINO-trained feature extractor and reads a multibit message from latent-space directions. Their implementation uses learned whitening statistics and includes image transformations during optimization. Ghostframe v1 uses a stock supervised ImageNet encoder, unwhitened features and keyed sign projections as a minimal comparison. This establishes precedent for the method, independent of Ghostframe's results. [Paper and examples](https://pierrefdz.github.io/publications/sslwatermarking/) · [Official implementation](https://github.com/facebookresearch/ssl_watermarking)
 
 | Candidate | Capacity and robustness | Cost and dependencies | Security and maturity |

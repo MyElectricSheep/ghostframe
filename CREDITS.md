@@ -28,6 +28,6 @@ bundled with scikit-image; see its [data credits](https://scikit-image.org/docs/
 
 The pretrained ImageNet weights for SqueezeNet 1.1, MobileNetV3-Small, ResNet-18,
 EfficientNet-B0 and ConvNeXt-Tiny are not included in this repository. They are downloaded on
-first use from `download.pytorch.org` and checked against pinned SHA-256 hashes. They are
-published by the torchvision project under its BSD-3-Clause licence; the ImageNet dataset they
-were trained on has its own terms.
+first use from `download.pytorch.org` and checked against pinned SHA-256 hashes. The torchvision
+project publishes them; its code is BSD-3-Clause, it makes no separate licence statement for the
+weights, and the ImageNet dataset they were trained on has its own terms.
