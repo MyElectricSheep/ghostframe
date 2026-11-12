@@ -65,7 +65,7 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
 
 | Cap | Profile | Payload | Holdout | Wilson 95 % | Median PSNR / SSIM | Median encode | Status |
 |---:|---|---:|---:|---|---|---:|---|
-| 2 | `sw-l2-c10x8b16p48` | 79 B | 123/123 | 97.0–100 % | 42.9 dB / 0.979 | 30 s | recommended experimental |
+| 2 | `sw-l2-c10x8b16p48` | 79 B | 123/123 | 97.0–100 % | 42.9 dB / 0.978 | 30 s | recommended experimental |
 | 8 | `sw-l8-c10x8b40p64` | 302 B | 123/123 | 97.0–100 % | 35.0 dB / 0.885 | 41 s | recommended experimental |
 | 2 | legacy 49 B | 49 B | 41/41 | 91.4–100 % | 43.6 dB / 0.981 | 21 s | legacy |
 | 8 | legacy 161 B | 161 B | 41/41 | 91.4–100 % | 38.6 dB / 0.949 | 23 s | legacy |

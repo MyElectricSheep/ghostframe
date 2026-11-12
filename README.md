@@ -14,23 +14,28 @@ reliably it works on ordinary CPUs, with every raw result committed.
 
 ## What works and what doesn't
 
-| Mode | Profile | Message | Change per channel | Held-out photos | Encode (4 vCPU) |
+| Mode | Profile | Message | Change per channel | Held-out trials | Encode (4 vCPU) |
 |---|---|---:|---:|---:|---:|
 | Subtle | `bb-mobilenet_v3_small-l2-b16p48` | up to 79 B | ±2 levels | 123/123 | median 19 s |
 | Long | `bb-mobilenet_v3_small-l8-b64p112` | up to 494 B | ±8 levels | 123/123 | median 33 s |
 | Classic | `legacy-v1` (SqueezeNet 1.1) | 13 B | ±8 levels | 41/41 | median 24 s |
 
-"Held-out photos" means 41 photographs, 1280 px wide, that were fixed in a manifest and never used
-to tune any profile (the MobileNetV3 profiles were scored on the same 41 photos after the
-SqueezeNet ones), with three separately encrypted messages each. A separate decoder process recovered
-every one exactly. With zero failures in 41 photos, the data still allow a failure rate of up to
-about 7 % per photo; they do not show that it is zero. Subtle and Long also read back 41/41 on
+"Held-out trials" are on 41 photographs, 1280 px wide, that were fixed in a manifest and never
+used to tune any profile (the MobileNetV3 profiles were scored on the same 41 photos after the
+SqueezeNet ones). 123 = 41 photos × 3 separately encrypted messages for Subtle and Long; Classic
+is 41 photos × 1. A separate decoder process recovered every one exactly. With zero failures in
+41 photos, the data still allow a per-photo failure rate of about 7 % (one-sided 95 % bound; 9 %
+two-sided); they do not show that it is zero. Subtle and Long also read back 41/41 on
 those photos resized to 640 px.
+
+Encode times are the optimisation alone on a shared 4-vCPU server; the command-line tool adds
+about 5–15 s to load the model and verify.
 
 Its limits:
 
-- It does not survive edits. It reads exact PNG pixels, so a JPEG save at quality 95, a resize or
-  a crop destroys the message. Most messaging apps and social sites do one of these.
+- It does not survive edits. It reads exact PNG pixels, so a resize or a crop destroys the
+  message, and a JPEG save, even at quality 95, almost always does (1 of 12 Long test files
+  survived quality 95; none survived 90). Most messaging apps and social sites do one of these.
 - It does not hide that a message exists. A simple detector that knows the public profile
   separates every marked photo from its original (AUC 1.0). This is not steganography in the sense of being
   undetectable. The passphrase keeps the contents private and makes tampering detectable.
@@ -60,7 +65,7 @@ ghostframe-png decode demo-photos/fixtures/milky-way/subtle.png \
 # Signal from the fence line at 02:00. Two flashes mean the road is clear.
 ```
 
-Hide your own message. This takes about 20 seconds on a 4-core CPU:
+Hide your own message. This takes about 25 seconds on a 4-core CPU:
 
 ```sh
 printf '%s' 'Meet at dawn. The north gate stays open until six.' > message.txt

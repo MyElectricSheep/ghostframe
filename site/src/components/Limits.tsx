@@ -16,7 +16,7 @@ const aucs = [DETECT.subtle?.auc, DETECT.long?.auc].filter((v): v is number => v
 const detectNote = aucs.length && Math.min(...aucs) === 1 ? 'a detection test separated every marked photo from every clean one' : aucs.length ? `detection test AUC ${Math.min(...aucs).toFixed(2)}` : '';
 
 const limits = [
-  { t: 'Exact PNG copies only.', d: 'Recompressing, resizing, cropping, screenshots and most chat apps destroy the message. Email attachments, file links, AirDrop and USB keep it.', n: '' },
+  { t: 'Exact PNG copies only.', d: 'Recompressing, resizing, cropping, screenshots and most chat apps almost always destroy the message. Email attachments, file links, AirDrop and USB keep it.', n: '' },
   { t: 'Not a watermark.', d: 'The message is hidden from the eye, not from software, and it is not built to survive edits. A watermark is built to withstand compression and resizing; Ghostframe deliberately is not.', n: '' },
   { t: 'Not invisible to software.', d: 'Anyone with the public reader can tell a photo carries a message. They can’t read or forge it.', n: detectNote },
   { t: 'Not every photo works.', d: 'Flat, synthetic and small images can be refused. When that happens, no file is produced.', n: stressNote + smallNote },
@@ -58,7 +58,7 @@ export function Limits() {
             <span id="gf-modes-cap" style={S({ fontSize: '13px', color: '#625c57' })}>Modes, held-out evidence and median image quality</span>
           </div>
           {phone ? (
-          // Below 560 px each mode is a card with labelled rows, so nothing is cut off (corrective pass 3).
+          // Below 560 px each mode is a card with labelled rows, so nothing is cut off.
           <ul aria-labelledby="gf-modes-cap" style={S({ listStyle: 'none', margin: '0', padding: '0' })}>
             {modeRows.map((r, i) => (<React.Fragment key={i}>
               <li style={S({ display: 'flex', flexDirection: 'column', gap: '10px', padding: '14px 16px', borderBottom: '1px solid rgba(24,20,17,0.07)' })}>
