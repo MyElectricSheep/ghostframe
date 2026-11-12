@@ -12,6 +12,8 @@ interface Env {
   GF_TURNSTILE_SECRET?: string;
   ACCESS_TEAM_DOMAIN: string;
   ACCESS_AUD: string;
+  REVIEW_HOST: string;
+  REVIEW_KEY?: string;
 }
 
 const PORT = 8790;
@@ -115,11 +117,46 @@ async function hasAccess(request: Request, env: Env): Promise<boolean> {
   }
 }
 
+// A temporary review address (REVIEW_HOST) without Access, for design reviews. It needs the
+// REVIEW_KEY secret: `?review=<key>` once sets a cookie, then the cookie lets the page load its
+// files. Encoding is refused there with the designed daily-limit state; reading still works.
+// Without the secret the review address refuses everything.
+const REVIEW_COOKIE = 'gf_review';
+
+function sameKey(given: string | null | undefined, key: string): boolean {
+  if (!given) return false;
+  const a = new TextEncoder().encode(given), b = new TextEncoder().encode(key);
+  return a.byteLength === b.byteLength && crypto.subtle.timingSafeEqual(a, b);
+}
+
+const cookie = (request: Request, name: string) =>
+  request.headers.get('cookie')?.split(';').map((c) => c.trim().split('=')).find(([k]) => k === name)?.[1];
+
+async function review(request: Request, env: Env): Promise<Response> {
+  const forbidden = new Response('Forbidden', { status: 403, headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } });
+  if (!env.REVIEW_KEY) return forbidden;
+  const url = new URL(request.url);
+  const fromQuery = sameKey(url.searchParams.get('review'), env.REVIEW_KEY);
+  if (!fromQuery && !sameKey(cookie(request, REVIEW_COOKIE), env.REVIEW_KEY)) return forbidden;
+  let response = url.pathname === '/api/encode'
+    ? Response.json({ error: 'site_limit' }, { status: 429, headers: { 'Cache-Control': 'no-store' } })
+    : await route(request, env);
+  response = new Response(response.body, response);
+  response.headers.set('X-Robots-Tag', 'noindex');
+  if (fromQuery) response.headers.append('Set-Cookie', `${REVIEW_COOKIE}=${env.REVIEW_KEY}; Path=/; Max-Age=604800; HttpOnly; Secure; SameSite=Lax`);
+  return response;
+}
+
+function route(request: Request, env: Env): Promise<Response> {
+  const { pathname } = new URL(request.url);
+  if (pathname.startsWith('/api/')) return env.ENGINE.getByName('engine').fetch(request);
+  return env.ASSETS.fetch(request);
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    if (new URL(request.url).hostname === env.REVIEW_HOST) return review(request, env);
     if (!(await hasAccess(request, env))) return new Response('Forbidden', { status: 403, headers: { 'Cache-Control': 'no-store' } });
-    const { pathname } = new URL(request.url);
-    if (pathname.startsWith('/api/')) return env.ENGINE.getByName('engine').fetch(request);
-    return env.ASSETS.fetch(request);
+    return route(request, env);
   },
 } satisfies ExportedHandler<Env>;

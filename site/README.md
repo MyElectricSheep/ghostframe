@@ -83,6 +83,10 @@ sudo systemctl stop docker
   `ACCESS_AUD` to `off` in `wrangler.jsonc` only when the site is opened up.
 - **Config.** The caps and the time limit are `vars` in `wrangler.jsonc`, passed to the container
   when it starts. The Turnstile secret is a Worker secret: `npx wrangler secret put GF_TURNSTILE_SECRET`.
+- **Review address.** `ghostframe-review.electricsheep.id` has no Access, for design reviews. The
+  Worker lets a visitor in only with the `REVIEW_KEY` secret: `?review=<key>` once sets a cookie for
+  7 days. Encoding is refused there with the "closed for today" state; Read works. To close it:
+  `npx wrangler secret delete REVIEW_KEY` (everything there then returns 403), then remove the route.
 - **Testing the live site.** Create a temporary Access service token, allow it on the app, then run
   `CF_ACCESS_CLIENT_ID=… CF_ACCESS_CLIENT_SECRET=… node tests/e2e.mjs https://ghostframe.electricsheep.id/ Subtle`.
   Delete the token afterwards.
@@ -98,7 +102,7 @@ loaded (the very first start, which also pulled the image, took about 23 s).
 - **Keep the live site behind Cloudflare Access** until it is opened up.
 - **Serve every PNG byte for byte.** Polish, Mirage, WebP and Image Resizing are off on the
   `electricsheep.id` zone, and a configuration rule pins Polish, Mirage, Rocket Loader and email
-  obfuscation off for `ghostframe.electricsheep.id`. The API already sends
+  obfuscation off for `ghostframe.electricsheep.id` and the review address. The API already sends
   `Cache-Control: no-store, no-transform`.
 - **The three link placeholders** (`[REPOSITORY_URL]`, `docs/BENCHMARK.md`,
   `docs/AUDIT_REPORT.md`) stay as in the design until the repository is public.
