@@ -63,7 +63,7 @@ def main():
                    font=font("DejaVuSansMono-Bold.ttf", 14))
 
     headline = font("DejaVuSans-Bold.ttf", 32)
-    d.text((GX, 38), "There is a 493-byte message", fill=FG, font=headline)
+    d.text((GX, 38), "There is a message", fill=FG, font=headline)
     d.text((GX, 80), "hidden in this painting.", fill=FG, font=headline)
 
     rx = GX + N * CELL + 30
