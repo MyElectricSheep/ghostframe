@@ -8,7 +8,7 @@ hashes match the manifest), and they are free to use. The portrait is a painting
 |---|---|---|---|
 | `coffee-beans.jpg` (1280×960) | Roasted coffee beans, close up | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Roasted_coffee_beans.jpg), public domain | "Roasted coffee beans" by MarkSweep, public domain, via Wikimedia Commons |
 | `milky-way.jpg` (1280×848) | Milky Way over a wooden fence | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Milky_Way_Night_Sky_(Unsplash).jpg), CC0 | "Milky Way Night Sky" by Guillaume (Unsplash), CC0, via Wikimedia Commons |
-| `antonello-portrait-of-a-man.jpg` (1280×1782) | Portrait of a man in a red cap, painted about 1475 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg), public domain (the National Gallery, London) | Antonello da Messina, *Portrait of a Man* (about 1475), The National Gallery, London, public domain, via Wikimedia Commons |
+| `antonello-portrait-of-a-man.jpg` (1280×1782) | Portrait of a man in a red cap, painted about 1475 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg); the painting is in the public domain, and the faithful photographic reproduction is PD-Art | Antonello da Messina, *Portrait of a Man* (about 1475; National Gallery, London, NG1141). The painting is in the public domain; faithful photographic reproduction via Wikimedia Commons (PD-Art). |
 
 None of these licences requires attribution, but crediting the source is good practice.
 
