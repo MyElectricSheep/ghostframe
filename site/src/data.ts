@@ -77,7 +77,7 @@ export const ABBR: Record<'PSNR' | 'SSIM' | 'AES' | 'scrypt', [string, string]> 
   PSNR: ['PSNR · peak signal-to-noise ratio', 'How close the marked photo is to the original, measured in decibels. Higher means closer; at around 40 dB and above, differences are usually very hard to see.'],
   SSIM: ['SSIM · structural similarity', 'Compares local patterns of brightness, contrast and texture between two images. 1 means identical.'],
   AES: ['AES-256-GCM', 'A widely used encryption standard. It keeps the message secret, and any change to the hidden data is detected instead of producing a wrong message.'],
-  scrypt: ['scrypt', 'A deliberately slow way of turning a passphrase into an encryption key, so trying many passphrases takes a very long time.'],
+  scrypt: ['scrypt', 'A deliberately slow way of turning a passphrase into an encryption key, so each guess takes a fraction of a second and a lot of memory, and a passphrase of several random words is out of reach.'],
 };
 export type AbbrKey = keyof typeof ABBR;
 

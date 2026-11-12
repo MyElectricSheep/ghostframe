@@ -55,8 +55,8 @@ export function drawHow(x: Ctx, img: Img, step: number, t: number) {
     if (enc > 0) hText(x, 'encrypted bytes', 960, 150, 26, HBLUE, { mono:true, align:'right', alpha:enc });
     const lk = hSeg(t, 0.8, 0.92);
     if (lk > 0) { x.globalAlpha = lk; hLock(x, 1010, 220, 60, hEase(lk), HBLUE); x.globalAlpha = 1; }
-    hText(x, 'Without the passphrase, nothing can be read.', 560, 640, 34, HINK, { align:'center', weight:600, alpha:hSeg(t, 0.85, 0.97) });
-    hText(x, 'AES-256-GCM: tampering is detected, not just hidden.', 560, 690, 24, HGRAY, { align:'center', alpha:hSeg(t, 0.88, 1) });
+    hWrap(x, 'Without the passphrase, the message can’t be read, as long as the passphrase is hard to guess.', 560, 610, 900, 32, 42, HINK, { align:'center', weight:600, alpha:hSeg(t, 0.85, 0.97) });
+    hText(x, 'AES-256-GCM: tampering is detected, not just hidden.', 560, 710, 24, HGRAY, { align:'center', alpha:hSeg(t, 0.88, 1) });
   } else if (step === 1) {
     const cell = 46, gap = 6, n = 13, ecc = 6, X0 = 560 - ((n + ecc) * (cell + gap) - gap) / 2, Y0 = 330;
     const a = hSeg(t, 0.02, 0.3);
@@ -160,8 +160,8 @@ export function drawHowNarrow(x: Ctx, img: Img, step: number, t: number) {
       const kx = L + 278 + (CW - 278) / 2;
       hText(x, 'key (scrypt)', kx, 316, 20, HBLUE, { mono:true, align:'center' }); x.globalAlpha = 1;
       x.strokeStyle = HBLUE; x.lineWidth = 3; x.beginPath(); x.moveTo(kx, 276); x.lineTo(kx, 178); x.stroke(); x.beginPath(); x.moveTo(kx - 10, 190); x.lineTo(kx, 176); x.lineTo(kx + 10, 190); x.stroke(); }
-    hWrap(x, 'Without the passphrase, nothing can be read.', MID, 448, CW, 28, 36, HINK, { align:'center', weight:600, alpha:hSeg(t, 0.85, 0.97) });
-    hWrap(x, 'AES-256-GCM: tampering is detected, not just hidden.', MID, 540, CW, 21, 30, HGRAY, { align:'center', alpha:hSeg(t, 0.88, 1) });
+    hWrap(x, 'Without the passphrase, the message can’t be read, as long as the passphrase is hard to guess.', MID, 430, CW, 28, 36, HINK, { align:'center', weight:600, alpha:hSeg(t, 0.85, 0.97) });
+    hWrap(x, 'AES-256-GCM: tampering is detected, not just hidden.', MID, 566, CW, 21, 30, HGRAY, { align:'center', alpha:hSeg(t, 0.88, 1) });
   } else if (step === 1) {
     const n = 13, ecc = 6, cell = 34, gap = 4, X0 = MID - (n * (cell + gap) - gap) / 2, Y0 = 130, Y1 = 250;
     const a = hSeg(t, 0.02, 0.3);

@@ -7,7 +7,7 @@ import { useAbbr } from './Abbr';
 import { StepCards } from './HowCards';
 
 const STEPS = [
-  { who: 'sender', t: 'The passphrase locks the message.', d: 'The message is encrypted with a key made from the passphrase. Without it, nothing can be read.' },
+  { who: 'sender', t: 'The passphrase locks the message.', d: 'The message is encrypted with a key made from the passphrase. Without it, the message can’t be read, as long as the passphrase is hard to guess.' },
   { who: 'sender', t: 'Error-correction bytes are added.', d: 'A few extra bytes let the reader repair a small number of wrong bits later.' },
   { who: 'sender', t: 'The photo is split into a grid of tiles.', d: '10 × 8 tiles for Subtle and Long, 6 × 5 for Short.' },
   { who: 'sender', t: 'Each tile is nudged until the model reads specific bits.', d: 'Pixels change by at most 2 or 8 levels out of 255. The encoder then saves the PNG, reopens it and checks it reads back.' },
