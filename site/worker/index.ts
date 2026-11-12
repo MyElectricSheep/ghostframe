@@ -118,7 +118,8 @@ async function hasAccess(request: Request, env: Env): Promise<boolean> {
 }
 
 // A temporary review address (REVIEW_HOST) without Access, for design reviews. It needs the
-// REVIEW_KEY secret: `?review=<key>` once sets a cookie, then the cookie lets the page load its
+// REVIEW_KEY secret: `?review=<key>` once sets a cookie (SameSite=None and Partitioned, so it also
+// works inside another site's frame), then the cookie lets the page load its
 // files. Encoding is refused there with the designed daily-limit state; reading still works.
 // Without the secret the review address refuses everything.
 const REVIEW_COOKIE = 'gf_review';
@@ -143,7 +144,7 @@ async function review(request: Request, env: Env): Promise<Response> {
     : await route(request, env);
   response = new Response(response.body, response);
   response.headers.set('X-Robots-Tag', 'noindex');
-  if (fromQuery) response.headers.append('Set-Cookie', `${REVIEW_COOKIE}=${env.REVIEW_KEY}; Path=/; Max-Age=604800; HttpOnly; Secure; SameSite=Lax`);
+  if (fromQuery) response.headers.append('Set-Cookie', `${REVIEW_COOKIE}=${env.REVIEW_KEY}; Path=/; Max-Age=604800; HttpOnly; Secure; SameSite=None; Partitioned`);
   return response;
 }
 
