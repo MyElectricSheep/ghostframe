@@ -88,12 +88,11 @@ sudo systemctl stop docker
   Delete the token afterwards.
 
 Measured on the live container (2026-11-12, 1920 × 1080 sample photo): Subtle 26.8 s, Long 59.7 s,
-Short 48.5 s; every download read back exactly. A cold start took about 23 s until the models were
-loaded.
+Short 48.5 s; every download read back exactly. Waking from sleep took 12 s until the models were
+loaded (the very first start, which also pulled the image, took about 23 s).
 
 ## Before launch
 
-- **Wake-up copy.** The copy promises "10–20 seconds"; a cold start measured about 23 s.
 - **Daily caps live in the container's memory**, so they start again whenever the container
   sleeps and wakes. Before opening up, keep the counts in the Durable Object's storage.
 - **Keep the live site behind Cloudflare Access** until it is opened up.
