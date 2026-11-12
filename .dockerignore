@@ -1,10 +1,20 @@
-# Only what server/Dockerfile copies.
+# An allow-list: only what server/Dockerfile copies.
 *
-!pyproject.toml
-!README.md
 !ghostframe.py
 !ghostframe_png/
-!experiments/
 !server/
+!experiments/message_cli.py
+!experiments/alignment_search.py
+!experiments/crop_robustness.py
+!experiments/encoder_screen.py
+!experiments/extended.py
+!experiments/frame_keys.py
+!experiments/jpeg_capacity.py
+!experiments/jpeg_carrier.py
+!experiments/jpeg_frame.py
+!experiments/luminance.py
+!experiments/robustness.py
+!experiments/tiled.py
+!experiments/tiled_ecc.py
 **/__pycache__
 server/Dockerfile
