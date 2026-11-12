@@ -61,7 +61,10 @@ export class Engine extends DurableObject<Env> {
   async saveCount(): Promise<void> {
     try {
       const r = await this.ctx.container!.getTcpPort(PORT).fetch('http://container/api/internal/limits');
-      if (r.ok) await this.ctx.storage.put('siteCount', await r.json());
+      if (!r.ok) { console.error('could not save the daily count', r.status); return; }
+      const count = await r.json<{ day: string; site: number }>();
+      await this.ctx.storage.put('siteCount', count);
+      console.log('saved daily count', JSON.stringify(count));
     } catch (error) {
       console.error('could not save the daily count', error);
     }
@@ -73,7 +76,8 @@ export class Engine extends DurableObject<Env> {
       const r = await this.ctx.container!.getTcpPort(PORT).fetch('http://container/api/internal/limits', { method: 'POST', body: JSON.stringify(saved), headers: { 'content-type': 'application/json' } });
       // Never block the site on this: log it and try again on the next request.
       if (!r.ok) { console.error('could not restore the daily count', r.status); return; }
-    }
+      console.log('restored daily count', JSON.stringify(saved), '->', await r.text());
+    } else console.log('no saved daily count to restore');
     this.restored = true;
   }
 
