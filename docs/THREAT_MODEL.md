@@ -1,4 +1,4 @@
-# Security and framing
+# Threat model and frame format
 
 Ghostframe is experimental. Encryption protects the contents of an authenticated frame under the passphrase and cryptographic assumptions. Steganography concerns hiding the existence of a payload. A subtle image change is insufficient evidence of undetectability. The raw-bit command emits unauthenticated guesses and is for research.
 

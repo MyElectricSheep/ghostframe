@@ -8,3 +8,5 @@ __pycache__/
 /site/public/demo-photos/
 /site/src/generated/
 /site/compare-out/
+/demo-photos/fixtures/embeddings/
+/site/worker/worker-configuration.d.ts

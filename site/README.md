@@ -38,7 +38,7 @@ node tests/e2e.mjs http://127.0.0.1:5178/ Short 'Meet at dawn.'
 node tests/a11y.mjs                                   # divider and tile keyboard paths, tooltips, tabs, live regions
 node tests/phone.mjs                                  # below 760 px: menu, Try it sheet and switch, How it works cards (focus, Escape, scroll lock)
 node tests/counter.mjs                                # daily encode counter: when it fetches, 0 on "site limit", hidden on failure
-node scripts/touch-targets.mjs /tmp/touch.png         # every control >= 44 px on touch
+node scripts/touch-targets.mjs touch.png              # every control >= 44 px on touch
 ```
 
 ## Server configuration
@@ -61,14 +61,15 @@ deletes it immediately.
 
 ## Deploy
 
-Live behind Cloudflare Access at https://ghostframe.electricsheep.id (Access app `ghostframe`, policy
-"Only Ben"). The `workers.dev` address is turned off.
+The site runs on Cloudflare Workers with one Cloudflare Container for the engine, behind
+Cloudflare Access. `wrangler.jsonc` is the author's deployment; for your own, copy
+`wrangler.example.jsonc` to `wrangler.jsonc` and fill in the hostname and the Access team domain and
+AUD (or set `ACCESS_AUD` to `off`). Deploying needs Docker running, because wrangler builds the
+engine image locally.
 
 ```sh
-sudo systemctl start docker              # Docker is off on the VPS; wrangler builds the engine image with it
 cd site
 CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… npm run deploy   # build + verify-dist + wrangler deploy
-sudo systemctl stop docker
 ```
 
 - **One engine.** The Worker sends every `/api/*` request to a single Durable Object (`engine`), which
@@ -84,12 +85,8 @@ sudo systemctl stop docker
   `ACCESS_AUD` to `off` in `wrangler.jsonc` only when the site is opened up.
 - **Config.** The caps and the time limit are `vars` in `wrangler.jsonc`, passed to the container
   when it starts. The Turnstile secret is a Worker secret: `npx wrangler secret put GF_TURNSTILE_SECRET`.
-- **Review address.** `ghostframe-review.electricsheep.id` has no Access, for design reviews. The
-  Worker lets a visitor in only with the `REVIEW_KEY` secret: `?review=<key>` once sets a cookie for
-  7 days. Encoding is refused there with the "closed for today" state; Read works. To close it:
-  `npx wrangler secret delete REVIEW_KEY` (everything there then returns 403), then remove the route.
 - **Testing the live site.** Create a temporary Access service token, allow it on the app, then run
-  `CF_ACCESS_CLIENT_ID=… CF_ACCESS_CLIENT_SECRET=… node tests/e2e.mjs https://ghostframe.electricsheep.id/ Subtle`.
+  `CF_ACCESS_CLIENT_ID=… CF_ACCESS_CLIENT_SECRET=… node tests/e2e.mjs https://<your host>/ Subtle`.
   Delete the token afterwards.
 
 Measured on the live container (2026-11-12, 1920 × 1080 sample photo): Subtle 26.8 s, Long 59.7 s,
@@ -103,7 +100,7 @@ loaded (the very first start, which also pulled the image, took about 23 s).
 - **Keep the live site behind Cloudflare Access** until it is opened up.
 - **Serve every PNG byte for byte.** Polish, Mirage, WebP and Image Resizing are off on the
   `electricsheep.id` zone, and a configuration rule pins Polish, Mirage, Rocket Loader and email
-  obfuscation off for `ghostframe.electricsheep.id` and the review address. The API already sends
+  obfuscation off for `ghostframe.electricsheep.id`. The API already sends
   `Cache-Control: no-store, no-transform`.
 - **The three link placeholders** (`[REPOSITORY_URL]`, `docs/BENCHMARK.md`,
-  `docs/AUDIT_REPORT.md`) stay as in the design until the repository is public.
+  `docs/AUDIT_REPORT.md`) point at the repository once it is public.

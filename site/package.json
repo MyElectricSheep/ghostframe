@@ -6,7 +6,7 @@
   "scripts": {
     "prepare-assets": "node scripts/prepare-assets.mjs",
     "dev": "npm run prepare-assets && vite",
-    "build": "npm run prepare-assets && tsc --noEmit && tsc -p worker/tsconfig.json && vite build && node scripts/verify-dist.mjs",
+    "build": "npm run prepare-assets && npm run cf-types && tsc --noEmit && tsc -p worker/tsconfig.json && vite build && node scripts/verify-dist.mjs",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy",
     "cf-types": "wrangler types worker/worker-configuration.d.ts"

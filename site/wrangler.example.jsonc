@@ -1,0 +1,41 @@
+// Copy to wrangler.jsonc and fill in the placeholders. See site/README.md, "Deploy".
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ghostframe",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-12",
+  // Behind Cloudflare Access. Set ACCESS_AUD to "off" to open the site to everyone.
+  "routes": [{ "pattern": "ghostframe.example.com", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "containers": [
+    {
+      "class_name": "Engine",
+      "scheduling_policy": "durable_object",
+      "images": {
+        "base": { "dockerfile": "../server/Dockerfile", "build_context": ".." }
+      }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "ENGINE", "class_name": "Engine" }]
+  },
+  "exports": {
+    "Engine": { "type": "durable-object", "storage": "sqlite" }
+  },
+  // Placeholders until the caps are decided; "none" removes a cap. GF_TURNSTILE_SECRET is a secret.
+  "vars": {
+    "GF_SITE_DAILY_CAP": "50",
+    "GF_VISITOR_DAILY_CAP": "3",
+    "GF_ENCODE_TIMEOUT_S": "300",
+    // Access app "ghostframe": the Worker checks every request's Access token against this AUD.
+    "ACCESS_TEAM_DOMAIN": "<your-team>.cloudflareaccess.com",
+    "ACCESS_AUD": "<Access application AUD tag>"
+  }
+}
