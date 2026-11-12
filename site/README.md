@@ -54,7 +54,9 @@ node scripts/touch-targets.mjs touch.png              # every control >= 44 px o
 | `GF_SITE_DAILY_CAP` | 50 | encodes per UTC day for the whole site; `none` for no cap. `GET /api/quota` returns `{ left, limit, resets_at }` from the same counter (404 with no cap), and the page's daily counter shows it |
 | `GF_VISITOR_DAILY_CAP` | 3 | encodes per UTC day per visitor (keyed IP hash, key replaced daily, never stored) |
 | `GF_ENCODE_TIMEOUT_S` | 300 | hard stop per encode; the copy promises 5 minutes |
-| `GF_TURNSTILE_SECRET` | unset | when set, encode and decode need a Turnstile token (build the page with `VITE_TURNSTILE_SITEKEY`) |
+| `GF_DECODE_SITE_DAILY_CAP` | 1000 | reads per UTC day for the whole site; `none` for no cap |
+| `GF_DECODE_VISITOR_DAILY_CAP` | 20 | reads per UTC day per visitor |
+| `GF_ENGINE_KEY`, `GF_INTERNAL_KEY` | unset | set by the Durable Object, fresh at every container start. With `GF_ENGINE_KEY` set, encode and decode are refused unless the request carries it (the Worker adds it after checking Turnstile). `GF_INTERNAL_KEY` guards `/api/internal/limits`, which does not exist without it. Unset means local development: no bot check, no internal route, and a warning at start-up |
 | `GF_TRUST_CF_IP` | unset | `1` behind Cloudflare: the visitor address comes from `CF-Connecting-IP` |
 | `GF_STATIC_DIR` | unset | also serve `site/dist` from the same process (single-host fallback) |
 | `GF_PRELOAD`, `GF_THREADS` | unset, 4 | load both models at start-up; torch threads |
@@ -63,14 +65,13 @@ node scripts/touch-targets.mjs touch.png              # every control >= 44 px o
 
 Photos, messages and passphrases are processed in memory only: the multipart spool limit is
 raised so uploads never reach disk, and a job's photo, message and passphrase are dropped when
-the job ends. The marked PNG is deleted as soon as the page fetches it, and anything left (the
-difference image, an unfetched result) is deleted after 15 minutes at most. One exception, as of
-this writing: the `legacy-v1` (Short) encoder writes its marked PNG to a private temporary
-directory and deletes it immediately.
+the job ends. The marked PNG and the difference image are deleted as soon as the page fetches
+them, and an unfetched result is deleted after 15 minutes at most. The Short encoder also works
+in memory.
 
 Per-visitor caps use an in-memory hash of the visitor's IP address (IPv6 by /64) with a key that
-changes daily and is never stored. The Durable Object stores only today's site-wide encode count.
-Cloudflare Workers per-request invocation logs are switched off; only error logs (no photos,
+changes daily and is never stored. The Durable Object stores only today's site-wide encode and read counts.
+Cloudflare Workers per-request invocation logs are switched off; only the engine's own log lines (errors and count updates; no photos,
 messages or passphrases) are kept by Cloudflare, for up to 7 days. The page sets no cookies and
 uses no browser storage; Turnstile may set its own. The privacy notice for visitors is in the page
 footer (`src/components/Footer.tsx`).
@@ -124,7 +125,7 @@ The site has been public since 2026-11-12. There is no Cloudflare Access app in 
   verifies the token before passing the request on.
 - **Caps.** 50 encodes per UTC day for the whole site and 3 per visitor. A cancelled encode gives
   its count back only if it had not started yet. Reads (decodes) are capped at 20 per visitor and
-  1,000 for the whole site per UTC day. The site-wide encode count is kept in the Durable Object
+  1,000 for the whole site per UTC day. The site-wide encode and read counts are kept in the Durable Object
   across sleeps; the per-visitor counts stay in memory on purpose (persisting them would mean
   storing hashed IP addresses), so they reset when the container sleeps.
 - **Serve every PNG byte for byte.** Polish, Mirage, WebP and Image Resizing are off on the

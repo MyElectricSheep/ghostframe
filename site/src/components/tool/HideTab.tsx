@@ -89,7 +89,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
     }
   };
 
-  // ---- values, named as in the design reference's renderVals()
+  // ---- derived values
   const HM = MODES[hMode];
   const hIss = issueOf(hFile, false), hf = hFile;
   const n = bytesOf(hMsg), over = n > HM.bytes, near = !over && n >= HM.bytes * 0.85;
@@ -127,7 +127,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
     cancelled: { t: 'Encoding cancelled', b: 'Nothing was kept. Change the photo, mode or message and encode again when you’re ready.', m: 'cancelled · no file produced', a: [] },
     vlimit: { t: 'You’ve used today’s encodes', b: 'You’ve used today’s encodes. You can still decode any image, or try the ready-made examples.', m: 'visitor limit reached · resets tomorrow (UTC)', a: [['Try the ready-made examples', toExamples], ['Read a message', navRead]] },
     slimit: { t: 'Encoding is closed for today', b: 'The demo has hit today’s limit. Encoding comes back tomorrow (UTC). Decoding still works.', m: 'site limit reached', a: [['Try the ready-made examples', toExamples], ['Read a message', navRead]] },
-    // Not in the design: wording for server errors and a failed bot check, approved 2026-11-12.
+    // Wording for server errors and a failed bot check.
     failed: { t: 'Something went wrong', b: 'The encoder stopped unexpectedly and no file was produced. Try again in a minute.', m: 'server error · no file produced', a: [] },
     botcheck: { t: 'The bot check didn’t pass', b: 'Complete the check next to the Encode button and try again.', m: 'bot check failed · no file produced', a: [] },
   } as Record<string, { t: string; b: string; m: string; a: [string, () => void][] }>)[phase];

@@ -52,7 +52,7 @@ export function ReadTab() {
     }
   };
 
-  // ---- values, named as in the design reference's renderVals()
+  // ---- derived values
   const rIss = issueOf(rFile, true), rf = rFile;
   const rBlock: string[] = []; if (!rf) rBlock.push('add a PNG'); else if (rIss) rBlock.push('use the original PNG'); if (!rPass) rBlock.push('enter the passphrase');
   const rDisabled = rBlock.length > 0 || rState === 'running';
@@ -174,7 +174,7 @@ export function ReadTab() {
               </div>
             </>)}
             {rFailed && (
-              // Not in the design: wording for a server error, approved 2026-11-12.
+              // Wording for a server error.
               <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px', padding: '16px', borderRadius: '8px', background: '#f1eee9', border: '1.5px solid rgba(18,16,14,0.55)' })}>
                 <span style={S({ fontSize: '17px', fontWeight: '700' })}>Something went wrong</span>
                 <p style={S({ margin: '0', fontSize: '14px', lineHeight: '1.5' })}>The reader couldn’t finish. Try again in a minute.</p>

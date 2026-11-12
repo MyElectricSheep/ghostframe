@@ -1,6 +1,6 @@
 // End-to-end against the real engine: Hide -> download the exact PNG -> Read it back.
 //   node tests/e2e.mjs [siteUrl] [mode] [message]    (site and API must be running; see site/README.md)
-// Behind Cloudflare Access, set CF_ACCESS_CLIENT_ID and CF_ACCESS_CLIENT_SECRET to a service token.
+// Against the live site the Turnstile check must pass in the headless browser.
 import { chromium } from 'playwright';
 import { createHash } from 'node:crypto';
 import { mkdtempSync, readFileSync } from 'node:fs';
@@ -15,10 +15,7 @@ const out = mkdtempSync(join(tmpdir(), 'gf-e2e-'));
 const ok = (cond, what) => { if (!cond) throw new Error('FAILED: ' + what); console.log('ok  ' + what); };
 
 const browser = await chromium.launch();
-const access = process.env.CF_ACCESS_CLIENT_ID
-  ? { 'CF-Access-Client-Id': process.env.CF_ACCESS_CLIENT_ID, 'CF-Access-Client-Secret': process.env.CF_ACCESS_CLIENT_SECRET }
-  : undefined;
-const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, acceptDownloads: true, extraHTTPHeaders: access });
+const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, acceptDownloads: true });
 await page.goto(SITE, { waitUntil: 'networkidle' });
 const tool = page.locator('#tool');
 
