@@ -57,14 +57,17 @@ export class Engine extends DurableObject<Env> {
   // Object's storage across sleeps and restarts, so it holds for the whole UTC day. The per-visitor
   // counts are not persisted: they are keyed by a hashed IP whose key is never stored.
   restored = false;
+  lastSaved = '';
 
   async saveCount(): Promise<void> {
     try {
       const r = await this.ctx.container!.getTcpPort(PORT).fetch('http://container/api/internal/limits');
       if (!r.ok) { console.error('could not save the daily count', r.status); return; }
-      const count = await r.json<{ day: string; site: number }>();
+      const count = await r.json<{ day: string; site: number }>(), text = JSON.stringify(count);
+      if (text === this.lastSaved) return;  // polls arrive every second; write only when it changes
       await this.ctx.storage.put('siteCount', count);
-      console.log('saved daily count', JSON.stringify(count));
+      this.lastSaved = text;
+      console.log('saved daily count', text);
     } catch (error) {
       console.error('could not save the daily count', error);
     }
