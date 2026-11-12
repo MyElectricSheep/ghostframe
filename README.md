@@ -152,7 +152,10 @@ them are in [docs/earlier/](docs/earlier/README.md). The `ghostframe` command an
 
 [ghostframe.electricsheep.id](https://ghostframe.electricsheep.id) runs the same engine. Its code is in
 `site/` and `server/`; see [site/README.md](site/README.md). Hide is capped at 50 encodes a day for
-the whole site and 3 per visitor, so running it locally is the way to try many photos.
+the whole site and 3 per visitor, and Read at 20 a day per visitor, so running it locally is the
+way to try many photos. The demo server sees the photo, message and passphrase you send; they
+are processed in memory and dropped when the job ends (privacy details are in the site footer
+and in [site/README.md](site/README.md#privacy)).
 
 ## Use it responsibly
 

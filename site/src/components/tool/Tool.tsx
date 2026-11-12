@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import type { Tab } from '../../App';
 import { BLUE, GRAY, INK } from '../../data';
 import { S } from '../../lib/style';
+import { openPrivacy } from '../Footer';
 import { DailyCounter, useDailyQuota } from './DailyCounter';
 import { HideTab } from './HideTab';
 import { ReadTab } from './ReadTab';
@@ -26,7 +27,7 @@ export function Tool({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) {
     <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '12px 32px', alignItems: 'flex-end', justifyContent: 'space-between' })}>
       <div style={S({ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '40em' })}>
         <h2 style={S({ margin: '0', fontSize: 'clamp(28px,3.4vw,40px)', fontWeight: '700', letterSpacing: '-0.02em', lineHeight: '1.1' })}>Use your own photo</h2>
-        <p style={S({ margin: '0', fontSize: '16px', lineHeight: '1.55', color: '#625c57', textWrap: 'pretty' })}>Nothing is stored. Photos, messages, passphrases and results are deleted as soon as the job finishes, and no one else can see your images.</p>
+        <p style={S({ margin: '0', fontSize: '16px', lineHeight: '1.55', color: '#625c57', textWrap: 'pretty' })}>Your photo, message and passphrase are sent to the demo server and processed in memory only; they are never written to disk and never shared. The result is deleted from the server as soon as your browser has fetched it, or after 15 minutes at most. <a href="#privacy" onClick={openPrivacy}>Privacy</a></p>
       </div>
       <DailyCounter q={quota.q} />
     </div>

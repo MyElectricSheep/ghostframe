@@ -53,20 +53,29 @@ node scripts/touch-targets.mjs touch.png              # every control >= 44 px o
 | `GF_STATIC_DIR` | unset | also serve `site/dist` from the same process (single-host fallback) |
 | `GF_PRELOAD`, `GF_THREADS` | unset, 4 | load both models at start-up; torch threads |
 
-Nothing is stored. Uploads stay in memory: the multipart spool limit is raised so they never
-reach disk. A job's photo, message and passphrase are dropped when the job ends. The marked PNG
-is released as soon as the page fetches it, and anything left expires after 15 minutes. The
-`legacy-v1` (Short) encoder writes one temporary file inside a private temporary directory and
-deletes it immediately.
+## Privacy
+
+Photos, messages and passphrases are processed in memory only: the multipart spool limit is
+raised so uploads never reach disk, and a job's photo, message and passphrase are dropped when
+the job ends. The marked PNG is deleted as soon as the page fetches it, and anything left (the
+difference image, an unfetched result) is deleted after 15 minutes at most. One exception, as of
+this writing: the `legacy-v1` (Short) encoder writes its marked PNG to a private temporary
+directory and deletes it immediately.
+
+Per-visitor caps use an in-memory hash of the visitor's IP address (IPv6 by /64) with a key that
+changes daily and is never stored. The Durable Object stores only today's site-wide encode count.
+Cloudflare Workers per-request invocation logs are switched off; only error logs (no photos,
+messages or passphrases) are kept by Cloudflare, for up to 7 days. The page sets no cookies and
+uses no browser storage; Turnstile may set its own. The privacy notice for visitors is in the page
+footer (`src/components/Footer.tsx`).
 
 ## Deploy
 
-The site runs on Cloudflare Workers with one Cloudflare Container for the engine. The Worker can
-also sit behind Cloudflare Access and check its token. `wrangler.jsonc` is the author's deployment;
-for your own, copy `wrangler.example.jsonc` to `wrangler.jsonc` and fill in the hostname and either
-the Access team domain and AUD, or `ACCESS_AUD: "off"`. Put your own Turnstile site key in
-`site/.env.production`, or remove the file to build without a bot check. Deploying needs Docker running, because wrangler builds the
-engine image locally.
+The site runs on Cloudflare Workers with one Cloudflare Container for the engine.
+`wrangler.jsonc` is the author's deployment; for your own, copy `wrangler.example.jsonc` to
+`wrangler.jsonc` and fill in the hostname. Put your own Turnstile site key in
+`site/.env.production`, or remove the file to build without a bot check. Deploying needs Docker
+running, because wrangler builds the engine image locally.
 
 ```sh
 cd site
@@ -80,11 +89,10 @@ CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… npm run deploy   # build + ve
   encodes of a 4 MP photo queued and six decodes alongside. The container stops after 3 minutes
   without requests (memory is billed while it is awake); the next visitor wakes it in about 12 s.
 - **No Internet from the container.** Both checkpoints are baked into the image and checked against
-  their pinned SHA-256 at build time. Outbound access is turned on only when `GF_TURNSTILE_SECRET` is
-  set, because Turnstile verification is the only outbound call.
-- **Two locks.** Access sits in front of the hostname, and the Worker also checks every request's
-  Access token (signature, audience, expiry) before serving anything, assets included. Set
-  `ACCESS_AUD` to `off` in `wrangler.jsonc` only when the site is opened up.
+  their pinned SHA-256 at build time. The Worker verifies the Turnstile token before an upload
+  reaches the engine, so the container makes no outbound calls and has no Internet access.
+- **Bot check and rate limits.** Hide and Read need a Turnstile token, checked by the Worker. The
+  Worker also applies per-IP request rate limits.
 - **Daily count.** The site-wide count is saved in the Durable Object's storage after every encode,
   cancel and job poll, and given back to the container (`/api/internal/limits`, never reachable from
   outside) before a fresh container serves its first request. It holds for the whole UTC day across
@@ -92,9 +100,10 @@ CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… npm run deploy   # build + ve
   without a request, so if the container then sleeps, that one encode stays counted.
 - **Config.** The caps and the time limit are `vars` in `wrangler.jsonc`, passed to the container
   when it starts. The Turnstile secret is a Worker secret: `npx wrangler secret put GF_TURNSTILE_SECRET`.
-- **Testing the live site.** Create a temporary Access service token, allow it on the app, then run
-  `CF_ACCESS_CLIENT_ID=… CF_ACCESS_CLIENT_SECRET=… node tests/e2e.mjs https://<your host>/ Subtle`.
-  Delete the token afterwards.
+- **Testing the live site.** No token or Access setup is needed, but every Hide and Read on the
+  live site needs a Turnstile token, so `node tests/e2e.mjs https://<your host>/ Subtle` passes only
+  if the headless browser gets one, and each run uses the live daily caps. Test against a local
+  server first.
 
 Measured on the live container (2026-11-12, 1920 × 1080 sample photo): Subtle 26.8 s, Long 59.7 s,
 Short 48.5 s; every download read back exactly. Waking from sleep took 12 s until the models were
@@ -102,14 +111,16 @@ loaded (the very first start, which also pulled the image, took about 23 s).
 
 ## Running in public
 
-The site has been public since 2026-11-12, with no Access app in front (`ACCESS_AUD` is `off`).
+The site has been public since 2026-11-12. There is no Cloudflare Access app in front of it.
 
 - **Bot check.** Hide and Read need a Turnstile token. The site key is public and lives in
-  `site/.env.production`; the secret is the Worker secret `GF_TURNSTILE_SECRET`, and setting it also
-  gives the container outbound access for verification.
-- **Caps.** 50 encodes per UTC day for the whole site and 3 per visitor. The site-wide count is
-  kept in the Durable Object across sleeps; the per-visitor counts stay in memory on purpose
-  (persisting them would mean storing hashed IP addresses), so they reset when the container sleeps.
+  `site/.env.production`; the secret is the Worker secret `GF_TURNSTILE_SECRET`, and the Worker
+  verifies the token before passing the request on.
+- **Caps.** 50 encodes per UTC day for the whole site and 3 per visitor. A cancelled encode gives
+  its count back only if it had not started yet. Reads (decodes) are capped at 20 per visitor and
+  1,000 for the whole site per UTC day. The site-wide encode count is kept in the Durable Object
+  across sleeps; the per-visitor counts stay in memory on purpose (persisting them would mean
+  storing hashed IP addresses), so they reset when the container sleeps.
 - **Serve every PNG byte for byte.** Polish, Mirage, WebP and Image Resizing are off on the
   `electricsheep.id` zone, and a configuration rule pins Polish, Mirage, Rocket Loader and email
   obfuscation off for `ghostframe.electricsheep.id`. The API already sends
