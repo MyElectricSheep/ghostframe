@@ -4,7 +4,7 @@ import type { RefObject } from 'react';
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /**
- * Phone menu and bottom sheet (mobile pass): while open, the page behind doesn't scroll, Escape
+ * Phone menu and bottom sheet: while open, the page behind doesn't scroll, Escape
  * closes, focus moves into the panel and Tab stays inside it (plus `keep`, e.g. the burger that
  * closes it). On close, focus returns to `back`.
  */

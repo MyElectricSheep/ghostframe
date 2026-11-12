@@ -33,7 +33,7 @@ const MENU = [
   { n: '05', t: 'Limits and evidence', d: 'What it can’t do, and the numbers', href: '#limits' },
 ] as const;
 
-/** Phone menu (mobile pass 8a): a burger opens a full-screen list of the sections under the header. */
+/** Phone menu: a burger opens a full-screen list of the sections under the header. */
 function PhoneMenu({ navHide, navRead }: { navHide: () => void; navRead: () => void }) {
   const [open, setOpen] = useState(false);
   const burger = useRef<HTMLButtonElement>(null), panel = useRef<HTMLDivElement>(null);

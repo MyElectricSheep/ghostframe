@@ -1,4 +1,4 @@
-// How it works on phones (mobile pass 8h): five swipe cards in a scroll-snap row, with numbered
+// How it works on phones: five swipe cards in a scroll-snap row, with numbered
 // dots. Only the card in view mounts the canvas and plays its step; the others wait.
 import { useEffect, useRef } from 'react';
 import type { RefObject } from 'react';

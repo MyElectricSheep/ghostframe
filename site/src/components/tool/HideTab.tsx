@@ -110,7 +110,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
   const stage = job && jobBusy ? job.state : null;
   const stDefs: [string, string][] = [['queued', 'Waiting in line'], ...(cold ? [['starting', 'Starting the engine'] as [string, string]] : []), ['encoding', 'Encoding and checking the saved file'], ['done', 'Ready to download']];
   const stageIdx = stDefs.findIndex((d) => d[0] === stage);
-  // Done: a check. Now: a ring with a pulsing centre. Upcoming: an outline (corrective pass 14).
+  // Done: a check. Now: a ring with a pulsing centre. Upcoming: an outline.
   const hStages = stDefs.map((d, i) => ({ label: d[1], status: i < stageIdx ? 'done' : i === stageIdx ? 'now' : '', fg: i <= stageIdx ? INK : GRAY, weight: i === stageIdx ? 600 : 400,
     kind: i < stageIdx ? 'done' : i === stageIdx ? 'now' : 'next', anim: i === stageIdx && !prefersReducedMotion() ? 'gfpulse 1s ease-in-out infinite' : 'none' }));
   const pos = job?.position ?? 0, slow = !!job?.slow;
