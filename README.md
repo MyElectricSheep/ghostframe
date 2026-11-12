@@ -79,8 +79,9 @@ ghostframe-png decode marked.png --profile bb-mobilenet_v3_small-l2-b16p48 --pas
 ```
 
 Without `--passphrase-file` the commands ask for the passphrase. Decode prints exactly the
-message bytes and exits 0; a wrong passphrase, a wrong profile or an unmarked image exits 1 with
-no output. `ghostframe-png profiles` lists every profile. The input rules (formats, colour
+message bytes and exits 0; with a wrong passphrase, a wrong profile or an unmarked PNG it prints
+nothing on standard output and exits 1. A non-PNG input exits 2 ("Unsupported image format;
+expected PNG"). `ghostframe-png profiles` lists every profile. The input rules (formats, colour
 profiles, minimum size) are in [docs/PNG_PROFILES.md](docs/PNG_PROFILES.md#input-contract).
 
 To check all nine published sample files and their negative controls:
