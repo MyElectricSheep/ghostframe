@@ -8,7 +8,7 @@ import { prefersReducedMotion, S } from '../../lib/style';
 import { check, dropZone, ISSUE, scrollToId } from './shared';
 import { Turnstile } from './Turnstile';
 
-type RState = 'idle' | 'running' | 'found' | 'none' | 'failed';
+type RState = 'idle' | 'running' | 'found' | 'none' | 'failed' | 'limit';
 interface Found { message: string; bytes: number; mode: ModeKey; profile: string }
 
 export function ReadTab() {
@@ -45,7 +45,8 @@ export function ReadTab() {
       }, token || undefined);
       if (!hit) setRState((s) => (s === 'running' ? 'none' : s));
     } catch (e) {
-      setRState(e instanceof ApiError && e.body.error === 'issue' ? 'idle' : 'failed');
+      const code = e instanceof ApiError ? e.body.error : 'unreachable';
+      setRState(code === 'issue' ? 'idle' : code === 'read_site_limit' || code === 'read_visitor_limit' ? 'limit' : 'failed');
     } finally {
       setTsReset((n) => n + 1);
     }
@@ -75,7 +76,7 @@ export function ReadTab() {
   const rCopy = () => { try { navigator.clipboard.writeText(rMessage); } catch { /* clipboard unavailable */ } setCopied(true); };
   const rCopyLabel = copied ? 'Copied' : 'Copy';
   const rNoneModeNote = ranMode === 'auto' ? '' : ' (you chose ' + MODES[ranMode].label + ' only)';
-  const rFailed = rState === 'failed';
+  const rFailed = rState === 'failed', rLimit = rState === 'limit';
 
   return (
 <>
@@ -132,7 +133,7 @@ export function ReadTab() {
             <span style={S({ fontSize: '12.5px', color: '#625c57' })}>Choosing the mode the sender used is faster.</span>
           </div>
           <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px' })}>
-            <Turnstile onToken={setToken} resetKey={tsReset} />
+            <Turnstile onToken={setToken} action="decode" resetKey={tsReset} />
             <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '10px 14px', alignItems: 'center' })}>
               <button type="button" onClick={rRun} disabled={rDisabled} style={S({ fontSize: '15px', fontWeight: '600', padding: '12px 20px', minHeight: '44px', border: '0', borderRadius: '4px', background: rBtn.bg, color: rBtn.fg, cursor: rBtn.cursor })}>{rBtnLabel}</button>
               <span style={S({ fontSize: '13px', color: '#625c57' })}>{rBlocker}</span>
@@ -177,6 +178,13 @@ export function ReadTab() {
               <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px', padding: '16px', borderRadius: '8px', background: '#f1eee9', border: '1.5px solid rgba(18,16,14,0.55)' })}>
                 <span style={S({ fontSize: '17px', fontWeight: '700' })}>Something went wrong</span>
                 <p style={S({ margin: '0', fontSize: '14px', lineHeight: '1.5' })}>The reader couldn’t finish. Try again in a minute.</p>
+              </div>
+            )}
+            {rLimit && (
+              // Daily decode caps (read_site_limit, read_visitor_limit).
+              <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px', padding: '16px', borderRadius: '8px', background: '#f1eee9', border: '1.5px solid rgba(18,16,14,0.55)' })}>
+                <span style={S({ fontSize: '17px', fontWeight: '700' })}>Today’s reading limit is used up</span>
+                <p style={S({ margin: '0', fontSize: '14px', lineHeight: '1.5' })}>Try again tomorrow, or run Ghostframe locally.</p>
               </div>
             )}
           </div>

@@ -257,7 +257,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
           <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px' })}>
             <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '10px 14px', alignItems: 'center' })}>
               <button type="button" onClick={hEncode} disabled={hDisabled} style={S({ fontSize: '15px', fontWeight: '600', padding: '12px 20px', minHeight: '44px', border: '0', borderRadius: '4px', background: hBtn.bg, color: hBtn.fg, cursor: hBtn.cursor })}><span style={S({ font: '500 11.5px \'IBM Plex Mono\',ui-monospace,monospace', marginRight: '8px', opacity: '0.8' })}>05</span>Encode</button>
-              <Turnstile onToken={setToken} resetKey={tsReset} />
+              <Turnstile onToken={setToken} action="encode" resetKey={tsReset} />
             </div>
             <div>
               <span style={S({ fontSize: '13px', lineHeight: '1.45', color: '#625c57' })}>{hBlocker}</span>

@@ -11,5 +11,5 @@
     "noEmit": true,
     "types": []
   },
-  "include": ["index.ts", "worker-configuration.d.ts"]
+  "include": ["index.ts", "routes.ts", "worker-configuration.d.ts"]
 }

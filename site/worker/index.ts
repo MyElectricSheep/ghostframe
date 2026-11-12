@@ -1,17 +1,24 @@
-// Cloudflare Worker for the demo site: static assets from site/dist, and /api/* passed to the
-// engine (server/app.py) running in one Container. There is exactly one engine instance, so the
-// queue, the daily caps and the one-encode-at-a-time rule hold as on a single server.
+// Cloudflare Worker for the demo site. Static assets from site/dist are served without the Worker
+// (assets.run_worker_first is ["/api/*"]); /api/* comes here and goes to the engine
+// (server/app.py) running in one Container. There is exactly one engine instance, so the queue,
+// the daily caps and the one-encode-at-a-time rule hold as on a single server.
+//
+// The Worker answers only the engine's public routes (worker/routes.ts), rate-limits them per
+// visitor, checks upload sizes and Turnstile itself, and only then wakes the engine.
 import { DurableObject } from 'cloudflare:workers';
+import { apiRoute, isApiPath, mentionsInternal, uploadProblem, verifyTurnstile, visitorKey } from './routes';
 
 interface Env {
   ENGINE: DurableObjectNamespace<Engine>;
   ASSETS: Fetcher;
+  GF_POST_LIMIT: RateLimit;
+  GF_API_LIMIT: RateLimit;
   GF_SITE_DAILY_CAP: string;
   GF_VISITOR_DAILY_CAP: string;
+  GF_DECODE_SITE_DAILY_CAP: string;
+  GF_DECODE_VISITOR_DAILY_CAP: string;
   GF_ENCODE_TIMEOUT_S: string;
   GF_TURNSTILE_SECRET?: string;
-  ACCESS_TEAM_DOMAIN: string;
-  ACCESS_AUD: string;
 }
 
 const PORT = 8790;
@@ -23,9 +30,25 @@ const READY_TIMEOUT_MS = 90 * 1000;
 // 4 vCPU like the test server. 2 GiB: the engine peaked at 1,416 MiB with three Long encodes of a
 // 4 MP photo queued and six decodes alongside, in a 2 GiB cgroup with no swap. The image is 1.8 GB on disk.
 const INSTANCE = { vcpu: 4, memoryMib: 2048, diskMb: 4000 };
+// Per-start secrets shared only by this Durable Object and the container it starts (server/app.py).
+const ENGINE_KEY_HEADER = 'x-gf-engine-key';
+const INTERNAL_KEY_HEADER = 'x-gf-internal-key';
+const NO_STORE = { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' };
+
+const fail = (status: number, error: string) => Response.json({ error }, { status, headers: NO_STORE });
+
+interface Keys { engine: string; internal: string }
+interface SavedCount { day: string; site: number; read?: number }
+
+function randomKey(): string {
+  return [...crypto.getRandomValues(new Uint8Array(32))].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+const today = () => new Date().toISOString().slice(0, 10);
 
 export class Engine extends DurableObject<Env> {
   starting?: Promise<void>;
+  keys?: Keys;
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
@@ -34,37 +57,72 @@ export class Engine extends DurableObject<Env> {
   }
 
   async fetch(request: Request): Promise<Response> {
+    const url = new URL(request.url);
+    // The Worker forwards only allow-listed routes; check again here, in every decoded form.
+    if (mentionsInternal(url.pathname) || url.pathname.includes('%')) return fail(404, 'not_found');
+    // The daily counter must not wake (and bill) the engine: when it sleeps, answer from storage.
+    if (request.method === 'GET' && url.pathname === '/api/quota' && !this.ctx.container!.running) return this.storedQuota();
     this.starting ??= this.startAndWait().finally(() => { this.starting = undefined; });
     try {
       await this.starting;
     } catch (error) {
       console.error('engine did not start', error);
-      return Response.json({ error: 'unreachable' }, { status: 503, headers: { 'Cache-Control': 'no-store' } });
+      return fail(503, 'unreachable');
     }
-    const url = new URL(request.url);
-    if (url.pathname.startsWith('/api/internal/')) return new Response('Not found', { status: 404 });
+    const encode = request.method === 'POST' && url.pathname === '/api/encode';
+    // Without today's restored count a fresh container would allow the whole daily cap again.
+    if (encode && !this.restored) return fail(503, 'unreachable');
+    const keys = await this.loadKeys();
+    if (!keys) return fail(503, 'unreachable');
     url.protocol = 'http:';
     url.host = 'container';
     const forwarded = new Request(url, request);
     forwarded.headers.delete('host');
+    forwarded.headers.delete(INTERNAL_KEY_HEADER);
+    forwarded.headers.set(ENGINE_KEY_HEADER, keys.engine);  // the Worker has checked Turnstile
     const response = await this.ctx.container!.getTcpPort(PORT).fetch(forwarded);
-    // Encodes, cancels and job polls are where the site-wide count changes: save it each time.
-    if (url.pathname === '/api/encode' || url.pathname.startsWith('/api/jobs/')) void this.saveCount();
+    // Only an encode or a cancel changes the site-wide count (job polls do not), so save after those.
+    const counts = request.method === 'POST' && (encode || url.pathname.endsWith('/cancel') || url.pathname === '/api/decode');
+    if (counts) void this.saveCount();
     return response;
   }
 
-  // The site-wide daily count lives in the container's memory while it runs, and in this Durable
-  // Object's storage across sleeps and restarts, so it holds for the whole UTC day. The per-visitor
+  async loadKeys(): Promise<Keys | undefined> {
+    this.keys ??= await this.ctx.storage.get<Keys>('keys');
+    return this.keys;
+  }
+
+  internal(init?: RequestInit): Promise<Response> {
+    const headers = new Headers(init?.headers);
+    headers.set(INTERNAL_KEY_HEADER, this.keys!.internal);
+    return this.ctx.container!.getTcpPort(PORT).fetch('http://container/api/internal/limits', { ...init, headers });
+  }
+
+  async storedQuota(): Promise<Response> {
+    const cap = (this.env.GF_SITE_DAILY_CAP ?? '').trim().toLowerCase();
+    if (['', 'none', 'off'].includes(cap)) return fail(404, 'no_limit');
+    const saved = await this.ctx.storage.get<SavedCount>('siteCount');
+    const day = today(), limit = Number(cap);
+    const used = saved?.day === day ? saved.site : 0;
+    const tomorrow = new Date(`${day}T00:00:00Z`);
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+    return Response.json({ left: Math.max(0, limit - used), limit, resets_at: tomorrow.toISOString().replace('.000Z', 'Z') }, { headers: NO_STORE });
+  }
+
+  // The site-wide daily counts live in the container's memory while it runs, and in this Durable
+  // Object's storage across sleeps and restarts, so they hold for the whole UTC day. The per-visitor
   // counts are not persisted: they are keyed by a hashed IP whose key is never stored.
   restored = false;
   lastSaved = '';
 
   async saveCount(): Promise<void> {
+    // Before the saved count is back in the container, its count is a fresh 0: never store that.
+    if (!this.restored || !this.keys) return;
     try {
-      const r = await this.ctx.container!.getTcpPort(PORT).fetch('http://container/api/internal/limits');
+      const r = await this.internal();
       if (!r.ok) { console.error('could not save the daily count', r.status); return; }
-      const count = await r.json<{ day: string; site: number }>(), text = JSON.stringify(count);
-      if (text === this.lastSaved) return;  // polls arrive every second; write only when it changes
+      const count = await r.json<SavedCount>(), text = JSON.stringify(count);
+      if (text === this.lastSaved) return;  // write only when it changes
       await this.ctx.storage.put('siteCount', count);
       this.lastSaved = text;
       console.log('saved daily count', text);
@@ -74,10 +132,10 @@ export class Engine extends DurableObject<Env> {
   }
 
   async restoreCount(): Promise<void> {
-    const saved = await this.ctx.storage.get<{ day: string; site: number }>('siteCount');
+    const saved = await this.ctx.storage.get<SavedCount>('siteCount');
     if (saved) {
-      const r = await this.ctx.container!.getTcpPort(PORT).fetch('http://container/api/internal/limits', { method: 'POST', body: JSON.stringify(saved), headers: { 'content-type': 'application/json' } });
-      // Never block the site on this: log it and try again on the next request.
+      const r = await this.internal({ method: 'POST', body: JSON.stringify(saved), headers: { 'content-type': 'application/json' } });
+      // Never block reading on this: log it and try again on the next request (encodes wait for it).
       if (!r.ok) { console.error('could not restore the daily count', r.status); return; }
       console.log('restored daily count', JSON.stringify(saved), '->', await r.text());
     } else console.log('no saved daily count to restore');
@@ -88,15 +146,24 @@ export class Engine extends DurableObject<Env> {
     const container = this.ctx.container!;
     if (!container.running) {
       this.restored = false;
+      // Fresh secrets for every start, kept in this Durable Object's storage so they survive an
+      // eviction of the object while the container keeps running.
+      this.keys = { engine: randomKey(), internal: randomKey() };
+      await this.ctx.storage.put('keys', this.keys);
       const env: Record<string, string> = {
         GF_SITE_DAILY_CAP: this.env.GF_SITE_DAILY_CAP,
         GF_VISITOR_DAILY_CAP: this.env.GF_VISITOR_DAILY_CAP,
+        GF_DECODE_SITE_DAILY_CAP: this.env.GF_DECODE_SITE_DAILY_CAP,
+        GF_DECODE_VISITOR_DAILY_CAP: this.env.GF_DECODE_VISITOR_DAILY_CAP,
         GF_ENCODE_TIMEOUT_S: this.env.GF_ENCODE_TIMEOUT_S,
+        GF_ENGINE_KEY: this.keys.engine,
+        GF_INTERNAL_KEY: this.keys.internal,
       };
-      if (this.env.GF_TURNSTILE_SECRET) env.GF_TURNSTILE_SECRET = this.env.GF_TURNSTILE_SECRET;
-      // No Internet access: the checkpoints are baked into the image, and Turnstile is the only
-      // outbound call, so it is allowed only once a secret is configured.
-      container.start({ image: container.images.base, instance: INSTANCE, enableInternet: Boolean(this.env.GF_TURNSTILE_SECRET), env });
+      // No Internet access: the checkpoints are baked into the image and Turnstile is checked in
+      // the Worker, so the engine never makes an outbound call.
+      container.start({ image: container.images.base, instance: INSTANCE, enableInternet: false, env });
+    } else {
+      await this.loadKeys();
     }
     await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
     const port = container.getTcpPort(PORT);
@@ -106,8 +173,8 @@ export class Engine extends DurableObject<Env> {
       try {
         const response = await port.fetch('http://container/api/status', { signal: AbortSignal.timeout(2000) });
         await response.body?.cancel();
-        // Before the first request reaches a fresh container, give it today's saved count.
-        if (response.ok) { if (!this.restored) await this.restoreCount(); return; }
+        // Before the first encode reaches a fresh container, give it today's saved count.
+        if (response.ok) { if (!this.restored && this.keys) await this.restoreCount(); return; }
         lastError = new Error(`status returned ${response.status}`);
       } catch (error) {
         lastError = error;
@@ -118,53 +185,34 @@ export class Engine extends DurableObject<Env> {
   }
 }
 
-// Cloudflare Access sits in front of the hostname. Every request, assets included, must also carry
-// a valid Access token for this application, so the site stays closed even if the Access app is
-// missing or misconfigured. ACCESS_AUD = "off" opens the site.
-type Jwk = JsonWebKey & { kid: string };
-let certs: { keys: Jwk[]; fetched: number } | undefined;
-
-const b64url = (part: string) => Uint8Array.from(atob(part.replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0));
-
-async function accessKeys(team: string, refresh: boolean): Promise<Jwk[]> {
-  if (!certs || refresh || Date.now() - certs.fetched > 3600_000) {
-    const r = await fetch(`https://${team}/cdn-cgi/access/certs`);
-    certs = { keys: ((await r.json()) as { keys: Jwk[] }).keys, fetched: Date.now() };
+async function api(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  const route = apiRoute(request.method, url.pathname);
+  if (!route) return fail(404, 'not_found');  // unknown paths never wake the engine
+  const ip = request.headers.get('cf-connecting-ip');
+  const limiter = request.method === 'POST' ? env.GF_POST_LIMIT : env.GF_API_LIMIT;
+  const { success } = await limiter.limit({ key: visitorKey(ip ?? 'unknown') });
+  if (!success) return fail(429, 'rate_limited');
+  if (route === 'encode' || route === 'decode') {
+    const problem = uploadProblem(request.headers);
+    if (problem) return fail(...problem);
+    const verdict = await verifyTurnstile({
+      token: request.headers.get('cf-turnstile-response'), secret: env.GF_TURNSTILE_SECRET,
+      ip, hostname: url.hostname, action: route,
+    });
+    if (verdict === 'unavailable') console.error('turnstile unavailable', env.GF_TURNSTILE_SECRET ? 'siteverify failed' : 'no secret');
+    if (verdict !== 'ok') return verdict === 'failed' ? fail(403, 'bot_check') : fail(503, 'bot_check_unavailable');
   }
-  return certs.keys;
-}
-
-async function hasAccess(request: Request, env: Env): Promise<boolean> {
-  if (env.ACCESS_AUD === 'off') return true;
-  const token = request.headers.get('cf-access-jwt-assertion');
-  if (!token) return false;
-  try {
-    const [head, body, sig] = token.split('.');
-    const header = JSON.parse(new TextDecoder().decode(b64url(head)));
-    const claims = JSON.parse(new TextDecoder().decode(b64url(body)));
-    const aud = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
-    if (header.alg !== 'RS256' || !aud.includes(env.ACCESS_AUD) || claims.iss !== `https://${env.ACCESS_TEAM_DOMAIN}`) return false;
-    if (typeof claims.exp !== 'number' || claims.exp * 1000 < Date.now()) return false;
-    let jwk = (await accessKeys(env.ACCESS_TEAM_DOMAIN, false)).find((k) => k.kid === header.kid);
-    jwk ??= (await accessKeys(env.ACCESS_TEAM_DOMAIN, true)).find((k) => k.kid === header.kid);
-    if (!jwk) return false;
-    const key = await crypto.subtle.importKey('jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
-    return await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, b64url(sig), new TextEncoder().encode(`${head}.${body}`));
-  } catch {
-    return false;
-  }
-}
-
-function route(request: Request, env: Env): Promise<Response> {
-  const { pathname } = new URL(request.url);
-  if (pathname.startsWith('/api/internal/')) return Promise.resolve(new Response('Not found', { status: 404 }));
-  if (pathname.startsWith('/api/')) return env.ENGINE.getByName('engine').fetch(request);
-  return env.ASSETS.fetch(request);
+  const forwarded = new Request(request);
+  forwarded.headers.delete(ENGINE_KEY_HEADER);
+  forwarded.headers.delete(INTERNAL_KEY_HEADER);
+  forwarded.headers.delete('cf-turnstile-response');
+  return env.ENGINE.getByName('engine').fetch(forwarded);
 }
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    if (!(await hasAccess(request, env))) return new Response('Forbidden', { status: 403, headers: { 'Cache-Control': 'no-store' } });
-    return route(request, env);
+    if (isApiPath(new URL(request.url).pathname)) return api(request, env);
+    return env.ASSETS.fetch(request);
   },
 } satisfies ExportedHandler<Env>;
