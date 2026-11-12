@@ -70,7 +70,8 @@ export class Engine extends DurableObject<Env> {
     const saved = await this.ctx.storage.get<{ day: string; site: number }>('siteCount');
     if (saved) {
       const r = await this.ctx.container!.getTcpPort(PORT).fetch('http://container/api/internal/limits', { method: 'POST', body: JSON.stringify(saved), headers: { 'content-type': 'application/json' } });
-      if (!r.ok) throw new Error(`restore returned ${r.status}`);
+      // Never block the site on this: log it and try again on the next request.
+      if (!r.ok) { console.error('could not restore the daily count', r.status); return; }
     }
     this.restored = true;
   }
