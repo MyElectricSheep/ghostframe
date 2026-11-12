@@ -121,14 +121,24 @@ The frame format and threat model are in [docs/THREAT_MODEL.md](docs/THREAT_MODE
 ## Related work
 
 Optimising an image so that a frozen network reads out hidden data is an established idea.
-Vukotić, Chappelier and Furon (WIFS 2018) watermarked images through a frozen classifier's
-features, and [Fernandez et al. (ICASSP 2022)](https://arxiv.org/abs/2112.09581) used fixed
-carrier directions in a pretrained feature space, which is close to what Ghostframe does.
-[Kishore et al. (ICLR 2022)](https://openreview.net/forum?id=hcMvApxGSzZ) applied the same
-principle to steganography (Fixed Neural Network Steganography), and
-[Luo et al. (ACM MM 2023)](https://openreview.net/forum?id=8MY_s2y_v9) added a key. The
-differences here are practical: tiles with authenticated encryption and error correction, an
-encoder that refuses rather than writes a bad file, and a held-out benchmark on CPU.
+[Vukotić, Chappelier and Furon (WIFS 2018)](https://doi.org/10.1109/wifs.2018.8630768)
+watermarked images (zero-bit) through a frozen classifier's features.
+[Ghamizi et al. (2019)](https://arxiv.org/abs/1912.01487) hid messages in the outputs of
+pretrained classifiers using adversarial attacks.
+[Fernandez et al. (ICASSP 2022)](https://arxiv.org/abs/2112.09581) used secret random carrier
+directions in a self-supervised (DINO) feature space and read bits from projection signs, which
+is close to what Ghostframe does with public carriers.
+[Kishore et al. (ICLR 2022)](https://openreview.net/forum?id=hcMvApxGSzZ) developed the idea for
+steganography (Fixed Neural Network Steganography), and
+[Luo et al., "Securing Fixed Neural Network Steganography" (ACM MM 2023)](https://arxiv.org/abs/2309.09700)
+added a key. Cornell holds a US patent on adversarial-perturbation steganography with a fixed
+decoder ([US 12,033,233](https://patents.google.com/patent/US12033233B2/en)).
+
+Relative to these papers, the differences are practical: tiles with authenticated encryption
+and error correction, an encoder that refuses rather than writes a bad file, and a held-out
+benchmark on CPU. Error correction itself is standard in learned tools (SteganoGAN ships
+Reed–Solomon; StegaStamp and TrustMark use BCH codes). More detail is in
+[docs/RESEARCH.md](docs/RESEARCH.md).
 
 ## Earlier experiments
 

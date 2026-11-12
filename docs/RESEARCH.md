@@ -5,21 +5,36 @@
 The current `ghostframe-png` profiles use an idea with several precedents: optimise an image's
 pixels so that a frozen network reads hidden data out of its features.
 
-- Vukotić, Chappelier and Furon, "Are deep neural networks good for blind image watermarking?",
-  WIFS 2018: watermarking through the features of a frozen pretrained network.
+- Vukotić, Chappelier and Furon, ["Are Deep Neural Networks good for blind image watermarking?"](https://doi.org/10.1109/wifs.2018.8630768),
+  IEEE WIFS 2018: zero-bit watermarking (presence only) through the features of a frozen
+  pretrained network.
+- Ghamizi, Cordy, Papadakis and Le Traon, ["Adversarial Embedding: A robust and elusive
+  Steganography and Watermarking technique"](https://arxiv.org/abs/1912.01487), arXiv 2019,
+  peer-reviewed as "Evasion Attack STeganography…" (ICCV Workshops 2021): messages hidden in the
+  outputs of pretrained classifiers using adversarial attacks.
 - Fernandez et al., [Watermarking Images in Self-Supervised Latent Spaces](https://arxiv.org/abs/2112.09581),
-  ICASSP 2022: fixed carrier directions in a self-supervised feature space. This is the closest
-  to Ghostframe's carriers.
-- Kishore et al., [Fixed Neural Network Steganography](https://openreview.net/forum?id=hcMvApxGSzZ),
-  ICLR 2022 ([code](https://github.com/varshakishore/FNNS)): the same principle applied to
+  ICASSP 2022: secret random carrier directions in a self-supervised (DINO) feature space, with
+  bits read from projection signs and augmentation during optimisation for robustness. This is
+  the closest to Ghostframe's carriers, which are public.
+- Kishore et al., ["Fixed Neural Network Steganography: Train the images, not the network"](https://openreview.net/forum?id=hcMvApxGSzZ),
+  ICLR 2022 ([code](https://github.com/varshakishore/FNNS)): the idea developed for
   steganography, with several decoder variants.
-- Luo et al., [ACM MM 2023](https://openreview.net/forum?id=8MY_s2y_v9): adds a key to FNNS. A
-  later follow-up is [Cs-FNNS](https://arxiv.org/abs/2407.11405).
+- Luo, Li, Li, Qian and Zhang, ["Securing Fixed Neural Network Steganography"](https://arxiv.org/abs/2309.09700),
+  ACM MM 2023 ([DOI](https://doi.org/10.1145/3581783.3611920)): adds a key to FNNS.
+- Li, Li, Qian and Zhang, ["Cover-separable Fixed Neural Network Steganography via Deep
+  Generative Models"](https://arxiv.org/abs/2407.11405) (Cs-FNNS), ACM MM 2024.
+- Cornell University holds a US patent on adversarial-perturbation steganography with a fixed
+  decoder: [US 12,033,233, "Image steganography utilizing adversarial perturbations"](https://patents.google.com/patent/US12033233B2/en).
 
-What Ghostframe adds is engineering and measurement rather than a new method: tiles with
+Relative to these papers, the differences are practical rather than a new method: tiles with
 authenticated encryption and interleaved Reed–Solomon codes, an encoder that verifies the saved
 file before writing it, and a preregistered held-out benchmark on CPU
-([BENCHMARK.md](BENCHMARK.md)).
+([BENCHMARK.md](BENCHMARK.md)). Error correction on its own is standard in learned tools:
+SteganoGAN ships Reed–Solomon, and StegaStamp and TrustMark use BCH codes.
+
+The capacities are not comparable budgets. FNNS reports up to 3 bits per pixel with decoders
+built for steganography; Ghostframe carries about 0.004 bits per pixel (494 B on a 1280 × ~850
+photo) through a stock classifier.
 
 ## Original survey
 
