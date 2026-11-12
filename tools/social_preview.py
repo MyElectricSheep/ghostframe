@@ -1,4 +1,5 @@
-"""Write docs/img/social-preview.png, the repository's 1280x640 link preview.
+"""Write the 1280x640 link preview: docs/img/social-preview.png for the repository and
+site/public/og.png for the demo site (the same image).
 
     python -m tools.social_preview
 
@@ -14,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 FIX = ROOT / "demo-photos" / "fixtures" / "antonello-portrait-of-a-man"
-OUT = ROOT / "docs" / "img" / "social-preview.png"
+OUTS = (ROOT / "docs" / "img" / "social-preview.png", ROOT / "site" / "public" / "og.png")
 W, H = 1280, 640
 BG, FG, MUTED, GOLD = (14, 16, 20), (236, 238, 242), (178, 184, 194), (255, 206, 96)
 FONTS = Path("/usr/share/fonts/truetype/dejavu")
@@ -73,9 +74,10 @@ def main():
                               "model decodes what the eye", "can't see."]):
         d.text((rx, 528 + i * 22), line, fill=MUTED, font=font("DejaVuSans.ttf", 16))
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    im.save(OUT, optimize=True)
-    print(OUT.relative_to(ROOT))
+    for out in OUTS:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        im.save(out, optimize=True)
+        print(out.relative_to(ROOT))
 
 
 if __name__ == "__main__":
