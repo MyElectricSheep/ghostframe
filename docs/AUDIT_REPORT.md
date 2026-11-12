@@ -36,7 +36,7 @@ Legacy wire formats and decoding are unchanged. The original fixtures still deco
   - Frame: salt ‖ AES-256-GCM, with scrypt deriving both the key and the nonce. The AAD is the
     full profile identity. Overhead is 33 bytes, against 47 for the legacy capacity frames.
   - Error correction: interleaved multi-block Reed–Solomon, with soft erasure retries. The
-    decoder tries at most eight distinct salts.
+    decoder tries at most five distinct salts.
   - **Centered carriers.** SqueezeNet features are non-negative, so random ±1 directions were
     biased: 11 % of bits were almost constant on clean tiles. Projecting out a pinned mean from
     the screen and tune covers fixed this. It is the main source of the capacity gain. Matched
@@ -65,7 +65,7 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
 
 | Cap | Profile | Payload | Holdout | Wilson 95 % | Median PSNR / SSIM | Median encode | Status |
 |---:|---|---:|---:|---|---|---:|---|
-| 2 | `sw-l2-c10x8b16p48` | 79 B | 123/123 | 97.0–100 % | 42.9 dB / 0.979 | 30 s | recommended experimental |
+| 2 | `sw-l2-c10x8b16p48` | 79 B | 123/123 | 97.0–100 % | 42.9 dB / 0.978 | 30 s | recommended experimental |
 | 8 | `sw-l8-c10x8b40p64` | 302 B | 123/123 | 97.0–100 % | 35.0 dB / 0.885 | 41 s | recommended experimental |
 | 2 | legacy 49 B | 49 B | 41/41 | 91.4–100 % | 43.6 dB / 0.981 | 21 s | legacy |
 | 8 | legacy 161 B | 161 B | 41/41 | 91.4–100 % | 38.6 dB / 0.949 | 23 s | legacy |

@@ -56,7 +56,7 @@ All 25 automated tests passed, including input format, size, preprocessing, auth
 
 SqueezeNet LPIPS 0.1.4 measured 14 archived clean/marked pairs. Median distances were 0.0882 for the six initial global samples, 0.0360 for four two-level tiled samples, and 0.1281 for four eight-level tiled samples. These scores are model-based distances rather than human visibility thresholds. The shared backbone is a limitation when scoring perturbations optimized against the same backbone. The visual difference maps and pixel-level measurements remain useful independent views of the changes.
 
-Reproduce with `python -m pip install -e '.[perceptual]'` followed by `python -m experiments.perceptual`. The LPIPS calibrated checkpoint is bundled by its pinned package. The result JSON is in `benchmarks/goal-validation/lpips.json`.
+Reproduce with `python -m pip install -e '.[perceptual]'` followed by `python -m experiments.perceptual`. The LPIPS calibrated checkpoint is bundled by its pinned package. The result JSON (`benchmarks/goal-validation/lpips.json`) was not kept in this repository; rerunning writes it.
 
 ## Matched multiscale loss
 

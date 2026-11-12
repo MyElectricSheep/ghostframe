@@ -13,11 +13,11 @@ const smallSentence = !SMALL640.subtle || !SMALL640.long ? ''
   : sameSmall ? `At 640 px wide, ordinary photos did well: Subtle and Long each read back ${SMALL640.subtle.read_back} of ${SMALL640.subtle.of}.`
   : `At 640 px wide, ordinary photos did well: Subtle read back ${SMALL640.subtle.read_back} of ${SMALL640.subtle.of}, Long ${SMALL640.long.read_back} of ${SMALL640.long.of}.`;
 const aucs = [DETECT.subtle?.auc, DETECT.long?.auc].filter((v): v is number => v != null);
-const detectNote = aucs.length ? `a detection test separated marked from clean photos ${Math.round(Math.min(...aucs) * 100)}% of the time` : '';
+const detectNote = aucs.length && Math.min(...aucs) === 1 ? 'a detection test separated every marked photo from every clean one' : aucs.length ? `detection test AUC ${Math.min(...aucs).toFixed(2)}` : '';
 
 const limits = [
-  { t: 'Exact PNG copies only.', d: 'Recompressing, resizing, cropping, screenshots and most chat apps destroy the message. Email attachments, file links, AirDrop and USB keep it.', n: '' },
-  { t: 'Steganography, not a watermark.', d: 'The message is meant to stay hidden, not to survive edits. A watermark is built to withstand compression and resizing; Ghostframe deliberately is not.', n: '' },
+  { t: 'Exact PNG copies only.', d: 'Recompressing, resizing, cropping, screenshots and most chat apps almost always destroy the message. Email attachments, file links, AirDrop and USB keep it.', n: '' },
+  { t: 'Not a watermark.', d: 'The message is hidden from the eye, not from software, and it is not built to survive edits. A watermark is built to withstand compression and resizing; Ghostframe deliberately is not.', n: '' },
   { t: 'Not invisible to software.', d: 'Anyone with the public reader can tell a photo carries a message. They can’t read or forge it.', n: detectNote },
   { t: 'Not every photo works.', d: 'Flat, synthetic and small images can be refused. When that happens, no file is produced.', n: stressNote + smallNote },
   { t: 'Short messages only.', d: 'Limits are in UTF-8 bytes, not characters.', n: `${MODES.classic.bytes}, ${MODES.subtle.bytes} or ${MODES.long.bytes} bytes` },
@@ -28,7 +28,7 @@ const REPO = 'https://github.com/MyElectricSheep/ghostframe';
 const links = [
   { t: 'Source code', d: 'Engine, CLI and this site', ph: 'github.com/MyElectricSheep/ghostframe', href: REPO },
   { t: 'Benchmark', d: 'Held-out trials, image quality, speed', ph: 'docs/BENCHMARK.md', href: `${REPO}/blob/main/docs/BENCHMARK.md` },
-  { t: 'Method notes', d: 'How the experiments were run', ph: 'docs/AUDIT_REPORT.md', href: `${REPO}/blob/main/docs/AUDIT_REPORT.md` },
+  { t: 'Audit report', d: 'The earlier prototype’s claims, checked', ph: 'docs/AUDIT_REPORT.md', href: `${REPO}/blob/main/docs/AUDIT_REPORT.md` },
 ];
 
 export function Limits() {
@@ -39,7 +39,7 @@ export function Limits() {
   <div style={S({ maxWidth: '1240px', margin: '0 auto', padding: 'clamp(40px,6vw,80px) clamp(16px,4vw,40px)', display: 'flex', flexDirection: 'column', gap: '28px' })}>
     <div style={S({ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '46em' })}>
       <h2 style={S({ margin: '0', fontSize: 'clamp(28px,3.4vw,40px)', fontWeight: '700', letterSpacing: '-0.02em', lineHeight: '1.1' })}>Limits and evidence</h2>
-      <p style={S({ margin: '0', fontSize: '16px', lineHeight: '1.55', color: '#625c57', textWrap: 'pretty' })}>Numbers from our own experiments and benchmarks. Held-out trials used 41 photographs the system had never seen, all 1280 px wide, with three messages per photo, read back by a separate program given only the file and the passphrase.</p>
+      <p style={S({ margin: '0', fontSize: '16px', lineHeight: '1.55', color: '#625c57', textWrap: 'pretty' })}>Numbers from our own experiments and benchmarks. Held-out trials used 41 photographs that were never used for tuning, all 1280 px wide, with three messages per photo for Subtle and Long and one for Short, read back by a separate program given only the file and the passphrase.</p>
     </div>
     <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'flex-start' })}>
       <ul style={S({ flex: '1 1 380px', minWidth: '0', margin: '0', padding: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', borderTop: '1px solid rgba(24,20,17,0.10)' })}>
@@ -58,7 +58,7 @@ export function Limits() {
             <span id="gf-modes-cap" style={S({ fontSize: '13px', color: '#625c57' })}>Modes, held-out evidence and median image quality</span>
           </div>
           {phone ? (
-          // Below 560 px each mode is a card with labelled rows, so nothing is cut off (corrective pass 3).
+          // Below 560 px each mode is a card with labelled rows, so nothing is cut off.
           <ul aria-labelledby="gf-modes-cap" style={S({ listStyle: 'none', margin: '0', padding: '0' })}>
             {modeRows.map((r, i) => (<React.Fragment key={i}>
               <li style={S({ display: 'flex', flexDirection: 'column', gap: '10px', padding: '14px 16px', borderBottom: '1px solid rgba(24,20,17,0.07)' })}>

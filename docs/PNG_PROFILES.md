@@ -1,7 +1,8 @@
 # ghostframe-png profiles
 
-`ghostframe_png` is the embedding-only PNG carrier with explicit, versioned profiles. It
-reuses the frozen SqueezeNet 1.1 reader and preprocessing of `ghostframe.py` and adds
+`ghostframe_png` is the embedding-only PNG carrier with explicit, versioned profiles. Its
+reader is a frozen ImageNet model: MobileNetV3-Small for the `bb-` profiles, SqueezeNet 1.1
+(with the preprocessing of `ghostframe.py`) otherwise. It adds
 framing, interleaved Reed–Solomon, a margin-verified encoder and a safe I/O contract. The
 legacy `message_cli --carrier neural|neural-ecc` formats are unchanged and are available in
 the new CLI as `legacy-v1` and `legacy-v2`. Measured results: [BENCHMARK.md](BENCHMARK.md).
@@ -16,7 +17,7 @@ the new CLI as `legacy-v1` and `legacy-v2`. Measured results: [BENCHMARK.md](BEN
 | `bb-mobilenet_v3_small-l8-b40p64` | 8 | 302 B | 10×8 × 40 | 64 (2 blocks) | recommended experimental, MobileNetV3-Small reader: held-out 123/123, ~1.6× faster than `sw-l8` |
 | `bb-mobilenet_v3_small-l2-b16p48` | 2 | 79 B | 10×8 × 16 | 48 | recommended experimental, MobileNetV3-Small reader: held-out 123/123, ~1.6× faster than `sw-l2` |
 | `png-l2-c10x8b12` | 2 | 63 B | 10×8 × 12 | 24 | experimental: screen and tune 12/12, not held out |
-| `png-l8-c10x8b24` | 8 | 175 B | 10×8 × 24 | 32 | experimental: screen 6/6, not held out |
+| `png-l8-c10x8b24` | 8 | 175 B | 10×8 × 24 | 32 | experimental: not held out |
 | `legacy-v1` | 8 | 13 B | 6×5 | — | legacy CLI frame; the default |
 | `legacy-v2` | 2 | 1 B | 6×5 | 14 | legacy CLI frame |
 
@@ -38,8 +39,8 @@ ghostframe-png encode examples/grace_hopper.jpg marked.png --profile sw-l2-c10x8
 ghostframe-png decode marked.png --profile sw-l2-c10x8b16p48 > recovered.txt
 ```
 
-The commands prompt for a passphrase, or read it from `--passphrase-file` (one trailing
-newline is stripped). Decode writes exactly the authenticated bytes to stdout and nothing
+The commands prompt for a passphrase, or read it from `--passphrase-file` (trailing
+newline characters are stripped; the rest of the file is used as bytes, unchanged). Decode writes exactly the authenticated bytes to stdout and nothing
 else. Exit status: 0 success; 1 no authenticated message (wrong passphrase, wrong profile,
 unmarked or damaged image); 2 invalid input or usage; 3 message too long or encoding budget
 exhausted. No output file is written unless the saved PNG has already been reopened and
@@ -85,7 +86,8 @@ bytes would silently become a longer, mismatched codeword there.)
 ## Carriers and reader
 
 Each tile is resized to 224×224 (antialiased bilinear), normalized with ImageNet statistics,
-passed through the frozen SqueezeNet 1.1 feature stack, spatially averaged and L2-normalized.
+passed through the frozen feature stack (MobileNetV3-Small for the `bb-` profiles, SqueezeNet 1.1
+otherwise), spatially averaged and L2-normalized.
 Bit *k* of tile *i* is the sign of the dot product with a public ±1 direction derived by
 HMAC-SHA256 and SHAKE256 from the profile identity, tile and bit index.
 
@@ -112,5 +114,5 @@ re-optimized, up to three rounds, then once more with a fresh salt.
 
 One forward pass per tile, then errors-only Reed–Solomon, then up to four retries that erase
 the 25/50/75/100 % least-confident bytes of each block (the confidence of a byte is its weakest
-bit's |score|). Every candidate must pass AES-GCM; at most eight distinct salts are tried, so
+bit's |score|). Every candidate must pass AES-GCM; at most five distinct salts are tried (one errors-only attempt plus four erasure levels), so
 work is bounded for any input. A failure returns no bytes.

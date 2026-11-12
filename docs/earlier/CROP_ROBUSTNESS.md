@@ -8,7 +8,7 @@ The evaluation uses three photo covers and one low-detail derivative of the land
 
 Run `python -m experiments.crop_robustness` from the project directory. The script saves each attempted image and atomically updates its JSON results. Measurements use the same frozen SqueezeNet checkpoint and four CPU threads.
 
-For a visual spot check, see `benchmarks/crop-robustness/portrait-detail.png`. Clockwise from top left are the source, baseline, 96× absolute difference for the crop-aware output, and crop-aware output. The two outputs were visually close to the source in this crop at native scale. This single comparison is illustrative. PSNR and SSIM in the table cover every attempted image.
+A visual spot check, `benchmarks/crop-robustness/portrait-detail.png`, was made but not kept in this repository. Clockwise from top left are the source, baseline, 96× absolute difference for the crop-aware output, and crop-aware output. The two outputs were visually close to the source in this crop at native scale. This single comparison is illustrative. PSNR and SSIM in the table cover every attempted image.
 ## Results
 
 | Condition | Baseline exact | Crop-aware exact | Baseline bit error | Crop-aware bit error |

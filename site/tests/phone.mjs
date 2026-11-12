@@ -1,4 +1,4 @@
-// Phone layout (mobile pass, below 760 px): menu, Try it sheet and view switch, How it works cards.
+// Phone layout (below 760 px): menu, Try it sheet and view switch, How it works cards.
 //   node tests/phone.mjs [siteUrl]
 import { chromium } from 'playwright';
 

@@ -110,7 +110,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
   const stage = job && jobBusy ? job.state : null;
   const stDefs: [string, string][] = [['queued', 'Waiting in line'], ...(cold ? [['starting', 'Starting the engine'] as [string, string]] : []), ['encoding', 'Encoding and checking the saved file'], ['done', 'Ready to download']];
   const stageIdx = stDefs.findIndex((d) => d[0] === stage);
-  // Done: a check. Now: a ring with a pulsing centre. Upcoming: an outline (corrective pass 14).
+  // Done: a check. Now: a ring with a pulsing centre. Upcoming: an outline.
   const hStages = stDefs.map((d, i) => ({ label: d[1], status: i < stageIdx ? 'done' : i === stageIdx ? 'now' : '', fg: i <= stageIdx ? INK : GRAY, weight: i === stageIdx ? 600 : 400,
     kind: i < stageIdx ? 'done' : i === stageIdx ? 'now' : 'next', anim: i === stageIdx && !prefersReducedMotion() ? 'gfpulse 1s ease-in-out infinite' : 'none' }));
   const pos = job?.position ?? 0, slow = !!job?.slow;
@@ -354,7 +354,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
                   <div style={S({ display: 'flex', flexDirection: 'column', gap: '4px' })}><span style={S({ fontWeight: '600', display: 'flex', gap: '6px', alignItems: 'center' })}><span aria-hidden="true" style={S({ fontWeight: '700' })}>✕</span>Destroys it</span><span>WhatsApp, Instagram, Messenger and most chat apps, screenshots, saving as JPEG, resizing, cropping, filters, some “optimise” tools</span></div>
                 </div>
               </div>
-              <p style={S({ margin: '0', fontSize: '13.5px', lineHeight: '1.5', color: '#625c57', textWrap: 'pretty' })}>The photo still looks like a photo, but anyone with the public reader can tell it carries a message. Your photo and the result are deleted from the server shortly after the job finishes.</p>
+              <p style={S({ margin: '0', fontSize: '13.5px', lineHeight: '1.5', color: '#625c57', textWrap: 'pretty' })}>The photo still looks like a photo, but anyone with the public reader can tell it carries a message. Your photo, message and passphrase were dropped when the job ended. The marked PNG was deleted from the server once your browser fetched it, and anything left goes within 15 minutes. The download comes from your browser’s copy.</p>
             </div>
           </div>
         </>)}

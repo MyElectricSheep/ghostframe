@@ -15,10 +15,10 @@ export function TryIt({ state, set, pick }: {
   state: TryItState; set: (patch: Partial<TryItState>) => void; pick: (photo: PhotoKey, mode: ModeKey) => void;
 }) {
   const v = useTryItView(state, set, pick);
-  // Below 760 px the control column gives way to a summary line, a view switch and a sheet (mobile pass 8f).
+  // Below 760 px the control column gives way to a summary line, a view switch and a sheet.
   const narrow = useNarrow(), phone = usePhoneControls(v);
   // When the side panel no longer fits beside the stage, it spans the full width and lays its
-  // cards out in columns (corrective pass 12). Where it wraps depends on the photo, so measure it.
+  // cards out in columns. Where it wraps depends on the photo, so measure it.
   const sideRef = useRef<HTMLDivElement>(null);
   const [wrapped, setWrapped] = useState(false);
   useLayoutEffect(() => {

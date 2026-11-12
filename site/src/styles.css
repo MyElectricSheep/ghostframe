@@ -1,4 +1,4 @@
-/* Global rules carried over from the design reference (helmet <style>). */
+/* Global rules. */
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
@@ -23,7 +23,7 @@ details[open] > summary svg{transform:rotate(180deg)}
 @keyframes gfpulse{0%,100%{opacity:.3}50%{opacity:1}}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 
-/* Hover and focus states (style-hover / style-focus in the design reference). */
+/* Hover and focus states. */
 .logo-invert:hover{--gfa:#f6f4f1 !important;--gfb:rgba(18,16,14,0.96) !important}
 .logo-invert-focus:focus-visible{--gfa:#f6f4f1 !important;--gfb:rgba(18,16,14,0.96) !important}
 .hover-tint:hover{background:rgba(0,0,0,0.05) !important}
@@ -46,7 +46,7 @@ details[open] > summary svg{transform:rotate(180deg)}
   .hit-44::after { content: ''; position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; transform: translate(-50%, -50%); }
 }
 
-/* Header on one line (corrective pass 8, 9). */
+/* Header on one line. */
 .gf-nav{scrollbar-width:none}
 .gf-nav::-webkit-scrollbar{display:none}
 .gf-nav a{white-space:nowrap;flex:none}
@@ -56,20 +56,20 @@ details[open] > summary svg{transform:rotate(180deg)}
 /* Badge: hidden where the desktop nav needs the room (760–899 px), and on phones too narrow for
    logo, badge and burger on one line (< 390 px). */
 @media (min-width:760px) and (max-width:899.98px),(max-width:389.98px){.gf-badge{display:none!important}}
-/* Hero animation full width once the hero stacks (corrective pass 20). */
+/* Hero animation full width once the hero stacks. */
 @media (max-width:975.98px){.gf-hero-figure{max-width:none!important}}
-/* Entry links: full-width buttons of the same size on phones (corrective pass 21). */
+/* Entry links: full-width buttons of the same size on phones. */
 @media (max-width:759.98px){.gf-entry-buttons{flex:1 1 100%!important;flex-direction:column}.gf-entry-buttons a{justify-content:center}}
-/* Mode tooltip in Try it (corrective pass 4): never past the viewport edge; under 760 px it opens
+/* Mode tooltip in Try it: never past the viewport edge; under 760 px it opens
    below the mode row across the content width, with its arrow pointing up. */
 .gf-mode-tip{max-width:calc(100vw - 32px);box-sizing:border-box}
 @media (max-width:759.98px){
   .gf-mode-tip{left:0!important;top:calc(100% + 8px)!important;transform:none!important;width:calc(100vw - 2 * clamp(16px,4vw,40px))!important}
   .gf-mode-tip-arrow{left:24px!important;top:-5px!important;margin-top:0!important}
 }
-/* Try it side panel below the stage: full width, cards in columns (corrective pass 12). */
+/* Try it side panel below the stage: full width, cards in columns. */
 .gf-side.gf-side-wrapped:not([data-measure]){flex:1 1 100%!important;max-width:none!important;display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));align-items:start}
-/* How it works animation full width once the steps stack under it (corrective pass 20). */
+/* How it works animation full width once the steps stack under it. */
 @media (max-width:975.98px){.gf-how-figure{max-width:none!important}}
 /* Hide: mode cards in one column on small phones (17); Show beside the passphrase fields (16). */
 @media (max-width:479.98px){

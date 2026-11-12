@@ -17,7 +17,7 @@ const OUT_DATA = join(SITE, 'src', 'generated', 'site-data.json');
 
 const COVERS = { antonello: 'antonello-portrait-of-a-man', coffee: 'coffee-beans', milky: 'milky-way' };
 const STEMS = { classic: 'classic', subtle: 'subtle', long: 'long' };
-// Visitor-facing file names (corrective pass 6): the page never shows the internal key `classic`.
+// Visitor-facing file names: the page never shows the internal key `classic`.
 // Each is a byte-identical copy of the fixture, checked like the original.
 const SLUGS = { antonello: 'portrait', coffee: 'coffee-beans', milky: 'milky-way' };
 const LABELS = { classic: 'short', subtle: 'subtle', long: 'long' };

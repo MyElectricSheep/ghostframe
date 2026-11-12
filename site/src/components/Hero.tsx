@@ -46,7 +46,7 @@ export function Hero() {
   return (
 <section id="top" data-screen-label="Intro" style={S({ maxWidth: '1240px', margin: '0 auto', padding: 'clamp(28px,4.5vw,56px) clamp(16px,4vw,40px) clamp(20px,3vw,28px)', display: 'flex', flexWrap: 'wrap', gap: '24px 56px', alignItems: 'center' })}>
   <div style={S({ flex: '1 1 460px', minWidth: '0', display: 'flex', flexDirection: 'column', gap: '14px' })}>
-    <span style={S({ font: '500 12px/1.4 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}>An experiment in embedding-based steganography</span>
+    <span style={S({ font: '500 12px/1.4 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}>An experiment in hiding encrypted messages in image embeddings</span>
     <h1 style={S({ margin: '0', fontSize: 'clamp(36px,4.8vw,56px)', fontWeight: '700', lineHeight: '1.03', letterSpacing: '-0.035em', textWrap: 'balance' })}>A secret message, hidden in plain pixels.</h1>
     <p style={S({ margin: '0', fontSize: 'clamp(16px,1.5vw,18.5px)', lineHeight: '1.5', color: '#625c57', maxWidth: '38em', textWrap: 'pretty' })}>An AI image model turns every part of a photo into a vector embedding, a list of numbers describing what it sees. Ghostframe nudges the pixels, by at most 2 or 8 levels out of 255, until those numbers spell out a short encrypted message. The same frozen model reads it back. The message is private and tamper-evident.</p>
   </div>

@@ -7,7 +7,7 @@ import { useAbbr } from './Abbr';
 import { StepCards } from './HowCards';
 
 const STEPS = [
-  { who: 'sender', t: 'The passphrase locks the message.', d: 'The message is encrypted with a key made from the passphrase. Without it, nothing can be read.' },
+  { who: 'sender', t: 'The passphrase locks the message.', d: 'The message is encrypted with a key made from the passphrase. Without it, the message can’t be read, as long as the passphrase is hard to guess.' },
   { who: 'sender', t: 'Error-correction bytes are added.', d: 'A few extra bytes let the reader repair a small number of wrong bits later.' },
   { who: 'sender', t: 'The photo is split into a grid of tiles.', d: '10 × 8 tiles for Subtle and Long, 6 × 5 for Short.' },
   { who: 'sender', t: 'Each tile is nudged until the model reads specific bits.', d: 'Pixels change by at most 2 or 8 levels out of 255. The encoder then saves the PNG, reopens it and checks it reads back.' },
@@ -18,7 +18,7 @@ const STEPS = [
 const PHONE = '(max-width: 759.98px)';
 
 /** Draws one frame. On phones (the card layout) the canvas is sized to its real pixels and gets the 4:5 composition;
- *  otherwise the design's 1120 × 840 drawing, scaled by CSS. */
+ *  otherwise the 1120 × 840 drawing, scaled by CSS. */
 function paint(cv: HTMLCanvasElement, img: HTMLImageElement | null, step: number, t: number) {
   const x = cv.getContext('2d')!;
   if (window.matchMedia(PHONE).matches) {
@@ -97,8 +97,8 @@ export function HowItWorks() {
               <li>Encryption: <button type="button" data-abbr="1" onClick={abOpen.AES} aria-expanded={abExp.AES} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>AES-256-GCM</button>. The key is derived from the passphrase with <button type="button" data-abbr="1" onClick={abOpen.scrypt} aria-expanded={abExp.scrypt} aria-controls="gf-abbr" style={S({ font: 'inherit', color: 'inherit', background: 'none', border: '0', padding: '0', margin: '0', borderBottom: '1px dashed currentColor', cursor: 'help', lineHeight: 'inherit' })}>scrypt</button>, which makes guessing deliberately slow.</li>
               <li>Tamper evidence: if the hidden message is altered, authentication fails and the reader returns “No message found.” instead of a wrong message.</li>
               <li>The encoder is a standard optimiser. The model only reads; it never writes anything.</li>
-              <li><strong>Related work.</strong> Ghostframe builds on an established idea: hide data by optimising an image so a frozen network reads it out. See Vukotić et al. (WIFS 2018) and <a href="https://arxiv.org/abs/2112.09581" target="_blank" rel="noopener">Fernandez et al. (ICASSP 2022)</a>, whose fixed “carrier” directions in a pretrained feature space are close to ours. <a href="https://openreview.net/forum?id=hcMvApxGSzZ" target="_blank" rel="noopener">Kishore et al. (ICLR 2022)</a> apply the same principle to steganography (FNNS), and <a href="https://openreview.net/forum?id=8MY_s2y_v9" target="_blank" rel="noopener">Luo et al. (ACM MM 2023)</a> add a key. What’s ours is the engineering and the testing, not the method.
-                <span style={S({ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', marginTop: '6px', font: '400 12px/1.5 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}><span>Also:</span><a href="https://github.com/varshakishore/FNNS" target="_blank" rel="noopener">FNNS code</a><a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/12033233" target="_blank" rel="noopener">FNNS variants (US patent 12,033,233)</a><a href="https://arxiv.org/abs/2407.11405" target="_blank" rel="noopener">Cs-FNNS follow-up</a></span>
+              <li><strong>Related work.</strong> Ghostframe builds on an established idea: hide data by optimising an image so a frozen network reads it out. See <a href="https://doi.org/10.1109/wifs.2018.8630768" target="_blank" rel="noopener">Vukotić et al. (WIFS 2018)</a>, a zero-bit watermark, and <a href="https://arxiv.org/abs/1912.01487" target="_blank" rel="noopener">Ghamizi et al. (2019)</a>, who hid messages in pretrained classifiers’ outputs with adversarial attacks. <a href="https://arxiv.org/abs/2112.09581" target="_blank" rel="noopener">Fernandez et al. (ICASSP 2022)</a> used secret random “carrier” directions in a self-supervised (DINO) feature space and read bits from projection signs, which is close to what we do with public carriers. <a href="https://openreview.net/forum?id=hcMvApxGSzZ" target="_blank" rel="noopener">Kishore et al. (ICLR 2022)</a> developed it for steganography (FNNS), and <a href="https://arxiv.org/abs/2309.09700" target="_blank" rel="noopener">Luo et al., “Securing Fixed Neural Network Steganography” (ACM MM 2023)</a> added a key. What’s ours is the engineering and the testing, not the method.
+                <span style={S({ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', marginTop: '6px', font: '400 12px/1.5 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57' })}><span>Also:</span><a href="https://github.com/varshakishore/FNNS" target="_blank" rel="noopener">FNNS code</a><a href="https://patents.google.com/patent/US12033233B2/en" target="_blank" rel="noopener">US patent 12,033,233 (Cornell University), “Image steganography utilizing adversarial perturbations”</a><a href="https://arxiv.org/abs/2407.11405" target="_blank" rel="noopener">Cs-FNNS follow-up (ACM MM 2024)</a></span>
               </li>
               <li>Encoding and decoding run on a server. Browser decoding hasn’t been validated.</li>
             </ul>

@@ -31,7 +31,7 @@ export function App() {
       <EntryLinks navHide={navHide} navRead={navRead} />
       <DashedRule />
       <TryIt state={tryIt} set={setTry} pick={pick} />
-      {/* Changing cover, mode or view resets the reveal, as in the design. */}
+      {/* Changing cover, mode or view resets the reveal. */}
       <Reveal key={`${tryIt.photo}|${tryIt.mode}|${tryIt.view}`} photo={tryIt.photo} mode={tryIt.mode} />
       <DashedRule />
       <HowItWorks />
