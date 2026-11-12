@@ -1,4 +1,4 @@
-// Daily encode counter (design option 9a, DAILY_COUNTER.md): the site-wide encodes left today, at
+// Daily encode counter: the site-wide encodes left today, at
 // the top right of "Use your own photo". Hidden when the count can't be read: never a guess.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { RefObject } from 'react';

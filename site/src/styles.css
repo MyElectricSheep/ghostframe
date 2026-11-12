@@ -34,7 +34,7 @@ details[open] > summary svg{transform:rotate(180deg)}
 .hover-pill:hover{background:#3f648c !important}
 .hover-card:hover{border-color:rgba(63,100,140,0.45) !important}
 
-/* Touch: every control is at least 44 px tall (handoff README, accessibility). Desktop layout is
+/* Touch: every control is at least 44 px tall (accessibility). Desktop layout is
    unchanged. Tiles fill their grid cell, and acronyms stay inline in running text. */
 @media (pointer: coarse) {
   button:not(.tile):not(.hit-44):not([data-abbr]), select, a[href].hover-tint, a[href].hover-primary-link, a[href].hover-secondary, a[href].logo-invert, a[href].gf-touch-44 {

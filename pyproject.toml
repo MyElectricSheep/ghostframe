@@ -1,10 +1,24 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "ghostframe"
 version = "0.1.0"
+description = "Hide an authenticated, encrypted message in a PNG that a frozen image model reads back (research PoC)"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Ben Paget" }]
+keywords = ["steganography", "adversarial perturbation", "image embeddings", "pytorch"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Security :: Cryptography",
+]
 requires-python = ">=3.11,<3.13"
 dependencies = ["torch==2.7.1", "torchvision==0.22.1", "numpy==2.3.5", "Pillow==12.3.0", "scikit-image==0.25.2"]
 
@@ -13,6 +27,10 @@ tiled = ["cryptography==50.0.2", "reedsolo==1.7.0"]
 learned = ["trustmark==0.9.2"]
 perceptual = ["lpips==0.1.4"]
 server = ["starlette==0.41.3", "uvicorn==0.32.1", "python-multipart==0.0.20", "httpx==0.28.1"]
+
+[project.urls]
+Repository = "https://github.com/MyElectricSheep/ghostframe"
+Issues = "https://github.com/MyElectricSheep/ghostframe/issues"
 
 [project.scripts]
 ghostframe = "ghostframe:main"

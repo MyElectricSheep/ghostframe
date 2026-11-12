@@ -1,5 +1,4 @@
-// View model for "Try it". Names mirror the design reference (wVals / t4Vals / t5Vals in
-// Ghostframe v3.dc.html) so each value can be traced back to the prototype:
+// View model for "Try it". Names follow the original design mock-up (wVals / t4Vals / t5Vals):
 // w* = the image stage, t4* = the dot strip, t5* = the pixel inspector.
 import { useEffect, useRef, useState } from 'react';
 import type React from 'react';

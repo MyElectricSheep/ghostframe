@@ -15,7 +15,7 @@ Profiles and the frame format: [PNG_PROFILES.md](PNG_PROFILES.md).
 | 2 | `bb-mobilenet_v3_small-l2-b16p48` | 79 B | 123/123 | 97.0–100 % | recommended experimental (MobileNetV3, faster) |
 | 2 | legacy 49-byte capacity profile | 49 B | 41/41 (frame 0) | 91.4–100 % | legacy research profile |
 | 8 | legacy 161-byte capacity profile | 161 B | 41/41 (frame 0) | 91.4–100 % | legacy research profile |
-| 8 | legacy v1 CLI frame (`Meet at dawn.`) | 13 B | 41/41 (frame 0) | 91.4–100 % | default showcase frame |
+| 8 | legacy v1 CLI frame (`Meet at dawn.`) | 13 B | 41/41 (frame 0) | 91.4–100 % | default frame |
 
 Both finalists met the preregistered promotion rule: observed success ≥ 95 %, cover-clustered
 bootstrap lower bound ≥ 85 % (it is 100 %: no cover failed), and no paired frame-0 losses
@@ -23,11 +23,11 @@ against the matched-cap legacy baseline (0 losses, 0 wins: every arm succeeded o
 held-out cover). With zero failures on 41 covers, the data are consistent with a per-cover
 failure rate up to about 7 % (rule of three); they do not show the rate is zero.
 
-**At equal held-out reliability, the finalists carry 1.6× (cap 2) and 1.9× (cap 8) the payload
-of the legacy capacity profiles.** The cost is distortion within the same cap, chiefly at cap 8
+At equal held-out reliability, the finalists carry 1.6× (cap 2) and 1.9× (cap 8) the payload
+of the legacy capacity profiles. The cost is distortion within the same cap, chiefly at cap 8
 (median PSNR 35.0 vs 38.6 dB), and roughly 1.4–1.8× the median encode time.
 
-**A newer frozen backbone, MobileNetV3-Small (2019), carries 494 B at the 8-level cap**, 1.6×
+A newer frozen backbone, MobileNetV3-Small (2019), carries 494 B at the 8-level cap, 1.6×
 the SqueezeNet finalist, with the same held-out reliability, similar distortion (median PSNR
 34.1 vs 35.0 dB), and still a faster median encode (33 s vs 41 s). At matched sizes it is
 about 1.6× faster. See [the backbone comparison](#backbone-comparison-mobilenetv3-small).
@@ -65,14 +65,14 @@ check](#exploratory-held-out-covers-at-640-px).
 
 | Candidate | Cap | Payload | Screen | Tune | Median encode | Outcome |
 |---|---:|---:|---:|---:|---:|---|
-| `sw-l2-c10x8b16p48` | 2 | 79 B | 6/6 | 6/6 in-contract | 42 s | **finalist** |
+| `sw-l2-c10x8b16p48` | 2 | 79 B | 6/6 | 6/6 in-contract | 42 s | finalist |
 | `sw-l2-c10x8b20p48` | 2 | 119 B | 6/6 | failed `china` | — | rejected |
 | `sw-l2-c12x10b12p36` | 2 | 111 B | 6/6 | failed `china` | — | rejected |
 | `sw-l2-c10x8b16p32` | 2 | 95 B | 6/6 | failed `china` | — | rejected |
 | `sw-l2-c12x10b16p56` | 2 | 151 B | 6/6 | not run | 94 s | over the 90 s budget |
 | `png-l2-c10x8b12` | 2 | 63 B | 6/6 | 6/6 | 34 s | smaller fallback |
 | `sw-l2-c8x6b20p32` | 2 | 55 B | 6/6 | 6/6 | 26 s | smaller fallback |
-| `sw-l8-c10x8b40p64` | 8 | 302 B | 6/6 | 6/6 in-contract | 62 s | **finalist** |
+| `sw-l8-c10x8b40p64` | 8 | 302 B | 6/6 | 6/6 in-contract | 62 s | finalist |
 | `sw-l8-c12x10b32p72` | 8 | 374 B | 6/6 | 6/6 | 93 s | over the 90 s budget |
 | `sw-l8-c12x10b40p96` | 8 | 470 B | 6/6 | not run | 98 s | over the 90 s budget |
 | `sw-l8-c14x12b32p96` | 8 | 542 B | 6/6 | not run | 134 s | over the 90 s budget |
@@ -150,7 +150,7 @@ the same independent worker. Raw records are in `bench/results/holdout640/`.
 | Cap | Arm | Success | Wilson 95 % | Raw wrong bytes median / max | Median PSNR | Failures |
 |---:|---|---:|---|---|---:|---|
 | 2 | `sw-l2-c10x8b16p48` (79 B) | 40/41 | 87–100 % | 2 / 22 | 42.9 dB | `boulevard_hotel_neon_sign`: clean refusal, no file written |
-| 2 | legacy 49 B | 28/41 | 53–80 % | 3 / 65 | 43.4 dB | 13 covers. **Each wrote a PNG that then failed to decode** |
+| 2 | legacy 49 B | 28/41 | 53–80 % | 3 / 65 | 43.4 dB | 13 covers. Each wrote a PNG that then failed to decode |
 | 8 | `sw-l8-c10x8b40p64` (302 B) | 41/41 | 91–100 % | 0 / 16 | 34.2 dB | none |
 | 8 | legacy 161 B | 41/41 | 91–100 % | 0 / 11 | 36.9 dB | none |
 
@@ -270,7 +270,7 @@ No steganographic claim is made.
 
 Every held-out finalist PNG (246) was decoded again in a fresh worker process with one CPU
 thread instead of four. All 246 authenticated, and the raw received codeword bytes matched the
-four-thread decode exactly, before error correction (`decode-threads1*.jsonl`). The showcase
+four-thread decode exactly, before error correction (`decode-threads1*.jsonl`). The example
 fixtures were also decoded at both thread counts through the CLI. These checks cover one CPU
 and one torch build. Other hardware, BLAS builds or GPUs are untested. The 2·10⁻³ safety
 margin is meant to absorb those differences, but that has not been demonstrated.

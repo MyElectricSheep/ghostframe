@@ -1,4 +1,4 @@
-// Keyboard paths from the handoff README: divider slider, tiles, tooltips, tabs, touch targets.
+// Keyboard paths: divider slider, tiles, tooltips, tabs, touch targets.
 //   node tests/a11y.mjs [siteUrl]
 import { chromium } from 'playwright';
 

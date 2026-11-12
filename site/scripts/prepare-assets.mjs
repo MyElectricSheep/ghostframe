@@ -1,5 +1,5 @@
 // Build-time data and assets for the site. Nothing here is typed in by hand:
-//   - every number comes from design-handoff/ghostframe-site/data/design-data.json;
+//   - every number comes from site/data/design-data.json;
 //   - every example message, byte count and hash from demo-photos/fixtures/*/fixtures.json;
 //   - the fixture PNGs are copied byte for byte and checked against those hashes.
 // Writes site/public/demo-photos/ (copies) and site/src/generated/site-data.json.
@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 
 const SITE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ROOT = join(SITE, '..');
-const DATA = join(ROOT, 'design-handoff', 'ghostframe-site', 'data', 'design-data.json');
+const DATA = join(ROOT, 'site', 'data', 'design-data.json');
 const PHOTOS = join(ROOT, 'demo-photos');
 const OUT_PHOTOS = join(SITE, 'public', 'demo-photos');
 const OUT_DATA = join(SITE, 'src', 'generated', 'site-data.json');
@@ -71,7 +71,7 @@ for (const [key, dir] of Object.entries(COVERS)) {
 }
 
 const out = {
-  source: 'design-handoff/ghostframe-site/data/design-data.json + demo-photos/fixtures/*/fixtures.json',
+  source: 'site/data/design-data.json + demo-photos/fixtures/*/fixtures.json',
   modes: design.modes,
   heat: design.heat,
   raw: design.raw,

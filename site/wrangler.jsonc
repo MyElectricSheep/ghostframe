@@ -1,14 +1,11 @@
+// The author's deployment. To deploy your own copy, start from wrangler.example.jsonc.
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "ghostframe",
   "main": "worker/index.ts",
   "compatibility_date": "2026-11-12",
   // Behind Cloudflare Access (app "ghostframe") until the site is opened up.
-  "routes": [
-    { "pattern": "ghostframe.electricsheep.id", "custom_domain": true },
-    // Temporary design-review address: no Access, needs the REVIEW_KEY secret (see worker/index.ts).
-    { "pattern": "ghostframe-review.electricsheep.id", "custom_domain": true }
-  ],
+  "routes": [{ "pattern": "ghostframe.electricsheep.id", "custom_domain": true }],
   "workers_dev": false,
   "preview_urls": false,
   "observability": { "enabled": true },
@@ -39,7 +36,6 @@
     "GF_ENCODE_TIMEOUT_S": "300",
     // Access app "ghostframe": the Worker checks every request's Access token against this AUD.
     "ACCESS_TEAM_DOMAIN": "electric-sheep.cloudflareaccess.com",
-    "ACCESS_AUD": "254b22c9d33cde1f417a0b355a1f566cb814905c56165a97db38c5198b0a9107",
-    "REVIEW_HOST": "ghostframe-review.electricsheep.id"
+    "ACCESS_AUD": "254b22c9d33cde1f417a0b355a1f566cb814905c56165a97db38c5198b0a9107"
   }
 }

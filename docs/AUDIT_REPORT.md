@@ -1,9 +1,9 @@
 # Ghostframe adversarial verification: final report
 
-Date: 2026-11-10. Source: archive sha256 `b6cb7c14…`, imported as commit `1b53cbe`. All work is
+Date: 2026-11-10. Source: archive sha256 `b6cb7c14…`, imported as commit `7370fa0`. All work is
 offline on a 4-vCPU Linux VPS with CPU-only PyTorch 2.7.1 and torchvision 0.22.1. The model is
-the SqueezeNet 1.1 checkpoint `b8a52dc0…`. The UI is out of scope. The 13-byte "Meet at dawn."
-legacy frame remains the showcase entry point and the default.
+the SqueezeNet 1.1 checkpoint `b8a52dc0…`. The demo site came later and is not covered here. The
+13-byte "Meet at dawn." legacy frame remains the default.
 
 ## 1. Baseline audit
 
@@ -15,10 +15,10 @@ legacy frame remains the showcase entry point and the default.
 | 161-byte fixture recovers `bytes(range(161))` | Same | Confirmed, but the weakest bit has a margin of 1.1·10⁻⁵ and 15 bits sit below 10⁻³, so it is fragile across numerical environments |
 | 35 capacity trials | Re-derived from the raw JSON | Numbers match |
 | 161 B at an 8-level cap, 3/3 | Rerun: screen 6/6, holdout 41/41 | Holds |
-| 49 B at a 2-level cap, 3/3 | Rerun: screen **2/6** (fails four 300–640 px covers, 16–24 wrong bytes against a 12-byte budget); holdout 41/41 at 1280 px | **Size-dependent; the claim is overstated** |
+| 49 B at a 2-level cap, 3/3 | Rerun: screen 2/6 (fails four 300–640 px covers, 16–24 wrong bytes against a 12-byte budget); holdout 41/41 at 1280 px | Size-dependent; the claim is overstated |
 | Encoded PNGs carry no metadata | Inspected chunks | **Broken:** the ECC demo path copied the source ICC profile into the output. Fixed |
 | Capacity script supports larger frames | Constructed a 300-byte frame | **Broken:** above 255 − parity bytes the RS codeword silently grows (300 → 364 bytes) and no longer matches the layout. Fixed in the new code by multi-block RS; the legacy script is documented, not changed |
-| Input handling | `audit/probe_inputs.py` | **Broken:** 16-bit, float and transparent images were silently flattened; the CLI could spend a full encode before discovering that the output directory was missing. Fixed |
+| Input handling | `bench/probe_inputs.py` | **Broken:** 16-bit, float and transparent images were silently flattened; the CLI could spend a full encode before discovering that the output directory was missing. Fixed |
 
 Legacy fixes (`tests/test_legacy_fixes.py`, 3 tests, all failing on the original code):
 - `read_image` rejects 16-bit, float and transparent images.
@@ -65,11 +65,11 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
 
 | Cap | Profile | Payload | Holdout | Wilson 95 % | Median PSNR / SSIM | Median encode | Status |
 |---:|---|---:|---:|---|---|---:|---|
-| 2 | `sw-l2-c10x8b16p48` | **79 B** | 123/123 | 97.0–100 % | 42.9 dB / 0.979 | 30 s | recommended experimental |
-| 8 | `sw-l8-c10x8b40p64` | **302 B** | 123/123 | 97.0–100 % | 35.0 dB / 0.885 | 41 s | recommended experimental |
+| 2 | `sw-l2-c10x8b16p48` | 79 B | 123/123 | 97.0–100 % | 42.9 dB / 0.979 | 30 s | recommended experimental |
+| 8 | `sw-l8-c10x8b40p64` | 302 B | 123/123 | 97.0–100 % | 35.0 dB / 0.885 | 41 s | recommended experimental |
 | 2 | legacy 49 B | 49 B | 41/41 | 91.4–100 % | 43.6 dB / 0.981 | 21 s | legacy |
 | 8 | legacy 161 B | 161 B | 41/41 | 91.4–100 % | 38.6 dB / 0.949 | 23 s | legacy |
-| 8 | legacy v1 | 13 B | 41/41 | 91.4–100 % | 36.5 dB / 0.924 | 24 s | default showcase |
+| 8 | legacy v1 | 13 B | 41/41 | 91.4–100 % | 36.5 dB / 0.924 | 24 s | default |
 
 - **Promotion rule met** for both finalists:
   - Observed success is ≥ 95 %.
@@ -92,7 +92,7 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
   minutes.
 - **Small covers** (640 px, exploratory, after the fact): the 41 held-out covers resized to 640 px, one frame per arm.
   - 2-level cap: the 79 B finalist passed 40/41, and its one failure was a clean refusal. Legacy
-    49 B passed only 28/41, and all 13 of its failures **wrote a PNG that does not decode**. On
+    49 B passed only 28/41, and all 13 of its failures wrote a PNG that does not decode. On
     the same covers the finalist won 12 and lost 0.
   - 8-level cap: both 302 B and legacy 161 B passed 41/41.
   - Median encodes were slower than at 1280 px: 44 s and 52 s, with a long tail up to 16 min.
@@ -100,17 +100,16 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
 - **Newer backbone** (second preregistration, after the above): four torchvision backbones were
   screened against SqueezeNet on the same grid, ladder and 90 s budget. MobileNetV3-Small was
   held out (41 × 3) at three sizes, and all three passed 123/123:
-  - **494 B at an 8-level cap**: 1.6× the SqueezeNet finalist, PSNR 34.1 dB / SSIM 0.872,
+  - 494 B at an 8-level cap: 1.6× the SqueezeNet finalist, PSNR 34.1 dB / SSIM 0.872,
     median encode 33 s.
   - 302 B and 79 B: the same sizes as the finalists, with matching distortion and about 1.6×
     faster encodes (25 s and 19 s).
   - 640-px covers: 41/41 for both demo profiles (SqueezeNet 79 B was 40/41). The detector still reaches AUC 1.0.
   - Details are in [BENCHMARK.md](BENCHMARK.md#backbone-comparison-mobilenetv3-small).
 
-## 4. Showcase handoff
+## 4. Example fixtures
 
-[EMBEDDING_PNG_SHOWCASE.md](EMBEDDING_PNG_SHOWCASE.md) has been updated. The main flow is
-unchanged and "Meet at dawn." remains the entry point. The new fixtures are in
+"Meet at dawn." remains the default example. The new fixtures are in
 `benchmarks/embedding-showcase/`, listed in `fixtures-v2.json` with their hashes, and can be
 regenerated with `python -m tools.make_showcase`.
 

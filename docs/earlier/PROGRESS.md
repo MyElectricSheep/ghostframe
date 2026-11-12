@@ -7,7 +7,7 @@
 3. Verified the installed encode/decode CLI in separate processes and passed both automated tests. Ran the 16-bit and 32-bit benchmark on three photos and one low-detail crop, including unmarked covers, wrong keys and transformations.
 4. Reviewed original, marked and amplified difference images. Recovery is repeatable on PNG. Crop sensitivity and visible texture at 32 bits limit product readiness. Measured tighter pixel budgets as a comparison. See EXPERIMENTS.md and benchmarks for measurements.
 
-## Handoff
+## Next step at the time
 
 Keep the current baseline fixed. Run a paired comparison with clean-only versus crop-aware optimization at the same low perturbation budget, with multiple payloads and keys per image, held-out crop offsets, and explicit fidelity review. Use full-payload recovery as the primary outcome. Verify a second platform once the protocol is stable. Product UI, encrypted framing, ECC and dead-drop service remain behind the research gates.
 
@@ -51,7 +51,7 @@ Added encode and decode commands for the 26-byte authenticated luminance profile
 
 Added an opt-in integer-percent search from 50% through 95%, plus 62.5%, with floor and nearest dimension candidates. At the 96-byte frame size, the wider search recovered 8/10 at 67% and 10/10 at 73% and 87% after JPEG recompression. Both negative conditions authenticated 0/10. See WIDE_RESIZE.md for timings and the independently verified JPEG fixture.
 
-## Final autonomous sweep
+## Final sweep
 
 Validated the luminance carrier on 14 covers, including four fresh samples, and measured alternate resize kernels, confidence erasures, compound edits, exposure, and paired detectability. Added a faster aligned resize calculation and optional exposure recovery to the CLI. Re-tested the neural path on the fresh covers and measured JPEG-stable cover selection. See FULL_REPORT.md for consolidated findings and raw evidence locations.
 
@@ -63,9 +63,9 @@ Added optional `--soft` retries for direct decoding and the existing bounded sea
 
 Added optional pre-resize crop dimensions to the existing original-dimensions recovery mode. The decoder restores crop size and searches the unknown offset. On 14 saved JPEGs it authenticated 12/14 at the 75% crop resize and 8/14 at 67%. See COMPOUND_SEARCH.md for the test conditions and demo.
 
-## Original brief verification
+## Verification against the original goals
 
-Exposed the two authenticated neural PNG profiles in the local CLI and verified fresh encodes through independent processes. Rechecked six older authenticated fixtures under two CPU thread configurations, rejecting all wrong-password and alternate-checkpoint controls. Ran the trained TrustMark C comparator, color-balance and synthetic-display checks. Added architecture, security, and scope documentation. See GOAL_STATUS.md for the requirement-by-requirement ledger and remaining independent device verification.
+Exposed the two authenticated neural PNG profiles in the local CLI and verified fresh encodes through independent processes. Rechecked six older authenticated fixtures under two CPU thread configurations, rejecting all wrong-password and alternate-checkpoint controls. Ran the trained TrustMark C comparator, color-balance and synthetic-display checks. Added architecture, security, and scope documentation. See GOAL_STATUS.md for the goal-by-goal ledger and remaining independent device verification.
 
 Measured SqueezeNet LPIPS on 14 saved pairs and completed a matched multiscale neural comparison. The added scales raised median encode time and did not improve held-out resize recovery, so they remain experimental.
 

@@ -1,7 +1,7 @@
 # Embedding-only PNG capacity experiment
 
 > **Audit note (2026-11-10).** This is the archived three-cover screen. Rerun on more covers
-> ([BENCHMARK.md](BENCHMARK.md)) with an independent decoder process:
+> ([BENCHMARK.md](../BENCHMARK.md)) with an independent decoder process:
 >
 > - The 161-byte profile (cap 8) held up: 6/6 on the screening covers and 41/41 on held-out covers.
 > - The 49-byte profile (cap 2) authenticated on only 2 of 6 screening covers. It failed

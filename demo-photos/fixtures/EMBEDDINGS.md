@@ -276,7 +276,7 @@ The two models' numbers look different:
 
 ## Full data
 
-`demo-photos/fixtures/embeddings/<photo>.json` holds everything, for each mode:
+`demo-photos/fixtures/embeddings/<photo>.json` (not committed: `python -m tools.dump_embeddings` writes it, about 5.5 MB) holds everything, for each mode:
 
 | Key | Contents | Shape |
 |---|---|---|

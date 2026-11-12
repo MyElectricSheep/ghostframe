@@ -8,8 +8,8 @@ type Run = { st: 'idle' } | { st: 'running' | 'done'; n: number };
 
 /**
  * "Hidden in this photo": a recorded result. It replays the fixture's verified message with
- * embedding-like digits resolving into the text; no decode runs (keep it that way: see the
- * handoff README, "What is real, recorded or simulated"). Remount it (key) to reset.
+ * embedding-like digits resolving into the text; no decode runs (keep it that way: the page
+ * labels it as recorded). Remount it (key) to reset.
  */
 export function Reveal({ photo, mode }: { photo: PhotoKey; mode: ModeKey }) {
   const narrow = useNarrow();

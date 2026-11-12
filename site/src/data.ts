@@ -1,5 +1,5 @@
 // All numbers come from the generated site-data.json (design-data.json + fixtures.json, see
-// scripts/prepare-assets.mjs). Strings here are the approved copy from the design handoff.
+// scripts/prepare-assets.mjs). Strings here are the page copy.
 import raw from './generated/site-data.json';
 
 export type ModeKey = 'classic' | 'subtle' | 'long';
