@@ -1,4 +1,5 @@
 """Demo-site API: input rules, queue, caps, stop and cancel, nothing kept, exact bytes."""
+import datetime as dt
 from importlib.util import find_spec
 import hashlib
 import io
@@ -182,6 +183,25 @@ class QueueTests(unittest.TestCase):
         self.assertEqual(encode(c2).status_code, 429)
         self.assertEqual(encode(c2).json()["error"], "site_limit")
         self.assertFalse(c2.get("/api/status").json()["site_open"])
+
+    def test_quota_counts_site_encodes_only(self):
+        c, _, _ = client(site_cap=3, visitor_cap=None)
+        q = c.get("/api/quota")
+        self.assertEqual(q.headers["cache-control"], "no-store, no-transform")
+        tomorrow = (dt.datetime.now(dt.timezone.utc).date() + dt.timedelta(days=1)).isoformat()
+        self.assertEqual(q.json(), dict(left=3, limit=3, resets_at=tomorrow + "T00:00:00Z"))
+        wait(c, encode(c).json()["id"])
+        self.assertEqual(c.get("/api/quota").json()["left"], 2)
+        # Reading never counts; a refused encode does (the engine ran), a cancelled one doesn't.
+        c.post("/api/decode", data=dict(passphrase="pw", mode="auto"), files=dict(image=("m.png", png(), "image/png")))
+        self.assertEqual(c.get("/api/quota").json()["left"], 2)
+        wait(c, encode(c, message="refuse").json()["id"])
+        self.assertEqual(c.get("/api/quota").json()["left"], 1)
+        wait(c, encode(c).json()["id"])
+        self.assertEqual(c.get("/api/quota").json()["left"], 0)
+        self.assertEqual(encode(c).json()["error"], "site_limit")
+        self.assertEqual(c.get("/api/quota").json()["left"], 0)
+        self.assertEqual(client(site_cap=None)[0].get("/api/quota").status_code, 404)
 
     def test_cancelled_encodes_do_not_count(self):
         c, engine, _ = client(visitor_cap=1)

@@ -103,6 +103,17 @@ class Limits:
             self._roll()
             return self.site_cap is None or self._site < self.site_cap
 
+    def quota(self):
+        """The site-wide daily count, read from the same counter `check` and `take` use: encodes
+        left today, the cap, and when it resets (the next midnight UTC). None when there is no cap."""
+        with self._lock:
+            self._roll()
+            if self.site_cap is None:
+                return None
+            tomorrow = dt.datetime.combine(self._day + dt.timedelta(days=1), dt.time(), dt.timezone.utc)
+            return dict(left=max(0, self.site_cap - self._site), limit=self.site_cap,
+                        resets_at=tomorrow.strftime("%Y-%m-%dT%H:%M:%SZ"))
+
 
 class Queue:
     def __init__(self, engine, limits, timeout=300, clock=time.monotonic):

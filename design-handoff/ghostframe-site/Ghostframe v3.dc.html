@@ -484,7 +484,14 @@ details[open] > summary svg{transform:rotate(180deg)}
         <h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-0.02em;line-height:1.1">Use your own photo</h2>
         <p style="margin:0;font-size:16px;line-height:1.55;color:#625c57;text-wrap:pretty">Nothing is stored. Photos, messages, passphrases and results are deleted as soon as the job finishes, and no one else can see your images.</p>
       </div>
-      <span style="display:inline-flex;align-items:center;gap:6px;font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;padding:4px 9px;border:1px dashed #8a837c;border-radius:999px"><span aria-hidden="true" style="width:7px;height:7px;border:1.25px dashed #625c57;border-radius:50%;display:block"></span>Prototype · server responses are simulated</span>
+      <div style="display:flex;flex-direction:column;align-items:{{ qAlign }};gap:10px;margin-left:{{ qML }}">
+        <div role="status" aria-live="polite" style="display:flex;flex-direction:column;align-items:{{ qAlign }};gap:6px">
+          <span style="font:500 13px/1 'IBM Plex Mono',ui-monospace,monospace;color:{{ qFg }}"><strong style="font-weight:600">{{ qLeft }}</strong> / 50 encodes left today</span>
+          <div aria-hidden="true" style="width:170px;height:4px;border-radius:2px;background:#e0dad3;overflow:hidden"><div style="height:100%;width:{{ qPct }};background:{{ qBar }};transition:width 300ms ease"></div></div>
+          <span style="font-size:11.5px;color:#625c57">{{ qNote }}</span>
+        </div>
+        <span style="display:inline-flex;align-items:center;gap:6px;font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;color:#625c57;padding:4px 9px;border:1px dashed #8a837c;border-radius:999px"><span aria-hidden="true" style="width:7px;height:7px;border:1.25px dashed #625c57;border-radius:50%;display:block"></span>Prototype · server responses are simulated</span>
+      </div>
     </div>
 
     <div role="tablist" aria-label="Hide or read" onKeyDown="{{ onTabKey }}" style="display:flex;border-bottom:1px solid rgba(24,20,17,0.10)">
@@ -1489,6 +1496,7 @@ class Component extends DCLogic {
   encode = () => {
     const s = this.state; this.clear(); clearInterval(this.tick);
     if (s.hSim === 'vlimit' || s.hSim === 'slimit') { this.setState({ hJob:s.hSim }); this.scrollTo('gf-hresult'); return; }
+    this.setState(st => ({ encLeft:Math.max(0, (st.encLeft == null ? 38 : st.encLeft) - 1) }));
     const t0 = Date.now(); this.setState({ hJob:'run', hFrozen:false, hT0:t0, hNow:t0 });
     this.scrollTo('gf-hresult');
     this.tick = setInterval(() => {
@@ -1576,7 +1584,11 @@ class Component extends DCLogic {
       mDots:v.steps.map((f, i) => { const on = i === cur; return { n:f.n, cur:on ? 'step' : 'false', aria:'Step ' + f.n, bg:on ? BLUE : 'rgba(24,20,17,0.07)', fg:on ? '#fff' : '#625c57', onClick:() => this.goHowCard(i) }; })
     };
   }
-  renderVals() { const v = this.baseVals(); return { ...v, ...this.mob(v) }; }
+  quota() {
+    const s = this.state, left = s.hSim === 'slimit' ? 0 : (s.encLeft == null ? 38 : s.encLeft), closed = left === 0, low = left > 0 && left <= 10;
+    return { qLeft:left, qPct:(left / 50 * 100) + '%', qFg:closed ? '#9f3b3b' : 'rgba(18,16,14,0.96)', qBar:closed ? '#9f3b3b' : low ? 'rgba(18,16,14,0.96)' : BLUE, qNote:closed ? 'Closed until midnight UTC' : 'Shared by everyone · resets midnight UTC', qAlign:s.narrow ? 'flex-start' : 'flex-end', qML:s.narrow ? '0' : 'auto' };
+  }
+  renderVals() { const v = this.baseVals(); return { ...v, ...this.mob(v), ...this.quota() }; }
   baseVals() {
     const s = this.state, TM = MODES[s.tMode], HM = MODES[s.hMode], TP = PHOTOS[s.tPhoto], fi = String(PORDER.indexOf(s.tPhoto) * 3 + ORDER.indexOf(s.tMode) + 2).padStart(2, '0');
     const TF = FIX[s.tPhoto][s.tMode], tBytes = TF[1];

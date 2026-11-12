@@ -72,6 +72,13 @@ def build_app(engine=None, queue=None):
     limits = queue.limits if queue else Limits(env_cap("GF_SITE_DAILY_CAP", 50), env_cap("GF_VISITOR_DAILY_CAP", 3))
     queue = queue or Queue(engine, limits, timeout=float(os.environ.get("GF_ENCODE_TIMEOUT_S", "300")))
 
+    async def quota(request: Request):
+        # Read-only: the site-wide encodes left today. Reading messages never changes it.
+        q = limits.quota()
+        if q is None:
+            return error(404, "no_limit")
+        return JSONResponse(q, headers=NO_STORE)
+
     async def status(request: Request):
         visitor = limits.visitor(client_address(request))
         return JSONResponse(dict(engine_ready=engine.ready.is_set(), site_open=limits.site_open(),
@@ -168,6 +175,7 @@ def build_app(engine=None, queue=None):
 
     routes = [
         Route("/api/status", status),
+        Route("/api/quota", quota),
         Route("/api/encode", encode, methods=["POST"]),
         Route("/api/jobs/{job_id}", job_status),
         Route("/api/jobs/{job_id}/cancel", job_cancel, methods=["POST"]),

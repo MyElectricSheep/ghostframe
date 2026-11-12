@@ -13,7 +13,7 @@ type Final = 'done' | 'refused' | 'timeout' | 'cancelled' | 'vlimit' | 'slimit' 
 type Phase = 'idle' | 'run' | Final;
 interface Result { marked: string; diff: string; bytes: number }
 
-export function HideTab({ navRead }: { navRead: () => void }) {
+export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refresh: () => void; closed: () => void } }) {
   const [hFile, setHFile] = useState<FileInfo | null>(null);
   const [hMode, setHMode] = useState<ModeKey>('subtle');
   const [hMsg, setHMsgState] = useState(''), [hPass, setHPassState] = useState(''), [hPass2, setHPass2State] = useState('');
@@ -43,6 +43,7 @@ export function HideTab({ navRead }: { navRead: () => void }) {
         if (stop) return;
         if (view.state === 'starting') setCold(true);
         setJob(view);
+        if (view.state !== 'queued' && view.state !== 'starting' && view.state !== 'encoding') quota.refresh();
         if (view.state === 'done') {
           try {
             const [m, d] = await Promise.all([fetchResult(view.id, 'marked'), fetchResult(view.id, 'difference')]);
@@ -77,11 +78,12 @@ export function HideTab({ navRead }: { navRead: () => void }) {
     try {
       const view = await startEncode(hFile.blob, hFile.name, hMode, hMsg, hPass, token || undefined);
       jobId.current = view.id; setJob(view); setPhase('run');
+      quota.refresh();
       if (view.state === 'starting') setCold(true);
     } catch (e) {
       const code = e instanceof ApiError ? e.body.error : 'unreachable';
       setPhase(code === 'site_limit' ? 'slimit' : code === 'visitor_limit' ? 'vlimit' : code === 'bot_check' ? 'botcheck' : 'failed');
-      if (code === 'site_limit') setSiteClosed(true);
+      if (code === 'site_limit') { setSiteClosed(true); quota.closed(); } else quota.refresh();
     } finally {
       setTsReset((n) => n + 1);
     }
@@ -152,7 +154,7 @@ export function HideTab({ navRead }: { navRead: () => void }) {
   const hJobActive = jobBusy, hElapsed = Math.floor(elapsed / 60) + ':' + String(Math.floor(elapsed % 60)).padStart(2, '0');
   const hShowProg = stage === 'encoding', hProgN = prog, hProgPct = prog + '%';
   const hCardBd = slow ? 'rgba(18,16,14,0.55)' : 'rgba(24,20,17,0.12)', hCancelBd = slow ? '#3f648c' : 'rgba(24,20,17,0.18)';
-  const hCancel = useCallback(() => { if (jobId.current) cancelJob(jobId.current).catch(() => {}); setPhase('cancelled'); }, []);
+  const hCancel = useCallback(() => { if (jobId.current) cancelJob(jobId.current).catch(() => {}).finally(quota.refresh); setPhase('cancelled'); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const hStop = !!STOP && !(phase === 'slimit' && siteClosed), hStopTitle = STOP ? STOP.t : '', hStopBody = STOP ? STOP.b : '', hStopMeta = STOP ? STOP.m : '', hStopActions = STOP ? STOP.a.map(([label, onClick]) => ({ label, onClick })) : [];
   const hDone = phase === 'done' && !!result, hAmp = HM.amp, hCap = HM.cap, hModeLabel = HM.label, hModel = HM.backbone, hProfile = HM.profile;
   const hStageLabel = hView === 'orig' ? 'Your photo · original' : 'Marked PNG · ' + HM.label;
