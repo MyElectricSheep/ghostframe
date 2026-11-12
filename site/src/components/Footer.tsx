@@ -15,7 +15,12 @@ const H = { margin: '0', fontSize: '12.5px', fontWeight: '600', color: 'rgba(18,
 const P = { margin: '0' };
 
 export function Footer() {
-  useEffect(() => { if (location.hash === '#privacy') openPrivacy(); }, []);
+  useEffect(() => {
+    const check = () => { if (location.hash === '#privacy') openPrivacy(); };
+    check();
+    window.addEventListener('hashchange', check);
+    return () => window.removeEventListener('hashchange', check);
+  }, []);
   return (
 <footer style={S({ background: '#f6f4f1' })}>
   <div style={S({ maxWidth: '1240px', margin: '0 auto', padding: '24px clamp(16px,4vw,40px) 40px', display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '12.5px', lineHeight: '1.55', color: '#625c57' })}>
