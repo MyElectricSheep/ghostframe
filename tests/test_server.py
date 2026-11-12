@@ -203,6 +203,20 @@ class QueueTests(unittest.TestCase):
         self.assertEqual(c.get("/api/quota").json()["left"], 0)
         self.assertEqual(client(site_cap=None)[0].get("/api/quota").status_code, 404)
 
+    def test_site_count_can_be_persisted_and_restored(self):
+        c, _, _ = client(site_cap=5)
+        wait(c, encode(c).json()["id"])
+        today = dt.datetime.now(dt.timezone.utc).date().isoformat()
+        self.assertEqual(c.get("/api/internal/limits").json(), dict(day=today, site=1))
+        # A restarted container gets today's count back; another day's count, or a lower one, is ignored.
+        c2, _, _ = client(site_cap=5)
+        self.assertEqual(c2.post("/api/internal/limits", json=dict(day="2000-01-01", site=4)).json()["site"], 0)
+        self.assertEqual(c2.post("/api/internal/limits", json=dict(day=today, site=4)).json()["site"], 4)
+        self.assertEqual(c2.post("/api/internal/limits", json=dict(day=today, site=2)).json()["site"], 4)
+        self.assertEqual(c2.get("/api/quota").json()["left"], 1)
+        wait(c2, encode(c2).json()["id"])
+        self.assertEqual(encode(c2).json()["error"], "site_limit")
+
     def test_cancelled_encodes_do_not_count(self):
         c, engine, _ = client(visitor_cap=1)
         job_id = encode(c, message="slow").json()["id"]

@@ -103,6 +103,21 @@ class Limits:
             self._roll()
             return self.site_cap is None or self._site < self.site_cap
 
+    def site_count(self):
+        """Today's site-wide count, for the host to persist (the per-visitor counts are not exported)."""
+        with self._lock:
+            self._roll()
+            return dict(day=self._day.isoformat(), site=self._site)
+
+    def restore_site_count(self, day, site):
+        """Restore a persisted site-wide count after a restart. Ignored unless it is today's; never
+        lowers the live count."""
+        with self._lock:
+            self._roll()
+            if day == self._day.isoformat():
+                self._site = max(self._site, int(site))
+            return dict(day=self._day.isoformat(), site=self._site)
+
     def quota(self):
         """The site-wide daily count, read from the same counter `check` and `take` use: encodes
         left today, the cap, and when it resets (the next midnight UTC). None when there is no cap."""
