@@ -1,14 +1,14 @@
-# Non-UI objective verification
+# Verification against the original goals
 
-This ledger traces the original development prompt to working commands, measurements, and remaining limits. It distinguishes a successful feasibility result from robust recovery on uncontrolled channels.
+This ledger checks each of the project's original goals against working commands, measurements, and remaining limits. It distinguishes a successful feasibility result from robust recovery on uncontrolled channels.
 
-| Original objective | Evidence and disposition |
+| Original goal | Evidence and disposition |
 |---|---|
-| Research and three architectures | [Research](RESEARCH.md) covers the closest frozen-feature precedent, trained watermarking, and coverless selection. The repository includes empirical runs for all three and a separate conventional luminance baseline. |
+| Research and three architectures | [Research](../RESEARCH.md) covers the closest frozen-feature precedent, trained watermarking, and coverless selection. The repository includes empirical runs for all three and a separate conventional luminance baseline. |
 | 16- and 32-bit frozen-encoder proof of concept | Verified in memory, after PNG serialization, with separate decoding and wrong-key controls. [Initial evidence](EXPERIMENTS.md) and [fresh-cover evidence](FULL_REPORT.md). |
 | Fidelity, capacity, and robustness | Measured 16–512 bits, PSNR, SSIM, pixel error, runtime, bit errors, and exact recovery. The evidence includes visual difference maps, JPEG quality sweeps, crops, resizes, exposure and simulated recompression. Color and synthetic display capture controls are recorded below. LPIPS was added on 14 archived neural output pairs. |
 | Optimization and alternate architectures | Tested projection margins, QR-orthogonal directions, crop and JPEG-aware objectives, different frozen backbones, repetition, independent tiles, and Reed–Solomon parity. The tests include multiple image scales as transforms. A matched multiscale neural loss was measured in the follow-up below. |
-| Authenticated offline messages | The local CLI encodes and decodes up to 13 bytes through neural embeddings, one byte with neural ECC, or up to 26 bytes through the conventional luminance carrier. Encoding verifies the serialized result. [Architecture](ARCHITECTURE.md) and [wire format and threat assessment](SECURITY.md). |
+| Authenticated offline messages | The local CLI encodes and decodes up to 13 bytes through neural embeddings, one byte with neural ECC, or up to 26 bytes through the conventional luminance carrier. Encoding verifies the serialized result. [Architecture](ARCHITECTURE.md) and [wire format and threat assessment](../THREAT_MODEL.md). |
 | Conditional encrypted dead drop | Offline short messages work, and the implementation retains that workflow. No external service was introduced. This still leaves long messages outside the validated product scope. |
 | Independent model and restart checks | Two fresh CPU processes with one and four threads each authenticated six prior files and rejected six wrong-password and six wrong-checkpoint cases. Same-host verification does not establish cross-device recovery. |
 | Developer and quality deliverables | Version-pinned core dependencies, digest-pinned SqueezeNet assets, documented CLI and benchmark commands, machine-readable outputs, tests, and ongoing progress are included. |
@@ -50,7 +50,7 @@ The six authenticated neural fixtures were tested with an RGB balance change tha
 
 ## Remaining verification
 
-All 25 automated tests passed, including input format, size, preprocessing, authentication, parity, and wrong-password checks. The fresh CLI files and wrong-passphrase subprocess checks verify the local workflow. The major unresolved verification item is independent hardware or OS execution. The interface was excluded by request. The offline endpoint is validated within its short-message limits. Longer payloads, a large independent cover corpus and real delivery channels remain outside the measured result.
+All 25 automated tests passed, including input format, size, preprocessing, authentication, parity, and wrong-password checks. The fresh CLI files and wrong-passphrase subprocess checks verify the local workflow. The major unresolved verification item is independent hardware or OS execution. There was no user interface at the time. The offline endpoint is validated within its short-message limits. Longer payloads, a large independent cover corpus and real delivery channels remain outside the measured result.
 
 ## Perceptual distances
 

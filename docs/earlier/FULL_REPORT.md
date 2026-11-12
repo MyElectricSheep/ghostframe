@@ -16,7 +16,7 @@ The neural work demonstrates feasibility on preserved PNGs. The conventional lum
 
 Earlier methods and results are in [progress](PROGRESS.md), [extended neural experiments](EXTENDED.md), [tiled parity](TILED_ECC.md), [JPEG comparison](JPEG_CARRIER.md), [geometry and codecs](ROBUSTNESS.md), and [CLI](MESSAGE_CLI.md).
 
-## Final autonomous sweep
+## Final sweep
 
 The luminance experiments reuse ten prior covers and add four unused in earlier Ghostframe runs: coins, clock, color wheel, and retina. These are convenience samples from scikit-image. They do not constitute a representative collection or establish that the neural model never encountered them during pretraining. Each file experiment uses one fresh randomized 96-byte frame per cover. The public benchmark passphrase and the 25-byte message are fixed. Images are fitted within 512×512. [scikit-image data and credits](https://scikit-image.org/docs/stable/api/skimage.data.html)
 
@@ -32,7 +32,7 @@ These were local processing chains, not tests of WhatsApp, social media services
 
 ## Reproduction
 
-From the extracted project root with the optional tiled dependencies installed:
+From the repository root with the optional tiled dependencies installed:
 
 ```sh
 python -m pip install -e '.[tiled]'

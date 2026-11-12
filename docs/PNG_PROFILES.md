@@ -17,7 +17,7 @@ the new CLI as `legacy-v1` and `legacy-v2`. Measured results: [BENCHMARK.md](BEN
 | `bb-mobilenet_v3_small-l2-b16p48` | 2 | 79 B | 10×8 × 16 | 48 | recommended experimental, MobileNetV3-Small reader: held-out 123/123, ~1.6× faster than `sw-l2` |
 | `png-l2-c10x8b12` | 2 | 63 B | 10×8 × 12 | 24 | experimental: screen and tune 12/12, not held out |
 | `png-l8-c10x8b24` | 8 | 175 B | 10×8 × 24 | 32 | experimental: screen 6/6, not held out |
-| `legacy-v1` | 8 | 13 B | 6×5 | — | legacy CLI frame; default showcase |
+| `legacy-v1` | 8 | 13 B | 6×5 | — | legacy CLI frame; the default |
 | `legacy-v2` | 2 | 1 B | 6×5 | 14 | legacy CLI frame |
 
 "Recommended experimental" means the profile met the preregistered promotion rule

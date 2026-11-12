@@ -1,7 +1,7 @@
 """Export every number the demo design shows, in the shapes its page script uses.
 
     python -m tools.dump_embeddings && python -m tools.design_data
-    # writes design-handoff/mobilenet-v3/design-data.json
+    # writes site/data/design-data.json
 
 Sources: the demo fixtures (`demo-photos/fixtures/`), their embedding export, and the raw
 benchmark records under `bench/results/`. Nothing here is typed in by hand except labels.
@@ -14,7 +14,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "demo-photos" / "fixtures"
 RESULTS = ROOT / "bench" / "results"
-OUT = ROOT / "design-handoff" / "mobilenet-v3" / "design-data.json"
+OUT = ROOT / "site" / "data" / "design-data.json"
 
 PHOTOS = {"antonello": ("antonello-portrait-of-a-man", "antonello_da_messina_portrai"),
           "coffee": ("coffee-beans", "coffee_beans"),

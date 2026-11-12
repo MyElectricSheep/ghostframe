@@ -1,7 +1,7 @@
 # Ghostframe demo site
 
-The public page for Ghostframe, built from the design handoff in
-[`design-handoff/ghostframe-site/`](../design-handoff/ghostframe-site/README.md) (the spec).
+The demo page for Ghostframe: try the three modes on sample photos, hide a message in your own
+photo, and read one back.
 
 | Part | Where | What |
 |---|---|---|
@@ -21,12 +21,12 @@ cd site && npm ci && npm run dev
 ```
 
 `npm run dev` and `npm run build` first run `scripts/prepare-assets.mjs`. It:
-- reads every number from `design-handoff/ghostframe-site/data/design-data.json`;
+- reads every number from `site/data/design-data.json` (written by `python -m tools.design_data` from `bench/results/`);
 - reads every example message and hash from `demo-photos/fixtures/*/fixtures.json`;
 - copies the fixture PNGs into `public/demo-photos/` and checks every SHA-256.
 
 After the build, `scripts/verify-dist.mjs` checks the copies in `dist/` again. Nothing on the
-page is typed in by hand, except the approved copy.
+page is typed in by hand except the prose.
 
 ## Tests
 
@@ -39,7 +39,6 @@ node tests/a11y.mjs                                   # divider and tile keyboar
 node tests/phone.mjs                                  # below 760 px: menu, Try it sheet and switch, How it works cards (focus, Escape, scroll lock)
 node tests/counter.mjs                                # daily encode counter: when it fetches, 0 on "site limit", hidden on failure
 node scripts/touch-targets.mjs /tmp/touch.png         # every control >= 44 px on touch
-node scripts/compare.mjs try 1280,768,375 /tmp/cmp    # side by side with the prototype (serve it on :5190)
 ```
 
 ## Server configuration

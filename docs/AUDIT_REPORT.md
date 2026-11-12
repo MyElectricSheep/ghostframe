@@ -1,9 +1,9 @@
 # Ghostframe adversarial verification: final report
 
-Date: 2026-11-10. Source: archive sha256 `b6cb7c14…`, imported as commit `1b53cbe`. All work is
+Date: 2026-11-10. Source: archive sha256 `b6cb7c14…`, imported as commit `7370fa0`. All work is
 offline on a 4-vCPU Linux VPS with CPU-only PyTorch 2.7.1 and torchvision 0.22.1. The model is
-the SqueezeNet 1.1 checkpoint `b8a52dc0…`. The UI is out of scope. The 13-byte "Meet at dawn."
-legacy frame remains the showcase entry point and the default.
+the SqueezeNet 1.1 checkpoint `b8a52dc0…`. The demo site came later and is not covered here. The
+13-byte "Meet at dawn." legacy frame remains the default.
 
 ## 1. Baseline audit
 
@@ -18,7 +18,7 @@ legacy frame remains the showcase entry point and the default.
 | 49 B at a 2-level cap, 3/3 | Rerun: screen **2/6** (fails four 300–640 px covers, 16–24 wrong bytes against a 12-byte budget); holdout 41/41 at 1280 px | **Size-dependent; the claim is overstated** |
 | Encoded PNGs carry no metadata | Inspected chunks | **Broken:** the ECC demo path copied the source ICC profile into the output. Fixed |
 | Capacity script supports larger frames | Constructed a 300-byte frame | **Broken:** above 255 − parity bytes the RS codeword silently grows (300 → 364 bytes) and no longer matches the layout. Fixed in the new code by multi-block RS; the legacy script is documented, not changed |
-| Input handling | `audit/probe_inputs.py` | **Broken:** 16-bit, float and transparent images were silently flattened; the CLI could spend a full encode before discovering that the output directory was missing. Fixed |
+| Input handling | `bench/probe_inputs.py` | **Broken:** 16-bit, float and transparent images were silently flattened; the CLI could spend a full encode before discovering that the output directory was missing. Fixed |
 
 Legacy fixes (`tests/test_legacy_fixes.py`, 3 tests, all failing on the original code):
 - `read_image` rejects 16-bit, float and transparent images.
@@ -69,7 +69,7 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
 | 8 | `sw-l8-c10x8b40p64` | **302 B** | 123/123 | 97.0–100 % | 35.0 dB / 0.885 | 41 s | recommended experimental |
 | 2 | legacy 49 B | 49 B | 41/41 | 91.4–100 % | 43.6 dB / 0.981 | 21 s | legacy |
 | 8 | legacy 161 B | 161 B | 41/41 | 91.4–100 % | 38.6 dB / 0.949 | 23 s | legacy |
-| 8 | legacy v1 | 13 B | 41/41 | 91.4–100 % | 36.5 dB / 0.924 | 24 s | default showcase |
+| 8 | legacy v1 | 13 B | 41/41 | 91.4–100 % | 36.5 dB / 0.924 | 24 s | default |
 
 - **Promotion rule met** for both finalists:
   - Observed success is ≥ 95 %.
@@ -107,10 +107,9 @@ photographs are 1280 px wide: 41 covers, with 3 independently sealed frames per 
   - 640-px covers: 41/41 for both demo profiles (SqueezeNet 79 B was 40/41). The detector still reaches AUC 1.0.
   - Details are in [BENCHMARK.md](BENCHMARK.md#backbone-comparison-mobilenetv3-small).
 
-## 4. Showcase handoff
+## 4. Example fixtures
 
-[EMBEDDING_PNG_SHOWCASE.md](EMBEDDING_PNG_SHOWCASE.md) has been updated. The main flow is
-unchanged and "Meet at dawn." remains the entry point. The new fixtures are in
+"Meet at dawn." remains the default example. The new fixtures are in
 `benchmarks/embedding-showcase/`, listed in `fixtures-v2.json` with their hashes, and can be
 regenerated with `python -m tools.make_showcase`.
 

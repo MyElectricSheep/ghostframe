@@ -15,7 +15,7 @@ Profiles and the frame format: [PNG_PROFILES.md](PNG_PROFILES.md).
 | 2 | `bb-mobilenet_v3_small-l2-b16p48` | 79 B | 123/123 | 97.0–100 % | recommended experimental (MobileNetV3, faster) |
 | 2 | legacy 49-byte capacity profile | 49 B | 41/41 (frame 0) | 91.4–100 % | legacy research profile |
 | 8 | legacy 161-byte capacity profile | 161 B | 41/41 (frame 0) | 91.4–100 % | legacy research profile |
-| 8 | legacy v1 CLI frame (`Meet at dawn.`) | 13 B | 41/41 (frame 0) | 91.4–100 % | default showcase frame |
+| 8 | legacy v1 CLI frame (`Meet at dawn.`) | 13 B | 41/41 (frame 0) | 91.4–100 % | default frame |
 
 Both finalists met the preregistered promotion rule: observed success ≥ 95 %, cover-clustered
 bootstrap lower bound ≥ 85 % (it is 100 %: no cover failed), and no paired frame-0 losses
@@ -270,7 +270,7 @@ No steganographic claim is made.
 
 Every held-out finalist PNG (246) was decoded again in a fresh worker process with one CPU
 thread instead of four. All 246 authenticated, and the raw received codeword bytes matched the
-four-thread decode exactly, before error correction (`decode-threads1*.jsonl`). The showcase
+four-thread decode exactly, before error correction (`decode-threads1*.jsonl`). The example
 fixtures were also decoded at both thread counts through the CLI. These checks cover one CPU
 and one torch build. Other hardware, BLAS builds or GPUs are untested. The 2·10⁻³ safety
 margin is meant to absorb those differences, but that has not been demonstrated.

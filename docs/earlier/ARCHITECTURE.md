@@ -12,4 +12,4 @@ The neural modes use the exact existing v1 and v2 benchmark frames and preserve 
 
 The message CLI seals a frame, marks pixels, serializes the intended output, and independently extracts and authenticates the frame from that serialized output before creating a file. It refuses to overwrite existing files. Luminance has bounded resize, crop, compound crop/resize and exposure recovery. Optional confidence erasures spend part of the parity budget. The neural mode only supports the preserved-image workflow.
 
-The installed raw-bit command is `ghostframe`. The authenticated command is `python -m experiments.message_cli` from the extracted repository root. Setup and test commands are in README.md. See [security and framing](SECURITY.md), [benchmark evidence](FULL_REPORT.md), and [goal verification](GOAL_STATUS.md).
+The installed raw-bit command is `ghostframe`. The authenticated command is `python -m experiments.message_cli` from the extracted repository root. Setup and test commands are in README.md. See [security and framing](../THREAT_MODEL.md), [benchmark evidence](FULL_REPORT.md), and [goal verification](GOAL_STATUS.md).

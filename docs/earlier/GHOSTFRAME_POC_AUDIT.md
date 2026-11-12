@@ -1,6 +1,6 @@
 # Ghostframe proof-of-concept audit
 
-The offline command-line proof of concept was verified on a Linux CPU host. All 26 tests passed with the project's pinned versions of PyTorch, torchvision, NumPy, Pillow, scikit-image, cryptography and reedsolo. The JPEG candidate remains an experiment. The design prompt describes a proposed showcase.
+The offline command-line proof of concept was verified on a Linux CPU host. All 26 tests passed with the project's pinned versions of PyTorch, torchvision, NumPy, Pillow, scikit-image, cryptography and reedsolo. The JPEG candidate remains an experiment.
 
 ## Claims checked
 
