@@ -1226,6 +1226,28 @@
    ]
   }
  },
- "small640": {},
- "detect": {}
+ "small640": {
+  "subtle": {
+   "read_back": 41,
+   "of": 41,
+   "failures": [],
+   "median_encode_s": 21
+  },
+  "long": {
+   "read_back": 41,
+   "of": 41,
+   "failures": [],
+   "median_encode_s": 37
+  }
+ },
+ "detect": {
+  "subtle": {
+   "auc": 1.0,
+   "pairs": 41
+  },
+  "long": {
+   "auc": 1.0,
+   "pairs": 41
+  }
+ }
 }

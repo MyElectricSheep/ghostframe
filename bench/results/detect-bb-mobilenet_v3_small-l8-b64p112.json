@@ -1,0 +1,217 @@
+{
+ "profile": "bb-mobilenet_v3_small-l8-b64p112",
+ "threshold": 0.002161,
+ "pairs": 41,
+ "auc": 1.0,
+ "clean_median": 0.0453125,
+ "marked_median": 0.0,
+ "clean_min": 0.0384765625,
+ "marked_max": 0.003125,
+ "per_cover": [
+  {
+   "cover": "apple_cake",
+   "clean": 0.0435546875,
+   "marked": 0.0
+  },
+  {
+   "cover": "big_mac",
+   "clean": 0.0423828125,
+   "marked": 0.003125
+  },
+  {
+   "cover": "cardamom_buns",
+   "clean": 0.0435546875,
+   "marked": 0.0005859375
+  },
+  {
+   "cover": "fungi_basket",
+   "clean": 0.040625,
+   "marked": 0.0
+  },
+  {
+   "cover": "lark_buns",
+   "clean": 0.04296875,
+   "marked": 0.0
+  },
+  {
+   "cover": "chocolate_cake",
+   "clean": 0.046484375,
+   "marked": 0.0013671875
+  },
+  {
+   "cover": "carrots",
+   "clean": 0.0451171875,
+   "marked": 0.0
+  },
+  {
+   "cover": "coffee_beans",
+   "clean": 0.0408203125,
+   "marked": 0.0
+  },
+  {
+   "cover": "city_night",
+   "clean": 0.046875,
+   "marked": 0.000390625
+  },
+  {
+   "cover": "milky_way",
+   "clean": 0.0451171875,
+   "marked": 0.0
+  },
+  {
+   "cover": "iss_border_night",
+   "clean": 0.0513671875,
+   "marked": 0.0
+  },
+  {
+   "cover": "met_portrait",
+   "clean": 0.0484375,
+   "marked": 0.0
+  },
+  {
+   "cover": "liljefors_fox",
+   "clean": 0.04375,
+   "marked": 0.0
+  },
+  {
+   "cover": "honthorst",
+   "clean": 0.049609375,
+   "marked": 0.0
+  },
+  {
+   "cover": "portrait_of_a_man_said_to_be",
+   "clean": 0.0421875,
+   "marked": 0.0
+  },
+  {
+   "cover": "antonello_da_messina_portrai",
+   "clean": 0.0484375,
+   "marked": 0.0
+  },
+  {
+   "cover": "2009_photo_of_summer_in_the",
+   "clean": 0.0384765625,
+   "marked": 0.0
+  },
+  {
+   "cover": "photo_of_two_young_women_pas",
+   "clean": 0.046875,
+   "marked": 0.0
+  },
+  {
+   "cover": "utah_dunes_landscape_west_de",
+   "clean": 0.040234375,
+   "marked": 0.0
+  },
+  {
+   "cover": "ky_to_kan_school_mountain_la",
+   "clean": 0.0408203125,
+   "marked": 0.0
+  },
+  {
+   "cover": "william_adolphe_bouguereau_1",
+   "clean": 0.043359375,
+   "marked": 0.0
+  },
+  {
+   "cover": "waves_in_sea_jpg",
+   "clean": 0.0494140625,
+   "marked": 0.0
+  },
+  {
+   "cover": "restaurant_amigos_de_acapulc",
+   "clean": 0.0484375,
+   "marked": 0.0
+  },
+  {
+   "cover": "boulevard_hotel_neon_sign_mi",
+   "clean": 0.0458984375,
+   "marked": 0.0
+  },
+  {
+   "cover": "the_blue_bird_press_photogra",
+   "clean": 0.0466796875,
+   "marked": 0.0
+  },
+  {
+   "cover": "dog_met_dp233970_jpg",
+   "clean": 0.04453125,
+   "marked": 0.0
+  },
+  {
+   "cover": "photograph_of_buddy_the_dog",
+   "clean": 0.0423828125,
+   "marked": 0.0
+  },
+  {
+   "cover": "fly_insect_macro_jpg",
+   "clean": 0.045703125,
+   "marked": 0.0
+  },
+  {
+   "cover": "insect_macro_36301512526_jpg",
+   "clean": 0.0458984375,
+   "marked": 0.0001953125
+  },
+  {
+   "cover": "chromis_reef_fish_and_stagho",
+   "clean": 0.04921875,
+   "marked": 0.0
+  },
+  {
+   "cover": "underwater_photo_of_coral_re",
+   "clean": 0.0451171875,
+   "marked": 0.0
+  },
+  {
+   "cover": "aerial_view_of_farmland_cont",
+   "clean": 0.046484375,
+   "marked": 0.0
+  },
+  {
+   "cover": "aerial_photograph_of_farmlan",
+   "clean": 0.045703125,
+   "marked": 0.000390625
+  },
+  {
+   "cover": "french_marigold_garden_2009",
+   "clean": 0.049609375,
+   "marked": 0.0
+  },
+  {
+   "cover": "pasillo_de_la_biblioteca_vas",
+   "clean": 0.0419921875,
+   "marked": 0.0001953125
+  },
+  {
+   "cover": "holsteiner_ufer_in_berlin_on",
+   "clean": 0.0453125,
+   "marked": 0.001171875
+  },
+  {
+   "cover": "orange_fabric_textile_cloth",
+   "clean": 0.0478515625,
+   "marked": 0.0
+  },
+  {
+   "cover": "ravi_shankar_charcoal_pencil",
+   "clean": 0.0505859375,
+   "marked": 0.0
+  },
+  {
+   "cover": "carl_gustav_carus_morning_fo",
+   "clean": 0.04296875,
+   "marked": 0.0
+  },
+  {
+   "cover": "train_station_with_train_and",
+   "clean": 0.0486328125,
+   "marked": 0.0
+  },
+  {
+   "cover": "john_frederick_tayler_a_frui",
+   "clean": 0.0416015625,
+   "marked": 0.0
+  }
+ ]
+}

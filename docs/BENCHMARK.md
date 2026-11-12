@@ -231,8 +231,22 @@ Every stress failure was a refusal: the encoder wrote no file. MobileNetV3 refus
 - After a JPEG re-save, decoding still worked on 2 of 152 at quality 95, and on none at 90. No
   backbone gives JPEG robustness.
 
-**Not covered for MobileNetV3:** the 640-px small-cover check, the detectability analysis below
-and the thread-count determinism run on the holdout PNGs. The profiles are new, experimental,
+**640-px covers** (exploratory, as in the SqueezeNet check above): the demo profiles on the 41
+held-out covers resized to 640 px wide, one frame each.
+- `bb-mobilenet_v3_small-l2-b16p48` (79 B): 41/41, with 20 raw wrong bytes at most and a median
+  PSNR of 42.9 dB. SqueezeNet's 79 B profile was 40/41 here. Encode median / p90 / max:
+  21 / 33 / 110 s.
+- `bb-mobilenet_v3_small-l8-b64p112` (494 B): 41/41, with 25 raw wrong bytes at most and a
+  median PSNR of 33.8 dB. Encode: 37 / 45 / 51 s.
+
+Raw records are in `bench/results/holdout640-mobilenet/`.
+
+**Detectability:** the protocol-aware detector below uses each profile's own safety threshold,
+0.002161. It again separates every marked file from its clean cover, with AUC 1.0 for all three
+MobileNetV3 profiles (`bench/results/detect-bb-*.json`).
+
+**Not covered for MobileNetV3:** the thread-count determinism run on the holdout PNGs. The
+screen PNGs and the demo fixtures did decode identically with 1 and 4 threads. The profiles are new, experimental,
 and named after the arms that were scored. The name is part of the identity, so a PNG decodes
 only under its exact profile name.
 
