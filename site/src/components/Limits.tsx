@@ -13,11 +13,11 @@ const smallSentence = !SMALL640.subtle || !SMALL640.long ? ''
   : sameSmall ? `At 640 px wide, ordinary photos did well: Subtle and Long each read back ${SMALL640.subtle.read_back} of ${SMALL640.subtle.of}.`
   : `At 640 px wide, ordinary photos did well: Subtle read back ${SMALL640.subtle.read_back} of ${SMALL640.subtle.of}, Long ${SMALL640.long.read_back} of ${SMALL640.long.of}.`;
 const aucs = [DETECT.subtle?.auc, DETECT.long?.auc].filter((v): v is number => v != null);
-const detectNote = aucs.length ? `a detection test separated marked from clean photos ${Math.round(Math.min(...aucs) * 100)}% of the time` : '';
+const detectNote = aucs.length && Math.min(...aucs) === 1 ? 'a detection test separated every marked photo from every clean one' : aucs.length ? `detection test AUC ${Math.min(...aucs).toFixed(2)}` : '';
 
 const limits = [
   { t: 'Exact PNG copies only.', d: 'Recompressing, resizing, cropping, screenshots and most chat apps destroy the message. Email attachments, file links, AirDrop and USB keep it.', n: '' },
-  { t: 'Steganography, not a watermark.', d: 'The message is meant to stay hidden, not to survive edits. A watermark is built to withstand compression and resizing; Ghostframe deliberately is not.', n: '' },
+  { t: 'Not a watermark.', d: 'The message is hidden from the eye, not from software, and it is not built to survive edits. A watermark is built to withstand compression and resizing; Ghostframe deliberately is not.', n: '' },
   { t: 'Not invisible to software.', d: 'Anyone with the public reader can tell a photo carries a message. They can’t read or forge it.', n: detectNote },
   { t: 'Not every photo works.', d: 'Flat, synthetic and small images can be refused. When that happens, no file is produced.', n: stressNote + smallNote },
   { t: 'Short messages only.', d: 'Limits are in UTF-8 bytes, not characters.', n: `${MODES.classic.bytes}, ${MODES.subtle.bytes} or ${MODES.long.bytes} bytes` },
