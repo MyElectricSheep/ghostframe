@@ -5,7 +5,8 @@ levels out of 255 per colour channel, until an off-the-shelf image model (Mobile
 frozen, ImageNet weights) describes the photo with numbers that spell out the message. Reading it
 back needs the PNG, the passphrase and the same public model. The original photo is not needed.
 
-It is an engineering experiment, not a product. The method is not new (see
+Try it in the browser at **[ghostframe.electricsheep.id](https://ghostframe.electricsheep.id)**, or run it
+locally (below). It is an engineering experiment, not a product. The method is not new (see
 [Related work](#related-work)). What this repository adds is a preregistered benchmark of how
 reliably it works on ordinary CPUs, with every raw result committed.
 
@@ -132,8 +133,9 @@ them are in [docs/earlier/](docs/earlier/README.md). The `ghostframe` command an
 
 ## Demo site
 
-`site/` and `server/` hold a small web page that runs the same engine. See
-[site/README.md](site/README.md).
+[ghostframe.electricsheep.id](https://ghostframe.electricsheep.id) runs the same engine. Its code is in
+`site/` and `server/`; see [site/README.md](site/README.md). Hide is capped at 50 encodes a day for
+the whole site and 3 per visitor, so running it locally is the way to try many photos.
 
 ## Use it responsibly
 

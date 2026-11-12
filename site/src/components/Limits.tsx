@@ -24,11 +24,11 @@ const limits = [
 ];
 const modeRows = ORDER.map((k) => ({ ...MODES[k], statusSfx: '' }));
 const hardRows = ([['Subtle', STRESS.subtle], ['Long', STRESS.long]] as const).map(([label, s]) => ({ label, n: s.encoded, cells: Array.from({ length: s.of }, (_, i) => (i < s.encoded ? BLUE : '#e0dad3')) }));
-// Placeholders until the repository is public (decision 2026-11-12); shown as in the design.
+const REPO = 'https://github.com/MyElectricSheep/ghostframe';
 const links = [
-  { t: 'Source code', d: 'Engine, CLI and this site', ph: '[REPOSITORY_URL]' },
-  { t: 'Benchmark', d: 'Held-out trials, image quality, speed', ph: 'docs/BENCHMARK.md' },
-  { t: 'Method notes', d: 'How the experiments were run', ph: 'docs/AUDIT_REPORT.md' },
+  { t: 'Source code', d: 'Engine, CLI and this site', ph: 'github.com/MyElectricSheep/ghostframe', href: REPO },
+  { t: 'Benchmark', d: 'Held-out trials, image quality, speed', ph: 'docs/BENCHMARK.md', href: `${REPO}/blob/main/docs/BENCHMARK.md` },
+  { t: 'Method notes', d: 'How the experiments were run', ph: 'docs/AUDIT_REPORT.md', href: `${REPO}/blob/main/docs/AUDIT_REPORT.md` },
 ];
 
 export function Limits() {
@@ -137,7 +137,7 @@ export function Limits() {
           {links.map((l, i) => (<React.Fragment key={i}>
             <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '4px 16px', justifyContent: 'space-between', alignItems: 'baseline', padding: '12px 0', borderBottom: '1px solid rgba(24,20,17,0.10)' })}>
               <span style={S({ display: 'flex', flexDirection: 'column', gap: '2px' })}><span style={S({ fontSize: '15px', fontWeight: '600' })}>{l.t}</span><span style={S({ fontSize: '13px', color: '#625c57' })}>{l.d}</span></span>
-              <span style={S({ font: '500 12px/1.3 \'IBM Plex Mono\',ui-monospace,monospace', color: '#625c57', background: '#f1eee9', padding: '4px 8px', borderRadius: '3px' })}>{l.ph}</span>
+              <a href={l.href} target="_blank" rel="noopener" style={S({ font: '500 12px/1.3 \'IBM Plex Mono\',ui-monospace,monospace', color: '#355574', background: '#f1eee9', padding: '4px 8px', borderRadius: '3px', overflowWrap: 'anywhere' })}>{l.ph}</a>
             </div>
           </React.Fragment>))}
         </div>

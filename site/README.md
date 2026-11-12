@@ -45,8 +45,8 @@ node scripts/touch-targets.mjs touch.png              # every control >= 44 px o
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `GF_SITE_DAILY_CAP` | 50 (placeholder) | encodes per UTC day for the whole site; `none` for no cap. `GET /api/quota` returns `{ left, limit, resets_at }` from the same counter (404 with no cap), and the page's daily counter shows it |
-| `GF_VISITOR_DAILY_CAP` | 3 (placeholder) | encodes per UTC day per visitor (keyed IP hash, key replaced daily, never stored) |
+| `GF_SITE_DAILY_CAP` | 50 | encodes per UTC day for the whole site; `none` for no cap. `GET /api/quota` returns `{ left, limit, resets_at }` from the same counter (404 with no cap), and the page's daily counter shows it |
+| `GF_VISITOR_DAILY_CAP` | 3 | encodes per UTC day per visitor (keyed IP hash, key replaced daily, never stored) |
 | `GF_ENCODE_TIMEOUT_S` | 300 | hard stop per encode; the copy promises 5 minutes |
 | `GF_TURNSTILE_SECRET` | unset | when set, encode and decode need a Turnstile token (build the page with `VITE_TURNSTILE_SITEKEY`) |
 | `GF_TRUST_CF_IP` | unset | `1` behind Cloudflare: the visitor address comes from `CF-Connecting-IP` |
@@ -61,10 +61,11 @@ deletes it immediately.
 
 ## Deploy
 
-The site runs on Cloudflare Workers with one Cloudflare Container for the engine, behind
-Cloudflare Access. `wrangler.jsonc` is the author's deployment; for your own, copy
-`wrangler.example.jsonc` to `wrangler.jsonc` and fill in the hostname and the Access team domain and
-AUD (or set `ACCESS_AUD` to `off`). Deploying needs Docker running, because wrangler builds the
+The site runs on Cloudflare Workers with one Cloudflare Container for the engine. The Worker can
+also sit behind Cloudflare Access and check its token. `wrangler.jsonc` is the author's deployment;
+for your own, copy `wrangler.example.jsonc` to `wrangler.jsonc` and fill in the hostname and either
+the Access team domain and AUD, or `ACCESS_AUD: "off"`. Put your own Turnstile site key in
+`site/.env.production`, or remove the file to build without a bot check. Deploying needs Docker running, because wrangler builds the
 engine image locally.
 
 ```sh
@@ -99,15 +100,17 @@ Measured on the live container (2026-11-12, 1920 × 1080 sample photo): Subtle 2
 Short 48.5 s; every download read back exactly. Waking from sleep took 12 s until the models were
 loaded (the very first start, which also pulled the image, took about 23 s).
 
-## Before launch
+## Running in public
 
-- **Per-visitor caps reset when the container sleeps.** The site-wide count is persisted (see
-  Deploy); the per-visitor counts stay in memory on purpose, because persisting them would mean
-  storing hashed IP addresses.
-- **Keep the live site behind Cloudflare Access** until it is opened up.
+The site has been public since 2026-11-12, with no Access app in front (`ACCESS_AUD` is `off`).
+
+- **Bot check.** Hide and Read need a Turnstile token. The site key is public and lives in
+  `site/.env.production`; the secret is the Worker secret `GF_TURNSTILE_SECRET`, and setting it also
+  gives the container outbound access for verification.
+- **Caps.** 50 encodes per UTC day for the whole site and 3 per visitor. The site-wide count is
+  kept in the Durable Object across sleeps; the per-visitor counts stay in memory on purpose
+  (persisting them would mean storing hashed IP addresses), so they reset when the container sleeps.
 - **Serve every PNG byte for byte.** Polish, Mirage, WebP and Image Resizing are off on the
   `electricsheep.id` zone, and a configuration rule pins Polish, Mirage, Rocket Loader and email
   obfuscation off for `ghostframe.electricsheep.id`. The API already sends
   `Cache-Control: no-store, no-transform`.
-- **The three link placeholders** (`[REPOSITORY_URL]`, `docs/BENCHMARK.md`,
-  `docs/AUDIT_REPORT.md`) point at the repository once it is public.
