@@ -4,7 +4,8 @@
   "main": "worker/index.ts",
   "compatibility_date": "2026-11-12",
   // Behind Cloudflare Access (app "ghostframe") until the site is opened up.
-  "workers_dev": true,
+  "routes": [{ "pattern": "ghostframe.electricsheep.id", "custom_domain": true }],
+  "workers_dev": false,
   "preview_urls": false,
   "observability": { "enabled": true },
   "assets": {
