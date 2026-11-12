@@ -15,11 +15,14 @@ interface Env {
 }
 
 const PORT = 8790;
-// Results expire after 15 minutes on the server; a page polls every second while it waits.
-const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+// Memory is billed for every second the container is awake, so it sleeps soon after the last
+// request. A page polls every second while an encode runs, which keeps it awake until the result
+// has been fetched; results expire after 15 minutes on the server.
+const INACTIVITY_TIMEOUT_MS = 3 * 60 * 1000;
 const READY_TIMEOUT_MS = 90 * 1000;
-// 4 vCPU like the test server; an encode peaked at about 1 GB, and the image is 1.8 GB on disk.
-const INSTANCE = { vcpu: 4, memoryMib: 4096, diskMb: 4000 };
+// 4 vCPU like the test server. 2 GiB: the engine peaked at 1,416 MiB with three Long encodes of a
+// 4 MP photo queued and six decodes alongside, in a 2 GiB cgroup with no swap. The image is 1.8 GB on disk.
+const INSTANCE = { vcpu: 4, memoryMib: 2048, diskMb: 4000 };
 
 export class Engine extends DurableObject<Env> {
   starting?: Promise<void>;
