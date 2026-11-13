@@ -48,7 +48,7 @@ Passphrase for all of them: `ghostframe public benchmark fixture`.
 |---|---|---|---|
 | Coffee beans | "Beans at six." | "The roaster on Via Lucca is ours. Order the dark blend and pay in cash." | Courier briefing, 488 B |
 | Milky Way | "Eyes on Orion" | "Signal from the fence line at 02:00. Two flashes mean the road is clear." | Night-team orders, 480 B |
-| Antonello portrait | "Trust no one." | "The man in the red cap knows the code. Meet him in Room 4 at closing time." | Birthday treasure hunt, 492 B |
+| Antonello portrait | "Trust no one." | "The man in the red cap knows the code. Meet him in Room 4 at closing time." | Gallery orders, 493 B |
 
 The full Long texts are in each `fixtures.json`. Every fixture passed four checks with the public CLI, each in a fresh process:
 
