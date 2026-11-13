@@ -1,7 +1,7 @@
 # The engine API for the demo site (server/app.py), as a Cloudflare Container.
 # Built from the repository root: see site/wrangler.jsonc (build_context "..").
 # python:3.12-slim, pinned by its multi-platform index digest (resolved 2026-11-12; Dependabot bumps it).
-FROM python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+FROM python:3.15-slim@sha256:65a65fc7b30b06cb6df4930fd4650697cb23f4c2698ab81fc87e4b031bc36928
 
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONPATH=/app TORCH_HOME=/opt/torch \
     GF_HOST=0.0.0.0 GF_PORT=8790 GF_PRELOAD=1 GF_THREADS=4 GF_TRUST_CF_IP=1
