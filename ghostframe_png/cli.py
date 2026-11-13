@@ -71,6 +71,15 @@ def main(argv=None):
         parser.exit(2, f"ghostframe-png: unknown profile {args.profile!r}; see 'ghostframe-png profiles'\n")
     if args.threads < 1:
         parser.exit(2, "ghostframe-png: --threads must be positive\n")
+    if args.profile in LEGACY:
+        try:
+            from experiments import tiled
+            from experiments.message_cli import neural_encode_file, neural_recover
+        except ModuleNotFoundError as exc:
+            if not (exc.name or "").startswith("experiments"):
+                raise
+            parser.exit(2, "ghostframe-png: legacy profiles need a clone of the repository (they use its "
+                           "experiments/ folder, which is not installed); run from the repository root\n")
     try:
         passphrase = read_passphrase(args.passphrase_file)
         if args.command == "encode":
@@ -91,15 +100,20 @@ def main(argv=None):
 
             model = backbones.load(backbone)
         if args.profile in LEGACY:
-            from experiments.message_cli import neural_encode_file, neural_recover
             from ghostframe import read_image
 
             ecc = LEGACY[args.profile]["ecc"]
-            if args.command == "encode":
-                neural_encode_file(read_image(args.cover), message, passphrase, args.output, model, ecc=ecc)
-            else:
+            if args.command == "decode":
                 core.load_png(args.image)  # Same input contract as the new profiles.
-                sys.stdout.buffer.write(neural_recover(read_image(args.image), passphrase, model, ecc=ecc))
+            try:
+                image = read_image(args.cover if args.command == "encode" else args.image)
+                tiled.tile_boxes(image.size)
+            except ValueError as exc:  # e.g. too small: an input error (2), not a failed authentication (1)
+                raise core.InputError(str(exc)) from exc
+            if args.command == "encode":
+                neural_encode_file(image, message, passphrase, args.output, model, ecc=ecc)
+            else:
+                sys.stdout.buffer.write(neural_recover(image, passphrase, model, ecc=ecc))
             return 0
         profile = core.PROFILES[args.profile]
         if args.command == "encode":

@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-/** Inline styles carried over exactly from the design reference (values may be CSS strings or vars). */
+/** Inline style objects (values may be CSS strings or vars). */
 export const S = (o: Record<string, string | number | undefined>) => o as CSSProperties;
 
 export const prefersReducedMotion = () =>

@@ -14,22 +14,28 @@ reliably it works on ordinary CPUs, with every raw result committed.
 
 ## What works and what doesn't
 
-| Mode | Profile | Message | Change per channel | Held-out photos | Encode (4 vCPU) |
+| Mode | Profile | Message | Change per channel | Held-out trials | Encode (4 vCPU) |
 |---|---|---:|---:|---:|---:|
 | Subtle | `bb-mobilenet_v3_small-l2-b16p48` | up to 79 B | ±2 levels | 123/123 | median 19 s |
 | Long | `bb-mobilenet_v3_small-l8-b64p112` | up to 494 B | ±8 levels | 123/123 | median 33 s |
 | Classic | `legacy-v1` (SqueezeNet 1.1) | 13 B | ±8 levels | 41/41 | median 24 s |
 
-"Held-out photos" means 41 photographs, 1280 px wide, that were fixed in a manifest and never used
-while tuning, with three separately encrypted messages each. A separate decoder process recovered
-every one exactly. With zero failures in 41 photos, the data still allow a failure rate of up to
-about 7 % per photo; they do not show that it is zero. Subtle and Long also read back 41/41 on
+"Held-out trials" are on 41 photographs, 1280 px wide, that were fixed in a manifest and never
+used to tune any profile (the MobileNetV3 profiles were scored on the same 41 photos after the
+SqueezeNet ones). 123 = 41 photos × 3 separately encrypted messages for Subtle and Long; Classic
+is 41 photos × 1. A separate decoder process recovered every one exactly. With zero failures in
+41 photos, the data still allow a per-photo failure rate of about 7 % (one-sided 95 % bound; 9 %
+two-sided); they do not show that it is zero. The demo site calls the Classic mode Short. Subtle and Long also read back 41/41 on
 those photos resized to 640 px.
+
+Encode times are the optimisation alone on a shared 4-vCPU server; the command-line tool adds
+about 5–15 s to load the model and verify.
 
 Its limits:
 
-- It does not survive edits. It reads exact PNG pixels, so a JPEG save at quality 95, a resize or
-  a crop destroys the message. Most messaging apps and social sites do one of these.
+- It does not survive edits. It reads exact PNG pixels, so a resize or a crop destroys the
+  message, and a JPEG save, even at quality 95, almost always does (1 of 12 Long test files
+  survived quality 95; none survived 90). Most messaging apps and social sites do one of these.
 - It does not hide that a message exists. A simple detector that knows the public profile
   separates every marked photo from its original (AUC 1.0). This is not steganography in the sense of being
   undetectable. The passphrase keeps the contents private and makes tampering detectable.
@@ -49,6 +55,10 @@ python -m pip install 'torch==2.7.1+cpu' 'torchvision==0.22.1+cpu' \
 python -m pip install -e '.[tiled]'
 ```
 
+On Debian/Ubuntu, `python3.12 -m venv` needs the `python3.12-venv` package (or use
+`uv venv --python 3.12 --seed .venv`). `uv pip install` works in place of `python -m pip install`;
+the other docs use it.
+
 Read a message that is already in one of the sample photos. The first run downloads the
 MobileNetV3-Small weights (about 10 MB) and checks their SHA-256.
 
@@ -59,7 +69,7 @@ ghostframe-png decode demo-photos/fixtures/milky-way/subtle.png \
 # Signal from the fence line at 02:00. Two flashes mean the road is clear.
 ```
 
-Hide your own message. This takes about 20 seconds on a 4-core CPU:
+Hide your own message. This takes about 25 seconds on a 4-core CPU:
 
 ```sh
 printf '%s' 'Meet at dawn. The north gate stays open until six.' > message.txt
@@ -69,8 +79,9 @@ ghostframe-png decode marked.png --profile bb-mobilenet_v3_small-l2-b16p48 --pas
 ```
 
 Without `--passphrase-file` the commands ask for the passphrase. Decode prints exactly the
-message bytes and exits 0; a wrong passphrase, a wrong profile or an unmarked image exits 1 with
-no output. `ghostframe-png profiles` lists every profile. The input rules (formats, colour
+message bytes and exits 0; with a wrong passphrase, a wrong profile or an unmarked PNG it prints
+nothing on standard output and exits 1. A non-PNG input exits 2 ("Unsupported image format;
+expected PNG"). `ghostframe-png profiles` lists every profile. The input rules (formats, colour
 profiles, minimum size) are in [docs/PNG_PROFILES.md](docs/PNG_PROFILES.md#input-contract).
 
 To check all nine published sample files and their negative controls:
@@ -101,10 +112,17 @@ The frame format and threat model are in [docs/THREAT_MODEL.md](docs/THREAT_MODE
 ## Evidence
 
 - [bench/PREREGISTRATION.md](bench/PREREGISTRATION.md) and
-  [bench/PREREGISTRATION-BACKBONES.md](bench/PREREGISTRATION-BACKBONES.md): the decision rules,
-  committed before any held-out photo was encoded. The git history shows the order (rule in
-  `9628f4d`, held-out results in `3c186e2`); those timestamps are my own and are not
-  independently notarised.
+  [bench/PREREGISTRATION-BACKBONES.md](bench/PREREGISTRATION-BACKBONES.md): the decision rules.
+  The first (rule `9628f4d`, results `3c186e2`, raw records `a633374`) covers the SqueezeNet
+  profiles and was committed before any held-out photo was encoded. The second (rule `afceeae`,
+  amended in `4fb6e27`, results `6364357`) covers the MobileNetV3 profiles in the table above. It
+  reuses the same 41 photos, which had by then been scored for the SqueezeNet profiles. Long was
+  the preregistered candidate; Subtle was added by an amendment after screening and before its
+  held-out run. The raw records were committed after the runs, so the order is shown by the rule
+  commits, not by the records. The history was rewritten twice, keeping dates: on 2026-11-11 to
+  change the author email, and on 2026-11-12 to remove local file paths from the benchmark records
+  (which changes the hashes of later commits; the ones above are current). These timestamps are
+  my own and are not independently notarised.
 - [docs/BENCHMARK.md](docs/BENCHMARK.md): every result, the 640-px check, the detector, and the
   commands to reproduce them.
 - [docs/AUDIT_REPORT.md](docs/AUDIT_REPORT.md): an adversarial review of the earlier prototype's
@@ -114,14 +132,24 @@ The frame format and threat model are in [docs/THREAT_MODEL.md](docs/THREAT_MODE
 ## Related work
 
 Optimising an image so that a frozen network reads out hidden data is an established idea.
-Vukotić, Chappelier and Furon (WIFS 2018) watermarked images through a frozen classifier's
-features, and [Fernandez et al. (ICASSP 2022)](https://arxiv.org/abs/2112.09581) used fixed
-carrier directions in a pretrained feature space, which is close to what Ghostframe does.
-[Kishore et al. (ICLR 2022)](https://openreview.net/forum?id=hcMvApxGSzZ) applied the same
-principle to steganography (Fixed Neural Network Steganography), and
-[Luo et al. (ACM MM 2023)](https://openreview.net/forum?id=8MY_s2y_v9) added a key. The
-differences here are practical: tiles with authenticated encryption and error correction, an
-encoder that refuses rather than writes a bad file, and a held-out benchmark on CPU.
+[Vukotić, Chappelier and Furon (WIFS 2018)](https://doi.org/10.1109/wifs.2018.8630768)
+watermarked images (zero-bit) through a frozen classifier's features.
+[Ghamizi et al. (2019)](https://arxiv.org/abs/1912.01487) hid messages in the outputs of
+pretrained classifiers using adversarial attacks.
+[Fernandez et al. (ICASSP 2022)](https://arxiv.org/abs/2112.09581) used secret random carrier
+directions in a self-supervised (DINO) feature space and read bits from projection signs, which
+is close to what Ghostframe does with public carriers.
+[Kishore et al. (ICLR 2022)](https://openreview.net/forum?id=hcMvApxGSzZ) developed the idea for
+steganography (Fixed Neural Network Steganography), and
+[Luo et al., "Securing Fixed Neural Network Steganography" (ACM MM 2023)](https://arxiv.org/abs/2309.09700)
+added a key. Cornell holds a US patent on adversarial-perturbation steganography with a fixed
+decoder ([US 12,033,233](https://patents.google.com/patent/US12033233B2/en)).
+
+Relative to these papers, the differences are practical: tiles with authenticated encryption
+and error correction, an encoder that refuses rather than writes a bad file, and a held-out
+benchmark on CPU. Error correction itself is standard in learned tools (SteganoGAN ships
+Reed–Solomon; StegaStamp and TrustMark use BCH codes). More detail is in
+[docs/RESEARCH.md](docs/RESEARCH.md).
 
 ## Earlier experiments
 
@@ -135,7 +163,10 @@ them are in [docs/earlier/](docs/earlier/README.md). The `ghostframe` command an
 
 [ghostframe.electricsheep.id](https://ghostframe.electricsheep.id) runs the same engine. Its code is in
 `site/` and `server/`; see [site/README.md](site/README.md). Hide is capped at 50 encodes a day for
-the whole site and 3 per visitor, so running it locally is the way to try many photos.
+the whole site and 3 per visitor, and Read at 20 a day per visitor, so running it locally is the
+way to try many photos. The demo server sees the photo, message and passphrase you send; they
+are processed in memory and dropped when the job ends (privacy details are in the site footer
+and in [site/README.md](site/README.md#privacy)).
 
 ## Use it responsibly
 

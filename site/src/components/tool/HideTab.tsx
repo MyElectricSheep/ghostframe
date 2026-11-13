@@ -89,7 +89,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
     }
   };
 
-  // ---- values, named as in the design reference's renderVals()
+  // ---- derived values
   const HM = MODES[hMode];
   const hIss = issueOf(hFile, false), hf = hFile;
   const n = bytesOf(hMsg), over = n > HM.bytes, near = !over && n >= HM.bytes * 0.85;
@@ -110,7 +110,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
   const stage = job && jobBusy ? job.state : null;
   const stDefs: [string, string][] = [['queued', 'Waiting in line'], ...(cold ? [['starting', 'Starting the engine'] as [string, string]] : []), ['encoding', 'Encoding and checking the saved file'], ['done', 'Ready to download']];
   const stageIdx = stDefs.findIndex((d) => d[0] === stage);
-  // Done: a check. Now: a ring with a pulsing centre. Upcoming: an outline (corrective pass 14).
+  // Done: a check. Now: a ring with a pulsing centre. Upcoming: an outline.
   const hStages = stDefs.map((d, i) => ({ label: d[1], status: i < stageIdx ? 'done' : i === stageIdx ? 'now' : '', fg: i <= stageIdx ? INK : GRAY, weight: i === stageIdx ? 600 : 400,
     kind: i < stageIdx ? 'done' : i === stageIdx ? 'now' : 'next', anim: i === stageIdx && !prefersReducedMotion() ? 'gfpulse 1s ease-in-out infinite' : 'none' }));
   const pos = job?.position ?? 0, slow = !!job?.slow;
@@ -127,7 +127,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
     cancelled: { t: 'Encoding cancelled', b: 'Nothing was kept. Change the photo, mode or message and encode again when you’re ready.', m: 'cancelled · no file produced', a: [] },
     vlimit: { t: 'You’ve used today’s encodes', b: 'You’ve used today’s encodes. You can still decode any image, or try the ready-made examples.', m: 'visitor limit reached · resets tomorrow (UTC)', a: [['Try the ready-made examples', toExamples], ['Read a message', navRead]] },
     slimit: { t: 'Encoding is closed for today', b: 'The demo has hit today’s limit. Encoding comes back tomorrow (UTC). Decoding still works.', m: 'site limit reached', a: [['Try the ready-made examples', toExamples], ['Read a message', navRead]] },
-    // Not in the design: wording for server errors and a failed bot check, approved 2026-11-12.
+    // Wording for server errors and a failed bot check.
     failed: { t: 'Something went wrong', b: 'The encoder stopped unexpectedly and no file was produced. Try again in a minute.', m: 'server error · no file produced', a: [] },
     botcheck: { t: 'The bot check didn’t pass', b: 'Complete the check next to the Encode button and try again.', m: 'bot check failed · no file produced', a: [] },
   } as Record<string, { t: string; b: string; m: string; a: [string, () => void][] }>)[phase];
@@ -257,7 +257,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
           <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px' })}>
             <div style={S({ display: 'flex', flexWrap: 'wrap', gap: '10px 14px', alignItems: 'center' })}>
               <button type="button" onClick={hEncode} disabled={hDisabled} style={S({ fontSize: '15px', fontWeight: '600', padding: '12px 20px', minHeight: '44px', border: '0', borderRadius: '4px', background: hBtn.bg, color: hBtn.fg, cursor: hBtn.cursor })}><span style={S({ font: '500 11.5px \'IBM Plex Mono\',ui-monospace,monospace', marginRight: '8px', opacity: '0.8' })}>05</span>Encode</button>
-              <Turnstile onToken={setToken} resetKey={tsReset} />
+              <Turnstile onToken={setToken} action="encode" resetKey={tsReset} />
             </div>
             <div>
               <span style={S({ fontSize: '13px', lineHeight: '1.45', color: '#625c57' })}>{hBlocker}</span>
@@ -354,7 +354,7 @@ export function HideTab({ navRead, quota }: { navRead: () => void; quota: { refr
                   <div style={S({ display: 'flex', flexDirection: 'column', gap: '4px' })}><span style={S({ fontWeight: '600', display: 'flex', gap: '6px', alignItems: 'center' })}><span aria-hidden="true" style={S({ fontWeight: '700' })}>✕</span>Destroys it</span><span>WhatsApp, Instagram, Messenger and most chat apps, screenshots, saving as JPEG, resizing, cropping, filters, some “optimise” tools</span></div>
                 </div>
               </div>
-              <p style={S({ margin: '0', fontSize: '13.5px', lineHeight: '1.5', color: '#625c57', textWrap: 'pretty' })}>The photo still looks like a photo, but anyone with the public reader can tell it carries a message. Your photo and the result are deleted from the server shortly after the job finishes.</p>
+              <p style={S({ margin: '0', fontSize: '13.5px', lineHeight: '1.5', color: '#625c57', textWrap: 'pretty' })}>The photo still looks like a photo, but anyone with the public reader can tell it carries a message. Your photo, message and passphrase were dropped when the job ended. The marked PNG was deleted from the server once your browser fetched it, and anything left goes within 15 minutes. The download comes from your browser’s copy.</p>
             </div>
           </div>
         </>)}

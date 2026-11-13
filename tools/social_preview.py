@@ -71,7 +71,7 @@ def main():
     ghost(d, rx, 478, 5)
     d.text((rx + 52, 478), "Ghostframe", fill=FG, font=font("DejaVuSans-Bold.ttf", 26))
     for i, line in enumerate(["Nudge the pixels, move the", "embedding vectors. A frozen",
-                              "model decodes what the eye", "can't see."]):
+                              "model reads what the eye", "barely notices."]):
         d.text((rx, 528 + i * 22), line, fill=MUTED, font=font("DejaVuSans.ttf", 16))
 
     for out in OUTS:

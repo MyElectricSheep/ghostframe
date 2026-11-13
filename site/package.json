@@ -8,6 +8,7 @@
     "dev": "npm run prepare-assets && vite",
     "build": "npm run prepare-assets && npm run cf-types && tsc --noEmit && tsc -p worker/tsconfig.json && vite build && node scripts/verify-dist.mjs",
     "preview": "vite preview",
+    "test:worker": "node --experimental-strip-types --test tests/worker-routes.mjs",
     "deploy": "npm run build && wrangler deploy",
     "cf-types": "wrangler types worker/worker-configuration.d.ts"
   },
@@ -24,7 +25,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "playwright": "^1.63.0",
     "typescript": "^5.7.3",
-    "vite": "^6.0.7",
+    "vite": "^6.4.6",
     "wrangler": "^4.160.1"
   }
 }

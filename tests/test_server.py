@@ -4,10 +4,13 @@ from importlib.util import find_spec
 import hashlib
 import io
 import json
+import logging
+import os
 from pathlib import Path
 import threading
 import time
 import unittest
+from unittest import mock
 
 if any(find_spec(name) is None for name in ("starlette", "httpx", "multipart", "cryptography", "reedsolo")):
     raise unittest.SkipTest("Install the server extra")
@@ -16,12 +19,14 @@ import numpy as np
 from PIL import Image
 from starlette.testclient import TestClient
 
+from server import app as app_module
 from server import jobs as jobs_module
 from server.app import build_app
 from server.engine import Refused
-from server.jobs import Limits, Queue
+from server.jobs import Limits, Queue, Reservation, visitor_address
 
 ROOT = Path(__file__).resolve().parents[1]
+logging.getLogger("ghostframe.server").setLevel(logging.ERROR)  # the "local development" notice
 
 
 def png(w=320, h=256, mode="RGB", **save):
@@ -39,6 +44,7 @@ class FakeEngine:
         self.ready = threading.Event()
         self.ready.set()
         self.release = threading.Event()
+        self.decoding, self.decode_gate = threading.Event(), None
 
     def load(self):
         self.ready.set()
@@ -57,18 +63,36 @@ class FakeEngine:
         return buffer.getvalue()
 
     def decode(self, data, passphrase, mode):
+        self.decoding.set()
+        if self.decode_gate is not None:
+            self.decode_gate.wait(10)
         return b"hello" if passphrase == b"right" and mode == "subtle" else None
 
 
-def client(engine=None, site_cap=None, visitor_cap=None, timeout=300):
+KEYS = dict(GF_ENGINE_KEY="engine-key-for-tests", GF_INTERNAL_KEY="internal-key-for-tests")
+
+
+def client(engine=None, site_cap=None, visitor_cap=None, timeout=300, read_site=None, read_visitor=None,
+           keys=False, max_waiting=jobs_module.MAX_WAITING):
     engine = engine or FakeEngine()
-    queue = Queue(engine, Limits(site_cap, visitor_cap), timeout=timeout)
-    return TestClient(build_app(engine=engine, queue=queue)), engine, queue
+    queue = Queue(engine, Limits(site_cap, visitor_cap, read_site, read_visitor), timeout=timeout, max_waiting=max_waiting)
+    env = dict(KEYS) if keys else {}
+    with mock.patch.dict(os.environ, env):
+        if not keys:
+            for name in KEYS:
+                os.environ.pop(name, None)
+        app = build_app(engine=engine, queue=queue)
+    return TestClient(app), engine, queue
 
 
-def encode(c, data=None, mode="subtle", message="Meet at dawn.", passphrase="pw"):
+def encode(c, data=None, mode="subtle", message="Meet at dawn.", passphrase="pw", headers=None):
     return c.post("/api/encode", data=dict(mode=mode, message=message, passphrase=passphrase),
-                  files=dict(image=("photo.png", data if data is not None else png(), "image/png")))
+                  files=dict(image=("photo.png", data if data is not None else png(), "image/png")), headers=headers)
+
+
+def decode(c, data=None, passphrase="right", mode="auto", headers=None):
+    return c.post("/api/decode", data=dict(passphrase=passphrase, mode=mode),
+                  files=dict(image=("m.png", data if data is not None else png(), "image/png")), headers=headers)
 
 
 def wait(c, job_id, states=("done", "refused", "timed_out", "cancelled", "failed"), limit=10):
@@ -204,27 +228,197 @@ class QueueTests(unittest.TestCase):
         self.assertEqual(client(site_cap=None)[0].get("/api/quota").status_code, 404)
 
     def test_site_count_can_be_persisted_and_restored(self):
-        c, _, _ = client(site_cap=5)
-        wait(c, encode(c).json()["id"])
+        c, _, _ = client(site_cap=5, keys=True)
+        auth, internal = {"x-gf-engine-key": KEYS["GF_ENGINE_KEY"]}, {"x-gf-internal-key": KEYS["GF_INTERNAL_KEY"]}
+        wait(c, encode(c, headers=auth).json()["id"])
         today = dt.datetime.now(dt.timezone.utc).date().isoformat()
-        self.assertEqual(c.get("/api/internal/limits").json(), dict(day=today, site=1))
+        self.assertEqual(c.get("/api/internal/limits", headers=internal).json(), dict(day=today, site=1, read=0))
         # A restarted container gets today's count back; another day's count, or a lower one, is ignored.
-        c2, _, _ = client(site_cap=5)
-        self.assertEqual(c2.post("/api/internal/limits", json=dict(day="2000-01-01", site=4)).json()["site"], 0)
-        self.assertEqual(c2.post("/api/internal/limits", json=dict(day=today, site=4)).json()["site"], 4)
-        self.assertEqual(c2.post("/api/internal/limits", json=dict(day=today, site=2)).json()["site"], 4)
+        c2, _, _ = client(site_cap=5, keys=True)
+        restore = lambda **body: c2.post("/api/internal/limits", json=body, headers=internal).json()
+        self.assertEqual(restore(day="2000-01-01", site=4)["site"], 0)
+        self.assertEqual(restore(day=today, site=4, read=7), dict(day=today, site=4, read=7))
+        self.assertEqual(restore(day=today, site=2)["site"], 4)
         self.assertEqual(c2.get("/api/quota").json()["left"], 1)
-        wait(c2, encode(c2).json()["id"])
-        self.assertEqual(encode(c2).json()["error"], "site_limit")
+        wait(c2, encode(c2, headers=auth).json()["id"])
+        self.assertEqual(encode(c2, headers=auth).json()["error"], "site_limit")
 
-    def test_cancelled_encodes_do_not_count(self):
+    def test_cancelling_a_running_encode_keeps_it_counted(self):
+        # Refunding a started encode would let cancel-and-resubmit run the encoder forever.
         c, engine, _ = client(visitor_cap=1)
         job_id = encode(c, message="slow").json()["id"]
         wait(c, job_id, states=("encoding",))
         c.post(f"/api/jobs/{job_id}/cancel")
-        wait(c, job_id)
         engine.release.set()
+        self.assertEqual(wait(c, job_id)["state"], "cancelled")
+        self.assertEqual(encode(c).json()["error"], "visitor_limit")
+
+    def test_cancelling_a_queued_encode_gives_it_back(self):
+        c, engine, _ = client(visitor_cap=2)
+        first = encode(c, message="slow").json()["id"]
+        wait(c, first, states=("encoding",))
+        second = encode(c).json()["id"]
+        self.assertEqual(c.post(f"/api/jobs/{second}/cancel").json()["state"], "cancelled")
+        self.assertEqual(encode(c).status_code, 202)  # the cancelled one was given back
+        self.assertEqual(encode(c).json()["error"], "visitor_limit")
+        engine.release.set()
+
+    def test_give_back_ignores_another_days_count(self):
+        limits = Limits(5, 5)
+        visitor = limits.visitor("192.0.2.1")
+        today = limits.reserve(visitor)
+        stale = Reservation("encode", visitor, today.day - dt.timedelta(days=1))
+        limits.give_back(stale)
+        self.assertEqual(limits.site_count()["site"], 1)
+        limits.give_back(today)
+        self.assertEqual(limits.site_count()["site"], 0)
+
+    def test_caps_hold_under_parallel_submissions(self):
+        limits = Limits(5, 3)
+        queue = Queue(FakeEngine(), limits)
+        visitors = [limits.visitor(f"192.0.2.{i % 4}") for i in range(64)]
+        results, barrier = [], threading.Barrier(16)
+
+        def worker(chunk):
+            barrier.wait()
+            results.extend(queue.reserve(v) for v in chunk)
+
+        threads = [threading.Thread(target=worker, args=(visitors[i::16],)) for i in range(16)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+        taken = [r for r in results if isinstance(r, Reservation)]
+        self.assertEqual(len(taken), 5)
+        self.assertTrue(all(sum(r.visitor == v for r in taken) <= 3 for v in set(visitors)))
+        self.assertEqual(limits.site_count()["site"], 5)
+
+    def test_parallel_requests_cannot_pass_the_visitor_cap(self):
+        c, engine, _ = client(visitor_cap=2)
+        engine.release.clear()
+        codes, barrier = [], threading.Barrier(6)
+
+        def post():
+            barrier.wait()
+            codes.append(encode(c, message="slow").status_code)
+
+        threads = [threading.Thread(target=post) for _ in range(6)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+        engine.release.set()
+        self.assertEqual(sorted(codes), [202, 202, 429, 429, 429, 429])
+
+    def test_waiting_room_is_bounded(self):
+        c, engine, queue = client(max_waiting=2)
+        first = encode(c, message="slow").json()["id"]
+        wait(c, first, states=("encoding",))
         self.assertEqual(encode(c).status_code, 202)
+        self.assertEqual(encode(c).status_code, 202)
+        busy = encode(c)
+        self.assertEqual((busy.status_code, busy.json()), (503, dict(error="busy")))
+        engine.release.set()
+        # A refusal before the job starts is not counted against anyone.
+        self.assertEqual(queue._reserved, 0)
+
+    def test_refused_upload_is_not_counted(self):
+        c, _, _ = client(visitor_cap=1)
+        self.assertEqual(encode(c, b"GIF89a not really").json()["issue"], "type")
+        self.assertEqual(encode(c).status_code, 202)
+
+
+class VisitorTests(unittest.TestCase):
+    def test_ipv6_visitors_are_their_64(self):
+        limits = Limits(None, None)
+        self.assertEqual(visitor_address("2001:db8:1:2:aaaa::1"), "2001:db8:1:2::/64")
+        self.assertEqual(limits.visitor("2001:db8:1:2::1"), limits.visitor("2001:db8:1:2:ffff:ffff:ffff:ffff"))
+        self.assertNotEqual(limits.visitor("2001:db8:1:2::1"), limits.visitor("2001:db8:1:3::1"))
+        self.assertEqual(visitor_address("::ffff:192.0.2.7"), "192.0.2.7")
+        self.assertEqual(visitor_address("192.0.2.7"), "192.0.2.7")
+        self.assertNotEqual(limits.visitor("192.0.2.7"), limits.visitor("192.0.2.8"))
+
+
+class HostKeyTests(unittest.TestCase):
+    """Behind Cloudflare the Durable Object passes per-start keys; without them, local development."""
+
+    def test_internal_route_needs_the_internal_key(self):
+        c, _, _ = client(keys=True)
+        self.assertEqual(c.get("/api/internal/limits").status_code, 404)
+        self.assertEqual(c.get("/api/internal/limits", headers={"x-gf-internal-key": "wrong"}).status_code, 404)
+        # The engine key that every forwarded request carries does not open it.
+        self.assertEqual(c.get("/api/internal/limits", headers={"x-gf-internal-key": KEYS["GF_ENGINE_KEY"]}).status_code, 404)
+        self.assertEqual(c.post("/api/internal/limits", json=dict(day="x", site=99)).status_code, 404)
+        self.assertEqual(c.get("/api/internal/limits", headers={"x-gf-internal-key": KEYS["GF_INTERNAL_KEY"]}).status_code, 200)
+
+    def test_internal_route_is_off_without_host_keys(self):
+        c, _, _ = client()
+        self.assertEqual(c.get("/api/internal/limits").status_code, 404)
+        self.assertEqual(c.get("/api/internal/limits", headers={"x-gf-internal-key": ""}).status_code, 404)
+
+    def test_percent_encoded_api_paths_are_refused(self):
+        c, _, _ = client(keys=True, site_cap=5)
+        internal = {"x-gf-internal-key": KEYS["GF_INTERNAL_KEY"]}
+        self.assertEqual(c.get("/api/quota").status_code, 200)
+        self.assertEqual(c.get("/api/internal%2Flimits", headers=internal).status_code, 404)
+        self.assertEqual(c.get("/api/%71uota").status_code, 404)
+
+    def test_encode_and_decode_need_the_engine_key(self):
+        c, _, _ = client(keys=True, visitor_cap=1)
+        self.assertEqual(encode(c).json(), dict(error="bot_check"))
+        self.assertEqual(decode(c).status_code, 403)
+        self.assertEqual(encode(c, headers={"x-gf-engine-key": "wrong"}).status_code, 403)
+        self.assertEqual(encode(c, headers={"x-gf-engine-key": KEYS["GF_ENGINE_KEY"]}).status_code, 202)
+        self.assertEqual(decode(c, headers={"x-gf-engine-key": KEYS["GF_ENGINE_KEY"]}).status_code, 200)
+
+
+class BodyLimitTests(unittest.TestCase):
+    def test_body_size_and_type_are_checked_before_parsing(self):
+        c, _, _ = client()
+        self.assertEqual(c.post("/api/encode", content=b"mode=subtle", headers={"content-type": "application/x-www-form-urlencoded"}).status_code, 415)
+        self.assertEqual(c.post("/api/decode", json=dict(passphrase="x")).status_code, 415)
+        big = c.post("/api/decode", content=b"x", headers={"content-type": "multipart/form-data; boundary=x",
+                                                             "content-length": str(app_module.MAX_BODY + 1)})
+        self.assertEqual(big.status_code, 413)
+        with mock.patch.object(app_module, "MAX_BODY", 4096):  # a streamed body is counted too
+            self.assertEqual(encode(c, png(320, 256)).status_code, 413)
+        self.assertEqual(c.post("/api/encode", content=b"--x\r\nnot multipart", headers={"content-type": "multipart/form-data; boundary=x"}).status_code, 400)
+
+    def test_uploads_never_spool_to_disk(self):
+        from starlette import formparsers
+
+        self.assertGreaterEqual(formparsers.MultiPartParser.spool_max_size, app_module.MAX_BODY)
+
+
+class DecodeLimitTests(unittest.TestCase):
+    def test_daily_decode_caps(self):
+        c, _, _ = client(read_site=3, read_visitor=2)
+        for _ in range(2):
+            self.assertEqual(decode(c).status_code, 200)
+        self.assertEqual((decode(c).status_code, decode(c).json()), (429, dict(error="read_visitor_limit")))
+        # Refused inputs are not counted; the encode quota is untouched.
+        self.assertEqual(c.get("/api/quota").status_code, 404)
+        c2, _, _ = client(read_site=1, read_visitor=None)
+        self.assertEqual(decode(c2, b"not a png").json()["issue"], "type")
+        self.assertEqual(decode(c2).status_code, 200)
+        self.assertEqual(decode(c2).json(), dict(error="read_site_limit"))
+
+    def test_decode_waiting_room_is_bounded(self):
+        engine = FakeEngine()
+        engine.decode_gate = threading.Event()
+        with mock.patch.object(app_module, "DECODE_RUNNING", 1), mock.patch.object(app_module, "DECODE_WAITING", 0):
+            c, _, _ = client(engine=engine)
+            with c:
+                first = []
+                t = threading.Thread(target=lambda: first.append(decode(c)))
+                t.start()
+                self.assertTrue(engine.decoding.wait(10))
+                busy = decode(c)
+                engine.decode_gate.set()
+                t.join()
+                self.assertEqual((busy.status_code, busy.json()), (503, dict(error="busy")))
+                self.assertEqual(json.loads(first[0].text.splitlines()[-1])["found"], True)
+                self.assertEqual(decode(c).status_code, 200)  # the slot was given back
 
 
 class DecodeStreamTests(unittest.TestCase):

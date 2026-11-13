@@ -69,9 +69,9 @@
     "amplification": 24,
     "cap": 8,
     "max_rgb_delta": 8,
-    "changed_channel_fraction": 0.9367,
-    "recovered_message": "Agent, the portrait is the key. The gallery guard on the night shift is one of ours; tell him you admire the red cap and he will let you stay past closing. Behind the frame you will find a list of names. Photograph it, put everything back exactly as it was, and leave by the river door before midnight. Avoid the lift; the cameras on the back stairs are off from eleven to twelve. If stopped, say you are from the restoration team. Bring the list to the bookshop on Charing Cross Road at nine.",
-    "payload_bytes": 493,
+    "changed_channel_fraction": 0.9365,
+    "recovered_message": "Birthday team: the portrait is the first clue. Find the man in the red cap in Room 4 and count the buttons on his coat; that number opens the padlock on the blue box in the cloakroom. Inside is a map of the museum garden. Follow it to the bench by the fountain, where a paper crown and a tin of lemon biscuits are waiting for you. Bring both to the caf\u00e9 by the river door before four, and start singing when Maya walks in. If she guesses early, give her the biscuits anyway. Well done, team!",
+    "payload_bytes": 492,
     "profile_capacity": 494,
     "source": "../../antonello-portrait-of-a-man.jpg",
     "original_authenticates": false,
@@ -83,9 +83,9 @@
     },
     "sha256": {
       "original.png": "0081fb36025346057796c5d935627cfd4519528a2d27553ebad6f88c2df950be",
-      "long.png": "1a4e9d08688bc96f0c70cb69ddd9162a6264acd90d701484c550f5dc3de24637",
-      "long-difference.png": "58751f9f3ea1edd8114904a729b0c460993ba9c4f5dad25b24ca1f8141014ab3"
+      "long.png": "c0c8d0036c575bf7e088b9c0589e9a75b45f1004f75735ff4593d7dbe57d0a8e",
+      "long-difference.png": "0a61412c7c9f1caf6f04233523e49ad7d3b368965e9841b99c1008d01bbfa9e8"
     },
-    "encode_s_cli": 41.7
+    "encode_s_cli": 42.0
   }
 ]

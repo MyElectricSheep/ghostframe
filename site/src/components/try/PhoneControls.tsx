@@ -1,4 +1,4 @@
-// Try it on phones (mobile pass 8f): a summary line above the photo opens a bottom sheet for photo
+// Try it on phones: a summary line above the photo opens a bottom sheet for photo
 // and mode, and a Compare · Difference · Model switch sits under the photo. Visibility turns on at
 // once when opening (so focus can move in) and off only after the slide when closing.
 import { useRef, useState } from 'react';

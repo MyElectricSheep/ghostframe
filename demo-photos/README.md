@@ -1,6 +1,6 @@
 # Demo photos
 
-Cover photos for the demo website. All three come from the preregistered held-out benchmark set
+Cover photos for the demo website. Classic, here and in the fixture file names, is the mode the site calls Short. All three come from the preregistered held-out benchmark set
 (`bench/manifest-v1.json`). They are the exact files that were tested, byte for byte (the SHA-256
 hashes match the manifest), and they are free to use. The portrait is a painting, so it shows a face without the consent or privacy questions that a modern photo of a living person would raise.
 
@@ -8,7 +8,7 @@ hashes match the manifest), and they are free to use. The portrait is a painting
 |---|---|---|---|
 | `coffee-beans.jpg` (1280×960) | Roasted coffee beans, close up | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Roasted_coffee_beans.jpg), public domain | "Roasted coffee beans" by MarkSweep, public domain, via Wikimedia Commons |
 | `milky-way.jpg` (1280×848) | Milky Way over a wooden fence | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Milky_Way_Night_Sky_(Unsplash).jpg), CC0 | "Milky Way Night Sky" by Guillaume (Unsplash), CC0, via Wikimedia Commons |
-| `antonello-portrait-of-a-man.jpg` (1280×1782) | Portrait of a man in a red cap, painted about 1475 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg), public domain (the National Gallery, London) | Antonello da Messina, *Portrait of a Man* (about 1475), The National Gallery, London, public domain, via Wikimedia Commons |
+| `antonello-portrait-of-a-man.jpg` (1280×1782) | Portrait of a man in a red cap, painted about 1475 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg); the painting is in the public domain, and the faithful photographic reproduction is PD-Art | Antonello da Messina, *Portrait of a Man* (about 1475; National Gallery, London, NG1141). The painting is in the public domain; faithful photographic reproduction via Wikimedia Commons (PD-Art). |
 
 None of these licences requires attribution, but crediting the source is good practice.
 
@@ -48,7 +48,7 @@ Passphrase for all of them: `ghostframe public benchmark fixture`.
 |---|---|---|---|
 | Coffee beans | "Beans at six." | "The roaster on Via Lucca is ours. Order the dark blend and pay in cash." | Courier briefing, 488 B |
 | Milky Way | "Eyes on Orion" | "Signal from the fence line at 02:00. Two flashes mean the road is clear." | Night-team orders, 480 B |
-| Antonello portrait | "Trust no one." | "The man in the red cap knows the code. Meet him in Room 4 at closing time." | Gallery orders, 493 B |
+| Antonello portrait | "Trust no one." | "The man in the red cap knows the code. Meet him in Room 4 at closing time." | Birthday treasure hunt, 492 B |
 
 The full Long texts are in each `fixtures.json`. Every fixture passed four checks with the public CLI, each in a fresh process:
 

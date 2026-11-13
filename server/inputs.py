@@ -1,4 +1,4 @@
-"""Input rules from the site copy, checked on the server. Codes match the design's ISSUE keys.
+"""Input rules from the site copy, checked on the server. Codes match the site's issue keys.
 
 Hide: PNG or JPEG; at most 4 MP; at least 160 x 128; no transparency; no 16-bit/HDR; no CMYK/Lab.
 Read: PNG only (a JPEG gets `jpegRead`). Other colour profiles (Display P3) are converted to sRGB.
@@ -23,7 +23,8 @@ def _open(data, formats):
     if len(data) > MAX_UPLOAD:
         raise Issue("big")
     try:
-        image = Image.open(io.BytesIO(data))
+        # Only the PNG and JPEG parsers ever see an upload; a JPEG sent to Read is still named.
+        image = Image.open(io.BytesIO(data), formats=["PNG", "JPEG"])
     except (UnidentifiedImageError, OSError) as exc:
         raise Issue("type") from exc
     if image.format not in formats:

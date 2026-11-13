@@ -34,9 +34,9 @@ safety gap.
    between a tile's embedding before and after, where 1 means unchanged, is:
    - Classic: 0.59–0.76
    - Subtle: 0.68–0.80
-   - Long: 0.53–0.63
+   - Long: 0.54–0.63
 
-   The lowest single tile is 0.17. The network is very sensitive to tiny,
+   The lowest single tile is 0.22. The network is very sensitive to tiny,
    targeted pixel changes, and that is exactly what the engine exploits.
 2. **About half the bits flip.** The hidden data is encrypted, so it looks random, and roughly
    half the scores have to change sign. The rest only need to be pushed further from zero.
@@ -66,7 +66,7 @@ largest possible distance. Scores are given as absolute values.
 | Milky Way | Long | 80 | 5120 | 0.572 / 0.337 | 0.925 | 2580 (50 %) | 0.0256 → 0.0183 | 0.0108 |
 | Antonello portrait | Classic | 30 | 480 | 0.617 / 0.397 | 0.875 | 250 (52 %) | 0.0285 → 0.0377 | 0.0294 |
 | Antonello portrait | Subtle | 80 | 1280 | 0.678 / 0.218 | 0.803 | 645 (50 %) | 0.0253 → 0.0256 | 0.0109 |
-| Antonello portrait | Long | 80 | 5120 | 0.534 / 0.169 | 0.965 | 2507 (49 %) | 0.0264 → 0.0204 | 0.0108 |
+| Antonello portrait | Long | 80 | 5120 | 0.535 / 0.271 | 0.964 | 2543 (50 %) | 0.0264 → 0.0205 | 0.0108 |
 
 ## Score histograms (the "gap" graphic)
 
@@ -104,7 +104,7 @@ beyond ±0.08 are counted in the end bins. Each row sums to that mode's total nu
 | Subtle: untouched | 41 | 32 | 51 | 62 | 88 | 119 | 140 | 120 | 99 | 136 | 117 | 72 | 72 | 56 | 32 | 43 |
 | Subtle: marked | 32 | 18 | 36 | 65 | 92 | 161 | 234 | 0 | 0 | 199 | 157 | 106 | 74 | 50 | 22 | 34 |
 | Long: untouched | 163 | 139 | 207 | 299 | 364 | 403 | 477 | 549 | 500 | 468 | 422 | 348 | 304 | 173 | 121 | 183 |
-| Long: marked | 117 | 71 | 106 | 179 | 292 | 552 | 1259 | 0 | 0 | 1246 | 575 | 271 | 181 | 96 | 67 | 108 |
+| Long: marked | 111 | 73 | 113 | 189 | 271 | 593 | 1262 | 0 | 0 | 1212 | 590 | 256 | 174 | 99 | 70 | 107 |
 
 The "untouched" rows differ between modes because each mode reads the photo through its own
 grid and its own directions. For one picture per photo, show the Subtle or Long pair: they share
@@ -221,14 +221,14 @@ a heat map over the photo.
 
 | | c1 | c2 | c3 | c4 | c5 | c6 | c7 | c8 | c9 | c10 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| r1 | 0.45 | 0.50 | 0.38 | 0.44 | 0.49 | 0.50 | 0.59 | 0.43 | 0.40 | 0.69 |
-| r2 | 0.40 | 0.51 | 0.58 | 0.52 | 0.72 | 0.74 | 0.32 | 0.57 | 0.51 | 0.48 |
-| r3 | 0.58 | 0.58 | 0.51 | 0.72 | 0.56 | 0.61 | 0.61 | 0.66 | 0.44 | 0.61 |
-| r4 | 0.62 | 0.64 | 0.65 | 0.59 | 0.67 | 0.46 | 0.44 | 0.67 | 0.45 | 0.46 |
-| r5 | 0.39 | 0.45 | 0.53 | 0.64 | 0.59 | 0.59 | 0.34 | 0.50 | 0.71 | 0.57 |
-| r6 | 0.59 | 0.63 | 0.31 | 0.50 | 0.55 | 0.43 | 0.56 | 0.54 | 0.43 | 0.51 |
-| r7 | 0.44 | 0.51 | 0.43 | 0.63 | 0.59 | 0.62 | 0.36 | 0.39 | 0.48 | 0.64 |
-| r8 | 0.65 | 0.62 | 0.55 | 0.62 | 0.59 | 0.49 | 0.39 | 0.17 | 0.50 | 0.64 |
+| r1 | 0.54 | 0.35 | 0.54 | 0.28 | 0.62 | 0.63 | 0.45 | 0.54 | 0.51 | 0.47 |
+| r2 | 0.55 | 0.36 | 0.28 | 0.53 | 0.71 | 0.53 | 0.50 | 0.62 | 0.53 | 0.43 |
+| r3 | 0.56 | 0.62 | 0.53 | 0.56 | 0.58 | 0.51 | 0.61 | 0.40 | 0.36 | 0.63 |
+| r4 | 0.56 | 0.44 | 0.68 | 0.65 | 0.52 | 0.68 | 0.55 | 0.67 | 0.45 | 0.32 |
+| r5 | 0.59 | 0.32 | 0.53 | 0.65 | 0.54 | 0.52 | 0.44 | 0.60 | 0.58 | 0.60 |
+| r6 | 0.54 | 0.59 | 0.52 | 0.54 | 0.57 | 0.52 | 0.68 | 0.60 | 0.44 | 0.47 |
+| r7 | 0.63 | 0.45 | 0.54 | 0.59 | 0.50 | 0.60 | 0.43 | 0.27 | 0.35 | 0.45 |
+| r8 | 0.51 | 0.64 | 0.48 | 0.51 | 0.53 | 0.60 | 0.65 | 0.57 | 0.46 | 0.62 |
 
 ## A sample of the raw embedding
 
@@ -263,7 +263,7 @@ not comparable with the others.
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | Untouched (10 × 8 tile) | -0.0120 | -0.0347 | -0.0239 | -0.0391 | -0.0259 | 0.0244 | -0.0331 | -0.0115 | 0.0096 | -0.0259 | -0.0288 | -0.0278 |
 | Subtle | -0.0176 | -0.0207 | -0.0110 | -0.0269 | 0.0158 | 0.0270 | -0.0200 | -0.0307 | -0.0064 | -0.0206 | -0.0197 | -0.0254 |
-| Long | -0.0193 | -0.0307 | 0.0675 | -0.0333 | -0.0278 | -0.0098 | -0.0252 | 0.0312 | -0.0108 | 0.0200 | -0.0263 | -0.0101 |
+| Long | -0.0311 | -0.0350 | -0.0037 | -0.0338 | 0.0042 | -0.0244 | 0.0437 | -0.0280 | -0.0219 | -0.0377 | -0.0236 | -0.0282 |
 | Untouched (6 × 5 tile) | 0.0003 | 0.0029 | 0.0005 | 0.0001 | 0.0025 | 0.0000 | 0.0103 | 0.0180 | 0.0000 | 0.0880 | 0.0215 | 0.0029 |
 | Classic | 0.0101 | 0.0259 | 0.0273 | 0.0038 | 0.0046 | 0.0001 | 0.0144 | 0.0691 | 0.0000 | 0.0522 | 0.0516 | 0.0000 |
 
@@ -276,7 +276,7 @@ The two models' numbers look different:
 
 ## Full data
 
-`demo-photos/fixtures/embeddings/<photo>.json` (not committed: `python -m tools.dump_embeddings` writes it, about 5.5 MB) holds everything, for each mode:
+`demo-photos/fixtures/embeddings/<photo>.json` holds everything, for each mode:
 
 | Key | Contents | Shape |
 |---|---|---|

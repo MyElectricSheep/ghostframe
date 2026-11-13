@@ -5,9 +5,7 @@ MobileNetV3-Small profiles. Profile names are part of the cryptographic identity
 used exactly as registered.
 """
 import io
-import tempfile
 import threading
-from pathlib import Path
 
 import numpy as np
 from PIL import Image
@@ -55,15 +53,12 @@ class Engine:
         """Return the exact PNG bytes of a marked cover (HxWx3 uint8, sRGB). Raises Refused."""
         model = self._model(mode)
         if mode == "classic":
-            from experiments.message_cli import neural_encode_file
+            from experiments.message_cli import neural_encode_bytes
 
-            with tempfile.TemporaryDirectory(prefix="gf-enc-") as tmp:
-                out = Path(tmp) / "marked.png"
-                try:
-                    neural_encode_file(Image.fromarray(cover), message, passphrase, out, model, progress=progress)
-                except ValueError as exc:  # the legacy encoder signals a failed read-back with ValueError
-                    raise Refused(str(exc)) from exc
-                return out.read_bytes()
+            try:  # in memory: nothing is written to disk
+                return neural_encode_bytes(Image.fromarray(cover), message, passphrase, model, progress=progress)
+            except ValueError as exc:  # the legacy encoder signals a failed read-back with ValueError
+                raise Refused(str(exc)) from exc
         from ghostframe_png import core
 
         try:
