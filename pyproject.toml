@@ -21,7 +21,7 @@ classifiers = [
 ]
 requires-python = ">=3.11,<3.13"
 dependencies = [
-    "torch==2.7.1", "torchvision==0.22.1", "numpy==2.3.5", "Pillow==13.0.0", "scikit-image==0.25.2",
+    "torch==2.7.1", "torchvision==0.29.2", "numpy==2.3.5", "Pillow==13.0.0", "scikit-image==0.25.2",
     "cryptography==50.0.2", "reedsolo==1.7.0",
 ]
 
