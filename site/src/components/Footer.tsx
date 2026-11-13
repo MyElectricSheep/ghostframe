@@ -32,7 +32,7 @@ export function Footer() {
       <summary style={S({ fontSize: '13px', fontWeight: '600', color: '#355574', cursor: 'pointer' })}>Privacy</summary>
       <div style={S({ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' })}>
         <p style={S(H)}>Who runs it</p>
-        <p style={S(P)}>This demo is run by Ben Paget, an individual in the EU. Contact: <a href="mailto:ben@electricsheep.id">ben@electricsheep.id</a>.</p>
+        <p style={S(P)}>This demo is run by Ben Paget. Contact: <a href="mailto:ben@electricsheep.id">ben@electricsheep.id</a>.</p>
         <p style={S(H)}>What is processed, and why</p>
         <p style={S(P)}>To hide or read a message, the photo, message and passphrase you send are processed for the duration of the job. Your IP address is used for rate limits, daily caps and the bot check. The purpose is to provide the demo and protect it from abuse; the legal basis is legitimate interest (GDPR Art. 6(1)(f)).</p>
         <p style={S(H)}>How long it is kept</p>
