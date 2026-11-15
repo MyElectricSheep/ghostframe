@@ -1,3 +1,5 @@
+![The photo looks the same. Its embeddings carry your message. A portrait is cut into 10 × 8 = 80 tiles; one tile goes into MobileNetV3-Small (frozen, public), its 576-number embedding is projected on 16 public directions, and the signs give 16 bits of an encrypted message, read back with the passphrase.](docs/img/readme-banner.webp)
+
 # Ghostframe
 
 Ghostframe hides a short encrypted message in a photo. It nudges the pixels, by at most 2 or 8
