@@ -4,15 +4,34 @@ updates:
     directory: /
     schedule:
       interval: weekly
+  # Edits pyproject.toml only: CI and the demo container install from the hashed
+  # server/requirements.lock, so these PRs are reminders, not tested upgrades.
   - package-ecosystem: pip
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      # The engine: a numerical change can stop older images from decoding, so these
+      # move by hand in the lock, with bench/verify_fixtures.py re-run.
+      - dependency-name: torch
+      - dependency-name: torchvision
+      - dependency-name: numpy
+      - dependency-name: scikit-image
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: npm
     directory: /site
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: docker
     directory: /server
     schedule:
       interval: weekly
+    ignore:
+      # Patch releases and digest refreshes of python:3.12-slim still come through.
+      # A new Python version has to wait for torch wheels for it.
+      - dependency-name: python
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
