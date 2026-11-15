@@ -175,11 +175,6 @@ any edit to the image loses the message. Do not rely on it to protect anything t
 do not use it to hide anything illegal. To report a security problem, see
 [SECURITY.md](SECURITY.md).
 
-## How this was built
-
-I built Ghostframe with Claude Code. Agents wrote most of the code and ran the experiments,
-benchmarks and audits; I chose the questions, set the decision rules, and checked the results.
-
 ## Licence
 
 The code is MIT-licensed ([LICENSE](LICENSE)). The photos, fonts and model weights keep their own
